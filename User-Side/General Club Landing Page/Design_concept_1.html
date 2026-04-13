@@ -12,20 +12,18 @@
       --wildcat-gold: #f6ae2d;
       --wildcat-gray: #2d2d3a;
       --light-bg: #f0f3f7;
-      --accent-paw: #d62828;
+      --accent-red: #d62828;
       --panel: #ffffff;
       --ink: #1e1e2a;
       --muted: #4a5568;
       --line: #dce3eb;
       --science-blue: #1a4b6d;
-      --card-hover: #f9fbfd;
+      --science-light: #f4f9fe;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: #f8f9fa;
@@ -40,31 +38,27 @@
       letter-spacing: -0.02em;
     }
 
-    /* === FULL WIDTH CONTAINERS === */
-    .full-width {
-      width: 100%;
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-
-    /* Header shell stays centered but header itself is full width */
+    /* ============================================================
+       HEADER
+    ============================================================ */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: var(--wildcat-navy);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
       width: 100%;
     }
 
     .header-container {
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 14px 3rem;
+      padding: 14px 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     .logo-area {
@@ -74,20 +68,19 @@
     }
 
     .logo-icon {
-      font-size: 2.6rem;
+      font-size: 2.4rem;
       color: var(--wildcat-gold);
     }
 
     .school-title h1 {
-      margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       line-height: 1.1;
       color: white;
     }
 
     .school-title span {
       color: #cfdfff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
@@ -95,16 +88,17 @@
     .topbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .topbar a {
       color: white;
       text-decoration: none;
       font-weight: 600;
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 40px;
       transition: all 0.2s;
+      font-size: 0.95rem;
     }
 
     .topbar a:hover {
@@ -112,10 +106,12 @@
       color: var(--wildcat-navy);
     }
 
-    /* === CLUB HERO - FULL BLEED === */
+    /* ============================================================
+       HERO
+    ============================================================ */
     .club-hero {
-      background: linear-gradient(145deg, #0a2e4b 0%, #1b4a6b 100%);
-      padding: 4rem 3rem 3.5rem;
+      background: linear-gradient(145deg, #071929 0%, #0e3050 50%, #1b4a6b 100%);
+      padding: 5rem 2.5rem 4.5rem;
       color: white;
       position: relative;
       overflow: hidden;
@@ -123,57 +119,95 @@
       width: 100%;
     }
 
-    .club-hero::after {
-      content: "⚛️";
+    /* Decorative background science symbols */
+    .club-hero::before {
+      content: "⚗";
       position: absolute;
-      bottom: 10px;
-      right: 5%;
-      font-size: 10rem;
-      opacity: 0.06;
-      transform: rotate(10deg);
+      top: -20px;
+      left: 8%;
+      font-size: 14rem;
+      opacity: 0.04;
+    }
+
+    .club-hero::after {
+      content: "⚛";
+      position: absolute;
+      bottom: -10px;
+      right: 6%;
+      font-size: 13rem;
+      opacity: 0.05;
+      transform: rotate(15deg);
     }
 
     .hero-content {
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
     }
 
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(246,174,45,0.18);
+      border: 1px solid rgba(246,174,45,0.4);
+      color: var(--wildcat-gold);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 40px;
+      margin-bottom: 1.2rem;
+    }
+
     .club-name {
-      font-size: clamp(3rem, 8vw, 5rem);
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      line-height: 1.1;
+    }
+
+    .club-name span {
+      color: var(--wildcat-gold);
     }
 
     .club-tagline {
-      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
       font-weight: 400;
-      opacity: 0.95;
-      margin-bottom: 2.5rem;
-      border-left: 6px solid var(--wildcat-gold);
-      padding-left: 2rem;
+      opacity: 0.9;
+      margin-bottom: 2.8rem;
+      border-left: 5px solid var(--wildcat-gold);
+      padding-left: 1.5rem;
+      max-width: 680px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
     }
 
     .join-us-btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       background: var(--wildcat-gold);
       color: var(--wildcat-navy);
+      font-family: "Montserrat", sans-serif;
       font-weight: 800;
-      font-size: 1.4rem;
-      padding: 1rem 4rem;
+      font-size: 1.2rem;
+      padding: 1rem 3rem;
       border-radius: 60px;
-      box-shadow: 0 8px 0 #b87c1a, 0 4px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 0 #b87c1a, 0 4px 20px rgba(0,0,0,0.3);
       text-decoration: none;
       transition: 0.1s ease;
       border: none;
       cursor: pointer;
-    }
-
-    .join-us-btn i {
-      margin-right: 12px;
     }
 
     .join-us-btn:hover {
@@ -181,7 +215,47 @@
       box-shadow: 0 5px 0 #b87c1a, 0 4px 20px rgba(0,0,0,0.2);
     }
 
-    /* === ABOUT SECTION - FULL WIDTH with inner max-width === */
+    .scroll-hint {
+      color: rgba(255,255,255,0.55);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Hero stats strip */
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-num {
+      font-family: "Montserrat", sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--wildcat-gold);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       ABOUT THE CLUB
+    ============================================================ */
     .about-section-wrapper {
       background: var(--panel);
       border-bottom: 1px solid var(--line);
@@ -189,12 +263,13 @@
     }
 
     .about-club-section {
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
       gap: 3rem;
-      padding: 3.5rem 3rem;
+      padding: 4rem 2.5rem;
+      align-items: center;
     }
 
     .about-text {
@@ -202,197 +277,336 @@
       min-width: 300px;
     }
 
-    .about-text h2 {
-      font-size: 2.5rem;
+    .section-eyebrow {
+      display: inline-block;
       font-weight: 700;
-      color: var(--wildcat-navy);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 15px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--wildcat-gold);
+      background: #fef3d7;
+      padding: 4px 14px;
+      border-radius: 40px;
+      margin-bottom: 1rem;
     }
 
-    .about-text h2 i {
-      color: var(--wildcat-gold);
+    .about-text h2 {
+      font-size: 2.4rem;
+      color: var(--wildcat-navy);
+      margin-bottom: 1.2rem;
     }
 
     .about-description {
-      font-size: 1.25rem;
-      line-height: 1.7;
+      font-size: 1.15rem;
+      line-height: 1.75;
       color: var(--muted);
       margin-bottom: 2rem;
-      max-width: 800px;
+      max-width: 640px;
     }
 
-    .member-count-badge {
-      background: #e8f0fe;
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .stat-badge {
+      background: var(--science-light);
+      border: 2px solid #d6e9f5;
+      border-radius: 50px;
+      padding: 0.7rem 1.5rem;
       display: inline-flex;
       align-items: center;
-      padding: 0.8rem 2.5rem;
-      border-radius: 50px;
+      gap: 10px;
       font-weight: 700;
-      font-size: 1.4rem;
       color: var(--wildcat-navy);
-      border: 2px dashed var(--wildcat-gold);
+      font-size: 1rem;
     }
 
-    .member-count-badge i {
-      margin-right: 15px;
+    .stat-badge i {
       color: var(--science-blue);
-      font-size: 1.8rem;
+      font-size: 1.1rem;
     }
 
-    .club-photo-placeholder {
+    .quote-block {
+      margin-top: 2rem;
+      padding: 1.2rem 1.8rem;
+      background: var(--science-light);
+      border-left: 5px solid var(--wildcat-gold);
+      border-radius: 0 16px 16px 0;
+      font-style: italic;
+      color: var(--science-blue);
+      font-size: 1.1rem;
+    }
+
+    /* About club photo */
+    .about-club-img {
       flex: 1.2;
       min-width: 300px;
-      background: #d9e6f2;
-      border-radius: 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1.5rem;
-      box-shadow: inset 0 2px 10px rgba(0,0,0,0.02), 0 15px 30px rgba(33,89,124,0.1);
-      border: 2px dashed #9bbfd6;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(11,28,58,0.14);
+      position: relative;
     }
 
-    .photo-icon-large {
-      font-size: 5rem;
-      color: #2e6a92;
-      margin-bottom: 20px;
-      opacity: 0.8;
+    .about-club-img img {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+      display: block;
     }
 
-    .club-photo-placeholder p {
+    .about-club-img .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(11,28,58,0.85), transparent);
+      color: white;
+      padding: 2rem 1.5rem 1.2rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      color: #1b4b6e;
-      background: rgba(255,255,255,0.7);
-      padding: 0.6rem 2rem;
-      border-radius: 40px;
-      font-size: 1.2rem;
-      backdrop-filter: blur(4px);
     }
 
-    /* === WHAT WE DO - full width background === */
+    /* ============================================================
+       WHAT WE DO
+    ============================================================ */
     .what-we-do-wrapper {
-      background: #f4f9fe;
+      background: var(--science-light);
       width: 100%;
     }
 
-    .what-we-do-section {
-      max-width: 1600px;
+    .section-container {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 4rem 3rem;
+      padding: 4.5rem 2.5rem;
     }
 
     .section-title-main {
-      font-size: 2.8rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 800;
       color: var(--wildcat-navy);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.8rem;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
     .section-title-main i {
       color: var(--wildcat-gold);
-      font-size: 2.5rem;
     }
 
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
 
     .activity-card {
       background: var(--panel);
-      border-radius: 32px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 15px 30px rgba(0, 32, 64, 0.08);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,32,64,0.07);
       border: 1px solid var(--line);
       transition: all 0.25s;
     }
 
     .activity-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 40px rgba(20, 80, 120, 0.12);
-      background: white;
+      transform: translateY(-6px);
+      box-shadow: 0 22px 40px rgba(20,80,120,0.12);
+    }
+
+    .activity-card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .activity-card-body {
+      padding: 1.8rem 1.6rem;
     }
 
     .card-icon-large {
-      font-size: 3.2rem;
+      font-size: 2.4rem;
       color: var(--wildcat-gold);
-      margin-bottom: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     .activity-card h3 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 1.5rem;
       color: var(--wildcat-navy);
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
     }
 
     .activity-card p {
       color: var(--muted);
       line-height: 1.7;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .card-subnote {
-      margin-top: 18px;
-      font-size: 1rem;
-      color: #2a7faa;
-      font-weight: 600;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--science-blue);
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      background: var(--science-light);
+      padding: 6px 14px;
+      border-radius: 40px;
+      display: inline-flex;
     }
 
-    /* === WHY JOIN - full width === */
+    /* ============================================================
+       WHY JOIN
+    ============================================================ */
     .why-join-wrapper {
-      background: linear-gradient(0deg, #fafcff, #ffffff);
+      background: white;
       width: 100%;
-    }
-
-    .why-join-section {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 4rem 3rem;
     }
 
     .benefits-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2.5rem;
     }
 
     .benefit-item {
-      text-align: left;
+      background: var(--science-light);
+      border-radius: 24px;
+      padding: 2rem 1.8rem;
+      border: 1px solid #d6e9f5;
+      transition: 0.2s;
+    }
+
+    .benefit-item:hover {
+      background: #e9f3fb;
+      transform: translateY(-4px);
     }
 
     .benefit-icon {
-      font-size: 3rem;
+      font-size: 2.4rem;
       color: var(--wildcat-gold);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .benefit-item h4 {
-      font-size: 1.9rem;
-      font-weight: 700;
+      font-size: 1.4rem;
       color: var(--wildcat-navy);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
     }
 
     .benefit-item p {
       color: var(--muted);
-      line-height: 1.6;
-      font-size: 1.15rem;
+      line-height: 1.65;
+      font-size: 1rem;
     }
 
-    /* === PHOTOS STRIP - full width === */
+    /* ============================================================
+       CLUB EXECUTIVES — compact horizontal strip
+    ============================================================ */
+    .exec-wrapper {
+      background: var(--wildcat-navy);
+      width: 100%;
+    }
+
+    .exec-wrapper .section-title-main {
+      color: white;
+      margin-bottom: 1.6rem;
+    }
+
+    .exec-wrapper .section-title-main i {
+      color: var(--wildcat-gold);
+    }
+
+    /* Single scrollable row */
+    .exec-strip {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(246,174,45,0.3) transparent;
+      /* separator lines between members */
+    }
+
+    .exec-strip::-webkit-scrollbar { height: 4px; }
+    .exec-strip::-webkit-scrollbar-track { background: transparent; }
+    .exec-strip::-webkit-scrollbar-thumb { background: rgba(246,174,45,0.35); border-radius: 4px; }
+
+    .exec-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 1.6rem;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .exec-member:last-child { border-right: none; }
+    .exec-member:hover { background: rgba(255,255,255,0.05); border-radius: 16px; }
+
+    /* Photo sizes by rank */
+    .exec-photo {
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 3px solid rgba(255,255,255,0.12);
+      transition: border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .exec-member:hover .exec-photo { border-color: var(--wildcat-gold); }
+
+    .exec-member.rank-1 .exec-photo { width: 88px; height: 88px; border-color: var(--wildcat-gold); }
+    .exec-member.rank-2 .exec-photo { width: 72px; height: 72px; }
+    .exec-member.rank-3 .exec-photo { width: 64px; height: 64px; }
+    .exec-member.rank-4 .exec-photo { width: 60px; height: 60px; }
+
+    .exec-role {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--wildcat-gold);
+      margin-top: 0.6rem;
+      margin-bottom: 2px;
+    }
+
+    .exec-member.rank-1 .exec-role { color: #ffd566; }
+
+    .exec-name {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .exec-member.rank-1 .exec-name { font-size: 1rem; }
+    .exec-member.rank-2 .exec-name { font-size: 0.9rem; }
+    .exec-member.rank-3 .exec-name { font-size: 0.85rem; }
+    .exec-member.rank-4 .exec-name { font-size: 0.82rem; }
+
+    /* Rank divider line between tiers */
+    .exec-rank-divider {
+      width: 1px;
+      background: rgba(246,174,45,0.25);
+      align-self: stretch;
+      margin: 0 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       PHOTO GALLERY
+    ============================================================ */
     .photos-wrapper {
       background: var(--panel);
       border-top: 1px solid var(--line);
@@ -400,149 +614,267 @@
       width: 100%;
     }
 
-    .photos-strip-section {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 3rem 3rem 4rem;
-    }
-
     .photos-title-row {
       display: flex;
       align-items: center;
-      gap: 20px;
-      margin-bottom: 2.5rem;
+      gap: 16px;
+      margin-bottom: 2rem;
     }
 
     .photos-title-row h3 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: var(--wildcat-navy);
+    }
+
+    .photos-title-row i {
+      color: var(--wildcat-gold);
+      font-size: 2rem;
     }
 
     .photo-thumbnails {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.2rem;
     }
 
     .photo-thumb {
-      background: #e2ecf5;
-      border-radius: 24px;
-      width: 180px;
-      height: 150px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #1e4f6b;
-      border: 2px dashed #9bbfd6;
-      font-weight: 600;
-      font-size: 1.1rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-      transition: all 0.2s;
-      gap: 10px;
-    }
-
-    .photo-thumb i {
-      font-size: 2.5rem;
-      opacity: 0.8;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      transition: all 0.25s;
     }
 
     .photo-thumb:hover {
-      background: #d0e0ee;
-      transform: scale(1.02);
+      transform: scale(1.03);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.13);
     }
 
-    /* === INFO BAR / APPLICATION - full width === */
-    .info-bar-wrapper {
-      background: white;
+    .photo-thumb img {
       width: 100%;
-      border-bottom: 1px solid var(--line);
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .club-meta-panel {
-      max-width: 1600px;
-      margin: 0 auto;
+    .photo-thumb .thumb-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(11,28,58,0.8), transparent);
+      color: white;
+      padding: 1.2rem 1rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transform: translateY(100%);
+      transition: 0.2s;
+    }
+
+    .photo-thumb:hover .thumb-overlay {
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       FLOATING APPLY PANEL
+    ============================================================ */
+    /* Tab button sticking out from the right edge */
+    .floating-apply-tab {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2rem 3rem;
-      padding: 2rem 3rem;
+      align-items: stretch;
     }
 
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: #f4f9fc;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
-      font-size: 1.1rem;
-    }
-
-    .meta-item i {
-      color: var(--wildcat-gold);
-      font-size: 1.4rem;
-    }
-
-    .meta-item strong {
-      color: var(--wildcat-navy);
-    }
-
-    .apply-block {
-      margin-left: auto;
-      background: transparent;
-      padding-right: 0.5rem;
-    }
-
-    .apply-link {
-      font-weight: 700;
-      color: var(--wildcat-navy);
-      text-decoration: none;
-      font-size: 1.15rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* The vertical "Apply" tab */
+    .apply-tab-btn {
       background: var(--wildcat-gold);
-      padding: 0.8rem 2.2rem;
-      border-radius: 50px;
+      color: var(--wildcat-navy);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      padding: 18px 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px 0 0 12px;
+      box-shadow: -4px 0 16px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .apply-tab-btn:hover { background: #ffc947; }
+
+    .apply-tab-btn i {
+      transform: rotate(90deg);
+      font-size: 1rem;
+    }
+
+    /* The slide-out panel */
+    .apply-panel {
+      background: var(--wildcat-navy);
+      color: white;
+      width: 0;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px 0 0 16px;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.25);
+    }
+
+    .apply-panel.open {
+      width: 280px;
+    }
+
+    .apply-panel-inner {
+      width: 280px;
+      padding: 1.6rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .apply-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.2rem;
+    }
+
+    .apply-panel-header h4 {
+      font-size: 1.1rem;
+      color: var(--wildcat-gold);
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .apply-close-btn {
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: rgba(255,255,255,0.6);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: 0.15s;
     }
 
-    .apply-link:hover {
-      background: #e09a1c;
+    .apply-close-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: white;
     }
 
-    /* === ANNOUNCEMENT & PRESIDENT - full width === */
+    .apply-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding-bottom: 0.8rem;
+    }
+
+    .apply-info-row:last-of-type { border-bottom: none; }
+
+    .apply-info-row i {
+      color: var(--wildcat-gold);
+      font-size: 0.9rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .apply-info-row strong {
+      color: white;
+      display: block;
+      font-size: 0.92rem;
+    }
+
+    .apply-now-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--wildcat-gold);
+      color: var(--wildcat-navy);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #b87c1a;
+      transition: 0.1s;
+      width: 100%;
+      margin-top: 0.4rem;
+    }
+
+    .apply-now-btn:hover {
+      background: #ffc947;
+      transform: translateY(2px);
+      box-shadow: 0 3px 0 #b87c1a;
+    }
+
+    .apply-code-badge {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: #ffe082;
+    }
+
+    /* ============================================================
+       ANNOUNCEMENT + PRESIDENT MESSAGE
+    ============================================================ */
     .info-cards-wrapper {
-      background: #f8f9fa;
+      background: var(--science-light);
       width: 100%;
     }
 
     .info-cards-container {
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
-      gap: 2.5rem;
-      padding: 3rem 3rem 4rem;
+      gap: 2rem;
+      padding: 3rem 2.5rem 4rem;
     }
 
     .info-card {
       flex: 1;
       min-width: 300px;
       background: white;
-      border-radius: 28px;
-      padding: 2rem 2.2rem;
+      border-radius: 24px;
+      padding: 2rem 2rem;
       border: 1px solid var(--line);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
     }
 
     .info-card h3 {
       display: flex;
+      align-items: center;
       gap: 12px;
       color: var(--wildcat-navy);
-      margin-bottom: 1.2rem;
-      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
     }
 
     .info-card h3 i {
@@ -552,47 +884,104 @@
     .info-card p {
       color: var(--muted);
       line-height: 1.7;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
-    /* === FOOTER === */
+    .pres-sig {
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pres-sig-photos {
+      display: flex;
+    }
+
+    .pres-sig-photos img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-left: -8px;
+    }
+
+    .pres-sig-photos img:first-child {
+      margin-left: 0;
+    }
+
+    .pres-sig-text {
+      font-weight: 700;
+      color: var(--wildcat-navy);
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
     .site-footer {
       background: #0a1628;
       color: #bbd1f0;
-      padding: 2.5rem 3rem;
+      padding: 2.5rem 2.5rem;
       text-align: center;
       border-top: 5px solid var(--wildcat-gold);
       width: 100%;
     }
 
     .footer-content {
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
-    /* Responsive */
+    .footer-content p:first-child {
+      font-size: 1rem;
+    }
+
+    .footer-social {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      color: #bbd1f0;
+      font-size: 1.3rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover {
+      color: var(--wildcat-gold);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
     @media (max-width: 900px) {
-      .full-width, .header-container, .about-club-section, 
-      .what-we-do-section, .why-join-section, 
-      .photos-strip-section, .club-meta-panel, .info-cards-container {
+      .header-container,
+      .about-club-section,
+      .section-container,
+      .info-cards-container {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
       }
+
       .club-hero {
-        padding: 3rem 1.5rem;
+        padding: 3.5rem 1.5rem 3rem;
       }
-      .apply-block {
-        margin-left: 0;
-      }
-      .meta-item {
-        width: 100%;
-      }
+
+      .apply-panel.open { width: 260px; }
+      .apply-panel-inner { width: 260px; }
     }
   </style>
 </head>
 <body>
 
-<!-- STICKY HEADER (full width) -->
+<!-- ============================================================
+     STICKY HEADER
+============================================================ -->
 <header class="site-header">
   <div class="header-container">
     <div class="logo-area">
@@ -611,160 +1000,372 @@
   </div>
 </header>
 
-<main style="width: 100%;">
-  
-  <!-- CLUB HERO (full bleed) -->
+<main>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
   <section class="club-hero">
     <div class="hero-content">
-      <div class="club-name">Dr. G.W. Williams S.S. <span style="font-weight:400;">🔬</span></div>
-      <div class="club-tagline">Science & Discovery Club · Where Curiosity Leads</div>
-      <a class="join-us-btn"><i class="fas fa-flask"></i> Join Us</a>
+      <div class="hero-eyebrow">
+        <i class="fas fa-flask"></i> Student Club · Open to All Grades
+      </div>
+      <div class="club-name">Science &amp; <span>Discovery</span> Club</div>
+      <div class="club-tagline">Where curiosity becomes creation — hands-on experiments, real competitions, and a community that loves to learn.</div>
+      <div class="hero-ctas">
+        <a href="#apply" class="join-us-btn"><i class="fas fa-flask"></i> Join Us Now</a>
+        <span class="scroll-hint"><i class="fas fa-chevron-down"></i> Scroll to explore</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">30+</div>
+          <div class="hero-stat-label">Active Members</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Annual Competitions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">7</div>
+          <div class="hero-stat-label">Exec Team Members</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">Wed</div>
+          <div class="hero-stat-label">Meets Every Week</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT THE CLUB (full width) -->
+  <!-- ============================================================
+       ABOUT THE CLUB
+  ============================================================ -->
   <div class="about-section-wrapper">
     <section class="about-club-section">
       <div class="about-text">
-        <h2><i class="fas fa-microscope"></i> About the Club</h2>
+        <div class="section-eyebrow">About Us</div>
+        <h2>A community of curious minds</h2>
         <div class="about-description">
-          Discover a community of scientists, experimenters, and curious minds. Our club brings together students passionate about exploring the world through hands-on projects, friendly competitions, and collaborative learning experiences.
+          The Dr. G.W. Williams Science &amp; Discovery Club brings together students who love exploring the world through experiment and inquiry. Whether you're building circuits, debating climate data, or prepping for a national olympiad — there's a place here for you.
         </div>
-        <div class="member-count-badge">
-          <i class="fas fa-users"></i> 30+ Active Members
+        <div class="stats-row">
+          <div class="stat-badge"><i class="fas fa-users"></i> 30+ Members</div>
+          <div class="stat-badge"><i class="fas fa-calendar-check"></i> Wednesdays · 3:30 PM</div>
+          <div class="stat-badge"><i class="fas fa-door-open"></i> Room 204</div>
         </div>
-        <p style="margin-top: 2rem; font-style: italic; color: #3a5e7a; font-size: 1.1rem;">
-          <i class="fas fa-quote-left" style="margin-right: 8px; opacity:0.7;"></i> 
+        <div class="quote-block">
+          <i class="fas fa-quote-left" style="margin-right: 8px; opacity:0.6;"></i>
           "Amplifying student voices through science and leadership."
-        </p>
+        </div>
       </div>
-      <div class="club-photo-placeholder">
-        <div class="photo-icon-large"><i class="fas fa-camera-retro"></i></div>
-        <p>📸 Club photo placeholder</p>
-        <div style="margin-top: 20px; font-size: 1rem; opacity:0.8;">(lab day · science fair · 2025)</div>
+
+      <!-- Real club / science photo -->
+      <div class="about-club-img">
+        <img
+          src="https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?w=800&q=80"
+          alt="Students collaborating in a science lab"
+          loading="lazy"
+        />
+        <div class="img-caption">📸 Science Club · Lab Day 2025</div>
       </div>
     </section>
   </div>
 
-  <!-- WHAT WE DO (full width) -->
+  <!-- ============================================================
+       WHAT WE DO
+  ============================================================ -->
   <div class="what-we-do-wrapper">
-    <section class="what-we-do-section">
+    <section class="section-container">
       <div class="section-title-main">
         <i class="fas fa-atom"></i> What We Do
       </div>
       <div class="cards-grid">
+
         <div class="activity-card">
-          <div class="card-icon-large"><i class="fas fa-vial"></i></div>
-          <h3>Hands-on Experiments</h3>
-          <p>Amplifying student voices and presenting concerns to school administration — through citizen science & lab workshops.</p>
-          <div class="card-subnote"><i class="far fa-clock"></i> Weekly lab sessions</div>
+          <img
+            class="activity-card-img"
+            src="https://images.unsplash.com/photo-1532094349884-543559c0e5a0?w=700&q=80"
+            alt="Hands-on chemistry lab experiment"
+            loading="lazy"
+          />
+          <div class="activity-card-body">
+            <div class="card-icon-large"><i class="fas fa-vial"></i></div>
+            <h3>Hands-on Experiments</h3>
+            <p>Forget the textbook — roll up your sleeves. Weekly lab sessions let members design and run real experiments, from electrochemistry to optics.</p>
+            <div class="card-subnote"><i class="far fa-clock"></i> Every Wednesday</div>
+          </div>
         </div>
+
         <div class="activity-card">
-          <div class="card-icon-large"><i class="fas fa-trophy"></i></div>
-          <h3>STEM Competitions</h3>
-          <p>Organizing dances, spirit weeks, and memorable school experiences — plus science olympiads & robotics challenges.</p>
-          <div class="card-subnote"><i class="fas fa-medal"></i> Regional & national</div>
+          <img
+            class="activity-card-img"
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=80"
+            alt="Students at a STEM competition"
+            loading="lazy"
+          />
+          <div class="activity-card-body">
+            <div class="card-icon-large"><i class="fas fa-trophy"></i></div>
+            <h3>STEM Competitions</h3>
+            <p>Compete in Science Olympiad, regional fairs, and robotics challenges. Past teams have placed at the provincial level — your turn to shine.</p>
+            <div class="card-subnote"><i class="fas fa-medal"></i> Regional &amp; National</div>
+          </div>
         </div>
+
         <div class="activity-card">
-          <div class="card-icon-large"><i class="fas fa-chalkboard-user"></i></div>
-          <h3>Science Mentorship</h3>
-          <p>Leading fundraisers and initiatives that give back to our community — peer tutoring & STEM outreach.</p>
-          <div class="card-subnote"><i class="fas fa-hand-holding-heart"></i> Volunteer hours</div>
+          <img
+            class="activity-card-img"
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&q=80"
+            alt="Peer tutoring and mentorship session"
+            loading="lazy"
+          />
+          <div class="activity-card-body">
+            <div class="card-icon-large"><i class="fas fa-chalkboard-user"></i></div>
+            <h3>Peer Mentorship</h3>
+            <p>Senior members mentor younger students in science and math. Log volunteer hours, build leadership skills, and give back to the school community.</p>
+            <div class="card-subnote"><i class="fas fa-hand-holding-heart"></i> Volunteer Hours</div>
+          </div>
         </div>
+
       </div>
-      <p style="margin-top: 2.5rem; color: #3a6a8a; font-weight: 500; font-size: 1.15rem;"><i class="fas fa-plus-circle"></i> Field trips, guest speakers & special workshops throughout the year</p>
+      <p style="margin-top: 2rem; color: var(--science-blue); font-weight: 600; font-size: 1rem;">
+        <i class="fas fa-plus-circle" style="color: var(--wildcat-gold);"></i>&nbsp; Field trips, guest lecturers &amp; special workshops throughout the year.
+      </p>
     </section>
   </div>
 
-  <!-- WHY JOIN (full width) -->
+  <!-- ============================================================
+       WHY JOIN
+  ============================================================ -->
   <div class="why-join-wrapper">
-    <section class="why-join-section">
-      <div class="section-title-main" style="margin-bottom: 1.5rem;">
+    <section class="section-container">
+      <div class="section-title-main">
         <i class="fas fa-star"></i> Why Join?
       </div>
       <div class="benefits-grid">
         <div class="benefit-item">
           <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
-          <h4>Build Skills</h4>
-          <p>Gain real-world experience in leadership, teamwork, and communication.</p>
+          <h4>Build Real Skills</h4>
+          <p>Gain hands-on experience in critical thinking, lab technique, leadership, and teamwork — skills universities actually want to see.</p>
         </div>
         <div class="benefit-item">
-          <div class="benefit-icon"><i class="fas fa-file-alt"></i></div>
-          <h4>Boost Resume</h4>
-          <p>Universities value student government involvement and leadership.</p>
+          <div class="benefit-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h4>Boost Your Application</h4>
+          <p>STEM competition experience and club executive roles stand out on university and scholarship applications. We have alumni at top programs.</p>
         </div>
         <div class="benefit-item">
           <div class="benefit-icon"><i class="fas fa-user-friends"></i></div>
-          <h4>Make Friends</h4>
-          <p>Work with passionate students who share your desire to make a difference.</p>
+          <h4>Find Your People</h4>
+          <p>Connect with fellow science-passionate students in a welcoming, collaborative environment. Many of our best friendships started here.</p>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon"><i class="fas fa-award"></i></div>
+          <h4>Win &amp; Achieve</h4>
+          <p>Represent your school. Our members regularly place in regional and national STEM competitions with real prizes and recognition.</p>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- PHOTOS (full width) -->
-  <div class="photos-wrapper">
-    <section class="photos-strip-section">
-      <div class="photos-title-row">
-        <i class="fas fa-images" style="font-size: 2.4rem; color: var(--wildcat-gold);"></i>
-        <h3>Photos</h3>
+  <!-- ============================================================
+       CLUB EXECUTIVES — compact horizontal strip, highest→lowest priority
+  ============================================================ -->
+  <div class="exec-wrapper">
+    <section class="section-container" style="padding-top: 2.8rem; padding-bottom: 2.8rem;">
+      <div class="section-title-main">
+        <i class="fas fa-id-badge"></i> Meet Your Exec Team
       </div>
-      <div class="photo-thumbnails">
-        <div class="photo-thumb"><i class="fas fa-flask"></i> Lab day</div>
-        <div class="photo-thumb"><i class="fas fa-rocket"></i> Rocket launch</div>
-        <div class="photo-thumb"><i class="fas fa-robot"></i> Science fair</div>
-        <div class="photo-thumb"><i class="fas fa-users"></i> Club social</div>
-        <div class="photo-thumb"><i class="fas fa-chalkboard"></i> Mentorship</div>
-        <div class="photo-thumb"><i class="fas fa-microchip"></i> Robotics</div>
+
+      <div class="exec-strip">
+
+        <!-- RANK 1 — Co-Presidents (largest photo, gold border) -->
+        <div class="exec-member rank-1">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=47" alt="Maya Chen" loading="lazy"/>
+          <div class="exec-role">Co-President</div>
+          <div class="exec-name">Maya Chen</div>
+        </div>
+        <div class="exec-member rank-1">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=52" alt="Jordan Taylor" loading="lazy"/>
+          <div class="exec-role">Co-President</div>
+          <div class="exec-name">Jordan Taylor</div>
+        </div>
+
+        <div class="exec-rank-divider"></div>
+
+        <!-- RANK 2 — Vice President -->
+        <div class="exec-member rank-2">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=33" alt="Alex Rivera" loading="lazy"/>
+          <div class="exec-role">Vice President</div>
+          <div class="exec-name">Alex Rivera</div>
+        </div>
+
+        <div class="exec-rank-divider"></div>
+
+        <!-- RANK 3 — Secretary & Treasurer -->
+        <div class="exec-member rank-3">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=26" alt="Priya Patel" loading="lazy"/>
+          <div class="exec-role">Secretary</div>
+          <div class="exec-name">Priya Patel</div>
+        </div>
+        <div class="exec-member rank-3">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=12" alt="Ethan Brooks" loading="lazy"/>
+          <div class="exec-role">Treasurer</div>
+          <div class="exec-name">Ethan Brooks</div>
+        </div>
+
+        <div class="exec-rank-divider"></div>
+
+        <!-- RANK 4 — Events & Communications -->
+        <div class="exec-member rank-4">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=20" alt="Sofia Nguyen" loading="lazy"/>
+          <div class="exec-role">Events Coord.</div>
+          <div class="exec-name">Sofia Nguyen</div>
+        </div>
+        <div class="exec-member rank-4">
+          <img class="exec-photo" src="https://i.pravatar.cc/200?img=15" alt="Marcus Lee" loading="lazy"/>
+          <div class="exec-role">Communications</div>
+          <div class="exec-name">Marcus Lee</div>
+        </div>
+
       </div>
     </section>
   </div>
 
-  <!-- INFO BAR (meeting times / classroom / apply) -->
-  <div class="info-bar-wrapper">
-    <div class="club-meta-panel">
-      <div class="meta-item"><i class="fas fa-calendar-alt"></i> <strong>Wednesdays 3:30pm</strong> · Room 204</div>
-      <div class="meta-item"><i class="fas fa-door-open"></i> Google Classroom: <code style="background:transparent; font-weight:700;">abc12xy</code></div>
-      <div class="meta-item apply-block">
-        <a href="#" class="apply-link"><i class="fas fa-paper-plane"></i> Apply for club & reminders</a>
+  <!-- ============================================================
+       PHOTOS
+  ============================================================ -->
+  <div class="photos-wrapper">
+    <section class="section-container">
+      <div class="photos-title-row">
+        <i class="fas fa-images"></i>
+        <h3>Club in Action</h3>
       </div>
+      <div class="photo-thumbnails">
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1607513746994-51f730a44832?w=600&q=80" alt="Lab day" loading="lazy"/>
+          <div class="thumb-overlay">🧪 Lab Day</div>
+        </div>
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" alt="Robotics" loading="lazy"/>
+          <div class="thumb-overlay">🤖 Robotics Build</div>
+        </div>
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1636690581110-a512fed05613?w=600&q=80" alt="Science fair" loading="lazy"/>
+          <div class="thumb-overlay">🏆 Science Fair</div>
+        </div>
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80" alt="Club social" loading="lazy"/>
+          <div class="thumb-overlay">🎉 Club Social</div>
+        </div>
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&q=80" alt="Mentorship session" loading="lazy"/>
+          <div class="thumb-overlay">📚 Peer Mentorship</div>
+        </div>
+
+        <div class="photo-thumb">
+          <img src="https://images.unsplash.com/photo-1561144257-e32e8506c481?w=600&q=80" alt="Field trip" loading="lazy"/>
+          <div class="thumb-overlay">🚌 Field Trip</div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+<!-- ============================================================
+     FLOATING APPLY PANEL (fixed right side, always visible)
+============================================================ -->
+<div class="floating-apply-tab" id="floatingApply">
+  <!-- Slide-out panel -->
+  <div class="apply-panel" id="applyPanel">
+    <div class="apply-panel-inner">
+      <div class="apply-panel-header">
+        <h4><i class="fas fa-flask"></i> Join the Club</h4>
+        <button class="apply-close-btn" onclick="toggleApplyPanel()" title="Close"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="apply-info-row">
+        <i class="fas fa-calendar-alt"></i>
+        <div><strong>Wednesdays · 3:30 PM</strong>Room 204</div>
+      </div>
+
+      <div class="apply-info-row">
+        <i class="fas fa-door-open"></i>
+        <div><strong>Google Classroom</strong><span class="apply-code-badge">abc12xy</span></div>
+      </div>
+
+      <div class="apply-info-row">
+        <i class="fas fa-envelope"></i>
+        <div><strong>Email Us</strong>scienceclub@gwwilliams.ca</div>
+      </div>
+
+      <button class="apply-now-btn" onclick="alert('✨ Application form coming soon! Check Google Classroom or reach out to any exec.');">
+        <i class="fas fa-paper-plane"></i> Apply Now
+      </button>
     </div>
   </div>
 
-  <!-- ANNOUNCEMENT + PRESIDENT MESSAGE (full width) -->
+  <!-- Vertical tab button -->
+  <button class="apply-tab-btn" onclick="toggleApplyPanel()" id="applyTabBtn" title="Apply for the club">
+    <i class="fas fa-paper-plane"></i>
+    Apply
+  </button>
+</div>
+
+  <!-- ============================================================
+       ANNOUNCEMENT + PRESIDENT MESSAGE
+  ============================================================ -->
   <div class="info-cards-wrapper">
     <div class="info-cards-container">
+
       <div class="info-card">
         <h3><i class="fas fa-bullhorn"></i> Announcement</h3>
-        <p>🔬 Science Fair registration is open! Join us Friday for lab prep. All members are invited to the annual Williams STEM showcase. Check the classroom for updates.</p>
+        <p>🔬 <strong>Science Fair registration is open!</strong> Join us this Friday for lab prep. All members are invited to the annual Williams STEM Showcase — check Google Classroom (abc12xy) for dates and project guidelines.</p>
+        <p style="margin-top: 12px; font-size: 0.9rem; color: #888;">Posted by Communications · April 2025</p>
       </div>
+
       <div class="info-card">
-        <h3><i class="fas fa-user-tie"></i> Message from the Presidents</h3>
-        <p>“Welcome to the Science Club! Whether you love hands-on experiments, want to compete in STEM events, or are just curious — you've found your people. We focus on collaborative learning and making science fun.”</p>
-        <p style="margin-top: 15px; font-weight:600;">— Maya Chen & Jordan Taylor, Presidents</p>
+        <h3><i class="fas fa-user-tie"></i> Message from the Co-Presidents</h3>
+        <p>"Welcome to the Science &amp; Discovery Club! Whether you want to run experiments, compete in olympiads, earn volunteer hours, or just explore what science can do — you've found the right place. We're proud of every member who walks through that door."</p>
+        <div class="pres-sig">
+          <div class="pres-sig-photos">
+            <img src="https://i.pravatar.cc/80?img=47" alt="Maya Chen"/>
+            <img src="https://i.pravatar.cc/80?img=52" alt="Jordan Taylor"/>
+          </div>
+          <div class="pres-sig-text">Maya Chen &amp; Jordan Taylor<br><span style="font-weight:400; color: var(--muted); font-size: 0.85rem;">Co-Presidents, 2024–25</span></div>
+        </div>
       </div>
+
     </div>
   </div>
 
 </main>
 
-<!-- FOOTER (full width) -->
+<!-- ============================================================
+     FOOTER
+============================================================ -->
 <footer class="site-footer">
   <div class="footer-content">
-    <p><i class="fas fa-paw"></i> Dr. G.W. Williams Secondary School · 200 Discovery Way</p>
-    <p style="margin-top: 16px; font-size: 1rem;">© Williams Science Club — curiosity in action. <i class="fas fa-flask"></i> <i class="fas fa-microscope"></i></p>
+    <p><i class="fas fa-paw" style="color: var(--wildcat-gold);"></i> Dr. G.W. Williams Secondary School · Aurora, ON · Science &amp; Discovery Club</p>
+    <div class="footer-social">
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="Google Classroom"><i class="fas fa-chalkboard"></i></a>
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">© 2025 Williams Science Club · curiosity in action <i class="fas fa-flask"></i></p>
   </div>
 </footer>
 
 <script>
-  document.querySelector('.join-us-btn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('✨ Thanks for your interest! Application form would open.');
-  });
-  document.querySelector('.apply-link')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('📋 Application form (demo) — you can set your notification preferences.');
-  });
+  function toggleApplyPanel() {
+    const panel = document.getElementById('applyPanel');
+    const btn   = document.getElementById('applyTabBtn');
+    const isOpen = panel.classList.toggle('open');
+    btn.style.borderRadius = isOpen ? '0 0 0 12px' : '12px 0 0 12px';
+  }
 </script>
 
 </body>
