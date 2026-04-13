@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance — Exec Dashboard | GW Williams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --navy:       #0b1c3a;
+      --navy-deep:  #07111f;
+      --navy-mid:   #162d52;
+      --gold:       #f6ae2d;
+      --gold-dark:  #c88a1a;
+      --gold-light: #fff3d0;
+      --white:      #ffffff;
+      --off-white:  #f5f7fa;
+      --ink:        #111827;
+      --muted:      #64748b;
+      --line:       #e2e8f0;
+      --green:      #16a34a;
+      --green-bg:   #dcfce7;
+      --red:        #dc2626;
+      --red-bg:     #fee2e2;
+      --amber:      #d97706;
+      --amber-bg:   #fef3c7;
+
+      --sidebar-w:  240px;
+      --topbar-h:   60px;
+      --font-head:  'Montserrat', sans-serif;
+      --font-body:  'DM Sans', sans-serif;
+      --font-disp:  'Bebas Neue', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--ink);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ================================================================
+       SIDEBAR NAV
+    ================================================================ */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy-deep);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s;
+    }
+
+    /* Brand mark */
+    .sidebar-brand {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--navy);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .brand-text strong {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: white;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Club badge */
+    .sidebar-club-badge {
+      margin: 14px 16px;
+      background: rgba(246,174,45,0.1);
+      border: 1px solid rgba(246,174,45,0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-club-badge i {
+      color: var(--gold);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .sidebar-club-badge span {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--gold);
+      line-height: 1.3;
+    }
+
+    /* Nav section label */
+    .nav-section-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      padding: 16px 20px 6px;
+    }
+
+    /* Nav items */
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      border-radius: 0;
+      transition: all 0.18s;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      border-left: 3px solid transparent;
+      margin: 1px 0;
+    }
+
+    .nav-item i {
+      width: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .nav-item:hover {
+      color: white;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+      background: rgba(246,174,45,0.08);
+      border-left-color: var(--gold);
+    }
+
+    .nav-item .badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    /* Sidebar bottom */
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .exec-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+
+    .exec-profile:hover { background: rgba(255,255,255,0.05); }
+
+    .exec-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(246,174,45,0.5);
+      flex-shrink: 0;
+    }
+
+    .exec-profile-text strong {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .exec-profile-text span {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .exec-profile i {
+      margin-left: auto;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.75rem;
+    }
+
+    /* ================================================================
+       MAIN LAYOUT
+    ================================================================ */
+    .main-area {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      height: var(--topbar-h);
+      background: white;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .topbar-breadcrumb a {
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    .topbar-breadcrumb a:hover { color: var(--navy); }
+
+    .topbar-breadcrumb .crumb-current {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .topbar-breadcrumb i { font-size: 0.6rem; }
+
+    .topbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar-date {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--off-white);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 7px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-btn.outline {
+      background: none;
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+    }
+
+    .topbar-btn.outline:hover { border-color: var(--navy); background: var(--off-white); }
+
+    .topbar-btn.solid {
+      background: var(--navy);
+      color: white;
+    }
+
+    .topbar-btn.solid:hover { background: var(--navy-mid); }
+
+    .topbar-btn.gold {
+      background: var(--gold);
+      color: var(--navy);
+      box-shadow: 0 3px 0 var(--gold-dark);
+    }
+
+    .topbar-btn.gold:hover {
+      background: #ffc947;
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 var(--gold-dark);
+    }
+
+    /* ================================================================
+       PAGE CONTENT
+    ================================================================ */
+    .page-content {
+      padding: 2rem 2rem 4rem;
+      max-width: 1100px;
+      flex: 1;
+    }
+
+    /* Session header card */
+    .session-card {
+      background: var(--navy);
+      border-radius: 20px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-card::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 6px;
+      background: var(--gold);
+    }
+
+    .session-info { flex: 1; min-width: 200px; }
+
+    .session-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .session-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .session-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .session-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+
+    .session-meta-item i { color: var(--gold); font-size: 0.8rem; }
+
+    .session-meta-item input[type="text"],
+    .session-meta-item input[type="date"] {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      outline: none;
+      transition: 0.18s;
+      min-width: 0;
+    }
+
+    .session-meta-item input[type="date"] { width: 140px; }
+    .session-meta-item input[type="text"] { width: 120px; }
+
+    .session-meta-item input:focus {
+      border-color: var(--gold);
+      background: rgba(246,174,45,0.08);
+    }
+
+    .session-meta-item input::-webkit-calendar-picker-indicator {
+      filter: invert(1) opacity(0.5);
+      cursor: pointer;
+    }
+
+    /* Count pills */
+    .session-counts {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .count-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 10px 18px;
+      min-width: 72px;
+    }
+
+    .count-pill-num {
+      font-family: var(--font-disp);
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .count-pill-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .count-pill.total  .count-pill-num   { color: white; }
+    .count-pill.total  .count-pill-label { color: rgba(255,255,255,0.4); }
+    .count-pill.present .count-pill-num  { color: #4ade80; }
+    .count-pill.present .count-pill-label{ color: rgba(74,222,128,0.6); }
+    .count-pill.absent .count-pill-num   { color: #f87171; }
+    .count-pill.absent .count-pill-label { color: rgba(248,113,113,0.6); }
+
+    /* ================================================================
+       QUICK-ADD BAR
+    ================================================================ */
+    .add-bar {
+      background: white;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 1.4rem;
+      transition: border-color 0.2s;
+    }
+
+    .add-bar:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(246,174,45,0.1);
+    }
+
+    .add-fields {
+      display: flex;
+      flex: 1;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .add-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .add-field label {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .add-field input {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--off-white);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 14px;
+      outline: none;
+      transition: 0.18s;
+    }
+
+    .add-field input::placeholder { color: #b0b8c9; font-weight: 400; }
+
+    .add-field input:focus {
+      border-color: var(--navy);
+      background: white;
+    }
+
+    .add-field.name-field { flex: 2; min-width: 180px; }
+    .add-field.id-field   { flex: 1; min-width: 130px; }
+    .add-field.grade-field{ width: 90px; }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.9rem;
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.15s;
+      white-space: nowrap;
+      align-self: flex-end;
+      height: 44px;
+    }
+
+    .add-btn:hover { background: var(--navy-mid); transform: translateY(-1px); }
+    .add-btn:active { transform: translateY(0); }
+
+    .add-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .add-hint kbd {
+      background: var(--line);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 0.7rem;
+      font-family: monospace;
+      color: var(--ink);
+    }
+
+    /* ================================================================
+       SEARCH / FILTER BAR
+    ================================================================ */
+    .list-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 14px;
+      flex: 1;
+      min-width: 180px;
+      transition: 0.18s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(11,28,58,0.07);
+    }
+
+    .search-box i { color: var(--muted); font-size: 0.85rem; }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: transparent;
+      flex: 1;
+    }
+
+    .search-box input::placeholder { color: #b0b8c9; }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: white;
+      border: 1.5px solid var(--line);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--navy);
+      color: var(--navy);
+    }
+
+    .filter-btn.filter-all.active    { background: var(--navy); color: white; border-color: var(--navy); }
+    .filter-btn.filter-present.active{ background: var(--green-bg); color: var(--green); border-color: var(--green); }
+    .filter-btn.filter-absent.active { background: var(--red-bg); color: var(--red); border-color: var(--red); }
+
+    .list-count-label {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ================================================================
+       ATTENDANCE TABLE
+    ================================================================ */
+    .attendance-table-wrap {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px 16px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    thead th:first-child { padding-left: 20px; color: rgba(255,255,255,0.4); width: 48px; text-align: center; }
+    thead th:last-child  { text-align: right; padding-right: 20px; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      transition: background 0.12s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafbfd; }
+    tbody tr.row-absent { background: #fff8f8; }
+    tbody tr.row-absent:hover { background: #fff2f2; }
+
+    tbody td {
+      padding: 13px 16px;
+      font-size: 0.88rem;
+      vertical-align: middle;
+    }
+
+    tbody td:first-child {
+      padding-left: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      width: 48px;
+    }
+
+    tbody td:last-child {
+      text-align: right;
+      padding-right: 16px;
+    }
+
+    /* Checkmark toggle */
+    .presence-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+
+    .toggle-check i {
+      font-size: 0.75rem;
+      opacity: 0;
+      color: white;
+      transition: opacity 0.15s;
+    }
+
+    .presence-toggle.present .toggle-check {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .presence-toggle.present .toggle-check i { opacity: 1; }
+
+    .presence-toggle.absent .toggle-check {
+      border-color: var(--red);
+      background: var(--red-bg);
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .status-pill.present { background: var(--green-bg); color: var(--green); }
+    .status-pill.absent  { background: var(--red-bg);   color: var(--red);   }
+    .status-pill.pending { background: var(--amber-bg);  color: var(--amber); }
+
+    .student-name {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .student-id {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .grade-badge {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.72rem;
+      background: var(--off-white);
+      color: var(--muted);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+    }
+
+    .arrival-time {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Row action buttons */
+    .row-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .row-action-btn {
+      background: none;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: 0.15s;
+    }
+
+    .row-action-btn:hover         { background: var(--off-white); color: var(--ink); }
+    .row-action-btn.delete:hover  { background: var(--red-bg); color: var(--red); }
+
+    /* Empty state */
+    .empty-state {
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--muted);
+      display: none;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--line);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* ================================================================
+       NOTES SECTION
+    ================================================================ */
+    .notes-section {
+      margin-top: 1.6rem;
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--off-white);
+    }
+
+    .notes-header h3 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--navy);
+    }
+
+    .notes-header i { color: var(--gold); }
+
+    textarea.notes-input {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--ink);
+      border: none;
+      outline: none;
+      resize: vertical;
+      padding: 16px 18px;
+      min-height: 90px;
+      background: white;
+      line-height: 1.6;
+    }
+
+    textarea.notes-input::placeholder { color: #c0c8d4; }
+
+    /* ================================================================
+       BOTTOM ACTION BAR
+    ================================================================ */
+    .bottom-bar {
+      position: sticky;
+      bottom: 0;
+      background: white;
+      border-top: 2px solid var(--line);
+      padding: 12px 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: var(--sidebar-w);
+      z-index: 40;
+    }
+
+    .bottom-bar-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .bottom-bar-text strong { color: var(--navy); }
+
+    .bottom-bar-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .save-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--green);
+      padding: 6px 12px;
+      background: var(--green-bg);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .save-indicator.visible { opacity: 1; }
+
+    /* ================================================================
+       PRINT STYLES
+    ================================================================ */
+    @media print {
+      .sidebar, .topbar, .add-bar, .list-toolbar .filter-btn,
+      .search-box, .row-actions, .bottom-bar, .notes-section,
+      .topbar-btn { display: none !important; }
+
+      .main-area { margin-left: 0; }
+      .page-content { padding: 0; }
+      .session-card { background: white; border: 2px solid #000; color: black; }
+      .session-card * { color: black !important; }
+      body { background: white; }
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-area { margin-left: 0; }
+      .bottom-bar { margin-left: 0; }
+      .session-counts { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     SIDEBAR NAV
+================================================================ -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-brand">
+    <div class="brand-icon"><i class="fas fa-paw"></i></div>
+    <div class="brand-text">
+      <strong>GW Williams SS</strong>
+      <span>Exec Dashboard</span>
+    </div>
+  </div>
+
+  <div class="sidebar-club-badge">
+    <i class="fas fa-flask"></i>
+    <span>Science &amp; Discovery Club<br>2024–25</span>
+  </div>
+
+  <div class="nav-section-label">Main</div>
+
+  <a href="#" class="nav-item">
+    <i class="fas fa-gauge-high"></i> Overview
+  </a>
+  <a href="#" class="nav-item active">
+    <i class="fas fa-clipboard-check"></i> Attendance
+    <span class="badge">Today</span>
+  </a>
+  <a href="#" class="nav-item">
+    <i class="fas fa-users"></i> Members
+  </a>
+  <a href="#" class="nav-item">
+    <i class="fas fa-calendar-days"></i> Meetings
+  </a>
+
+  <div class="nav-section-label">Manage</div>
+
+  <a href="#" class="nav-item">
+    <i class="fas fa-bullhorn"></i> Announcements
+  </a>
+  <a href="#" class="nav-item">
+    <i class="fas fa-file-lines"></i> Reports
+  </a>
+  <a href="#" class="nav-item">
+    <i class="fas fa-gear"></i> Settings
+  </a>
+
+  <div class="nav-section-label">School</div>
+
+  <a href="#" class="nav-item">
+    <i class="fas fa-house"></i> School Homepage
+  </a>
+  <a href="#" class="nav-item">
+    <i class="fas fa-users-between-lines"></i> All Clubs
+  </a>
+
+  <div class="sidebar-bottom">
+    <div class="exec-profile">
+      <img class="exec-avatar" src="https://i.pravatar.cc/80?img=47" alt="Maya Chen"/>
+      <div class="exec-profile-text">
+        <strong>Maya Chen</strong>
+        <span>Co-President</span>
+      </div>
+      <i class="fas fa-ellipsis-vertical"></i>
+    </div>
+  </div>
+</aside>
+
+<!-- ================================================================
+     MAIN AREA
+================================================================ -->
+<div class="main-area">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      <a href="#"><i class="fas fa-house"></i></a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="#">Science Club</a>
+      <i class="fas fa-chevron-right"></i>
+      <span class="crumb-current">Attendance</span>
+    </div>
+
+    <div class="topbar-right">
+      <div class="topbar-date" id="topbarDate"></div>
+      <button class="topbar-btn outline" onclick="window.print()">
+        <i class="fas fa-print"></i> Print
+      </button>
+      <button class="topbar-btn outline" onclick="exportCSV()">
+        <i class="fas fa-download"></i> Export
+      </button>
+      <button class="topbar-btn gold" onclick="saveSession()">
+        <i class="fas fa-floppy-disk"></i> Save Session
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+
+    <!-- SESSION HEADER -->
+    <div class="session-card">
+      <div class="session-info">
+        <div class="session-label"><i class="fas fa-flask" style="margin-right:6px;"></i>Science &amp; Discovery Club</div>
+        <div class="session-title">Weekly Meeting — Attendance</div>
+        <div class="session-meta">
+          <label class="session-meta-item">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="date" id="sessionDate" />
+          </label>
+          <label class="session-meta-item">
+            <i class="fas fa-clock"></i>
+            <input type="text" id="sessionTime" placeholder="e.g. 3:30 PM" value="3:30 PM" />
+          </label>
+          <label class="session-meta-item">
+            <i class="fas fa-door-open"></i>
+            <input type="text" id="sessionRoom" placeholder="Room" value="Room 204" />
+          </label>
+        </div>
+      </div>
+
+      <div class="session-counts">
+        <div class="count-pill total">
+          <div class="count-pill-num" id="countTotal">0</div>
+          <div class="count-pill-label">Total</div>
+        </div>
+        <div class="count-pill present">
+          <div class="count-pill-num" id="countPresent">0</div>
+          <div class="count-pill-label">Present</div>
+        </div>
+        <div class="count-pill absent">
+          <div class="count-pill-num" id="countAbsent">0</div>
+          <div class="count-pill-label">Absent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK-ADD BAR -->
+    <div class="add-bar" id="addBar">
+      <div class="add-fields">
+        <div class="add-field name-field">
+          <label>Student Name</label>
+          <input type="text" id="inputName" placeholder="First Last" autocomplete="off" />
+        </div>
+        <div class="add-field id-field">
+          <label>Student ID</label>
+          <input type="text" id="inputId" placeholder="e.g. 987654" autocomplete="off" />
+        </div>
+        <div class="add-field grade-field">
+          <label>Grade</label>
+          <input type="text" id="inputGrade" placeholder="e.g. 11" maxlength="2" autocomplete="off" />
+        </div>
+      </div>
+      <button class="add-btn" onclick="addStudent()">
+        <i class="fas fa-plus"></i> Add
+      </button>
+    </div>
+    <div class="add-hint">
+      <i class="fas fa-lightbulb"></i>
+      Press <kbd>Enter</kbd> in any field to add &nbsp;·&nbsp; Only name is required &nbsp;·&nbsp; Students are marked <strong>Present</strong> on add
+    </div>
+
+    <!-- FILTER / SEARCH BAR -->
+    <div class="list-toolbar" style="margin-top:1.4rem;">
+      <div class="search-box">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search by name or ID…" oninput="filterList()" />
+      </div>
+      <button class="filter-btn filter-all active"    onclick="setFilter('all',    this)">All</button>
+      <button class="filter-btn filter-present"        onclick="setFilter('present', this)">Present</button>
+      <button class="filter-btn filter-absent"         onclick="setFilter('absent',  this)">Absent</button>
+      <span class="list-count-label" id="listCountLabel">0 students</span>
+    </div>
+
+    <!-- ATTENDANCE TABLE -->
+    <div class="attendance-table-wrap">
+      <table id="attendanceTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student</th>
+            <th>Grade</th>
+            <th>Status</th>
+            <th>Time In</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <div class="empty-state" id="emptyState">
+        <i class="fas fa-clipboard"></i>
+        <p>No students yet. Use the form above to start taking attendance.</p>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="notes-section">
+      <div class="notes-header">
+        <i class="fas fa-note-sticky"></i>
+        <h3>Session Notes</h3>
+      </div>
+      <textarea class="notes-input" id="sessionNotes" placeholder="Any notes for this meeting — topics covered, announcements made, follow-ups…"></textarea>
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /main-area -->
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* ---------- State ---------- */
+  let students = [];
+  let nextId   = 1;
+  let activeFilter = 'all';
+
+  /* ---------- Init ---------- */
+  window.addEventListener('DOMContentLoaded', () => {
+    // Set today's date
+    const today = new Date();
+    document.getElementById('sessionDate').value = today.toISOString().split('T')[0];
+
+    // Topbar date
+    document.getElementById('topbarDate').textContent =
+      today.toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+    // Enter key on inputs
+    ['inputName','inputId','inputGrade'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); addStudent(); }
+      });
+    });
+
+    updateCounts();
+    renderTable();
+  });
+
+  /* ---------- Add student ---------- */
+  function addStudent() {
+    const nameEl  = document.getElementById('inputName');
+    const idEl    = document.getElementById('inputId');
+    const gradeEl = document.getElementById('inputGrade');
+
+    const name  = nameEl.value.trim();
+    const sid   = idEl.value.trim();
+    const grade = gradeEl.value.trim();
+
+    if (!name) {
+      nameEl.focus();
+      nameEl.style.borderColor = '#dc2626';
+      setTimeout(() => nameEl.style.borderColor = '', 1200);
+      return;
+    }
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit', hour12: true });
+
+    students.push({
+      uid:     nextId++,
+      name:    name,
+      sid:     sid || '—',
+      grade:   grade || '—',
+      status:  'present',
+      timeIn:  timeStr,
+    });
+
+    // Clear inputs, re-focus name
+    nameEl.value = '';
+    idEl.value   = '';
+    gradeEl.value= '';
+    nameEl.focus();
+
+    updateCounts();
+    renderTable();
+    flashSaved();
+  }
+
+  /* ---------- Toggle presence ---------- */
+  function toggleStatus(uid) {
+    const s = students.find(s => s.uid === uid);
+    if (!s) return;
+    s.status = s.status === 'present' ? 'absent' : 'present';
+    if (s.status === 'present') {
+      const now = new Date();
+      s.timeIn = now.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit', hour12:true });
+    }
+    updateCounts();
+    renderTable();
+    flashSaved();
+  }
+
+  /* ---------- Remove student ---------- */
+  function removeStudent(uid) {
+    students = students.filter(s => s.uid !== uid);
+    updateCounts();
+    renderTable();
+    flashSaved();
+  }
+
+  /* ---------- Render table ---------- */
+  function renderTable() {
+    const body   = document.getElementById('tableBody');
+    const empty  = document.getElementById('emptyState');
+    const search = document.getElementById('searchInput').value.toLowerCase();
+
+    const filtered = students.filter(s => {
+      const matchSearch = s.name.toLowerCase().includes(search) || s.sid.toLowerCase().includes(search);
+      const matchFilter = activeFilter === 'all' || s.status === activeFilter;
+      return matchSearch && matchFilter;
+    });
+
+    document.getElementById('listCountLabel').textContent =
+      `${filtered.length} student${filtered.length !== 1 ? 's' : ''}`;
+
+    if (students.length === 0) {
+      body.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+
+    empty.style.display = 'none';
+
+    body.innerHTML = filtered.map((s, idx) => `
+      <tr class="${s.status === 'absent' ? 'row-absent' : ''}" id="row-${s.uid}">
+        <td>${idx + 1}</td>
+        <td>
+          <div class="student-name">${escapeHtml(s.name)}</div>
+          <div class="student-id">${escapeHtml(s.sid)}</div>
+        </td>
+        <td><span class="grade-badge">Gr. ${escapeHtml(s.grade)}</span></td>
+        <td>
+          <span class="presence-toggle ${s.status}" onclick="toggleStatus(${s.uid})" title="Click to toggle">
+            <div class="toggle-check"><i class="fas fa-check"></i></div>
+            <span class="status-pill ${s.status}">${s.status === 'present' ? 'Present' : 'Absent'}</span>
+          </span>
+        </td>
+        <td><span class="arrival-time">${s.status === 'present' ? s.timeIn : '—'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="row-action-btn delete" onclick="removeStudent(${s.uid})" title="Remove">
+              <i class="fas fa-xmark"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  /* ---------- Filter ---------- */
+  function setFilter(f, btn) {
+    activeFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable();
+  }
+
+  function filterList() { renderTable(); }
+
+  /* ---------- Counts ---------- */
+  function updateCounts() {
+    const total   = students.length;
+    const present = students.filter(s => s.status === 'present').length;
+    const absent  = total - present;
+    document.getElementById('countTotal').textContent   = total;
+    document.getElementById('countPresent').textContent = present;
+    document.getElementById('countAbsent').textContent  = absent;
+    document.getElementById('bottomCount').textContent  = total;
+
+    const d = document.getElementById('sessionDate').value;
+    document.getElementById('bottomDate').textContent = d
+      ? new Date(d + 'T12:00:00').toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric' })
+      : '—';
+  }
+
+  /* ---------- Save ---------- */
+  function saveSession() {
+    flashSaved();
+    // In a real app: POST to backend here
+  }
+
+  function flashSaved() {
+    const el = document.getElementById('saveIndicator');
+    el.classList.add('visible');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('visible'), 2200);
+  }
+
+  /* ---------- Export CSV ---------- */
+  function exportCSV() {
+    if (students.length === 0) { alert('No students to export yet.'); return; }
+    const date  = document.getElementById('sessionDate').value || 'unknown-date';
+    const room  = document.getElementById('sessionRoom').value || '';
+    const notes = document.getElementById('sessionNotes').value || '';
+
+    let csv = `Science & Discovery Club — Attendance\nDate: ${date}  Room: ${room}\n\n`;
+    csv += 'Name,Student ID,Grade,Status,Time In\n';
+    students.forEach(s => {
+      csv += `"${s.name}","${s.sid}","${s.grade}","${s.status}","${s.timeIn}"\n`;
+    });
+    if (notes) csv += `\nNotes:\n"${notes}"\n`;
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `attendance_${date}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /* ---------- Clear all ---------- */
+  function clearAll() {
+    if (students.length === 0) return;
+    if (!confirm(`Remove all ${students.length} students from this session?`)) return;
+    students = [];
+    nextId   = 1;
+    updateCounts();
+    renderTable();
+  }
+
+  /* ---------- Scroll: header scroll state ---------- */
+  const sidebar = document.getElementById('sidebar');
+
+  /* ---------- Helpers ---------- */
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* Update bottom bar date when session date changes */
+  document.addEventListener('change', e => {
+    if (e.target.id === 'sessionDate') updateCounts();
+  });
+</script>
+
+</body>
+</html>
