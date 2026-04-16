@@ -1,4 +1,6 @@
 import link from "next/link";
+import Image from "next/image";
+import { Club } from "@/types/club";
 
 type Club = {
     id: number;
@@ -7,9 +9,9 @@ type Club = {
 }
 
 async function getClubs(): Promise<Club[]> {
-    const res = await fetch("http://localhost:8080/api/clubs", {
+    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
         cache: "no-store",
-});
+    });
 
 if (!res.ok) throw new Error("Failed to fetch clubs");
 return res.json();
@@ -18,5 +20,8 @@ return res.json();
 export default async function ClubsPage() {
     const clubs = await getClubs();
     return (
-        
+        <main>
+            <h1 className="text-3xl font-bold mb-6">Clubs</h1>
+        </main>
+    );
 }
