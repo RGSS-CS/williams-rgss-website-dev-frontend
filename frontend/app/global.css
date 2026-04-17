@@ -1,5 +1,28 @@
-body {
-  padding: 20px 20px 60px;
-  max-width: 680px;
-  margin: 0 auto;
+/* Fonts
+/* --------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap');
+
+/* Global Styles
+/* --------------------------------------------- */
+
+:root {
+  /* School Colors */
+  --school-primary: #0000a6;
+  --school-secondary: #9ad9ea;
+  --school-tertiary: #db9820;
+
+  /* Neutral Colors */
+  --white: #ffffff;
+  --black: #000000;
+  --grey: #bbd1f0;
+}
+
+/*Default page styles*/
+
+.navbar {
+
+}
+
+.footer {
+
 }
