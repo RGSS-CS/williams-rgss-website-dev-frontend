@@ -24,7 +24,6 @@ export default async function ClubsPage() {
     return (
         <main>
             <h1>Homepage</h1>
-            <div className="navbar"></div>
         </main>
     );
 }

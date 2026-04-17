@@ -52,6 +52,11 @@
   height: 40px;
 }
 
+.navbar .header-container .title-container .title-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
 .navbar .header-container .title-container span {
   color: var(--school-secondary);
   font-size: 0.9rem;

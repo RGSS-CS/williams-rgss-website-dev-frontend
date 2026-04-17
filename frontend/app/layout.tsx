@@ -26,7 +26,30 @@ export default function RootLayout({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body>
+        <div className="navbar">
+          <div className="header-container">
+            <div className="title-container">
+              <div className="title-title">
+                <h1>Dr. GW Williams Secondary School</h1>
+                <span>Student Council</span>
+              </div>
+              <div className="logo">
+                </div>
+            </div>
+
+            <div className="nav-links">
+              <a href="/public">Home</a>
+              <a href="/public/clubs">Clubs</a>
+              <a href="/public/gallery">Gallery</a>
+              <a href="/public/about">About</a>
+            </div>
+          </div>
+        </div>
+
+
+        {children}
+      </body>
     </html>
   )
 }
