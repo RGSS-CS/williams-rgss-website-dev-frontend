@@ -16,8 +16,15 @@
 /*Default page styles*/
 
 body {
-  background-color: var(--black);
+  background-color: var(--school-primary);
   margin: 0;
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
 }
 
 /* Navbar Styles
@@ -31,6 +38,7 @@ body {
   color: var(--white);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
   width: 100%;
+  font-family: "Montserrat", sans-serif;
 }
 
 .navbar .header-container {
@@ -49,24 +57,25 @@ body {
 .navbar .header-container .title-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .navbar .header-container .title-container .logo {
-  width: 40px;
-  height: 40px;
+  margin-top: 10px;
 }
 
-.navbar .header-container .title-container .title-title {
-  font-size: 1.5rem;
+#school-title {
+  font-size: 100%;
   font-weight: 700;
 }
 
-.navbar .header-container .title-container span {
+#school-subtitle {
   color: var(--school-secondary);
   font-size: 0.9rem;
   letter-spacing: 0.06rem;
   text-transform: uppercase;
+  position: relative;
+  top: -1rem;
 }
 
 /* Navigation Links Styles
