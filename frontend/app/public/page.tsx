@@ -25,11 +25,10 @@ export default async function ClubsPage() {
         <main>
             <div className={styles.ticker}>
                 <div className={styles.ticker_header}>
-                    <h4 className={styles.ticker_header}>Updates</h4>
+                    <h4 className="">Updates</h4>
                 </div>
                 <div className={styles.ticker_container}>
                     <div className={styles.ticker_inner} id="ticker-inner">
-
                     </div>
                 </div>
             </div>

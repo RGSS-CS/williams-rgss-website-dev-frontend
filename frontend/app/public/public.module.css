@@ -8,8 +8,8 @@
     height: 30px;
 }
 
-.ticker-header {
-    color: var(--white);
+.ticker-header h4 {
+    color: white;
     background: var(--school-tertiary);
 }
 

@@ -38,9 +38,7 @@ export default function RootLayout({
                 <span id="school-title"><h1>Dr. GW Williams S.S.</h1></span>
                 <span id="school-subtitle">Student Council</span>
               </div>
-
             </div>
-
             <div className="nav-links">
               <a href="/public">Home</a>
               <a href="/public/clubs">Clubs</a>
