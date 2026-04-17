@@ -1,5 +1,5 @@
 
-import link from "next/Link";
+import link from "next/link";
 import Image from "next/image";
 import styles from './clubs.module.css';
 // import { Club } from "@/types/club";
@@ -23,7 +23,6 @@ export default async function ClubsPage() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
-            <h1>Homepage</h1>
         </main>
     );
 }

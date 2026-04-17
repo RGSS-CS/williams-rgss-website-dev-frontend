@@ -46,9 +46,20 @@ export default function RootLayout({
             </div>
           </div>
         </div>
-
-
         {children}
+        <div className="footer">
+          <div className="footer-container">
+            <p>&copy; 2026 Dr. GW Williams Secondary School Student Council. All rights reserved.</p>
+            <div className="footer-socials">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://drgwwilliams-ss.yrdsb.ca/" target="_blank" rel="noopener noreferrer">
+                <i className="fas fa-globe"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   )

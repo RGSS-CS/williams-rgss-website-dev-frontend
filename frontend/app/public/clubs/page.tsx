@@ -1,4 +1,4 @@
-import link from "next/Link";
+import link from "next/link";
 import Image from "next/image";
 import styles from './clubs.module.css';
 // import { Club } from "@/types/club";
