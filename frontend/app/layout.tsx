@@ -1,5 +1,5 @@
 // These styles apply to every route in the application
-import './global.css';
+import './globals.css';
 import type { Metadata } from 'next';
  
 export const metadata: Metadata = {
