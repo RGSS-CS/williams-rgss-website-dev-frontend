@@ -19,8 +19,48 @@
 
 /*Default page styles*/
 
-.navbar {
+/* Navbar Styles
+/* --------------------------------------------- */
 
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--grey);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+.navbar .header-container {
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+  padding: 14px 2.5rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Logo and Title Styles
+/* --------------------------------------------- */
+.navbar .header-container .title-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar .header-container .title-container .logo {
+  width: 40px;
+  height: 40px;
+}
+
+/* Navigation Links Styles
+/* --------------------------------------------- */
+.navbar .header-container .nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .footer {
