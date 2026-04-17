@@ -19,7 +19,7 @@ type Club = {
 //    return res.json();
 //}
 
-export default async function ClubsPage() {
+export default async function Page() {
     //const clubs = await getDjangoAPI();
     return (
         <main>

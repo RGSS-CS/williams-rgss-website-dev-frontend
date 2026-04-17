@@ -8,12 +8,12 @@
     height: 30px;
 }
 
-.ticker-header h4 {
+.ticker_header h4 {
     color: white;
     background: var(--school-tertiary);
 }
 
-.ticker-header h4 {
+.ticker_header h4 {
     font-size: 1.2rem;
     font-weight: 600;
 }
