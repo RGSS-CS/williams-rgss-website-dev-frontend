@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'Dr. GW Williams Secondary School STUCO',
   description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
 };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const currentYear = new Date().getFullYear();
   return (
     <html lang="en">
       <head>
@@ -49,7 +49,7 @@ export default function RootLayout({
         {children}
         <div className="footer">
           <div className="footer-container">
-            <p>&copy; 2026 Dr. GW Williams Secondary School Student Council. All rights reserved.</p>
+            <p>&copy; {currentYear} Dr. GW Williams Secondary School Student Council. All rights reserved.</p>
             <div className="footer-socials">
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
