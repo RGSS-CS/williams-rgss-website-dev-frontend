@@ -1,7 +1,7 @@
 
 import link from "next/link";
 import Image from "next/image";
-import styles from './clubs.module.css';
+import styles from './public.module.css';
 // import { Club } from "@/types/club";
 
 type Club = {
@@ -23,6 +23,16 @@ export default async function ClubsPage() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
+            <div className={styles.ticker}>
+                <div className={styles.ticker_header}>
+                    <h4 className={styles.ticker_header}>Updates</h4>
+                </div>
+                <div className={styles.ticker_container}>
+                    <div className={styles.ticker_inner} id="ticker-inner">
+
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }

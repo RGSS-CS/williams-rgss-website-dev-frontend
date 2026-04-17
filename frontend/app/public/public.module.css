@@ -1,0 +1,19 @@
+.ticker {
+    display: flex;
+    align-items: center;
+    background-color: #0f2747;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 30px;
+}
+
+.ticker-header {
+    color: var(--white);
+    background: var(--school-tertiary);
+}
+
+.ticker-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}

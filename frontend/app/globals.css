@@ -54,13 +54,13 @@ h1, h2, h3, h4 {
 
 /* Logo and Title Styles
 /* --------------------------------------------- */
-.navbar .header-container .title-container {
+.title-container {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.navbar .header-container .title-container .logo {
+.logo {
   margin-top: 10px;
 }
 
@@ -80,13 +80,13 @@ h1, h2, h3, h4 {
 
 /* Navigation Links Styles
 /* --------------------------------------------- */
-.navbar .header-container .nav-links {
+.nav-links {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-.navbar .header-container .nav-links a {
+.nav-links a {
   text-decoration: none;
   color: var(--white);
   font-weight: 600;
@@ -95,7 +95,7 @@ h1, h2, h3, h4 {
   transition: all 0.2s;
 }
 
-.navbar .header-container .nav-links a:hover {
+.nav-links a:hover {
   background: var(--school-tertiary);
   color: var(--school-primary);
 }
@@ -112,12 +112,12 @@ h1, h2, h3, h4 {
   padding-bottom: 2rem;
 }
 
-.footer .footer-container {
+.footer-container {
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.footer .footer-socials {
+.footer-socials {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
@@ -125,12 +125,12 @@ h1, h2, h3, h4 {
 
 }
 
-.footer .footer-socials a {
+.footer-socials a {
   font-size: 1.5rem;
   transition: all 0.2s;
   color: var(--white);
 }
 
-.footer .footer-socials a:hover {
+.footer-socials a:hover {
   color: var(--school-tertiary);
 }
