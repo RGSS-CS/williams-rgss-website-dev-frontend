@@ -86,6 +86,7 @@
     padding: 5px 16px;
     border-radius: 40px;
     margin-bottom: 1.2rem;
+    text-transform: uppercase;
 }
 
 .hero_tag h4 {
