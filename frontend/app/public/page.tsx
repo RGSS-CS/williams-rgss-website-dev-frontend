@@ -78,11 +78,12 @@ export default async function Page() {
                     </div>
                 </div>
                 <div className={styles.hero_photo_strip}>
+                    {/* Add photos here after database is set up */}
                 </div>
             </div>
             <div className={`${styles.section_wrap} ${styles.announcements_section}`}>
                 <div className={styles.section_content}>
-                    <div className={styles.section_title}>
+                    <div>
                         <h2 className={styles.section_title}>
                             <span className={styles.section_title_accent}></span>
                             Announcements
@@ -90,13 +91,15 @@ export default async function Page() {
                     </div>
                     <div className={styles.card_container}>
                         <div className={styles.card_row}>
-
+                           {/* Put Announcement cards here after database is set up */}
                         </div>
                     </div>
                 </div>
             </div>
             <div className={`${styles.section_wrap} ${styles.events_section}`} id="events">
-                
+                <div className={styles.section_title}>
+                    <h2 className={styles.section_title}>Events</h2>
+                </div>
             </div>
         </main>
     );

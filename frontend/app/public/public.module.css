@@ -1,3 +1,7 @@
+body {
+    background: var(--white);
+}
+
 .ticker_bar {
     display: flex;
     align-items: center;
