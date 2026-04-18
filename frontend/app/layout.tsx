@@ -2,6 +2,7 @@
 import './global.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import NavLinks from './NavLinks';
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',
@@ -39,12 +40,7 @@ export default function RootLayout({
                 <span id="school-subtitle">Student Council</span>
               </div>
             </div>
-            <div className="nav-links">
-              <a href="/public"><i className="fas fa-home"></i>Home</a>
-              <a href="/public/clubs"><i className="fas fa-users"></i>Clubs</a>
-              <a href="/public/gallery"><i className="fas fa-images"></i>Gallery</a>
-              <a href="/public/about"><i className="fas fa-info-circle"></i>About</a>
-            </div>
+            <NavLinks />
           </div>
         </div>
         {children}
