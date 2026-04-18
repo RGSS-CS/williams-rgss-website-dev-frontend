@@ -77,6 +77,9 @@ export default async function Page() {
                         <Image src="/images/logo/wildcat-icon.png" alt="Wildcat Icon" width={230} height={200}/>
                     </div>
                 </div>
+                <div className={styles.hero_photo_strip}>
+
+                </div>
             </div>
         </main>
     );
