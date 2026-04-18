@@ -62,8 +62,14 @@ export default async function Page() {
                         </div>
                         <div className={styles.hero_buttons}>
                             <div className={styles.hero_btn_primary}>
+                                <a href="/public/clubs" className={styles.hero_btn_text}>
+                                    <i className="fas fa-paper-plane"></i> Our Clubs
+                                </a>
                             </div>
                             <div className={styles.hero_btn_secondary}>
+                                <a href="#" className={styles.hero_btn_text_alt}>
+                                    <i className= {`fas fa-calendar-alt ${styles.fas_fa_calendar_alt}`}></i> Upcoming Events
+                                </a>
                             </div>
                         </div>
                     </div>
