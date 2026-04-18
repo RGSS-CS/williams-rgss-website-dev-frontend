@@ -1,5 +1,5 @@
 // These styles apply to every route in the application
-import './globals.css';
+import './global.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 

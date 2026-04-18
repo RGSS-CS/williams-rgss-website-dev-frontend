@@ -19,16 +19,53 @@ type Club = {
 //    return res.json();
 //}
 
+function getSchoolYear(): string {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+
+    if (month >= 8) {
+        return `${year}-${year + 1}`;
+    } else {
+        return `${year - 1}-${year}`;
+    }
+}
+
 export default async function Page() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
-            <div className={styles.ticker}>
+            <div className={styles.ticker_bar}>
                 <div className={styles.ticker_header}>
-                    <h4 className="">Updates</h4>
+                    <h4><i className="fas fa-star"></i> Updates</h4>
                 </div>
-                <div className={styles.ticker_container}>
+
+                <div className={styles.ticker_track}>
                     <div className={styles.ticker_inner} id="ticker-inner">
+                    </div>
+                </div>
+            </div>
+            <div className={styles.hero}>
+                <div className={styles.hero_shape}></div>
+                <div className={styles.hero_inner}>
+                    <div className={styles.hero_left}>
+                        <div className={styles.hero_tag}>
+                            <h4>Student Council {getSchoolYear()}</h4>
+                        </div>
+                        <div className={styles.hero_title}>
+                            <h1>GW. Williams</h1>
+                            <h1>STUCO</h1>
+                        </div>
+                        <div className={styles.hero_tagline}>
+                            <h5>Representing Student Voice.</h5>
+                            <h5>Building Wildcat Spirit.</h5>
+                        </div>
+                        <div className={styles.hero_buttons}>
+                            <div className={styles.hero_btn_primary}>
+                            </div>
+                            <div className={styles.hero_btn_secondary}>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
