@@ -40,10 +40,10 @@ export default function RootLayout({
               </div>
             </div>
             <div className="nav-links">
-              <a href="/public">Home</a>
-              <a href="/public/clubs">Clubs</a>
-              <a href="/public/gallery">Gallery</a>
-              <a href="/public/about">About</a>
+              <a href="/public"><i className="fas fa-home"></i>Home</a>
+              <a href="/public/clubs"><i className="fas fa-users"></i>Clubs</a>
+              <a href="/public/gallery"><i className="fas fa-images"></i>Gallery</a>
+              <a href="/public/about"><i className="fas fa-info-circle"></i>About</a>
             </div>
           </div>
         </div>

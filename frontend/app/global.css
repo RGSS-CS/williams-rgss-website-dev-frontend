@@ -107,7 +107,16 @@ h3 {
   transition: all 0.2s;
 }
 
+.nav-links .fas {
+  padding-right: 6px;
+}
+
 .nav-links a:hover {
+  background: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.nav-links .active {
   background: var(--school-tertiary);
   color: var(--school-primary);
 }
