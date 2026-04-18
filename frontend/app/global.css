@@ -25,6 +25,7 @@ html {
   background-color: var(--school-primary);
   scroll-behavior: smooth;
   scrollbar-width: thin;
+  scroll-padding-top: var(--navbar-offset);
 }
 
 body {

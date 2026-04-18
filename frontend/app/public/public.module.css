@@ -241,7 +241,3 @@ body {
     position: relative;
     overflow: hidden;
 }
-
-.events_section {
-    scroll-margin-top: var(--navbar-offset);
-}
