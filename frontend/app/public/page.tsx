@@ -68,18 +68,35 @@ export default async function Page() {
                             </div>
                             <div className={styles.hero_btn_secondary}>
                                 <a href="#" className={styles.hero_btn_text_alt}>
-                                    <i className= {`fas fa-calendar-alt ${styles.fas_fa_calendar_alt}`}></i> Upcoming Events
+                                    <i className={`fas fa-calendar-alt ${styles.fas_fa_calendar_alt}`}></i> Upcoming Events
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div className={styles.hero_badge_image}>
-                        <Image src="/images/logo/wildcat-icon.png" alt="Wildcat Icon" width={230} height={200}/>
+                        <Image src="/images/logo/wildcat-icon.png" alt="Wildcat Icon" width={230} height={200} />
                     </div>
                 </div>
                 <div className={styles.hero_photo_strip}>
-
                 </div>
+            </div>
+            <div className={`${styles.section_wrap} ${styles.announcements_section}`}>
+                <div className={styles.section_content}>
+                    <div className={styles.section_title}>
+                        <h2 className={styles.section_title}>
+                            <span className={styles.section_title_accent}></span>
+                            Announcements
+                        </h2>
+                    </div>
+                    <div className={styles.card_container}>
+                        <div className={styles.card_row}>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={`${styles.section_wrap} ${styles.events_section}`} id="events">
+                
             </div>
         </main>
     );

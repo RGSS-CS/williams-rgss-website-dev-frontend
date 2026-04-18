@@ -32,7 +32,7 @@
     overflow: hidden;
     border-bottom: 5px solid var(--school-tertiary);
     font-family: "Montserrat", sans-serif;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .hero:before {
@@ -189,4 +189,53 @@
     padding: 16px;
     margin-top: 40px;
     margin-right: 40px;
+}
+
+.hero_photo_strip {
+    margin-top: 3rem;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    height: 230px;
+    background: var(--school-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--school-primary);
+    border-bottom: none;
+}
+
+.announcements_section {
+    padding: 3rem 4.5rem 0;
+    background: var(--white);
+}
+
+.section-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+    gap: 12px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.section_title {
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section_title_accent {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--school-tertiary);
+    border-radius: 50%;
+}
+
+.card_container {
+    position: relative;
+    overflow: hidden;
 }
