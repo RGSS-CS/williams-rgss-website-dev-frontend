@@ -98,6 +98,7 @@ export default async function Page() {
             </div>
             <div className={`${styles.section_wrap} ${styles.events_section}`} id="events">
                 <div className={styles.section_title}>
+                    <span className={styles.section_title_accent}></span>
                     <h2 className={styles.section_title}>Events</h2>
                 </div>
             </div>

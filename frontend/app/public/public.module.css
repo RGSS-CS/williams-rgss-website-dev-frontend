@@ -208,9 +208,8 @@ body {
     border-bottom: none;
 }
 
-.announcements_section {
+.section_wrap {
     padding: 3rem 4.5rem 0;
-    background: var(--white);
 }
 
 .section-title-row {
