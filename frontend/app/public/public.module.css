@@ -30,8 +30,9 @@
     color: var(--white);
     position: relative;
     overflow: hidden;
-    border-bottom: 6px solid var(--school-tertiary);
+    border-bottom: 5px solid var(--school-tertiary);
     font-family: "Montserrat", sans-serif;
+    margin-bottom: 10px;
 }
 
 .hero:before {
@@ -65,6 +66,11 @@
     align-items: start;
     position: relative;
     z-index: 2;
+    margin-bottom: 20px;
+}
+
+.hero_left {
+    flex-direction: column;
 }
 
 .hero_tag {
@@ -167,4 +173,19 @@
 .hero_btn_secondary:hover {
     border-color: var(--school-tertiary);
     color: var(--school-tertiary);
+}
+
+.hero_badge_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--school-tertiary);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 16px;
+    margin-top: 40px;
+    margin-right: 40px;
 }
