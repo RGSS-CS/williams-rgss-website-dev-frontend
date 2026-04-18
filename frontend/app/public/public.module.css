@@ -31,6 +31,7 @@
     position: relative;
     overflow: hidden;
     border-bottom: 6px solid var(--school-tertiary);
+    font-family: "Montserrat", sans-serif;
 }
 
 .hero:before {
@@ -54,3 +55,59 @@
     clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
     pointer-events: none;
 }
+
+.hero_inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+}
+
+.hero_tag {
+    display: inline-flex;
+    align-items:center;
+    gap: 8px;
+    background: rgba(219,152,32,0.1);
+    border: 1px solid rgba(219,152,32,0.3);
+    color: var(--school-tertiary);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    padding: 5px 16px;
+    border-radius: 40px;
+    margin-bottom: 1.2rem;
+}
+
+.hero_tag h4 {
+    margin: 3px;
+}
+
+.hero_title h1{
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    margin-top: 10px
+}
+
+.hero_tagline {
+    border-left: 5px solid var(--school-tertiary);
+    margin-bottom: 2rem;
+}
+
+.hero_tagline h5 {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    opacity: 0.85;
+    padding-left: 1.2rem;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+

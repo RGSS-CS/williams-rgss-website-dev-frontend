@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'Dr. GW Williams Secondary School STUCO',
+  title: 'Dr. GW Williams STUCO',
   description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
 };
 export default function RootLayout({
