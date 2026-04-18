@@ -23,7 +23,6 @@ export default async function ClubsPage() {
     return (
         <main>
             <h1>Clubs</h1>
-            <div className="navbar"></div>
         </main>
     );
 }

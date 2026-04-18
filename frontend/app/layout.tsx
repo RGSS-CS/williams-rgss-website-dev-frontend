@@ -66,7 +66,7 @@ export default function RootLayout({
             </div>
           </div>
           <div className="footer-bottom">
-            <span><i className="fas fa-paw"></i> Dr. G.W. Williams S.S. · Student Council {currentYear}</span>
+            <span>Dr. G.W. Williams S.S. · Student Council {currentYear}</span>
             <span>© {currentYear} Williams STUCO · All rights reserved</span>
           </div>
         </footer>
