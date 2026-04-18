@@ -73,6 +73,11 @@ export default async function Page() {
                             </div>
                         </div>
                     </div>
+                    <div className={styles.hero_badge_wrap}>
+                        <div className={styles.hero_badge_image}>
+                            <Image src="/images/logo/wildcat-icon.png" alt="Wildcat Icon" width={400} height={400}/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
