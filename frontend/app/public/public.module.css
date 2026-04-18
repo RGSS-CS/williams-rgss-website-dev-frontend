@@ -36,7 +36,6 @@ body {
     overflow: hidden;
     border-bottom: 5px solid var(--school-tertiary);
     font-family: "Montserrat", sans-serif;
-    padding-bottom: 10px;
 }
 
 .hero:before {

@@ -83,7 +83,7 @@ export default async function Page() {
             </div>
             <div className={`${styles.section_wrap} ${styles.announcements_section}`}>
                 <div className={styles.section_content}>
-                    <div>
+                    <div className={styles.section_title_row}>
                         <h2 className={styles.section_title}>
                             <span className={styles.section_title_accent}></span>
                             Announcements
@@ -91,7 +91,7 @@ export default async function Page() {
                     </div>
                     <div className={styles.card_container}>
                         <div className={styles.card_row}>
-                           {/* Put Announcement cards here after database is set up */}
+                            {/* Put Announcement cards here after database is set up */}
                         </div>
                     </div>
                 </div>
@@ -100,6 +100,22 @@ export default async function Page() {
                 <div className={styles.section_title}>
                     <span className={styles.section_title_accent}></span>
                     <h2 className={styles.section_title}>Events</h2>
+                </div>
+                {/*Add calendar page*/}
+            </div>
+            <div className={`${styles.section_wrap} ${styles.council_section}`}>
+                <div className={styles.section_content}>
+                    <div className={styles.section_title_row}>
+                        <h2 className={styles.section_title}>
+                            <span className={styles.section_title_accent}></span>
+                            Meet the Council
+                        </h2>
+                    </div>
+                    <div className={styles.card_container}>
+                        <div className={styles.card_row}>
+                            {/*Add section for school council*/}
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
