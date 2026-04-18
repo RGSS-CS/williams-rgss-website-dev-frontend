@@ -1,14 +1,7 @@
-
-import link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import styles from './public.module.css';
 // import { Club } from "@/types/club";
-
-type Club = {
-    id: number;
-    name: string;
-    description: string;
-}
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -30,6 +23,7 @@ function getSchoolYear(): string {
         return `${year - 1}-${year}`;
     }
 }
+
 
 export default async function Page() {
     //const clubs = await getDjangoAPI();
@@ -62,12 +56,12 @@ export default async function Page() {
                         </div>
                         <div className={styles.hero_buttons}>
                             <div className={styles.hero_btn_primary}>
-                                <a href="/public/clubs" className={styles.hero_btn_text}>
+                                <Link href="/public/clubs" className={styles.hero_btn_text}>
                                     <i className="fas fa-paper-plane"></i> Our Clubs
-                                </a>
+                                </Link>
                             </div>
                             <div className={styles.hero_btn_secondary}>
-                                <a href="#" className={styles.hero_btn_text_alt}>
+                                <a className={styles.hero_btn_text_alt} href="#events">
                                     <i className={`fas fa-calendar-alt ${styles.fas_fa_calendar_alt}`}></i> Upcoming Events
                                 </a>
                             </div>

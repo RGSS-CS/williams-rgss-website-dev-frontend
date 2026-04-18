@@ -8,6 +8,7 @@
   --school-secondary: #9ad9ea;
   --school-tertiary: #db9820;
   --school-tertiary-dark: #b87c1a;
+  --navbar-offset: 30px;
 
 
   /* Neutral Colors */
@@ -22,6 +23,8 @@ html {
   width: 100%;
   min-height: 100%;
   background-color: var(--school-primary);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 body {
