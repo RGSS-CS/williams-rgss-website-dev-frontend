@@ -8,14 +8,14 @@
   --school-secondary: #9ad9ea;
   --school-tertiary: #db9820;
   --school-tertiary-dark: #b87c1a;
-  --navbar-offset: 30px;
-
 
   /* Neutral Colors */
   --white: #ffffff;
   --black: #000000;
   --grey: #bbd1f0;
   --line: #dce3eb;
+
+  --navbar-height:80px;
 }
 
 /*Default page styles*/
@@ -26,7 +26,7 @@ html {
   background-color: var(--school-primary);
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scroll-padding-top: var(--navbar-offset);
+  scroll-padding-top: var(--navbar-height);
 }
 
 body {
@@ -519,11 +519,10 @@ body {
 
 .filter_bar_container {
   background: var(--white);
-  border-bottom: 1px solid var(--school-tertiary);
-  top: 70px;
+  border-bottom: 5px solid var(--school-tertiary);
+  top: var(--navbar-height);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   position: sticky;
-  z-index: 100;
 }
 
 .filter_bar {

@@ -3,6 +3,7 @@ import './global.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import NavLinks from '@/components/NavLinks';
+import Navbar from '@/components/navbarHeight';
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',
@@ -29,20 +30,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <div className="navbar">
-          <div className="header-container">
-            <div className="title-container">
-              <div className="logo">
-                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-              </div>
-              <div className="title-title">
-                <span id="school-title"><h1>Dr. GW Williams S.S.</h1></span>
-                <span id="school-subtitle">Student Council</span>
-              </div>
-            </div>
-            <NavLinks />
-          </div>
-        </div>
+        <Navbar />
         {children}
         <footer className="site-footer">
           <div className="footer-inner">
