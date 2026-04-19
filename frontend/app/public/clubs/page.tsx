@@ -1,6 +1,7 @@
 import link from "next/link";
 import Image from "next/image";
 import styles from './clubs.module.css';
+import { getSchoolYear } from "@/utils/SchoolYear"
 // import { Club } from "@/types/club";
 
 type Club = {
@@ -25,7 +26,11 @@ export default async function ClubsPage() {
             <div className="hero">
                 <div className="hero_shape"></div>
                 <div className="hero_inner">
-                    
+                    <div className="hero_left">
+                        <div className="hero_tag">
+                            <h4>Student Council {getSchoolYear()}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>

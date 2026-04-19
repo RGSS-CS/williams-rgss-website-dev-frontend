@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getSchoolYear } from "@/utils/SchoolYear"
 // import { Club } from "@/types/club";
 
 //async function getDjangoAPI(): Promise<Club[]> {
@@ -10,18 +11,6 @@ import Image from "next/image";
 //    if (!res.ok) throw new Error("Failed to fetch clubs");
 //    return res.json();
 //}
-
-function getSchoolYear(): string {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-
-    if (month >= 8) {
-        return `${year}-${year + 1}`;
-    } else {
-        return `${year - 1}-${year}`;
-    }
-}
 
 
 export default async function Page() {
