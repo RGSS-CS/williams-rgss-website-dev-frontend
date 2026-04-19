@@ -3,6 +3,7 @@ import Image from "next/image";
 import handleSearch from "@/utils/HandleSearch";
 import filterCategory from "@/utils/filterCategory"
 import filterDay from "@/utils/filterCategory"
+import resetAll from "@/utils/filterCategory"
 // import { Club } from "@/types/club";
 
 type Club = {
@@ -87,7 +88,53 @@ export default async function ClubsPage() {
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
                 </div>
-
+                <div className="clubs_container" id="clubs_container">
+                    <div className="category-section" data-category="academic" id="cat-academic">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title"><i className="fas fa-book"></i>Academic</span>
+                            <span className="category-count">0 clubs</span>
+                            <div className="category-divider"></div>
+                        </div>
+                        <div className="clubs-grid">{/*Where the academic clubs go (FIX)*/}</div>
+                    </div>
+                    <div className="category-section" data-category="arts" id="cat-arts">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title"><i className="fas fa-palette"></i>Arts</span>
+                            <span className="category-count">0 clubs</span>
+                            <div className="category-divider"></div>
+                        </div>
+                        <div className="clubs-grid">
+                            {/*Where the arts clubs go (FIX)*/}
+                        </div>
+                    </div>
+                    <div className="category-section" data-category="community" id="cat-community">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title"><i className="fas fa-hands-helping"></i>Community</span>
+                            <span className="category-count">0 clubs</span>
+                            <div className="category-divider"></div>
+                        </div>
+                        <div className="clubs-grid">
+                            {/*Where the community clubs go (FIX)*/}
+                        </div>
+                    </div>
+                    <div className="category-section" data-category="sports" id="cat-sports">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title"><i className="fas fa-running"></i>Sports &amp; Recreation</span>
+                            <span className="category-count">0 clubs</span>
+                            <div className="category-divider"></div>
+                        </div>
+                    </div>
+                    <div className="empty-state" id="emptyState">
+                        <i className="fas fa-search"></i>
+                        <h3>No Clubs Found</h3>
+                        <p>Try a different search term or clear your filters</p>
+                        <button className="cta-btn" onClick={resetAll()}><i className="fas fa-undo"></i>Reset Filters</button>
+                    </div>
+                </div>
             </div>
         </main>
     );
