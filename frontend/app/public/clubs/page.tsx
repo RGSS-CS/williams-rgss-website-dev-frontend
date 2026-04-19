@@ -1,6 +1,6 @@
 import link from "next/link";
 import Image from "next/image";
-import styles from './clubs.module.css';
+import handleSearch from "@/utils/HandleSearch";
 // import { Club } from "@/types/club";
 
 type Club = {
@@ -36,7 +36,7 @@ export default async function ClubsPage() {
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>
-                            
+                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onInput={handleSearch()} autoComplete="off"></input>
                         </div>
                     </div>
                 </div>

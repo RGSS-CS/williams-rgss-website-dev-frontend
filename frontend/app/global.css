@@ -446,3 +446,40 @@ body {
     position: relative;
     overflow: hidden;
 }
+
+.search_container {
+  max-width: 680px;
+  position: relative;
+}
+
+.search_container i {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.5);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.search_input {
+  width: 100%;
+  padding: 0.9rem 1.2rem 0.9rem 3rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.search_input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.search_input:focus {
+  border-color: var(--school-tertiary);
+  background: rgba(255,255,255,0.15);
+}
