@@ -1,9 +1,9 @@
 import link from "next/link";
 import Image from "next/image";
 import handleSearch from "@/utils/HandleSearch";
-import filterCategory from "@/utils/filterCategory"
-import filterDay from "@/utils/filterCategory"
-import resetAll from "@/utils/filterCategory"
+import { filterCategory } from "@/utils/filterCategory"
+import { filterDay } from "@/utils/filterCategory"
+import { resetAll } from "@/utils/filterCategory"
 // import { Club } from "@/types/club";
 
 type Club = {

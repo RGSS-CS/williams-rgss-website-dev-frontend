@@ -1,4 +1,4 @@
-export default function filterCategory(cat, btn) {
+export function filterCategory(cat, btn) {
 
 }
 
