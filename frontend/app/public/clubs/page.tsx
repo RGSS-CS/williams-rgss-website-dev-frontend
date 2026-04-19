@@ -136,6 +136,10 @@ export default async function ClubsPage() {
                     </div>
                 </div>
             </div>
+            <div className="cta-banner">
+                <h2>Don't See Your Club? <span>Start One.</span></h2>
+                <p>{/*Edit this message for club starting */}</p>
+            </div>
         </main>
     );
 }
