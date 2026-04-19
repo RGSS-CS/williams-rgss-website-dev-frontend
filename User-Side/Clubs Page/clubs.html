@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clubs | Williams STUCO · Dr. G.W. Williams S.S.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --navy:      #0b1c3a;
+      --gold:      #f6ae2d;
+      --gold-dark: #b87c1a;
+      --gray:      #2d2d3a;
+      --light-bg:  #f0f3f7;
+      --panel:     #ffffff;
+      --ink:       #1e1e2a;
+      --muted:     #4a5568;
+      --line:      #dce3eb;
+      --teal:      #1a6b6b;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f8f9fa;
+      color: var(--ink);
+      font-family: "Open Sans", sans-serif;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--navy);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+      width: 100%;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-placeholder {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(246,174,45,0.18);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .school-title h1 {
+      font-size: 1.45rem;
+      line-height: 1.1;
+      color: white;
+    }
+
+    .school-title span {
+      color: #cfdfff;
+      font-size: 0.8rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .topbar { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+
+    .topbar a {
+      color: white;
+      text-decoration: none;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 40px;
+      transition: all 0.18s;
+      font-size: 0.9rem;
+    }
+
+    .topbar a:hover  { background: rgba(255,255,255,0.12); }
+    .topbar a.active { background: var(--gold); color: var(--navy); }
+
+    /* ============================================================
+       PAGE HERO
+    ============================================================ */
+    .page-hero {
+      background: linear-gradient(150deg, #071929 0%, #0d2e52 55%, #1a4e70 100%);
+      padding: 3.8rem 2.5rem 3.2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 6px solid var(--gold);
+    }
+
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(246,174,45,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-shape {
+      position: absolute;
+      top: 0; right: 0;
+      width: 38%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(26,107,107,0.30) 0%, rgba(11,28,58,0.0) 70%);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(246,174,45,0.15);
+      border: 1px solid rgba(246,174,45,0.35);
+      color: var(--gold);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 40px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: "Montserrat", sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.82;
+      border-left: 5px solid var(--gold);
+      padding-left: 1.2rem;
+      max-width: 580px;
+      margin-bottom: 2.2rem;
+    }
+
+    /* ── Search bar ── */
+    .search-wrap {
+      max-width: 680px;
+      position: relative;
+    }
+
+    .search-wrap i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3rem;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .search-input::placeholder { color: rgba(255,255,255,0.5); }
+
+    .search-input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Hero stat strip */
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin-top: 2.8rem;
+      padding-top: 2.2rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-stat { display: flex; flex-direction: column; }
+
+    .hero-stat .stat-num {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-stat .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       FILTER BAR
+    ============================================================ */
+    .filter-bar-wrap {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 70px;
+      z-index: 100;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+
+    .filter-bar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.85rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 40px;
+      border: 1.5px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.02em;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    .filter-chip.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .filter-chip.active.gold {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--line);
+      margin: 0 4px;
+    }
+
+    .results-count {
+      margin-left: auto;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       MAIN CLUBS GRID
+    ============================================================ */
+    .clubs-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.8rem 2.5rem 5rem;
+    }
+
+    /* Section heading (e.g. "Academic", "Arts") */
+    .category-section { margin-bottom: 3.5rem; }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-accent {
+      width: 6px;
+      height: 32px;
+      background: var(--gold);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .category-title {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .category-count {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--light-bg);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .category-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* Club cards grid */
+    .clubs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.4rem;
+    }
+
+    /* ── Individual club card ── */
+    .club-card {
+      background: var(--panel);
+      border-radius: 14px;
+      border: 1.5px solid var(--line);
+      padding: 1.5rem 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .club-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.22s;
+    }
+
+    .club-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+      border-color: rgba(246,174,45,0.45);
+    }
+
+    .club-card:hover::before { transform: scaleX(1); }
+
+    .club-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(11,28,58,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .club-card-name {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 0.45rem;
+      line-height: 1.2;
+    }
+
+    .club-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 1.1rem;
+    }
+
+    .club-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .club-meta-row i {
+      font-size: 0.78rem;
+      color: var(--navy);
+      opacity: 0.5;
+      width: 14px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .club-card-desc {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1.3rem;
+      flex: 1;
+    }
+
+    .club-card-divider {
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 1rem;
+    }
+
+    .club-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .open-club-btn {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.18s, gap 0.18s;
+    }
+
+    .open-club-btn i { font-size: 0.65rem; transition: transform 0.18s; }
+
+    .club-card:hover .open-club-btn { color: var(--gold-dark); }
+    .club-card:hover .open-club-btn i { transform: translateX(3px); }
+
+    .club-tag {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: var(--light-bg);
+      color: var(--muted);
+    }
+
+    .club-tag.open    { background: #e6f9f0; color: #1a7a4a; }
+    .club-tag.limited { background: #fff8e6; color: #a06a00; }
+    .club-tag.full    { background: #fdecea; color: #c0392b; }
+
+    /* ============================================================
+       EMPTY STATE
+    ============================================================ */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 5rem 2rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state i { font-size: 3rem; opacity: 0.3; }
+    .empty-state h3 { font-size: 1.1rem; color: var(--navy); }
+    .empty-state p  { font-size: 0.9rem; max-width: 320px; }
+
+    /* ============================================================
+       CALL TO ACTION BANNER
+    ============================================================ */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 100%);
+      border-top: 4px solid var(--gold);
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      margin-bottom: 0.6rem;
+    }
+
+    .cta-banner h2 span { color: var(--gold); }
+
+    .cta-banner p {
+      font-size: 1rem;
+      opacity: 0.75;
+      margin-bottom: 1.8rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--gold-dark), 0 4px 18px rgba(0,0,0,0.2);
+      transition: 0.1s ease;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 var(--gold-dark), 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .site-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 2.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 1.8rem;
+      text-align: left;
+    }
+
+    .footer-col h4 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 0.7rem;
+    }
+
+    .footer-col p { font-size: 0.88rem; line-height: 1.8; }
+
+    .social-row { display: flex; gap: 12px; margin-top: 0.6rem; }
+
+    .social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: background 0.18s;
+      font-size: 0.9rem;
+    }
+
+    .social-link:hover { background: var(--gold); color: var(--navy); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.82rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       HIDDEN CARDS (filtered out)
+    ============================================================ */
+    .club-card.hidden { display: none; }
+    .category-section.hidden { display: none; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .header-container { padding: 10px 1.2rem; }
+      .page-hero         { padding: 2.5rem 1.2rem 2rem; }
+      .filter-bar        { padding: 0.7rem 1.2rem; }
+      .clubs-main        { padding: 1.8rem 1.2rem 4rem; }
+      .hero-stats        { gap: 1.5rem; }
+      .results-count     { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="site-header">
+  <div class="header-container">
+    <div class="logo-area">
+      <div class="logo-placeholder"><i class="fas fa-paw"></i></div>
+      <div class="school-title">
+        <h1>Dr. G.W. Williams S.S.</h1>
+        <span>Student Council</span>
+      </div>
+    </div>
+    <nav class="topbar">
+      <a href="#">Home</a>
+      <a href="#" class="active">Clubs</a>
+      <a href="#">Gallery</a>
+      <a href="#">About</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<div class="page-hero">
+  <div class="hero-shape"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <i class="fas fa-users"></i> Williams STUCO
+    </div>
+    <h1 class="hero-title">Find Your<br><span>Club</span></h1>
+    <p class="hero-tagline">Explore every club, team, and organization at Dr. G.W. Williams S.S. — find where you belong.</p>
+
+    <div class="search-wrap">
+      <i class="fas fa-search"></i>
+      <input
+        class="search-input"
+        id="searchInput"
+        type="text"
+        placeholder="Search by club name, location, or time…"
+        oninput="handleSearch()"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-num" id="totalCount">16</span>
+        <span class="stat-label">Total Clubs</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">400+</span>
+        <span class="stat-label">Student Members</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Days a Week</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FILTER BAR
+============================================================ -->
+<div class="filter-bar-wrap">
+  <div class="filter-bar">
+    <span class="filter-label"><i class="fas fa-filter"></i> Filter</span>
+    <button class="filter-chip active gold" onclick="filterCategory('all', this)">All Clubs</button>
+    <button class="filter-chip" onclick="filterCategory('academic', this)"><i class="fas fa-book"></i> Academic</button>
+    <button class="filter-chip" onclick="filterCategory('arts', this)"><i class="fas fa-palette"></i> Arts</button>
+    <button class="filter-chip" onclick="filterCategory('community', this)"><i class="fas fa-hands-helping"></i> Community</button>
+    <button class="filter-chip" onclick="filterCategory('sports', this)"><i class="fas fa-running"></i> Sports &amp; Rec</button>
+    <div class="filter-divider"></div>
+    <button class="filter-chip" onclick="filterDay('Mon', this)">Mon</button>
+    <button class="filter-chip" onclick="filterDay('Tue', this)">Tue</button>
+    <button class="filter-chip" onclick="filterDay('Wed', this)">Wed</button>
+    <button class="filter-chip" onclick="filterDay('Thu', this)">Thu</button>
+    <button class="filter-chip" onclick="filterDay('Fri', this)">Fri</button>
+    <span class="results-count" id="resultsCount">Showing 16 clubs</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     CLUBS GRID
+============================================================ -->
+<div class="clubs-main" id="clubsMain">
+
+  <!-- ACADEMIC -->
+  <div class="category-section" data-category="academic" id="cat-academic">
+    <div class="category-header">
+      <div class="category-accent"></div>
+      <span class="category-title"><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>Academic</span>
+      <span class="category-count">6 clubs</span>
+      <div class="category-divider"></div>
+    </div>
+    <div class="clubs-grid">
+
+      <div class="club-card" data-category="academic" data-day="Fri" data-name="debate club library weekly fri" onclick="openClub('debate-club')">
+        <div class="club-card-icon">🎤</div>
+        <div class="club-card-name">Debate Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Library</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Fri</div>
+        </div>
+        <p class="club-card-desc">Sharpen your critical thinking and public speaking skills. We compete in regional and national debate tournaments.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="academic" data-day="Tue" data-name="science club room 214 weekly tue" onclick="openClub('science-club')">
+        <div class="club-card-icon">🧪</div>
+        <div class="club-card-name">Science Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 214</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Tue</div>
+        </div>
+        <p class="club-card-desc">Hands-on experiments, STEM competitions, and science fair preparation. All grades welcome.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="academic" data-day="Wed" data-name="coding club room 216 weekly wed" onclick="openClub('coding-club')">
+        <div class="club-card-icon">💻</div>
+        <div class="club-card-name">Coding Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 216</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Wed</div>
+        </div>
+        <p class="club-card-desc">Learn Python, web development, game design, and compete in hackathons. Beginners and veterans welcome.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="academic" data-day="Thu" data-name="model united nations room 222 biweekly thu" onclick="openClub('mun')">
+        <div class="club-card-icon">🌍</div>
+        <div class="club-card-name">Model United Nations</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 222</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Biweekly – Thu</div>
+        </div>
+        <p class="club-card-desc">Simulate the UN General Assembly, debate global issues, and represent countries at conferences across Ontario.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag limited">Limited Spots</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="academic" data-day="Mon" data-name="math team room 108 weekly mon" onclick="openClub('math-team')">
+        <div class="club-card-icon">📐</div>
+        <div class="club-card-name">Math Team</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 108</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Mon</div>
+        </div>
+        <p class="club-card-desc">Problem-solving, competition prep for Waterloo contests, and helping each other love mathematics.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="academic" data-day="Wed" data-name="environmental club room 120 weekly wed" onclick="openClub('eco-club')">
+        <div class="club-card-icon">🌱</div>
+        <div class="club-card-name">Environmental Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 120</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Wed</div>
+        </div>
+        <p class="club-card-desc">Sustainability drives, school garden maintenance, and awareness campaigns. Make a real-world impact.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARTS -->
+  <div class="category-section" data-category="arts" id="cat-arts">
+    <div class="category-header">
+      <div class="category-accent"></div>
+      <span class="category-title"><i class="fas fa-palette" style="color:var(--gold); margin-right:8px;"></i>Arts</span>
+      <span class="category-count">4 clubs</span>
+      <div class="category-divider"></div>
+    </div>
+    <div class="clubs-grid">
+
+      <div class="club-card" data-category="arts" data-day="Thu" data-name="drama club auditorium weekly thu" onclick="openClub('drama')">
+        <div class="club-card-icon">🎭</div>
+        <div class="club-card-name">Drama Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Auditorium</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Thu</div>
+        </div>
+        <p class="club-card-desc">Acting, directing, stage design, and full productions each semester. No experience necessary — just passion.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="arts" data-day="Tue" data-name="visual arts club art room biweekly tue" onclick="openClub('visual-arts')">
+        <div class="club-card-icon">🎨</div>
+        <div class="club-card-name">Visual Arts Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Art Room</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Biweekly – Tue</div>
+        </div>
+        <p class="club-card-desc">Painting, illustration, digital media, and showcasing work at the year-end gallery exhibition.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="arts" data-day="Wed" data-name="school band music room weekly wed" onclick="openClub('band')">
+        <div class="club-card-icon">🎷</div>
+        <div class="club-card-name">School Band</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Music Room</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Wed</div>
+        </div>
+        <p class="club-card-desc">Concert performances, festivals, and community events. All instruments welcome — brass, woodwind, percussion.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag limited">Limited Spots</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="arts" data-day="Mon" data-name="yearbook room 230 biweekly mon" onclick="openClub('yearbook')">
+        <div class="club-card-icon">📷</div>
+        <div class="club-card-name">Yearbook</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 230</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Biweekly – Mon</div>
+        </div>
+        <p class="club-card-desc">Photography, graphic design, layout, and telling the story of the school year. Design skills a bonus.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div class="category-section" data-category="community" id="cat-community">
+    <div class="category-header">
+      <div class="category-accent"></div>
+      <span class="category-title"><i class="fas fa-hands-helping" style="color:var(--gold); margin-right:8px;"></i>Community</span>
+      <span class="category-count">3 clubs</span>
+      <div class="category-divider"></div>
+    </div>
+    <div class="clubs-grid">
+
+      <div class="club-card" data-category="community" data-day="Fri" data-name="student council room 101 weekly fri" onclick="openClub('stuco')">
+        <div class="club-card-icon">🏛️</div>
+        <div class="club-card-name">Student Council</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 101</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Fri</div>
+        </div>
+        <p class="club-card-desc">Plan school events, represent student voices, and lead Williams spirit initiatives all year long.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag limited">Elections Required</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="community" data-day="Thu" data-name="peer tutoring library weekly thu" onclick="openClub('tutoring')">
+        <div class="club-card-icon">📚</div>
+        <div class="club-card-name">Peer Tutoring</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Library</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Thu</div>
+        </div>
+        <p class="club-card-desc">Volunteer hours while helping fellow students succeed. Tutors needed in math, sciences, and English.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="community" data-day="Wed" data-name="global awareness club room 210 biweekly wed" onclick="openClub('global')">
+        <div class="club-card-icon">🤝</div>
+        <div class="club-card-name">Global Awareness Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 210</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Biweekly – Wed</div>
+        </div>
+        <p class="club-card-desc">Fundraising, cultural events, and advocacy for global causes. Inclusive, welcoming, and impactful.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPORTS & REC -->
+  <div class="category-section" data-category="sports" id="cat-sports">
+    <div class="category-header">
+      <div class="category-accent"></div>
+      <span class="category-title"><i class="fas fa-running" style="color:var(--gold); margin-right:8px;"></i>Sports &amp; Recreation</span>
+      <span class="category-count">3 clubs</span>
+      <div class="category-divider"></div>
+    </div>
+    <div class="clubs-grid">
+
+      <div class="club-card" data-category="sports" data-day="Tue" data-name="intramural volleyball gymnasium weekly tue" onclick="openClub('volleyball')">
+        <div class="club-card-icon">🏐</div>
+        <div class="club-card-name">Intramural Volleyball</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Gymnasium</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Tue</div>
+        </div>
+        <p class="club-card-desc">Casual and competitive play for all skill levels. Seasonal leagues, tournaments, and inter-school matches.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="sports" data-day="Mon" data-name="badminton club gymnasium weekly mon" onclick="openClub('badminton')">
+        <div class="club-card-icon">🏸</div>
+        <div class="club-card-name">Badminton Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Gymnasium</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Mon</div>
+        </div>
+        <p class="club-card-desc">Friendly matches and competitive training. We enter regional TDSB tournaments every spring.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+      <div class="club-card" data-category="sports" data-day="Thu" data-name="chess club room 105 weekly thu" onclick="openClub('chess')">
+        <div class="club-card-icon">♟️</div>
+        <div class="club-card-name">Chess Club</div>
+        <div class="club-card-meta">
+          <div class="club-meta-row"><i class="fas fa-map-marker-alt"></i> Room 105</div>
+          <div class="club-meta-row"><i class="fas fa-calendar-alt"></i> Weekly – Thu</div>
+        </div>
+        <p class="club-card-desc">From beginners to tournament players. Weekly puzzles, ladder rankings, and YRDSB chess championships.</p>
+        <div class="club-card-divider"></div>
+        <div class="club-card-footer">
+          <a class="open-club-btn" href="#">Open Club Page <i class="fas fa-arrow-right"></i></a>
+          <span class="club-tag open">Open</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" id="emptyState">
+    <i class="fas fa-search"></i>
+    <h3>No clubs found</h3>
+    <p>Try a different search term or clear your filters.</p>
+    <button class="cta-btn" style="margin-top:0.5rem;" onclick="resetAll()"><i class="fas fa-undo"></i> Reset Filters</button>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     CTA BANNER
+============================================================ -->
+<div class="cta-banner">
+  <h2>Don't See Your Club? <span>Start One.</span></h2>
+  <p>Any Williams student can propose a new club. Talk to STUCO or fill out a New Club Request form.</p>
+  <a href="#" class="cta-btn"><i class="fas fa-plus-circle"></i> Request a New Club</a>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>School Info</h4>
+      <p>Aurora · Ontario · Canada</p>
+      <p>11 Spring Farm Road · L4G 7W2</p>
+      <p>(905) 727-3131</p>
+    </div>
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <p>Stay connected with Williams STUCO</p>
+      <div class="social-row">
+        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link" title="X / Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="social-link" title="Google Classroom"><i class="fas fa-chalkboard"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span><i class="fas fa-paw" style="color:var(--gold);"></i> Dr. G.W. Williams S.S. · Student Council 2025–26</span>
+    <span>© 2025 Williams STUCO · All rights reserved</span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JS — search + filter
+============================================================ -->
+<script>
+  let activeCategory = 'all';
+  let activeDay      = null;
+
+  const allCards = () => document.querySelectorAll('.club-card');
+  const allCats  = () => document.querySelectorAll('.category-section');
+
+  function applyFilters() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    let visible = 0;
+
+    allCards().forEach(card => {
+      const name    = card.dataset.name  || '';
+      const cat     = card.dataset.category || '';
+      const day     = card.dataset.day   || '';
+
+      const matchSearch   = !query || name.includes(query);
+      const matchCategory = activeCategory === 'all' || cat === activeCategory;
+      const matchDay      = !activeDay || day === activeDay;
+
+      const show = matchSearch && matchCategory && matchDay;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    // Hide categories that have no visible cards
+    allCats().forEach(sec => {
+      const anyVisible = [...sec.querySelectorAll('.club-card')].some(c => !c.classList.contains('hidden'));
+      sec.classList.toggle('hidden', !anyVisible);
+    });
+
+    // Empty state
+    document.getElementById('emptyState').style.display = visible === 0 ? 'flex' : 'none';
+    document.getElementById('resultsCount').textContent =
+      `Showing ${visible} club${visible !== 1 ? 's' : ''}`;
+  }
+
+  function handleSearch() { applyFilters(); }
+
+  function filterCategory(cat, btn) {
+    activeCategory = cat;
+    document.querySelectorAll('.filter-bar .filter-chip').forEach(c => {
+      c.classList.remove('active', 'gold');
+    });
+    btn.classList.add('active');
+    if (cat === 'all') btn.classList.add('gold');
+    applyFilters();
+  }
+
+  function filterDay(day, btn) {
+    if (activeDay === day) {
+      activeDay = null;
+      btn.classList.remove('active');
+    } else {
+      // Deactivate previous day chip
+      document.querySelectorAll('.filter-bar .filter-chip').forEach(c => {
+        const days = ['Mon','Tue','Wed','Thu','Fri'];
+        if (days.some(d => c.textContent.trim() === d)) c.classList.remove('active');
+      });
+      activeDay = day;
+      btn.classList.add('active');
+    }
+    applyFilters();
+  }
+
+  function resetAll() {
+    activeCategory = 'all';
+    activeDay = null;
+    document.getElementById('searchInput').value = '';
+    document.querySelectorAll('.filter-bar .filter-chip').forEach(c => {
+      c.classList.remove('active', 'gold');
+    });
+    document.querySelector('.filter-chip').classList.add('active', 'gold');
+    applyFilters();
+  }
+
+  function openClub(slug) {
+    // Placeholder — wire to actual club pages
+    // window.location.href = `/clubs/${slug}`;
+  }
+
+  // Init
+  applyFilters();
+</script>
+
+</body>
+</html>
