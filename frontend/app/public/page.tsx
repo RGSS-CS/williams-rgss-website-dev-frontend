@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from './public.module.css';
 // import { Club } from "@/types/club";
 
 //async function getDjangoAPI(): Promise<Club[]> {
@@ -29,84 +28,84 @@ export default async function Page() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
-            <div className={styles.ticker_bar}>
-                <div className={styles.ticker_header}>
+            <div className="ticker_bar">
+                <div className="ticker_header">
                     <h4><i className="fas fa-star"></i> Updates</h4>
                 </div>
 
-                <div className={styles.ticker_track}>
-                    <div className={styles.ticker_inner} id="ticker-inner">
+                <div className="ticker_track">
+                    <div className="ticker_inner" id="ticker-inner">
                     </div>
                 </div>
             </div>
-            <div className={styles.hero}>
-                <div className={styles.hero_shape}></div>
-                <div className={styles.hero_inner}>
-                    <div className={styles.hero_left}>
-                        <div className={styles.hero_tag}>
+            <div className="hero">
+                <div className="hero_shape"></div>
+                <div className="hero_inner">
+                    <div className="hero_left">
+                        <div className="hero_tag">
                             <h4>Student Council {getSchoolYear()}</h4>
                         </div>
-                        <div className={styles.hero_title}>
+                        <div className="hero_title">
                             <h1>GW. Williams</h1>
                             <h1>STUCO</h1>
                         </div>
-                        <div className={styles.hero_tagline}>
+                        <div className="hero_tagline">
                             <h5>Representing Student Voice.</h5>
                             <h5>Building Wildcat Spirit.</h5>
                         </div>
-                        <div className={styles.hero_buttons}>
-                            <div className={styles.hero_btn_primary}>
-                                <Link href="/public/clubs" className={styles.hero_btn_text}>
+                        <div className="hero_buttons">
+                            <div className="hero_btn_primary">
+                                <Link href="/public/clubs" className="hero_btn_text">
                                     <i className="fas fa-paper-plane"></i> Our Clubs
                                 </Link>
                             </div>
-                            <div className={styles.hero_btn_secondary}>
-                                <a className={styles.hero_btn_text_alt} href="#events">
-                                    <i className={`fas fa-calendar-alt ${styles.fas_fa_calendar_alt}`}></i> Upcoming Events
+                            <div className="hero_btn_secondary">
+                                <a className="hero_btn_text_alt" href="#events">
+                                    <i className="fas fa-calendar-alt fas_fa_calendar_alt"></i> Upcoming Events
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div className={styles.hero_badge_image}>
+                    <div className="hero_badge_image">
                         <Image src="/images/logo/wildcat-icon.png" alt="Wildcat Icon" width={230} height={200} />
                     </div>
                 </div>
-                <div className={styles.hero_photo_strip}>
+                <div className="hero_photo_strip">
                     {/* Add photos here after database is set up */}
                 </div>
             </div>
-            <div className={`${styles.section_wrap} ${styles.announcements_section}`}>
-                <div className={styles.section_content}>
-                    <div className={styles.section_title_row}>
-                        <h2 className={styles.section_title}>
-                            <span className={styles.section_title_accent}></span>
+            <div className="section_wrap announcements_section">
+                <div className="section_content">
+                    <div className="section_title_row">
+                        <h2 className="section_title">
+                            <span className="section_title_accent"></span>
                             Announcements
                         </h2>
                     </div>
-                    <div className={styles.card_container}>
-                        <div className={styles.card_row}>
+                    <div className="card_container">
+                        <div className="card_row">
                             {/* Put Announcement cards here after database is set up */}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className={`${styles.section_wrap} ${styles.events_section}`} id="events">
-                <div className={styles.section_title}>
-                    <span className={styles.section_title_accent}></span>
-                    <h2 className={styles.section_title}>Events</h2>
+            <div className="section_wrap events_section" id="events">
+                <div className="section_title">
+                    <span className="section_title_accent"></span>
+                    <h2 className="section_title">Events</h2>
                 </div>
                 {/*Add calendar page*/}
             </div>
-            <div className={`${styles.section_wrap} ${styles.council_section}`}>
-                <div className={styles.section_content}>
-                    <div className={styles.section_title_row}>
-                        <h2 className={styles.section_title}>
-                            <span className={styles.section_title_accent}></span>
+            <div className="section_wrap council_section">
+                <div className="section_content">
+                    <div className="section_title_row">
+                        <h2 className="section_title">
+                            <span className="section_title_accent"></span>
                             Meet the Council
                         </h2>
                     </div>
-                    <div className={styles.card_container}>
-                        <div className={styles.card_row}>
+                    <div className="card_container">
+                        <div className="card_row">
                             {/*Add section for school council*/}
                         </div>
                     </div>

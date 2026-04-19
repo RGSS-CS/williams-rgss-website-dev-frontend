@@ -22,7 +22,12 @@ export default async function ClubsPage() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
-            <h1>Clubs</h1>
+            <div className="hero">
+                <div className="hero_shape"></div>
+                <div className="hero_inner">
+                    
+                </div>
+            </div>
         </main>
     );
 }
