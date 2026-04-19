@@ -36,9 +36,9 @@ export default async function Page() {
                         </div>
                         <div className="hero_title">
                             <h1>GW. Williams</h1>
-                            <h1>STUCO</h1>
+                            <h2>STUCO</h2>
                         </div>
-                        <div className="hero_tagline">
+                        <div className="hero_subtitle">
                             <h5>Representing Student Voice.</h5>
                             <h5>Building Wildcat Spirit.</h5>
                         </div>
