@@ -46,3 +46,5 @@ package-lock.json
 .vscode/
 
 .hintrc
+
+package-lock.json
