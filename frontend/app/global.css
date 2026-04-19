@@ -121,8 +121,8 @@ h3 {
 }
 
 .nav-links .active {
-  background: var(--school-tertiary);
-  color: var(--school-primary);
+  background: var(--school-tertiary) !important;
+  color: var(--school-primary) !important;
 }
 
 /* Footer Styles
