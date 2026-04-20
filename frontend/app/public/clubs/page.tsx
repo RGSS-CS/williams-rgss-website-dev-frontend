@@ -1,6 +1,4 @@
 "use client"
-
-import type { FormEvent } from "react";
 import handleSearch from "@/utils/HandleSearch";
 import { filterCategory } from "@/utils/filterCategory"
 import { filterDay } from "@/utils/filterCategory"
@@ -33,7 +31,7 @@ export default function ClubsPage() {
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>
-                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onInput={(e: FormEvent<HTMLInputElement>) => handleSearch(e)} autoComplete="off"></input>
+                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onChange={handleSearch} autoComplete="off"></input>
                         </div>
                         <div className="hero_stats">
                             <div className="hero_stat">
