@@ -3,7 +3,7 @@ import './global.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import NavLinks from '@/components/NavLinks';
-import Navbar from '@/components/navbarHeight';
+import Navbar from '@/components/navbar';
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',
