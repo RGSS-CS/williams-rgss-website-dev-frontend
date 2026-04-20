@@ -1,16 +1,10 @@
-import link from "next/link";
-import Image from "next/image";
+"use client"
+
+import type { FormEvent } from "react";
 import handleSearch from "@/utils/HandleSearch";
 import { filterCategory } from "@/utils/filterCategory"
 import { filterDay } from "@/utils/filterCategory"
 import { resetAll } from "@/utils/filterCategory"
-// import { Club } from "@/types/club";
-
-type Club = {
-    id: number;
-    name: string;
-    description: string;
-}
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -21,7 +15,7 @@ type Club = {
 //    return res.json();
 //}
 
-export default async function ClubsPage() {
+export default function ClubsPage() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
@@ -39,7 +33,7 @@ export default async function ClubsPage() {
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>
-                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onInput={handleSearch()} autoComplete="off"></input>
+                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onInput={(e: FormEvent<HTMLInputElement>) => handleSearch(e)} autoComplete="off"></input>
                         </div>
                         <div className="hero_stats">
                             <div className="hero_stat">
@@ -61,29 +55,29 @@ export default async function ClubsPage() {
                             <i className="fas fa-filter"></i>
                             Filter
                         </span>
-                        <button className="filter-chip active gold" onClick={filterCategory('all', this)}>All Clubs</button>
-                        <button className="filter-chip" onClick={filterCategory('academic', this)}>
+                        <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
+                        <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
                             <i className="fas fa-book"></i>
                             Academic
                         </button>
-                        <button className="filter-chip" onClick={filterCategory('arts', this)}>
+                        <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
                             <i className="fas fa-palette"></i>
                             Arts
                         </button>
-                        <button className="filter-chip" onClick={filterCategory('community', this)}>
+                        <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
                             <i className="fas fa-hands-helping"></i>
                             Community
                         </button>
-                        <button className="filter-chip" onClick={filterCategory('sports', this)}>
+                        <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
                             <i className="fas fa-running"></i>
                             Sports &amp; Rec
                         </button>
                         <div className="filter_divider"></div>
-                        <button className="filter-chip" onClick={filterDay('Mon', this)}>Mon</button>
-                        <button className="filter-chip" onClick={filterDay('Tue', this)}>Tue</button>
-                        <button className="filter-chip" onClick={filterDay('Wed', this)}>Wed</button>
-                        <button className="filter-chip" onClick={filterDay('Thur', this)}>Thur</button>
-                        <button className="filter-chip" onClick={filterDay('Fri', this)}>Fri</button>
+                        <button className="filter-chip" onClick={(e) => filterDay('Mon', e.currentTarget)}>Mon</button>
+                        <button className="filter-chip" onClick={(e) => filterDay('Tue', e.currentTarget)}>Tue</button>
+                        <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
+                        <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
+                        <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
                         <div className="filter_divider"></div>
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
@@ -132,12 +126,12 @@ export default async function ClubsPage() {
                         <i className="fas fa-search"></i>
                         <h3>No Clubs Found</h3>
                         <p>Try a different search term or clear your filters</p>
-                        <button className="cta-btn" onClick={resetAll()}><i className="fas fa-undo"></i>Reset Filters</button>
+                        <button className="cta-btn" onClick={resetAll}><i className="fas fa-undo"></i>Reset Filters</button>
                     </div>
                 </div>
             </div>
             <div className="cta-banner">
-                <h2>Don't See Your Club? <span>Start One.</span></h2>
+                <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
                 <p>{/*Edit this message for club starting */}</p>
             </div>
         </main>
