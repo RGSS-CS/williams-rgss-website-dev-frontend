@@ -132,7 +132,7 @@ export default function ClubsPage() {
             </div>
             <div className="cta-banner">
                 <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
-                <p>{/*Edit this message for club starting */}</p>
+                <p>Any GW Williams student can start a new club. Talk to a teacher that is interested with your idea.</p>
             </div>
         </main>
     );
