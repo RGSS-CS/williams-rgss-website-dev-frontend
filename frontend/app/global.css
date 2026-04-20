@@ -95,18 +95,20 @@ h3 {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
 }
 
 .logo {
   margin-top: 10px;
 }
 
-#school-title {
+.school-title {
   font-size: 13px;
   font-weight: 700;
+  color: var(--white);
 }
 
-#school-subtitle {
+.school-subtitle {
   color: var(--school-secondary);
   font-size: 0.9rem;
   letter-spacing: 0.06rem;
@@ -283,7 +285,7 @@ body {
 }
 
 .hero_inner {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;

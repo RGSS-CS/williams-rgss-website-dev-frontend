@@ -8,6 +8,7 @@ const links = [
   { href: '/public/clubs', iconClass: 'fas fa-users', label: 'Clubs' },
   { href: '/public/gallery', iconClass: 'fas fa-images', label: 'Gallery' },
   { href: '/public/about', iconClass: 'fas fa-info-circle', label: 'About' },
+  { href: '/public/login', iconClass: 'fas fa-solid fa-arrow-right-to-bracket', label: 'Login'},
 ];
 
 function isActivePath(pathname: string, href: string) {
