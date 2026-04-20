@@ -68,7 +68,7 @@ export default function ClubsPage() {
                         </button>
                         <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
                             <i className="fas fa-running"></i>
-                            Sports &amp; Rec
+                            Sports &amp; Recreation
                         </button>
                         <div className="filter_divider"></div>
                         <button className="filter-chip" onClick={(e) => filterDay('Mon', e.currentTarget)}>Mon</button>
