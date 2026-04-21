@@ -62,11 +62,12 @@ export default function GalleryPage() {
                                     <p>{/*List out clubs that are part of academic section*/}</p>
                                 </div>
                             </div>
+                            <span className="section-photo-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
                         </div>
-                        <span className="section-photo-count">
-                            <i className="fas fa-images"></i>
-                            0 photos
-                        </span>
+
                     </div>
                     <div className="gallery-section" data-section="arts">
                         <div className="section-header">
@@ -77,11 +78,12 @@ export default function GalleryPage() {
                                     <p>{/*List out clubs that are part of academic section*/}</p>
                                 </div>
                             </div>
+                            <span className="section-photo-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
                         </div>
-                        <span className="section-photo-count">
-                            <i className="fas fa-images"></i>
-                            0 photos
-                        </span>
+
                     </div>
                     <div className="gallery-section" data-section="community">
                         <div className="section-header">
@@ -92,11 +94,12 @@ export default function GalleryPage() {
                                     <p>{/*List out clubs that are part of community section*/}</p>
                                 </div>
                             </div>
+                            <span className="section-photo-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
                         </div>
-                        <span className="section-photo-count">
-                            <i className="fas fa-images"></i>
-                            0 photos
-                        </span>
+
                     </div>
                     <div className="gallery-section" data-section="sports">
                         <div className="section-header">
@@ -107,11 +110,12 @@ export default function GalleryPage() {
                                     <p>{/*List out teams that are part of sports section*/}</p>
                                 </div>
                             </div>
+                            <span className="section-photo-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
                         </div>
-                        <span className="section-photo-count">
-                            <i className="fas fa-images"></i>
-                            0 photos
-                        </span>
+
                     </div>
                     <div className="gallery-section" data-section="events">
                         <div className="section-header">
@@ -122,11 +126,12 @@ export default function GalleryPage() {
                                     <p>{/*List out events that happened*/}</p>
                                 </div>
                             </div>
+                            <span className="section-photo-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
                         </div>
-                        <span className="section-photo-count">
-                            <i className="fas fa-images"></i>
-                            0 photos
-                        </span>
+
                     </div>
                 </div>
             </div>
@@ -135,7 +140,7 @@ export default function GalleryPage() {
                 <button className="lightbox-nav-btn next"><i className="fas fa-chevron-right"></i></button>
                 <div className="lightbox-inner">
                     <div className="lightbox-img-container" id="lightboxImgWrap">
-                        <img src="" alt=""></img>
+                        <img src="null" alt=""></img>
                     </div>
                     <div className="lightbox-meta">
                         <span className="lightbox-caption-text" id="lightboxCaption"></span>
