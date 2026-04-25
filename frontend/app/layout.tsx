@@ -1,8 +1,6 @@
 // These styles apply to every route in the application
 import './global.css';
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import NavLinks from '@/components/NavLinks';
 import Navbar from '@/components/navbar';
 
 export const metadata: Metadata = {
