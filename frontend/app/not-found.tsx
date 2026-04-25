@@ -24,12 +24,7 @@ export default function NotFound() {
                     <i className="fa-solid fa-house"></i>
                     Go to Home
                 </a>
-                <a href="javascript:history.back()" className="btn-back">
-                    <i className="fa-solid fa-arrow-left"></i>
-                    Go Back
-                </a>
             </div>
-
         </div>
     )
 }
