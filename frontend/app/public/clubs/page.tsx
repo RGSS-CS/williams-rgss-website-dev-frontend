@@ -79,6 +79,7 @@ export default function ClubsPage() {
                         <div className="filter_divider"></div>
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
+                 {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </div>
                 <div className="clubs_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
