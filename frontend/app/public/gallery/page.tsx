@@ -50,6 +50,7 @@ export default function GalleryPage() {
                             <i className="fas fa-running"></i>
                             School Events
                         </button>
+                        {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                     </div>
                 </div>
                 <div className="gallery_container">
