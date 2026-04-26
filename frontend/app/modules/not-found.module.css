@@ -5,6 +5,11 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: var(--school-primary);
+    border-top: var(--school-tertiary) solid 4px;
+    border-bottom: var(--school-tertiary) solid 4px;
 }
 
 .gif_stage {
@@ -26,7 +31,6 @@
 }
 
 .num_404 {
-    font-family: var(--font-disp);
     font-size: 7rem;
     line-height: 1;
     letter-spacing: 0.04em;
@@ -48,7 +52,7 @@
     0 0 0 1px rgba(246,174,45,0.1),
     0 24px 80px rgba(0,0,0,0.6),
     inset 0 1px 0 rgba(255,255,255,0.06);
-    background: var(--navy-mid);
+    background: var(--school-primary);
     position: relative;
 }
 
@@ -94,7 +98,7 @@
 
 .copy p {
     font-size: 0.88rem;
-    color: var(--muted);
+    color: var(--white);
     max-width: 300px;
     line-height: 1.65;
 }
@@ -112,11 +116,10 @@
     align-items: center;
     gap: 8px;
     padding: 11px 22px;
-    background: var(--gold);
-    color: var(--navy);
+    background: var(--school-tertiary);
+    color: var(--school-primary);
     border: none;
     border-radius: 10px;
-    font-family: var(--font-head);
     font-weight: 800;
     font-size: 0.85rem;
     cursor: pointer;
@@ -124,5 +127,5 @@
     transition: background 0.18s, transform 0.12s;
 }
 
-.btn_home:hover { background: var(--gold-dark); }
+.btn_home:hover { background: var(--school-tertiary-dark); }
 .btn_home:active { transform: scale(0.97); }

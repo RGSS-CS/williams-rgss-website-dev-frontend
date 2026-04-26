@@ -29,7 +29,7 @@ export default function Navbar() {
               <div className="logo">
                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
               </div>
-              <div className="title-title">
+              <div>
                 <span className="school-title"><h1>Dr. GW Williams S.S.</h1></span>
                 <span className="school-subtitle">Student Council</span>
               </div>
