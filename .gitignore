@@ -48,3 +48,5 @@ package-lock.json
 .hintrc
 
 package-lock.json
+
+build.log
