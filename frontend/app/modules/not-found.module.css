@@ -1,0 +1,131 @@
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: var(--school-primary);
+    border-top: var(--school-tertiary) solid 4px;
+    border-bottom: var(--school-tertiary) solid 4px;
+}
+
+.gif_stage {
+    position: relative;
+    width: 380px;
+    max-width: 100%;
+}
+
+.overlay_404 {
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.num_404 {
+    font-size: 7rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: white;
+    text-shadow:
+    0 0 40px rgba(246,174,45,0.6),
+    0 2px 0 rgba(0,0,0,0.5),
+    0 4px 24px rgba(0,0,0,0.7);
+}
+
+.num_404 span { color: var(--school-tertiary); }
+
+.gif_frame {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    box-shadow:
+    0 0 0 1px rgba(246,174,45,0.1),
+    0 24px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+    background: var(--school-primary);
+    position: relative;
+}
+
+.gif_frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(
+    to bottom,
+    rgba(7,17,31,0.15) 0%,
+    rgba(7,17,31,0.55) 35%,
+    rgba(7,17,31,0.55) 65%,
+    rgba(7,17,31,0.15) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.gif_frame img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+}
+
+.copy {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.copy h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: white;
+    line-height: 1.3;
+}
+
+.copy p {
+    font-size: 0.88rem;
+    color: var(--white);
+    max-width: 300px;
+    line-height: 1.65;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn_home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: var(--school-tertiary);
+    color: var(--school-primary);
+    border: none;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.18s, transform 0.12s;
+}
+
+.btn_home:hover { background: var(--school-tertiary-dark); }
+.btn_home:active { transform: scale(0.97); }
