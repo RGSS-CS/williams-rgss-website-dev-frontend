@@ -1,7 +1,9 @@
 name: Test Docker Image
 
 on:
-  pull_request:
+  push:
+    branches:
+      - testing-dev
     paths:
       - "frontend/**"
       - ".github/workflows/docker-test.yml"
