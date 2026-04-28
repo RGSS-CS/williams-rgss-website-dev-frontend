@@ -619,7 +619,7 @@ body {
   white-space: nowrap;
 }
 
-.clubs_container {
+.grid_container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2.8rem 2.5rem 5rem;
@@ -651,15 +651,6 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--school-primary);
-}
-
-.category-count {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--school-primary-light);
-  padding: 3px 10px;
-  border-radius: 20px;
 }
 
 .category-divider {
@@ -731,44 +722,7 @@ body {
   margin-bottom: 4rem;
 }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 1.6rem;
-}
-
-.section-heading-group {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.section-accent-bar {
-  width: 6px;
-  height: 100%;
-  min-height: 36px;
-  background: var(--school-tertiary);
-  border-radius: 4px;
-  margin-right: 18px;
-  flex-shrink: 0;
-}
-
-.section-heading h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--school-primary);
-  line-height: 1.1;
-}
-
-.section-heading p {
-  font-size: 0.88rem;
-  color: var(--school-primary-light)
-}
-
-.section-photo-count {
+.category-count {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -781,12 +735,6 @@ body {
   border: 1px solid var(--line);
   padding: 5px 14px;
   border-radius: 40px
-}
-
-.section-divider {
-  height: 1px;
-  background: var(--line);
-  margin-bottom: 1.6rem;
 }
 
 .fas {
