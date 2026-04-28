@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+<<<<<<< HEAD:frontend/app/(public)/ui/navbar.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,6 +26,14 @@ function isActivePath(pathname: string, href: string) {
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+=======
+import Image from 'next/image';
+import NavLinks from "./navlinks";
+import "@/app/public/styles.css"
+
+export default function Navbar() {
+  const navRef = useRef<HTMLElement>(null);
+>>>>>>> c5c41b28c23724e6e32038367c4d206bdd5a429b:frontend/app/public/ui/navbar.tsx
   const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
@@ -41,6 +50,7 @@ export default function Navbar() {
   }, []);
   
   return (
+<<<<<<< HEAD:frontend/app/(public)/ui/navbar.tsx
     <nav ref={navRef} className={styles.navbar}>
           <div className={styles.headerContainer}>
             <a className={styles.titleContainer} href="/public">
@@ -68,3 +78,21 @@ export default function Navbar() {
     </nav>
   );
 }
+=======
+    <nav ref={navRef} className="navbar">
+          <div className="header-container">
+            <a className="title-container" href="/public">
+              <div className="logo">
+                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+              </div>
+              <div>
+                <span className="school-title"><h1>Dr. GW Williams S.S.</h1></span>
+                <span className="school-subtitle">Student Council</span>
+              </div>
+            </a>
+            <NavLinks />
+          </div>
+    </nav>
+  );
+}
+>>>>>>> c5c41b28c23724e6e32038367c4d206bdd5a429b:frontend/app/public/ui/navbar.tsx
