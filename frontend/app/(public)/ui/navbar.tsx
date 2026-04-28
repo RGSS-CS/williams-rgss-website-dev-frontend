@@ -1,12 +1,30 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Image from 'next/image';
-import NavLinks from "./navlinks";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "@/app/_modules/navbar.module.css";
+
+const links = [
+  { href: "/", iconClass: "fas fa-home", label: "Home" },
+  { href: "/clubs", iconClass: "fas fa-users", label: "Clubs" },
+  { href: "/gallery", iconClass: "fas fa-images", label: "Gallery" },
+  { href: "/about", iconClass: "fas fa-info-circle", label: "About" },
+  { href: "/login", iconClass: "fas fa-solid fa-arrow-right-to-bracket", label: "Login" },
+];
+
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === href;
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
   const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
@@ -34,7 +52,18 @@ export default function Navbar() {
                 <span className={styles.schoolSubtitle}>Student Council</span>
               </div>
             </a>
-            <NavLinks />
+            <div className={styles.navLinks}>
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.navLink} ${isActivePath(pathname, link.href) ? styles.active : ""}`.trim()}
+                >
+                  <i className={link.iconClass}></i>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
     </nav>
   );
