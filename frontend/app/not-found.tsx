@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '@/app/_modules/not-found.module.css'
+import './global.css'
 
 export default function NotFound() {
     return (
+        <body>
         <div className={styles.content}>
             <div className={styles.gif_stage}>
                 <div className={styles.overlay_404}>
@@ -26,5 +28,6 @@ export default function NotFound() {
                 </a>
             </div>
         </div>
+    </body>
     )
 }

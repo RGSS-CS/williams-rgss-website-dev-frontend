@@ -13,7 +13,7 @@ import { resetAll } from "@/utils/filterCategory"
 //    return res.json();
 //}
 
-export default function page() {
+export default function ClubsPage() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
