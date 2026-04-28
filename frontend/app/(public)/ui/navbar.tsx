@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Image from 'next/image';
 import NavLinks from "./navlinks";
-import "@/app/(public)/styles.css"
+import styles from "@/app/_modules/navbar.module.css";
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
@@ -23,15 +23,15 @@ export default function Navbar() {
   }, []);
   
   return (
-    <nav ref={navRef} className="navbar">
-          <div className="header-container">
-            <a className="title-container" href="/public">
-              <div className="logo">
+    <nav ref={navRef} className={styles.navbar}>
+          <div className={styles.headerContainer}>
+            <a className={styles.titleContainer} href="/public">
+              <div className={styles.logo}>
                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
               </div>
               <div>
-                <span className="school-title"><h1>Dr. GW Williams S.S.</h1></span>
-                <span className="school-subtitle">Student Council</span>
+                <span className={styles.schoolTitle}><h1>Dr. GW Williams S.S.</h1></span>
+                <span className={styles.schoolSubtitle}>Student Council</span>
               </div>
             </a>
             <NavLinks />

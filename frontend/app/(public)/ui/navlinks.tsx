@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import styles from "@/app/_modules/navbar.module.css";
 
 const links = [
   { href: '/', iconClass: 'fas fa-home', label: 'Home' },
@@ -23,12 +24,12 @@ export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <div className="nav-links">
+    <div className={styles.navLinks}>
       {links.map((link) => (
         <Link
           key={link.href}
           href={link.href}
-          className={isActivePath(pathname, link.href) ? 'active' : ''}
+          className={`${styles.navLink} ${isActivePath(pathname, link.href) ? styles.active : ''}`.trim()}
         >
           <i className={link.iconClass}></i>
           {link.label}
