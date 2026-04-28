@@ -1,0 +1,762 @@
+/*Default page styles for public route*/
+
+html {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--school-primary);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scroll-padding-top: var(--navbar-height);
+}
+
+body {
+  background-color: var(--school-primary);
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+/* Navbar Styles
+/* --------------------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--school-primary);
+  color: var(--white);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.navbar .header-container {
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+  padding: 10px 2.5rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Logo and Title Styles
+/* --------------------------------------------- */
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo {
+  margin-top: 10px;
+}
+
+.school-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.school-subtitle {
+  color: var(--school-secondary);
+  font-size: 0.9rem;
+  letter-spacing: 0.06rem;
+  text-transform: uppercase;
+  position: relative;
+  top: -1rem;
+}
+
+/* Navigation Links Styles
+/* --------------------------------------------- */
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 40px;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-links .active {
+  background: var(--school-tertiary) !important;
+  color: var(--school-primary) !important;
+}
+
+/* Footer Styles
+/* --------------------------------------------- */
+.site-footer {
+  background: var(--school-primary);
+  color: var(--school-secondary);
+  padding: 3rem 2.5rem 2.5rem;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-col h4 {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--school-tertiary);
+  margin-bottom: 1rem;
+}
+
+.footer-col p,
+.footer-col a {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  text-decoration: none;
+  color: var(--school-secondary)
+}
+
+.footer-col a:hover {
+  color: var(--school-tertiary);
+}
+
+.social-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 0.75rem;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: all 0.15s;
+  font-size: 0.9rem;
+}
+
+.social-link:hover {
+  border-color: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  font-size: 0.82rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body {
+  background: var(--white);
+}
+
+.ticker_bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--school-primary-light);
+  overflow: hidden;
+  border-bottom: 3px solid var(--school-tertiary);
+  height: 40px;
+}
+
+.ticker_header {
+  color: var(--school-primary);
+  background: var(--school-tertiary);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 16px;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(150deg, var(--school-primary) 0%, var(--school-primary-light) 55%);
+  padding: 4.5rem 2.5rem 0;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 5px solid var(--school-tertiary);
+  font-family: "Montserrat", sans-serif;
+  padding-bottom: 30px;
+}
+
+.hero:before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(246, 174, 45, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero_shape {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 107, 107, 0.35) 0%, rgba(11, 28, 58, 0.0) 70%);
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.hero_inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: start;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+
+.hero_left {
+  flex-direction: column;
+}
+
+.hero_tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(219, 152, 32, 0.1);
+  border: 1px solid rgba(219, 152, 32, 0.3);
+  color: var(--school-tertiary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  padding: 5px 16px;
+  border-radius: 40px;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+
+.hero_tag h4 {
+  margin: 3px;
+}
+
+.hero_title h1,
+.hero_title h2 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  margin-top: 10px
+}
+
+.hero_title h2 {
+  color: var(--school-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.hero_subtitle {
+  border-left: 5px solid var(--school-tertiary);
+  margin-bottom: 2rem;
+}
+
+.hero_subtitle h5 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  opacity: 0.85;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.hero_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hero_btn_primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--school-tertiary);
+  font-weight: 750;
+  font-size: 1rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: 60px;
+  box-shadow: 0 6px 0 var(--school-tertiary-dark), 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: 0.1s ease;
+  border: none;
+  cursor: pointer;
+
+}
+
+.hero_btn_primary a {
+  color: var(--school-primary);
+  text-decoration: none;
+}
+
+.hero_btn_primary:hover {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 var(--school-tertiary-dark), 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero_btn_secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 2rem;
+  border-radius: 60px;
+  transition: all 0.18s;
+  cursor: pointer;
+}
+
+.hero_btn_text_alt {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.hero_btn_secondary:hover {
+  border-color: var(--school-tertiary);
+  color: var(--school-tertiary);
+}
+
+.hero_badge_image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--school-tertiary);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 16px;
+  margin-top: 40px;
+  margin-right: 40px;
+}
+
+.hero_photo_strip {
+  margin-top: 3rem;
+  border-radius: 14px;
+  overflow: hidden;
+  height: 230px;
+  background: var(--school-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--school-primary);
+  border-bottom: none;
+}
+
+.section_wrap {
+  padding: 3rem 4.5rem 0;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  gap: 12px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.section_title {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section_title_accent {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--school-tertiary);
+  border-radius: 50%;
+}
+
+.card_container {
+  position: relative;
+  overflow: hidden;
+}
+
+.search_container {
+  max-width: 680px;
+  position: relative;
+}
+
+.search_container i {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.search_input {
+  width: 100%;
+  padding: 0.9rem 1.2rem 0.9rem 3rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.search_input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search_input:focus {
+  border-color: var(--school-tertiary);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hero_stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-top: 2.8rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hero_stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero_stat .stat-num {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--school-tertiary);
+  line-height: 1;
+}
+
+.hero_stat .stat-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-top: 4px;
+}
+
+.filter_bar_container {
+  background: var(--white);
+  border-bottom: 5px solid var(--school-tertiary);
+  top: var(--navbar-height);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  position: sticky;
+}
+
+.filter_bar {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.85rem 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+}
+
+.filter_label {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.filter_label i {
+  margin-right: 4px
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 40px;
+  border: 1.5px solid var(--school-primary-light);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.02em;
+}
+
+.filter-chip:hover {
+  border-color: var(--school-tertiary);
+  background-color: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.filter-chip.active {
+  background: var(--school-primary);
+  border-color: var(--school-primary);
+  color: white;
+}
+
+.filter-chip.active.gold {
+  background: var(--school-tertiary);
+  border-color: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.filter_divider {
+  width: 1px;
+  height: 22px;
+  background: var(--school-primary-light);
+  margin: 0 4px;
+}
+
+.results-count {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--school-primary-light);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.grid_container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.8rem 2.5rem 5rem;
+}
+
+.category-section {
+  margin-bottom: 3.5rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.category-accent {
+  width: 6px;
+  height: 32px;
+  background: var(--school-tertiary);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.category-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--school-primary);
+}
+
+.category-divider {
+  flex: 1;
+  height: 1.5px;
+  background: var(--line);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.4rem;
+}
+
+.empty-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 2rem;
+  color: var(--school-primary);
+  text-align: center;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.empty-state h3 {
+  font-size: 3rem;
+  color: var(--school-primary);
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  max-width: 320px;
+}
+
+.cta-banner {
+  background: linear-gradient(135deg, var(--school-primary) 0%, var(--school-primary-light) 100%);
+  border-top: 4px solid var(--school-tertiary);
+  padding: 1rem 2.5rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.cta-banner h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+}
+
+.cta-banner h2 span {
+  color: var(--school-tertiary);
+}
+
+.cta-banner p {
+  font-size: 1rem;
+  opacity: 0.75;
+  margin-bottom: 1.8rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gallery_container {
+  margin-bottom: 4rem;
+}
+
+.category-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--school-secondary);
+  color: var(--school-primary-light);
+  border: 1px solid var(--line);
+  padding: 5px 14px;
+  border-radius: 40px;
+  margin-left: 8px;
+}
+
+.fas {
+  margin-right: 6px;
+}
+
+
+/*Add photo grid CSS*/
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7,17,31,0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  padding: 1.5rem
+}
+
+.lightbox-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox-inner {
+  position: relative;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transform: scale(0.94);
+  transition: transform 0.25s;
+}
+
+.lightbox-overlay.open .lightbox-inner {
+  transform: scale(1);
+}
+
+.lightbox-img-container {
+  width: 100%;
+  max-height: 72vh;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--school-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img-container img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+}
+
+/*Add additional css for lightbox after backend*/
+

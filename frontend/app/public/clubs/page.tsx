@@ -13,7 +13,7 @@ import { resetAll } from "@/utils/filterCategory"
 //    return res.json();
 //}
 
-export default function ClubsPage() {
+export default function page() {
     //const clubs = await getDjangoAPI();
     return (
         <main>
@@ -79,26 +79,26 @@ export default function ClubsPage() {
                         <div className="filter_divider"></div>
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
-                 {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
+                    {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </div>
-                <div className="clubs_container" id="clubs_container">
+                <div className="grid_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-book"></i>Academic</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
-                        <div className="clubs-grid">{/*Where the academic clubs go (FIX)*/}</div>
+                        <div className="category-grid">{/*Where the academic clubs go (FIX)*/}</div>
                     </div>
                     <div className="category-section" data-category="arts" id="cat-arts">
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-palette"></i>Arts</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
-                        <div className="clubs-grid">
+                        <div className="category-grid">
                             {/*Where the arts clubs go (FIX)*/}
                         </div>
                     </div>
@@ -106,10 +106,10 @@ export default function ClubsPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-hands-helping"></i>Community</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
-                        <div className="clubs-grid">
+                        <div className="category-grid">
                             {/*Where the community clubs go (FIX)*/}
                         </div>
                     </div>
@@ -117,8 +117,11 @@ export default function ClubsPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-running"></i>Sports &amp; Recreation</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
+                        </div>
+                        <div className="category-grid">
+                            {/*Where the community clubs go (FIX)*/}
                         </div>
                     </div>
                     <div className="empty-state" id="emptyState">
