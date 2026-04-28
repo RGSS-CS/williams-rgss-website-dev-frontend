@@ -588,6 +588,7 @@ body {
 
 .filter-chip:hover {
   border-color: var(--school-tertiary);
+  background-color: var(--school-tertiary);
   color: var(--school-primary);
 }
 
@@ -646,7 +647,7 @@ body {
 
 .category-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -655,7 +656,7 @@ body {
 
 .category-divider {
   flex: 1;
-  height: 1px;
+  height: 1.5px;
   background: var(--line);
 }
 
@@ -725,7 +726,7 @@ body {
 .category-count {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -734,7 +735,8 @@ body {
   color: var(--school-primary-light);
   border: 1px solid var(--line);
   padding: 5px 14px;
-  border-radius: 40px
+  border-radius: 40px;
+  margin-left: 8px;
 }
 
 .fas {
