@@ -4,15 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { href: '/public', iconClass: 'fas fa-home', label: 'Home' },
-  { href: '/public/clubs', iconClass: 'fas fa-users', label: 'Clubs' },
-  { href: '/public/gallery', iconClass: 'fas fa-images', label: 'Gallery' },
-  { href: '/public/about', iconClass: 'fas fa-info-circle', label: 'About' },
-  { href: '/public/login', iconClass: 'fas fa-solid fa-arrow-right-to-bracket', label: 'Login'},
+  { href: '/', iconClass: 'fas fa-home', label: 'Home' },
+  { href: '/clubs', iconClass: 'fas fa-users', label: 'Clubs' },
+  { href: '/gallery', iconClass: 'fas fa-images', label: 'Gallery' },
+  { href: '/about', iconClass: 'fas fa-info-circle', label: 'About' },
+  { href: '/login', iconClass: 'fas fa-solid fa-arrow-right-to-bracket', label: 'Login'},
 ];
 
 function isActivePath(pathname: string, href: string) {
-  if (href === '/public') {
+  if (href === '/') {
     return pathname === href;
   }
 
