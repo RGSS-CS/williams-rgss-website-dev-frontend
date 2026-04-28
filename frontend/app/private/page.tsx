@@ -1,5 +1,5 @@
-export default function PrivatePage() {
-  return (
-    <div>Private</div>
-  )
+import { redirect } from "next/navigation";
+
+export default function Home() {
+    redirect('/public/login');
 }

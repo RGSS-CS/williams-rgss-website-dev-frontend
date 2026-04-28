@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Image from 'next/image';
 import NavLinks from "./navlinks";
-import "@/app/public/styles.css"
+import "@/app/(public)/styles.css"
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);

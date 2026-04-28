@@ -4,6 +4,7 @@ import styles from '@/app/_modules/not-found.module.css'
 
 export default function NotFound() {
     return (
+        <body>
         <div className={styles.content}>
             <div className={styles.gif_stage}>
                 <div className={styles.overlay_404}>
@@ -26,5 +27,6 @@ export default function NotFound() {
                 </a>
             </div>
         </div>
+    </body>
     )
 }
