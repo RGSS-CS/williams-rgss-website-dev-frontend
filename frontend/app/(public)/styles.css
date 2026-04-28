@@ -24,6 +24,8 @@ h3 {
   font-weight: 700;
 }
 
+<<<<<<< HEAD:frontend/app/(public)/styles.css
+=======
 /* Navbar Styles
 /* --------------------------------------------- */
 
@@ -103,6 +105,7 @@ h3 {
   color: var(--school-primary) !important;
 }
 
+>>>>>>> c5c41b28c23724e6e32038367c4d206bdd5a429b:frontend/app/public/styles.css
 /* Footer Styles
 /* --------------------------------------------- */
 .site-footer {

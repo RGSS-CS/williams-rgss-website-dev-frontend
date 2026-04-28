@@ -1,0 +1,71 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--school-primary);
+  color: var(--white);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.headerContainer {
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+  padding: 10px 2.5rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo {
+  margin-top: 10px;
+}
+
+.schoolTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.schoolSubtitle {
+  color: var(--school-secondary);
+  font-size: 0.9rem;
+  letter-spacing: 0.06rem;
+  text-transform: uppercase;
+  position: relative;
+  top: -1rem;
+}
+
+.navLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 40px;
+  transition: all 0.2s;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.active {
+  background: var(--school-tertiary) !important;
+  color: var(--school-primary) !important;
+}

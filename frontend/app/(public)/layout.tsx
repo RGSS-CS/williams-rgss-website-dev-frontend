@@ -1,5 +1,9 @@
 import './styles.css';
+<<<<<<< HEAD:frontend/app/(public)/layout.tsx
+import Navbar from '@/app/(public)/ui/navbar';
+=======
 import Navbar from '@/app/public/ui/navbar';
+>>>>>>> c5c41b28c23724e6e32038367c4d206bdd5a429b:frontend/app/public/layout.tsx
 
 export default function RootLayout({
   children,
