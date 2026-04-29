@@ -1,0 +1,129 @@
+.login_card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
+    padding: 44px 40px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.card_header {
+    margin-bottom: 32px;
+}
+
+.card_header h2 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--school-primary);
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+.card_header p {
+    font-size: 0.85rem;
+    color: var(--school-primary-light);
+}
+
+.form_group {
+    margin-bottom: 16px;
+}
+
+.form_group label {
+    display: block;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--school-primary);
+    margin-bottom: 7px;
+}
+
+.input_wrap {
+    position: relative;
+}
+
+.input_wrap > i {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--school-primary-light);
+    font-size: 0.82rem;
+    pointer-events: none;
+}
+
+.input_wrap input {
+    width: 90%;
+    padding: 11px 14px 11px 38px;
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    color: var(--school-secondary);
+    background: var(--white);
+    transition: border-color 0.18s, box-shadow 0.18;
+    outline: none;
+}
+
+.input_wrap input::placeholder {
+    color: var(--grey);
+}
+
+.input_wrap input:focus {
+    border-color: var(--school-primary);
+    box-shadow: 0 0 0 3px rgba(111,28,58,0.08)
+
+
+}
+
+.input_wrap .toggle_pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--school-primary-light);
+    font-size: 0.82rem;
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+}
+
+.input_wrap .toggle_pw:hover {
+    color: var(--school-primary-light);
+}
+
+.btn_login {
+    width: 100%;
+    padding: 13px;
+    background: var(--school-primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.18s, transform 0.12s;
+}
+
+.btn_login:hover {
+    background: var(--school-primary-light);
+}
+
+.btn_login:active {
+    transform: scale(0.98)
+}
+
