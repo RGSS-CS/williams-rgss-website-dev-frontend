@@ -28,7 +28,7 @@ export default function SigninForm() {
           </div>
 
         </div>
-        <button className={styles.btn_login} type="submit" id="loginBtn" onClick={signin}><i className="fa-solid fa-arrow-right-to-bracket"></i>
+        <button className={styles.btn_login} type="submit" id="loginBtn" onClick={(e) => signin}><i className="fa-solid fa-arrow-right-to-bracket"></i>
           Sign In
         </button>
         <div className={styles.signUp}>
