@@ -1,0 +1,16 @@
+name: Enforce Source Branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        if: github.head_ref != 'testing-dev'
+        run: |
+          echo "PRs to main must come from testing-dev. Got: ${{ github.head_ref }}"
+          exit 1
