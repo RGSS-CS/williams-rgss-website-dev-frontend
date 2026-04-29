@@ -43,7 +43,7 @@ export default function RootLayout({
               <p>Stay connected with Williams STUCO</p>
               <div className="social-row">
                 <a href="https://www.instagram.com/drgwwilliams" target="_blank" rel="noopener noreferrer" className="social-link" title="Instagram"><i className="fab fa-instagram"></i></a>
-                <a href="https://drgwwilliams-ss.yrdsb.ca/" target="_blank" rel="noopener noreferrer" className="social-link" title="YRDSB"><i className="fas fa-globe"></i></a>              
+                <a href="https://drgwwilliams-ss.yrdsb.ca/" target="_blank" rel="noopener noreferrer" className="social-link" title="YRDSB"><i className="fa fa-globe"></i></a>              
               </div>
             </div>
           </div>
