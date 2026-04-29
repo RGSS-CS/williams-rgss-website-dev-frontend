@@ -1,7 +1,7 @@
 import { signin } from '@/app/private/authentication/_methods/auth'
-import styles from '@/app/_modules/login.modules.css'
+import styles from '@/app/_modules/login.module.css'
 
-export function SigninForm() {
+export default function SigninForm() {
   return (
     <form action={signin}>
       <div className={styles.login_card}>
@@ -12,15 +12,20 @@ export function SigninForm() {
 
         <div className={styles.form_group}>
           <label htmlFor="student_number">Student Number</label>
-          <input id="email" name="student_number" type="number" placeholder="Student Number" />
+          <div className={styles.input_wrap}>
+            <i className="fa-regular fa-envelope"></i>
+            <input id="email" name="student_number" type="number" placeholder="Student Number" />
+          </div>
         </div>
 
         <div className={styles.form_group}>
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" />
-          <button className={styles.toggle_pw} id="togglePw" type="button" aria-label="Toggle password visibility">
-            <i className="fa-regular fa-eye" id="toggleIcon"></i>
-          </button>
+          <div className={styles.input_wrap}>
+            <input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" />
+            <button className={styles.toggle_pw} id="togglePw" type="button" aria-label="Toggle password visibility">
+              <i className="fa-regular fa-eye" id="toggleIcon"></i>
+            </button>
+          </div>
 
         </div>
         <button className={styles.btn_login} type="submit" id="loginBtn" onClick={signin}><i className="fa-solid fa-arrow-right-to-bracket"></i>
