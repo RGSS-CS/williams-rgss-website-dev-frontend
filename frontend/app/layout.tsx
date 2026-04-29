@@ -1,7 +1,7 @@
 // These styles apply to every route in the application
 import './global.css';
 import type { Metadata } from 'next';
-import Navbar from '@/components/navbar';
+import Navbar from '@/app/(public)/_ui/navbar';
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',

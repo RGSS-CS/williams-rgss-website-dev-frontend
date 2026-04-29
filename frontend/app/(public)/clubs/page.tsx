@@ -1,8 +1,8 @@
 "use client"
-import handleSearch from "@/utils/HandleSearch";
-import { filterCategory } from "@/utils/filterCategory"
-import { filterDay } from "@/utils/filterCategory"
-import { resetAll } from "@/utils/filterCategory"
+import handleSearch from "@/app/(public)/_utils/HandleSearch";
+import { filterCategory } from "@/app/(public)/_utils/filterCategory"
+import { filterDay } from "@/app/(public)/_utils/filterCategory"
+import { resetAll } from "@/app/(public)/_utils/filterCategory"
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
