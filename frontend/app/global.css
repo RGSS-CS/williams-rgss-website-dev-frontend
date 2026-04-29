@@ -646,7 +646,7 @@ body {
 
 .category-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.30rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -655,7 +655,7 @@ body {
 
 .category-count {
   font-family: "Montserrat", sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--school-primary-light);
   padding: 3px 10px;
