@@ -1,3 +1,3 @@
-export async function signup(formData: FormData) {}
+export async function signup(formData: FormData) {'use server'}
 
 export async function signin(formData: FormData) {'use server'}
