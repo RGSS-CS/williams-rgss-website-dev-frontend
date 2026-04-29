@@ -1,6 +1,6 @@
 import { signup } from '@/app/private/authentication/_methods/auth'
  
-export function SignupForm() {
+export default function SignupForm() {
   return (
     <form action={signup}>
       <div>
