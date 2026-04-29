@@ -81,7 +81,7 @@ export default function ClubsPage() {
                     </div>
                  {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </div>
-                <div className="clubs_container" id="clubs_container">
+                <div className="category_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
                         <div className="category-header">
                             <div className="category-accent"></div>
