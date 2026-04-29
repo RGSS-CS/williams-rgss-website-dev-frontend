@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getSchoolYear } from "@/utils/SchoolYear"
+import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear"
 // import { Club } from "@/types/club";
 
 //async function getDjangoAPI(): Promise<Club[]> {
