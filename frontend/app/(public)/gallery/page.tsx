@@ -53,81 +53,72 @@ export default function GalleryPage() {
                         {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                     </div>
                 </div>
-                <div className="gallery_container">
-                    <div className="gallery-section" data-section="academic">
-                        <div className="section-header">
-                            <div className="section-heading-group">
-                                <div className="section-accent-bar"></div>
-                                <div className="section-heading">
-                                    <h2><i className="fas fa-book"></i> Academic</h2>
-                                    <p>{/*List out clubs that are part of academic section*/}</p>
-                                </div>
-                            </div>
-                            <span className="section-photo-count">
+                <div className="category_container">
+                    <div className="category-section" data-section="academic">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title">
+                                <i className="fas fa-book"></i> Academic
+                            </span>
+                            <div className="category-divider"></div>
+                            <span className="category-count">
                                 <i className="fas fa-images"></i>
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="gallery-section" data-section="arts">
-                        <div className="section-header">
-                            <div className="section-heading-group">
-                                <div className="section-accent-bar"></div>
-                                <div className="section-heading">
-                                    <h2><i className="fas fa-palette"></i> Arts</h2>
-                                    <p>{/*List out clubs that are part of academic section*/}</p>
-                                </div>
-                            </div>
-                            <span className="section-photo-count">
+                    <div className="category-section" data-section="arts">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title">
+                                <i className="fas fa-palette"></i> Arts
+                            </span>
+                            <div className="category-divider"></div>
+                            <span className="category-count">
+                                <i className="fas fa-images"></i>
+                                0 photos
+                            </span>
+                        </div>
+
+
+                    </div>
+                    <div className="category-section" data-section="community">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title">
+                                <i className="fas fa-hands-helping"></i> Community
+                            </span>
+                            <div className="category-divider"></div>
+                            <span className="category-count">
                                 <i className="fas fa-images"></i>
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="gallery-section" data-section="community">
-                        <div className="section-header">
-                            <div className="section-heading-group">
-                                <div className="section-accent-bar"></div>
-                                <div className="section-heading">
-                                    <h2><i className="fas fa-hands-helping"></i> Community</h2>
-                                    <p>{/*List out clubs that are part of community section*/}</p>
-                                </div>
-                            </div>
-                            <span className="section-photo-count">
+                    <div className="category-section" data-section="sports">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title">
+                                <i className="fas fa-running"></i> Sports &amp; Recreation
+                            </span>
+                            <div className="category-divider"></div>
+                            <span className="category-count">
                                 <i className="fas fa-images"></i>
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="gallery-section" data-section="sports">
-                        <div className="section-header">
-                            <div className="section-heading-group">
-                                <div className="section-accent-bar"></div>
-                                <div className="section-heading">
-                                    <h2><i className="fas fa-running"></i> Sports &amp; Recreation</h2>
-                                    <p>{/*List out teams that are part of sports section*/}</p>
-                                </div>
-                            </div>
-                            <span className="section-photo-count">
-                                <i className="fas fa-images"></i>
-                                0 photos
+                    <div className="category-section" data-section="events">
+                        <div className="category-header">
+                            <div className="category-accent"></div>
+                            <span className="category-title">
+                                <i className="fas fa-calendar-check"></i> Events
                             </span>
-                        </div>
-
-                    </div>
-                    <div className="gallery-section" data-section="events">
-                        <div className="section-header">
-                            <div className="section-heading-group">
-                                <div className="section-accent-bar"></div>
-                                <div className="section-heading">
-                                    <h2><i className="fas fa-calendar-check"></i> Events</h2>
-                                    <p>{/*List out events that happened*/}</p>
-                                </div>
-                            </div>
-                            <span className="section-photo-count">
+                            <div className="category-divider"></div>
+                            <span className="category-count">
                                 <i className="fas fa-images"></i>
                                 0 photos
                             </span>
