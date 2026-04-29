@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from 'next/image';
-import NavLinks from "./NavLinks";
+import NavLinks from "./navlinks";
 import "@/app/global.css"
 
 export default function Navbar() {

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { filterCategory } from "@/utils/filterCategory";
+import { filterCategory } from "@/app/(public)/_utils/filterCategory";
 
 export default function GalleryPage() {
     return (
