@@ -25,6 +25,10 @@ jobs:
       - name: Checkout to the branch
         uses: actions/checkout@v4
 
+      - name: Set short SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
@@ -61,7 +65,7 @@ jobs:
         with:
           containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
           resourceGroup: ${{ secrets.RESOURCE_GROUP }}
-          imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.sha_short }}
           registryUrl: ${{ env.REGISTRY }}
           registryUsername: ${{ secrets.FRONTEND_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.FRONTEND_REGISTRY_PASSWORD }}
