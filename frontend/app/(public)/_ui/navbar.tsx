@@ -25,9 +25,6 @@ function isActivePath(pathname: string, href: string) {
 
   return pathname === href || pathname.startsWith(`${href}/`);
 }
-import Image from 'next/image';
-import NavLinks from "./navlinks";
-import "@/app/(public)/styles.css"
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
