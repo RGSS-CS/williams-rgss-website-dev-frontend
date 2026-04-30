@@ -1,3 +1,20 @@
+.body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--school-primary);
+    border-top: var(--school-tertiary) solid 5px;
+    border-bottom: var(--school-tertiary) solid 5px;
+}
+
+.body form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .login_card {
     background: white;
     border-radius: 18px;
@@ -62,7 +79,7 @@
     border-radius: 9px;
     font-family: "Montserrat", sans-serif;
     font-size: 0.9rem;
-    color: var(--school-secondary);
+    color: var(--school-primary-light);
     background: var(--white);
     transition: border-color 0.18s, box-shadow 0.18;
     outline: none;
