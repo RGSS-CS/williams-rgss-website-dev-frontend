@@ -38,5 +38,13 @@ export default function SigninForm() {
         </div>
       </form>
     </div>
+        <button className={styles.btn_login} type="submit" id="loginBtn"><i className="fa-solid fa-arrow-right-to-bracket"></i>
+          Sign In
+        </button>
+        <div className={styles.signUp}>
+          <p>Don't have an account yet? <a href="/private/authentication/signup">Register Now!</a></p>
+        </div>
+      </div>
+    </form>
   )
 }
