@@ -306,6 +306,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
   width: 100%;
   font-family: "Montserrat", sans-serif;
+  padding-top: env(safe-area-inset-top, 0);
   padding-bottom: 12px;
 }
 
