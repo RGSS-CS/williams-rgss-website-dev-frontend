@@ -1,4 +1,5 @@
 "use client"
+import React from "react";
 import handleSearch from "@/app/(public)/_utils/HandleSearch";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory"
 import { filterDay } from "@/app/(public)/_utils/filterCategory"
@@ -77,10 +78,13 @@ export default function ClubsPage() {
                         <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <span className="results-count" id="resultsCount">Showing 0 clubs</span>
+                        <span className="results-count" id="resultsCount" data-results-count>Showing 0 clubs</span>
                     </div>
                     {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </FilterBar>
+                <div className="mobile-results-bar">
+                    <span className="results-count results-count-mobile" data-results-count>Showing 0 clubs</span>
+                </div>
                 <div className="category_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
                         <div className="category-header">
