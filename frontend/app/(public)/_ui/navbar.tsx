@@ -59,7 +59,7 @@ export default function Navbar() {
               onClick={() => setSidebarOpen(true)}
               aria-label="Open menu"
             >
-              <i className="fas fa-bars"></i>
+              <i className="fa fa-bars"></i>
             </button>
             <Link href="/" className="brand-link">
               <div className="logo">
