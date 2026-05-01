@@ -1,5 +1,30 @@
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2.5rem 1.2rem 2rem;
+  }
+
+  .filter-bar {
+    padding: 0.7rem 1.2rem;
+  }
+
+  .clubs-container {
+    padding: 1.8rem 1.2rem 4rem;
+  }
+
+  .hero-stats {
+    gap: 1.5rem;
+  }
+
+  .results-count {
+    display: none;
+  }
+}
+
+
 /* Navbar Styles
 /* --------------------------------------------- */
+
 
 .navbar {
   position: sticky;
