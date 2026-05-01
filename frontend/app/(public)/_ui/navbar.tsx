@@ -19,49 +19,94 @@ const links = [
 ];
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/") {
-    return pathname === href;
-  }
-
+  if (href === "/") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
-  const [navHeight, setNavHeight] = useState(0);
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close sidebar on route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
+  // Prevent body scroll when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [sidebarOpen]);
 
   useEffect(() => {
     if (!navRef.current) return;
-
     const observer = new ResizeObserver(() => {
       const height = navRef.current!.offsetHeight;
-      setNavHeight(height);
       document.documentElement.style.setProperty("--navbar-height", `${height}px`);
     });
-
     observer.observe(navRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <nav ref={navRef} className="navbar">
-      <div className="header-container">
-        <a className="title-container" href="/">
-          <div className="logo">
-            <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+    <>
+      <nav ref={navRef} className="navbar">
+        <div className="header-container">
+          <div className="title-container">
+            <button
+              className="nav-hamburger"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+            >
+              <i className="fa fa-bars"></i>
+            </button>
+            <Link href="/" className="brand-link">
+              <div className="logo">
+                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+              </div>
+              <div className="brand-copy">
+                <h1 className="school-title">Dr. GW Williams S.S.</h1>
+                <span className="school-subtitle">Student Council</span>
+              </div>
+            </Link>
           </div>
-          <div>
-            <span className="school-title"><h1>Dr. GW Williams S.S.</h1></span>
-            <span className="school-subtitle">Student Council</span>
+
+          {/* Desktop nav */}
+          <div className="nav-links">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={isActivePath(pathname, link.href) ? "active" : ""}
+              >
+                <i className={link.iconClass}></i>
+                {link.label}
+              </Link>
+            ))}
           </div>
-        </a>
-        <div className="nav-links">
+        </div>
+      </nav>
+
+      {/* Sidebar overlay + drawer */}
+      {sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+      <div className={`nav-sidebar ${sidebarOpen ? "open" : ""}`}>
+        <button
+          className="sidebar-close"
+          onClick={() => setSidebarOpen(false)}
+          aria-label="Close menu"
+        >
+          <i className="fas fa-times"></i>
+        </button>
+        <div className="sidebar-links">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={isActivePath(pathname, link.href) ? "active" : ""}
+              onClick={() => setSidebarOpen(false)}
             >
               <i className={link.iconClass}></i>
               {link.label}
@@ -69,6 +114,6 @@ export default function Navbar() {
           ))}
         </div>
       </div>
-    </nav>
+    </>
   );
 }

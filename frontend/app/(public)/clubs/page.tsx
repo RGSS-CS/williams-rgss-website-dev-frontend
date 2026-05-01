@@ -1,8 +1,10 @@
 "use client"
+import React from "react";
 import handleSearch from "@/app/(public)/_utils/HandleSearch";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory"
 import { filterDay } from "@/app/(public)/_utils/filterCategory"
 import { resetAll } from "@/app/(public)/_utils/filterCategory"
+import FilterBar from "@/app/(public)/_ui/FilterBar";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -47,7 +49,7 @@ export default function ClubsPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <div className="filter_bar_container">
+                <FilterBar>
                     <div className="filter_bar">
                         <span className="filter_label">
                             <i className="fas fa-filter"></i>
@@ -76,18 +78,20 @@ export default function ClubsPage() {
                         <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <div className="filter_divider"></div>
-                        <span className="results-count" id="resultsCount">Showing 0 clubs</span>
+                        <span className="results-count" id="resultsCount" data-results-count>Showing 0 clubs</span>
                     </div>
-                 {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
+                    {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
+                </FilterBar>
+                <div className="mobile-results-bar">
+                    <span className="results-count results-count-mobile" data-results-count>Showing 0 clubs</span>
                 </div>
                 <div className="category_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-book"></i>Academic</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
                         <div className="clubs-grid">{/*Where the academic clubs go (FIX)*/}</div>
                     </div>
@@ -95,8 +99,8 @@ export default function ClubsPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-palette"></i>Arts</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
                         <div className="clubs-grid">
                             {/*Where the arts clubs go (FIX)*/}
@@ -106,8 +110,8 @@ export default function ClubsPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-hands-helping"></i>Community</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
                         <div className="clubs-grid">
                             {/*Where the community clubs go (FIX)*/}
@@ -117,8 +121,8 @@ export default function ClubsPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title"><i className="fas fa-running"></i>Sports &amp; Recreation</span>
-                            <span className="category-count">0 clubs</span>
                             <div className="category-divider"></div>
+                            <span className="category-count">0 clubs</span>
                         </div>
                     </div>
                     <div className="empty-state" id="emptyState">
