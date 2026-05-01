@@ -9,7 +9,7 @@
 @media (max-width: 768px) {
   /* Hide desktop links, show hamburger */
   .nav-links {
-    display: none;
+    display: none !important;
   }
 
   .nav-hamburger {
@@ -149,6 +149,10 @@
     cursor: pointer;
     letter-spacing: 0.04em;
     text-align: left;
+  }
+
+  .category-title {
+    font-size: 1.1rem !important;
   }
 }
 
@@ -854,6 +858,8 @@ body {
   color: var(--school-primary-light);
   padding: 3px 10px;
   border-radius: 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .category-divider {
