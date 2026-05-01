@@ -11,7 +11,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: frontend
+  IMAGE_NAME: rgss-cs/frontend
 
 jobs:
   build-and-deploy:
