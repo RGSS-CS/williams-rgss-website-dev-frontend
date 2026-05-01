@@ -3,6 +3,7 @@ import handleSearch from "@/app/(public)/_utils/HandleSearch";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory"
 import { filterDay } from "@/app/(public)/_utils/filterCategory"
 import { resetAll } from "@/app/(public)/_utils/filterCategory"
+import FilterBar from "@/app/(public)/_ui/FilterBar";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -47,7 +48,7 @@ export default function ClubsPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <div className="filter_bar_container">
+                <FilterBar>
                     <div className="filter_bar">
                         <span className="filter_label">
                             <i className="fas fa-filter"></i>
@@ -80,7 +81,7 @@ export default function ClubsPage() {
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
                  {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
-                </div>
+                </FilterBar>
                 <div className="category_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
                         <div className="category-header">

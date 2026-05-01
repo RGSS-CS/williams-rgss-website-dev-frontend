@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory";
+import FilterBar from "@/app/(public)/_ui/FilterBar";
 
 export default function GalleryPage() {
     return (
@@ -23,7 +24,7 @@ export default function GalleryPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <div className="filter_bar_container">
+                <FilterBar>
                     <div className="filter_bar">
                         <span className="filter_label">
                             <i className="fas fa-filter"></i>
@@ -52,7 +53,7 @@ export default function GalleryPage() {
                         </button>
                         {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                     </div>
-                </div>
+                </FilterBar>
                 <div className="category_container">
                     <div className="category-section" data-section="academic">
                         <div className="category-header">
