@@ -47,7 +47,7 @@ export default function Navbar() {
   return (
     <nav ref={navRef} className="navbar">
       <div className="header-container">
-        <a className="title-container" href="/public">
+        <a className="title-container" href="/">
           <div className="logo">
             <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
           </div>
