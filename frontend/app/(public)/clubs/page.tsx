@@ -77,7 +77,6 @@ export default function ClubsPage() {
                         <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <div className="filter_divider"></div>
                         <span className="results-count" id="resultsCount">Showing 0 clubs</span>
                     </div>
                     {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
