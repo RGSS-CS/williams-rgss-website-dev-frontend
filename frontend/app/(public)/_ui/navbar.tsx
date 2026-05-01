@@ -25,7 +25,6 @@ function isActivePath(pathname: string, href: string) {
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
-  const [navHeight, setNavHeight] = useState(0);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -44,7 +43,6 @@ export default function Navbar() {
     if (!navRef.current) return;
     const observer = new ResizeObserver(() => {
       const height = navRef.current!.offsetHeight;
-      setNavHeight(height);
       document.documentElement.style.setProperty("--navbar-height", `${height}px`);
     });
     observer.observe(navRef.current);
@@ -55,15 +53,24 @@ export default function Navbar() {
     <>
       <nav ref={navRef} className="navbar">
         <div className="header-container">
-          <a className="title-container" href="/">
-            <div className="logo">
-              <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-            </div>
-            <div>
-              <span className="school-title"><h1>Dr. GW Williams S.S.</h1></span>
-              <span className="school-subtitle">Student Council</span>
-            </div>
-          </a>
+          <div className="title-container">
+            <button
+              className="nav-hamburger"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+            <Link href="/" className="brand-link">
+              <div className="logo">
+                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+              </div>
+              <div className="brand-copy">
+                <h1 className="school-title">Dr. GW Williams S.S.</h1>
+                <span className="school-subtitle">Student Council</span>
+              </div>
+            </Link>
+          </div>
 
           {/* Desktop nav */}
           <div className="nav-links">
@@ -78,15 +85,6 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-
-          {/* Mobile hamburger — only visible on mobile via CSS */}
-          <button
-            className="nav-hamburger"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Open menu"
-          >
-            <i className="fas fa-bars"></i>
-          </button>
         </div>
       </nav>
 
