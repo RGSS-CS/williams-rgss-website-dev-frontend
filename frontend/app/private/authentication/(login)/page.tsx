@@ -1,5 +1,5 @@
 import { signin } from '@/app/private/authentication/_methods/auth'
-import styles from '@/app/_modules/login.module.css'
+import styles from './login.module.css'
 
 export default function SigninForm() {
   return (
