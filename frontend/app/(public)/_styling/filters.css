@@ -1,0 +1,75 @@
+/* Shared filter bars */
+
+.filter_bar_container {
+  background: var(--white);
+  border-bottom: 5px solid var(--school-tertiary);
+  top: var(--navbar-height);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  position: sticky;
+}
+
+.filter_bar {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.85rem 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter_label {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.filter_label i {
+  margin-right: 4px;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 40px;
+  border: 1.5px solid var(--school-primary-light);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.02em;
+}
+
+.filter-chip:hover {
+  border-color: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.filter-chip.active {
+  background: var(--school-primary);
+  border-color: var(--school-primary);
+  color: white;
+}
+
+.filter-chip.active.gold {
+  background: var(--school-tertiary);
+  border-color: var(--school-tertiary);
+  color: var(--school-primary);
+}
+
+.filter_divider {
+  width: 1px;
+  height: 22px;
+  background: var(--school-primary-light);
+  margin: 0 4px;
+}

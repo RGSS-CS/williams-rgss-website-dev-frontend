@@ -1,0 +1,134 @@
+/* Shared hero */
+
+body {
+  background: var(--white);
+}
+
+.hero {
+  background: linear-gradient(150deg, var(--school-primary) 0%, var(--school-primary-light) 55%);
+  padding: 4.5rem 2.5rem 0;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  padding-bottom: 30px;
+}
+
+.hero:before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(246, 174, 45, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero_shape {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 107, 107, 0.35) 0%, rgba(11, 28, 58, 0) 70%);
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.hero_inner {
+  max-width: 1500px;
+  margin: 0 auto 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: start;
+  position: relative;
+  z-index: 2;
+}
+
+.hero_left {
+  flex-direction: column;
+}
+
+.hero_title h1,
+.hero_title h2 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.hero_title h2 {
+  color: var(--school-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.hero_subtitle {
+  border-left: 5px solid var(--school-tertiary);
+  margin-bottom: 2rem;
+}
+
+.hero_subtitle h5 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  opacity: 0.85;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.search_container {
+  max-width: 680px;
+  width: 100%;
+  position: relative;
+}
+
+.search_container i {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.search_input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.9rem 1.2rem 0.9rem 3rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.search_input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search_input:focus {
+  border-color: var(--school-tertiary);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .search_container {
+    max-width: 100%;
+  }
+
+  .search_input {
+    font-size: 0.9rem;
+    padding-inline: 1rem 1rem;
+    padding-left: 2.8rem;
+  }
+}

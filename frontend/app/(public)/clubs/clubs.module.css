@@ -1,0 +1,120 @@
+.heroStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-top: 2.8rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroStat :global(.stat-num) {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--school-tertiary);
+  line-height: 1;
+}
+
+.heroStat :global(.stat-label) {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-top: 4px;
+}
+
+.resultsCount {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--school-primary-light);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.mobileResultsBar {
+  display: none;
+}
+
+.resultsCountMobile {
+}
+
+.emptyState {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 2rem;
+  color: var(--school-primary);
+  text-align: center;
+}
+
+.emptyState i {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.emptyState h3 {
+  font-size: 3rem;
+  color: var(--school-primary);
+}
+
+.emptyState p {
+  font-size: 0.9rem;
+  max-width: 320px;
+}
+
+.ctaBanner {
+  background: linear-gradient(135deg, var(--school-primary) 0%, var(--school-primary-light) 100%);
+  border-top: 4px solid var(--school-tertiary);
+  padding: 1rem 2.5rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.ctaBanner h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+}
+
+.ctaBanner h2 span {
+  color: var(--school-tertiary);
+}
+
+.ctaBanner p {
+  font-size: 1rem;
+  opacity: 0.75;
+  margin-bottom: 1.8rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .resultsCount {
+    display: block;
+    flex-basis: 100%;
+    margin-left: 0;
+    margin-top: 0.4rem;
+    text-align: right;
+    font-size: 9px;
+  }
+
+  .mobileResultsBar {
+    display: block;
+    padding: 0.75rem 1.2rem 0;
+    background: var(--white);
+  }
+
+  .resultsCountMobile {
+    margin-top: 0;
+  }
+}
