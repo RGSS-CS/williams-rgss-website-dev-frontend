@@ -1,8 +1,8 @@
 "use client"
 
-import Link from "next/link";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory";
 import FilterBar from "@/app/(public)/_ui/FilterBar";
+import styles from "./gallery.module.css";
 
 export default function GalleryPage() {
     return (
@@ -128,11 +128,11 @@ export default function GalleryPage() {
                     </div>
                 </div>
             </div>
-            <div className="lightbox-overlay" id="lightbox">
+            <div className={styles.lightboxOverlay} id="lightbox">
                 <button className="lightbox-nav-btn prev"><i className="fas fa-chevron-left"></i></button>
                 <button className="lightbox-nav-btn next"><i className="fas fa-chevron-right"></i></button>
-                <div className="lightbox-inner">
-                    <div className="lightbox-img-container" id="lightboxImgWrap">
+                <div className={styles.lightboxInner}>
+                    <div className={styles.lightboxImgContainer} id="lightboxImgWrap">
                         <img src="null" alt=""></img>
                     </div>
                     <div className="lightbox-meta">

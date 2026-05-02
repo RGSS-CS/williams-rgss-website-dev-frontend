@@ -5,6 +5,7 @@ import { filterCategory } from "@/app/(public)/_utils/filterCategory"
 import { filterDay } from "@/app/(public)/_utils/filterCategory"
 import { resetAll } from "@/app/(public)/_utils/filterCategory"
 import FilterBar from "@/app/(public)/_ui/FilterBar";
+import styles from "./clubs.module.css";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -35,12 +36,12 @@ export default function ClubsPage() {
                             <i className="fas fa-search"></i>
                             <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onChange={handleSearch} autoComplete="off"></input>
                         </div>
-                        <div className="hero_stats">
-                            <div className="hero_stat">
+                        <div className={styles.heroStats}>
+                            <div className={styles.heroStat}>
                                 <span className="stat-num" id="totalCount">0</span>
                                 <span className="stat-label">Total Clubs</span>
                             </div>
-                            <div className="hero_stat">
+                            <div className={styles.heroStat}>
                                 <span className="stat-num" id="totalCategories">0</span>
                                 <span className="stat-label">Categories</span>
                             </div>
@@ -78,12 +79,12 @@ export default function ClubsPage() {
                         <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
                         <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <span className="results-count" id="resultsCount" data-results-count>Showing 0 clubs</span>
+                        <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
                     </div>
                     {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </FilterBar>
-                <div className="mobile-results-bar">
-                    <span className="results-count results-count-mobile" data-results-count>Showing 0 clubs</span>
+                <div className={styles.mobileResultsBar}>
+                    <span className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`} data-results-count>Showing 0 clubs</span>
                 </div>
                 <div className="category_container" id="clubs_container">
                     <div className="category-section" data-category="academic" id="cat-academic">
@@ -125,7 +126,7 @@ export default function ClubsPage() {
                             <span className="category-count">0 clubs</span>
                         </div>
                     </div>
-                    <div className="empty-state" id="emptyState">
+                    <div className={styles.emptyState} id="emptyState">
                         <i className="fas fa-search"></i>
                         <h3>No Clubs Found</h3>
                         <p>Try a different search term or clear your filters</p>
@@ -133,7 +134,7 @@ export default function ClubsPage() {
                     </div>
                 </div>
             </div>
-            <div className="cta-banner">
+            <div className={styles.ctaBanner}>
                 <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
                 <p>Any GW Williams student can start a new club. Talk to a teacher that is interested with your idea.</p>
             </div>

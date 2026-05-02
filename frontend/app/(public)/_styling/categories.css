@@ -1,0 +1,58 @@
+/* Shared category sections */
+
+.category_container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.8rem 2.5rem 5rem;
+}
+
+.category-section {
+  margin-bottom: 3.5rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.category-accent {
+  width: 6px;
+  height: 32px;
+  background: var(--school-tertiary);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.category-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.30rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--school-primary);
+}
+
+.category-count {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--school-primary-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.category-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.4rem;
+}
