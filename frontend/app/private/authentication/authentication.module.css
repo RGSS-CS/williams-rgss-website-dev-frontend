@@ -25,6 +25,10 @@
     max-width: 420px;
 }
 
+.register_card {
+    margin: 158px;
+}
+
 .card_header {
     margin-bottom: 32px;
 }

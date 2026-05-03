@@ -1,5 +1,5 @@
 import { signin } from '@/app/private/authentication/_methods/auth'
-import styles from './login.module.css'
+import styles from '@/app/private/authentication/authentication.module.css'
 
 export default function SigninForm() {
   return (
@@ -33,7 +33,7 @@ export default function SigninForm() {
             Sign In
           </button>
           <div className={styles.signUp}>
-            <p>Don't have an account yet? <a href="/private/authentication/signup">Register Now!</a></p>
+            <p>Don't have an account yet? <a href="/private/authentication/register ">Register Now!</a></p>
           </div>
         </div>
       </form>
