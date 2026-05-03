@@ -45,7 +45,7 @@ export default async function Page() {
                         </div>
                         <div className={styles.heroButtons}>
                             <div className={styles.heroBtnPrimary}>
-                                <Link href="/public/clubs" className={styles.heroBtnText}>
+                                <Link href="/clubs" className={styles.heroBtnText}>
                                     <i className="fas fa-paper-plane"></i> Our Clubs
                                 </Link>
                             </div>
