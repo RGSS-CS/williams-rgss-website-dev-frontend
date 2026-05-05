@@ -1,7 +1,5 @@
-"use client"
-
-import { filterCategory } from "@/app/(public)/_utils/filterCategory";
-import FilterBar from "@/app/(public)/_ui/FilterBar";
+import FilterBar from "@/app/(public)/_ui/MobileFilterBar";
+import Filter from "@/app/(public)/_ui/FilterBar";
 import styles from "./gallery.module.css";
 
 export default function GalleryPage() {
@@ -25,34 +23,7 @@ export default function GalleryPage() {
             </div>
             <div className="sticky-wrapper">
                 <FilterBar>
-                    <div className="filter_bar">
-                        <span className="filter_label">
-                            <i className="fas fa-filter"></i>
-                            Filter
-                        </span>
-                        <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
-                            <i className="fas fa-book"></i>
-                            Academic
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
-                            <i className="fas fa-palette"></i>
-                            Arts
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
-                            <i className="fas fa-hands-helping"></i>
-                            Community
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            Sports &amp; Rec
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('events', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            School Events
-                        </button>
-                        {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
-                    </div>
+                    <Filter />
                 </FilterBar>
                 <div className="category_container">
                     <div className="category-section" data-section="academic">
@@ -124,13 +95,12 @@ export default function GalleryPage() {
                                 0 photos
                             </span>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div className={styles.lightboxOverlay} id="lightbox">
-                <button className="lightbox-nav-btn prev"><i className="fas fa-chevron-left"></i></button>
-                <button className="lightbox-nav-btn next"><i className="fas fa-chevron-right"></i></button>
+                <button className="lightbox-nav-btn prev" title="Previous image" aria-label="Previous image"><i className="fas fa-chevron-left"></i></button>
+                <button className="lightbox-nav-btn next" title="Next image" aria-label="Next image"><i className="fas fa-chevron-right"></i></button>
                 <div className={styles.lightboxInner}>
                     <div className={styles.lightboxImgContainer} id="lightboxImgWrap">
                         <img src="null" alt=""></img>

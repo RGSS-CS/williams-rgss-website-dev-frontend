@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css";
-import Footer from "@/app/(public)/_ui/footer";
+import Footer from "@/app/(public)/_ui/Footer";
 import LoginBackButton from "@/app/private/authentication/_ui/LoginBackButton";
 
 export default function RootLayout({

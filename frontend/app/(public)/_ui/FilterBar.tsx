@@ -1,60 +1,35 @@
-"use client";
+'use client'
+import { filterCategory } from "@/app/(public)/_utils/filterCategory";
 
-import { useState, useEffect } from "react";
-
-export default function FilterBar({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  return (
-    <>
-      {/* Mobile toggle button — hidden on desktop */}
-      <div className="filter_bar_container">
-        <button
-          className="filter-toggle-btn"
-          onClick={() => setOpen(true)}
-          aria-label="Open filters"
-        >
-          <i className="fas fa-filter"></i>
-          Filters
-        </button>
-      </div>
-
-      {/* Overlay */}
-      {open && (
-        <div className="filter-sidebar-overlay" onClick={() => setOpen(false)} />
-      )}
-
-      {/* Sidebar drawer */}
-      <div className={`filter-sidebar ${open ? "open" : ""}`}>
-        <div className="filter-sidebar-header">
-          <span className="filter-sidebar-title">
-            <i className="fas fa-filter"></i>
-            Filters
-          </span>
-          <button
-            className="filter-sidebar-close"
-            onClick={() => setOpen(false)}
-            aria-label="Close filters"
-          >
-            <i className="fas fa-times"></i>
-          </button>
-        </div>
-        <div className="filter-sidebar-body">
-          {children}
-        </div>
-      </div>
-
-      {/* Desktop filter bar — hidden on mobile */}
-      <div className="filter_bar_container filter_bar_container--desktop">
+export default function Filter() {
+    return (
         <div className="filter_bar">
-          {children}
+            <span className="filter_label">
+                <i className="fas fa-filter"></i>
+                Filter
+            </span>
+            <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
+            <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
+                <i className="fas fa-book"></i>
+                Academic
+            </button>
+            <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
+                <i className="fas fa-palette"></i>
+                Arts
+            </button>
+            <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
+                <i className="fas fa-hands-helping"></i>
+                Community
+            </button>
+            <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
+                <i className="fas fa-running"></i>
+                Sports &amp; Rec
+            </button>
+            <button className="filter-chip" onClick={(e) => filterCategory('events', e.currentTarget)}>
+                <i className="fas fa-running"></i>
+                School Events
+            </button>
+            {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
         </div>
-      </div>
-    </>
-  );
+    )
 }

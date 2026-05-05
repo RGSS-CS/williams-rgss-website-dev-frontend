@@ -4,7 +4,7 @@ import handleSearch from "@/app/(public)/_utils/HandleSearch";
 import { filterCategory } from "@/app/(public)/_utils/filterCategory"
 import { filterDay } from "@/app/(public)/_utils/filterCategory"
 import { resetAll } from "@/app/(public)/_utils/filterCategory"
-import FilterBar from "@/app/(public)/_ui/FilterBar";
+import FilterBar from "@/app/(public)/_ui/MobileFilterBar";
 import styles from "./clubs.module.css";
 
 //async function getDjangoAPI(): Promise<Club[]> {
