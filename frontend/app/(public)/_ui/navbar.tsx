@@ -40,12 +40,18 @@ export default function Navbar() {
   }, [sidebarOpen]);
 
   useEffect(() => {
-    if (!navRef.current) return;
-    const observer = new ResizeObserver(() => {
-      const height = navRef.current!.offsetHeight;
+    const navElement = navRef.current;
+    if (!navElement) return;
+
+    const updateNavbarHeight = () => {
+      const height = navElement.offsetHeight;
       document.documentElement.style.setProperty("--navbar-height", `${height}px`);
-    });
-    observer.observe(navRef.current);
+    };
+
+    updateNavbarHeight();
+
+    const observer = new ResizeObserver(updateNavbarHeight);
+    observer.observe(navElement);
     return () => observer.disconnect();
   }, []);
 

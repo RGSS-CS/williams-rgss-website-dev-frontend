@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/(public)/styles.css";
+import styles from "./authentication.module.css";
 import Footer from "@/app/(public)/_ui/footer";
 import LoginBackButton from "@/app/private/authentication/_ui/LoginBackButton";
 
@@ -10,7 +11,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <main>
+        <main className={styles.page}>
             <nav className="navbar">
                 <div className="header-container">
                     <div className="title-container">
@@ -27,8 +28,12 @@ export default function RootLayout({
                     </div>
                 </div>
             </nav>
-            {children}
-            <Footer />
+            <div className={styles.content}>
+                {children}
+            </div>
+            <div className={styles.footerWrap}>
+                <Footer />
+            </div>
         </main>
     )
 }
