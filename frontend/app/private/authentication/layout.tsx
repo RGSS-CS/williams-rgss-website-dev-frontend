@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/(public)/styles.css";
+import styles from "./authentication.module.css";
 import Footer from "@/app/(public)/_ui/footer";
 import LoginBackButton from "@/app/private/authentication/_ui/LoginBackButton";
 
@@ -28,7 +29,9 @@ export default function RootLayout({
                 </div>
             </nav>
             {children}
-            <Footer />
+            <div className={styles.footer}>
+                <Footer />
+            </div>
         </main>
     )
 }
