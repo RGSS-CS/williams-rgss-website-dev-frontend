@@ -1,5 +1,6 @@
 'use client'
 import { filterCategory } from "@/app/(public)/_utils/filterCategory";
+import { filterDay } from "@/app/(public)/_utils/filterCategory"
 
 export default function Filter() {
     return (
@@ -23,13 +24,14 @@ export default function Filter() {
             </button>
             <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
                 <i className="fas fa-running"></i>
-                Sports &amp; Rec
+                Sports &amp; Recreation
             </button>
-            <button className="filter-chip" onClick={(e) => filterCategory('events', e.currentTarget)}>
-                <i className="fas fa-running"></i>
-                School Events
-            </button>
-            {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
+            <div className="filter_divider"></div>
+            <button className="filter-chip" onClick={(e) => filterDay('Mon', e.currentTarget)}>Mon</button>
+            <button className="filter-chip" onClick={(e) => filterDay('Tue', e.currentTarget)}>Tue</button>
+            <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
+            <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
+            <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
         </div>
     )
 }

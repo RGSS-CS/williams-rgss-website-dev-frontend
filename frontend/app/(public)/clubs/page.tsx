@@ -1,11 +1,8 @@
-"use client"
-import React from "react";
 import handleSearch from "@/app/(public)/_utils/HandleSearch";
-import { filterCategory } from "@/app/(public)/_utils/filterCategory"
-import { filterDay } from "@/app/(public)/_utils/filterCategory"
 import { resetAll } from "@/app/(public)/_utils/filterCategory"
 import FilterBar from "@/app/(public)/_ui/MobileFilterBar";
-import styles from "./clubs.module.css";
+import styles from "@/app/(public)/clubs/clubs.module.css";
+import Filter from "@/app/(public)/_ui/FilterBar";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -51,36 +48,8 @@ export default function ClubsPage() {
             </div>
             <div className="sticky-wrapper">
                 <FilterBar>
-                    <div className="filter_bar">
-                        <span className="filter_label">
-                            <i className="fas fa-filter"></i>
-                            Filter
-                        </span>
-                        <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
-                            <i className="fas fa-book"></i>
-                            Academic
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
-                            <i className="fas fa-palette"></i>
-                            Arts
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
-                            <i className="fas fa-hands-helping"></i>
-                            Community
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            Sports &amp; Recreation
-                        </button>
-                        <div className="filter_divider"></div>
-                        <button className="filter-chip" onClick={(e) => filterDay('Mon', e.currentTarget)}>Mon</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Tue', e.currentTarget)}>Tue</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
-                    </div>
+                    <Filter />
+                    <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
                     {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
                 </FilterBar>
                 <div className={styles.mobileResultsBar}>
