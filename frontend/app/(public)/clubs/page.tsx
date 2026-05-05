@@ -1,11 +1,9 @@
-"use client"
-import React from "react";
-import handleSearch from "@/app/(public)/_utils/HandleSearch";
-import { filterCategory } from "@/app/(public)/_utils/filterCategory"
-import { filterDay } from "@/app/(public)/_utils/filterCategory"
-import { resetAll } from "@/app/(public)/_utils/filterCategory"
-import FilterBar from "@/app/(public)/_ui/FilterBar";
-import styles from "./clubs.module.css";
+import styles from "@/app/(public)/clubs/clubs.module.css";
+import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
+
+import ClubSearchInput from "./_components/ClubSearchInput";
+import ClubsFilterControls from "./_components/ClubsFilterControls";
+import ResetFiltersButton from "./_components/ResetFiltersButton";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -34,7 +32,7 @@ export default function ClubsPage() {
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>
-                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onChange={handleSearch} autoComplete="off"></input>
+                            <ClubSearchInput />
                         </div>
                         <div className={styles.heroStats}>
                             <div className={styles.heroStat}>
@@ -50,39 +48,10 @@ export default function ClubsPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <FilterBar>
-                    <div className="filter_bar">
-                        <span className="filter_label">
-                            <i className="fas fa-filter"></i>
-                            Filter
-                        </span>
-                        <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
-                            <i className="fas fa-book"></i>
-                            Academic
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
-                            <i className="fas fa-palette"></i>
-                            Arts
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
-                            <i className="fas fa-hands-helping"></i>
-                            Community
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            Sports &amp; Recreation
-                        </button>
-                        <div className="filter_divider"></div>
-                        <button className="filter-chip" onClick={(e) => filterDay('Mon', e.currentTarget)}>Mon</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Tue', e.currentTarget)}>Tue</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Wed', e.currentTarget)}>Wed</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Thur', e.currentTarget)}>Thur</button>
-                        <button className="filter-chip" onClick={(e) => filterDay('Fri', e.currentTarget)}>Fri</button>
-                        <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
-                    </div>
-                    {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
-                </FilterBar>
+                <ResponsiveFilterPanel>
+                    <ClubsFilterControls />
+                    <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
+                </ResponsiveFilterPanel>
                 <div className={styles.mobileResultsBar}>
                     <span className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`} data-results-count>Showing 0 clubs</span>
                 </div>
@@ -130,7 +99,7 @@ export default function ClubsPage() {
                         <i className="fas fa-search"></i>
                         <h3>No Clubs Found</h3>
                         <p>Try a different search term or clear your filters</p>
-                        <button className="cta-btn" onClick={resetAll}><i className="fas fa-undo"></i>Reset Filters</button>
+                        <ResetFiltersButton />
                     </div>
                 </div>
             </div>

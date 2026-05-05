@@ -1,8 +1,8 @@
 // These styles apply to every route in the application
 import './styles.css';
 import type { Metadata } from 'next';
-import Navbar from '@/app/(public)/_ui/navbar';
-import Footer from '@/app/(public)/_ui/footer';
+import Footer from '@/app/(public)/_components/Footer';
+import Navbar from '@/app/(public)/_components/Navbar';
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',
@@ -13,13 +13,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  
-  const currentYear = new Date().getFullYear();
   return (
-      <body>
+      <>
         <Navbar />
         {children}
         <Footer />
-      </body>
+      </>
   )
 }

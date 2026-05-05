@@ -1,8 +1,9 @@
-"use client"
+import Image from "next/image";
 
-import { filterCategory } from "@/app/(public)/_utils/filterCategory";
-import FilterBar from "@/app/(public)/_ui/FilterBar";
+import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
 import styles from "./gallery.module.css";
+
+import GalleryFilterContent from "./_components/GalleryFilterContent";
 
 export default function GalleryPage() {
     return (
@@ -24,36 +25,9 @@ export default function GalleryPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <FilterBar>
-                    <div className="filter_bar">
-                        <span className="filter_label">
-                            <i className="fas fa-filter"></i>
-                            Filter
-                        </span>
-                        <button className="filter-chip active gold" onClick={(e) => filterCategory('all', e.currentTarget)}>All Clubs</button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('academic', e.currentTarget)}>
-                            <i className="fas fa-book"></i>
-                            Academic
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('arts', e.currentTarget)}>
-                            <i className="fas fa-palette"></i>
-                            Arts
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('community', e.currentTarget)}>
-                            <i className="fas fa-hands-helping"></i>
-                            Community
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('sports', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            Sports &amp; Rec
-                        </button>
-                        <button className="filter-chip" onClick={(e) => filterCategory('events', e.currentTarget)}>
-                            <i className="fas fa-running"></i>
-                            School Events
-                        </button>
-                        {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
-                    </div>
-                </FilterBar>
+                <ResponsiveFilterPanel>
+                    <GalleryFilterContent />
+                </ResponsiveFilterPanel>
                 <div className="category_container">
                     <div className="category-section" data-section="academic">
                         <div className="category-header">
@@ -124,16 +98,21 @@ export default function GalleryPage() {
                                 0 photos
                             </span>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div className={styles.lightboxOverlay} id="lightbox">
-                <button className="lightbox-nav-btn prev"><i className="fas fa-chevron-left"></i></button>
-                <button className="lightbox-nav-btn next"><i className="fas fa-chevron-right"></i></button>
+                <button className="lightbox-nav-btn prev" title="Previous image" aria-label="Previous image"><i className="fas fa-chevron-left"></i></button>
+                <button className="lightbox-nav-btn next" title="Next image" aria-label="Next image"><i className="fas fa-chevron-right"></i></button>
                 <div className={styles.lightboxInner}>
                     <div className={styles.lightboxImgContainer} id="lightboxImgWrap">
-                        <img src="null" alt=""></img>
+                        <Image
+                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                            alt=""
+                            width={1}
+                            height={1}
+                            unoptimized
+                        />
                     </div>
                     <div className="lightbox-meta">
                         <span className="lightbox-caption-text" id="lightboxCaption"></span>
