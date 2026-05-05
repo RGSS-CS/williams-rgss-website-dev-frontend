@@ -2,10 +2,10 @@
 
 const categoryFilters = [
   { category: "all", label: "All Clubs", iconClass: undefined, active: true },
-  { category: "academic", label: "Academic", iconClass: "fas fa-book" },
-  { category: "arts", label: "Arts", iconClass: "fas fa-palette" },
-  { category: "community", label: "Community", iconClass: "fas fa-hands-helping" },
-  { category: "sports", label: "Sports & Recreation", iconClass: "fas fa-running" },
+  { category: "academic", label: "Academic", iconClass: "fas fa-book", active: false },
+  { category: "arts", label: "Arts", iconClass: "fas fa-palette", active: false },
+  { category: "community", label: "Community", iconClass: "fas fa-hands-helping", active: false },
+  { category: "sports", label: "Sports & Recreation", iconClass: "fas fa-running", active: false },
 ] as const;
 
 const dayFilters = ["Mon", "Tue", "Wed", "Thur", "Fri"] as const;
