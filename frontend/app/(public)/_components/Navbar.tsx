@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
 import "@/app/(public)/styles.css";
 
 const links = [
@@ -19,7 +20,10 @@ const links = [
 ];
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/") return pathname === href;
+  if (href === "/") {
+    return pathname === href;
+  }
+
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -28,20 +32,18 @@ export default function Navbar() {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Close sidebar on route change
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [pathname]);
-
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     document.body.style.overflow = sidebarOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [sidebarOpen]);
 
   useEffect(() => {
     const navElement = navRef.current;
-    if (!navElement) return;
+    if (!navElement) {
+      return;
+    }
 
     const updateNavbarHeight = () => {
       const height = navElement.offsetHeight;
@@ -52,6 +54,7 @@ export default function Navbar() {
 
     const observer = new ResizeObserver(updateNavbarHeight);
     observer.observe(navElement);
+
     return () => observer.disconnect();
   }, []);
 
@@ -78,26 +81,23 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop nav */}
           <div className="nav-links">
             {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={isActivePath(pathname, link.href) ? "active" : ""}
-              >
-                <i className={link.iconClass}></i>
-                {link.label}
+            <Link
+              key={link.href}
+              href={link.href}
+              className={isActivePath(pathname, link.href) ? "active" : ""}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <i className={link.iconClass}></i>
+              {link.label}
               </Link>
             ))}
           </div>
         </div>
       </nav>
 
-      {/* Sidebar overlay + drawer */}
-      {sidebarOpen && (
-        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
-      )}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
       <div className={`nav-sidebar ${sidebarOpen ? "open" : ""}`}>
         <button
           className="sidebar-close"

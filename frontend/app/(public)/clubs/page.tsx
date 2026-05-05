@@ -1,8 +1,9 @@
-import handleSearch from "@/app/(public)/_utils/HandleSearch";
-import { resetAll } from "@/app/(public)/_utils/filterCategory"
-import FilterBar from "@/app/(public)/_ui/MobileFilterBar";
 import styles from "@/app/(public)/clubs/clubs.module.css";
-import Filter from "@/app/(public)/_ui/FilterBar";
+import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
+
+import ClubSearchInput from "./_components/ClubSearchInput";
+import ClubsFilterControls from "./_components/ClubsFilterControls";
+import ResetFiltersButton from "./_components/ResetFiltersButton";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -31,7 +32,7 @@ export default function ClubsPage() {
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>
-                            <input className="search_input" id="club_search" type="text" placeholder="Search by club name, location or time..." onChange={handleSearch} autoComplete="off"></input>
+                            <ClubSearchInput />
                         </div>
                         <div className={styles.heroStats}>
                             <div className={styles.heroStat}>
@@ -47,11 +48,10 @@ export default function ClubsPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <FilterBar>
-                    <Filter />
+                <ResponsiveFilterPanel>
+                    <ClubsFilterControls />
                     <span className={`results-count ${styles.resultsCount}`} id="resultsCount" data-results-count>Showing 0 clubs</span>
-                    {/*Fix Server/Client components, refer: https://nextjs.org/docs/app/getting-started/server-and-client-components */}
-                </FilterBar>
+                </ResponsiveFilterPanel>
                 <div className={styles.mobileResultsBar}>
                     <span className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`} data-results-count>Showing 0 clubs</span>
                 </div>
@@ -99,7 +99,7 @@ export default function ClubsPage() {
                         <i className="fas fa-search"></i>
                         <h3>No Clubs Found</h3>
                         <p>Try a different search term or clear your filters</p>
-                        <button className="cta-btn" onClick={resetAll}><i className="fas fa-undo"></i>Reset Filters</button>
+                        <ResetFiltersButton />
                     </div>
                 </div>
             </div>

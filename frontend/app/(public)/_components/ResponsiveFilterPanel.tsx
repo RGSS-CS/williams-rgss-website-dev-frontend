@@ -1,18 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function FilterBar({ children }: { children: React.ReactNode }) {
+type ResponsiveFilterPanelProps = {
+  children: React.ReactNode;
+};
+
+export default function ResponsiveFilterPanel({
+  children,
+}: ResponsiveFilterPanelProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
     <>
-      {/* Mobile toggle button — hidden on desktop */}
       <div className="filter_bar_container">
         <button
           className="filter-toggle-btn"
@@ -24,12 +32,8 @@ export default function FilterBar({ children }: { children: React.ReactNode }) {
         </button>
       </div>
 
-      {/* Overlay */}
-      {open && (
-        <div className="filter-sidebar-overlay" onClick={() => setOpen(false)} />
-      )}
+      {open && <div className="filter-sidebar-overlay" onClick={() => setOpen(false)} />}
 
-      {/* Sidebar drawer */}
       <div className={`filter-sidebar ${open ? "open" : ""}`}>
         <div className="filter-sidebar-header">
           <span className="filter-sidebar-title">
@@ -44,15 +48,11 @@ export default function FilterBar({ children }: { children: React.ReactNode }) {
             <i className="fas fa-times"></i>
           </button>
         </div>
-        <div className="filter-sidebar-body">
-          {children}
-        </div>
+        <div className="filter-sidebar-body">{children}</div>
       </div>
 
       <div className="filter_bar_container filter_bar_container--desktop">
-        <div className="filter_bar">
-          {children}
-        </div>
+        <div className="filter_bar">{children}</div>
       </div>
     </>
   );

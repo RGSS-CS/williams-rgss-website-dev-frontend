@@ -1,6 +1,9 @@
-import FilterBar from "@/app/(public)/_ui/MobileFilterBar";
-import Filter from "@/app/(public)/_ui/FilterBar";
+import Image from "next/image";
+
+import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
 import styles from "./gallery.module.css";
+
+import GalleryFilterContent from "./_components/GalleryFilterContent";
 
 export default function GalleryPage() {
     return (
@@ -22,9 +25,9 @@ export default function GalleryPage() {
                 </div>
             </div>
             <div className="sticky-wrapper">
-                <FilterBar>
-                    <Filter />
-                </FilterBar>
+                <ResponsiveFilterPanel>
+                    <GalleryFilterContent />
+                </ResponsiveFilterPanel>
                 <div className="category_container">
                     <div className="category-section" data-section="academic">
                         <div className="category-header">
@@ -103,7 +106,13 @@ export default function GalleryPage() {
                 <button className="lightbox-nav-btn next" title="Next image" aria-label="Next image"><i className="fas fa-chevron-right"></i></button>
                 <div className={styles.lightboxInner}>
                     <div className={styles.lightboxImgContainer} id="lightboxImgWrap">
-                        <img src="null" alt=""></img>
+                        <Image
+                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                            alt=""
+                            width={1}
+                            height={1}
+                            unoptimized
+                        />
                     </div>
                     <div className="lightbox-meta">
                         <span className="lightbox-caption-text" id="lightboxCaption"></span>
