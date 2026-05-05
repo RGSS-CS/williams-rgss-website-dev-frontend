@@ -11,7 +11,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <main>
+        <main className={styles.page}>
             <nav className="navbar">
                 <div className="header-container">
                     <div className="title-container">
@@ -28,8 +28,10 @@ export default function RootLayout({
                     </div>
                 </div>
             </nav>
-            {children}
-            <div className={styles.footer}>
+            <div className={styles.content}>
+                {children}
+            </div>
+            <div className={styles.footerWrap}>
                 <Footer />
             </div>
         </main>
