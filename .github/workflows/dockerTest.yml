@@ -1,19 +1,13 @@
 name: Test Docker Image
 on: 
-  push:
-    paths:
-      - "frontend/**"
-      - ".github/workflows/docker-test.yml"
-      - ".github/workflows/Azure+DockerBuild.yml"
   pull_request:
-    types:
-      - closed
-    branches:
-      - testing-dev
     paths:
       - "frontend/**"
       - ".github/workflows/docker-test.yml"
       - ".github/workflows/Azure+DockerBuild.yml"
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
