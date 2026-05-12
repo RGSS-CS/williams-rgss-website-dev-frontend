@@ -3,7 +3,7 @@ import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPa
 
 import ClubSearchInput from "./_components/ClubSearchInput";
 import ClubsFilterControls from "./_components/ClubsFilterControls";
-import ResetFiltersButton from "./_components/ResetFiltersButton";
+import EmptyState from "./_components/EmptyState";
 
 //async function getDjangoAPI(): Promise<Club[]> {
 //    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
@@ -95,12 +95,7 @@ export default function ClubsPage() {
                             <span className="category-count">0 clubs</span>
                         </div>
                     </div>
-                    <div className={styles.emptyState} id="emptyState">
-                        <i className="fas fa-search"></i>
-                        <h3>No Clubs Found</h3>
-                        <p>Try a different search term or clear your filters</p>
-                        <ResetFiltersButton />
-                    </div>
+                    <EmptyState />
                 </div>
             </div>
             <div className={styles.ctaBanner}>
