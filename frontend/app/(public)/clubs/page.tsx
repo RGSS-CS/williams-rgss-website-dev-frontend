@@ -5,17 +5,8 @@ import ClubSearchInput from "./_components/ClubSearchInput";
 import ClubsFilterControls from "./_components/ClubsFilterControls";
 import ResetFiltersButton from "./_components/ResetFiltersButton";
 
-//async function getDjangoAPI(): Promise<Club[]> {
-//    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
-//        cache: "no-store",
-//    });
-
-//    if (!res.ok) throw new Error("Failed to fetch clubs");
-//    return res.json();
-//}
 
 export default function ClubsPage() {
-    //const clubs = await getDjangoAPI();
     return (
         <main>
             <div className="hero">
