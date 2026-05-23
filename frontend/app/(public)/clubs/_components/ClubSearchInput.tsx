@@ -2,9 +2,17 @@
 
 import type { ChangeEvent } from "react";
 
-export default function ClubSearchInput() {
+type ClubSearchInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function ClubSearchInput({
+  value,
+  onChange,
+}: ClubSearchInputProps) {
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    void event.target.value;
+    onChange(event.target.value);
   };
 
   return (
@@ -12,6 +20,7 @@ export default function ClubSearchInput() {
       className="search_input"
       id="club_search"
       type="text"
+      value={value}
       placeholder="Search by club name, location or time..."
       onChange={handleSearch}
       autoComplete="off"

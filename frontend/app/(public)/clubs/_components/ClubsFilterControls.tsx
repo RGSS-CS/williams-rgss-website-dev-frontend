@@ -1,23 +1,28 @@
 "use client";
 
-const categoryFilters = [
-  { category: "all", label: "All Clubs", iconClass: undefined, active: true },
-  { category: "academic", label: "Academic", iconClass: "fas fa-book", active: false },
-  { category: "arts", label: "Arts", iconClass: "fas fa-palette", active: false },
-  { category: "community", label: "Community", iconClass: "fas fa-hands-helping", active: false },
-  { category: "sports", label: "Sports & Recreation", iconClass: "fas fa-running", active: false },
-] as const;
+export type CategoryFilter = {
+  value: string;
+  label: string;
+  iconClass?: string;
+};
 
-const dayFilters = ["Mon", "Tue", "Wed", "Thur", "Fri"] as const;
+const dayFilters = ["All Days", "Mon", "Tue", "Wed", "Thu", "Fri"] as const;
 
-export default function ClubsFilterControls() {
-  const handleCategoryFilter = (category: string) => {
-    void category;
-  };
+type ClubsFilterControlsProps = {
+  categories: CategoryFilter[];
+  activeCategory: string;
+  activeDay: string;
+  onCategoryChange: (category: string) => void;
+  onDayChange: (day: string) => void;
+};
 
-  const handleDayFilter = (day: string) => {
-    void day;
-  };
+export default function ClubsFilterControls({
+  categories,
+  activeCategory,
+  activeDay,
+  onCategoryChange,
+  onDayChange,
+}: ClubsFilterControlsProps) {
 
   return (
     <>
@@ -25,11 +30,11 @@ export default function ClubsFilterControls() {
         <i className="fas fa-filter"></i>
         Filter
       </span>
-      {categoryFilters.map((filter) => (
+      {categories.map((filter) => (
         <button
-          key={filter.category}
-          className={`filter-chip${filter.active ? " active gold" : ""}`}
-          onClick={() => handleCategoryFilter(filter.category)}
+          key={filter.value}
+          className={`filter-chip${activeCategory === filter.value ? " active gold" : ""}`}
+          onClick={() => onCategoryChange(filter.value)}
         >
           {filter.iconClass && <i className={filter.iconClass}></i>}
           {filter.label}
@@ -39,8 +44,8 @@ export default function ClubsFilterControls() {
       {dayFilters.map((day) => (
         <button
           key={day}
-          className="filter-chip"
-          onClick={() => handleDayFilter(day)}
+          className={`filter-chip${activeDay === day ? " active" : ""}`}
+          onClick={() => onDayChange(day)}
         >
           {day}
         </button>
