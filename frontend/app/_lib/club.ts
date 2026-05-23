@@ -1,6 +1,12 @@
-import { useState, useEffect } from "react";
+async function getClubs() {
+    const res = await fetch(
+       "http://backend:8000/" /**TBD URL to REST API*/,
+        {
+            next: {
+                revalidate: 60
+            }
+        }
+    )
 
-export default function ClubsDatabase() {
-    const [name, description, motto, tags, classroom_code] = useState("");
-
-}
+    return res.json()
+};
