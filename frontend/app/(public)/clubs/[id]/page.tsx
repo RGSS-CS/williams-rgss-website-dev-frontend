@@ -48,78 +48,6 @@ function sentenceCase(value: string | null, fallback: string) {
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
-function splitDescription(description: string) {
-  const normalized = description
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  const intro = normalized[0] ?? "A student-led space to learn, build, and connect.";
-  const details = normalized.slice(1).join("\n");
-
-  return {
-    intro,
-    details: details || description,
-  };
-}
-
-function buildActivities(name: string, category: string, day: string | null) {
-  return [
-    {
-      icon: "fas fa-vial",
-      title: "Hands-On Sessions",
-      text: `${name} focuses on practical sessions where students learn by doing, testing ideas, and building confidence together.`,
-      note: day ? `Usually meets on ${formatDay(day)}` : "Weekly club rhythm",
-    },
-    {
-      icon: "fas fa-users",
-      title: "Community & Collaboration",
-      text: `Members work together in a supportive ${category.toLowerCase()} environment where curiosity, teamwork, and student leadership matter.`,
-      note: "Open to interested students",
-    },
-    {
-      icon: "fas fa-trophy",
-      title: "Events & Opportunities",
-      text: `The club can host projects, showcases, competitions, and special events that help students turn interest into real experience.`,
-      note: "Built around student involvement",
-    },
-  ];
-}
-
-function buildBenefits(category: string) {
-  return [
-    {
-      icon: "fas fa-chart-line",
-      title: "Build Real Skills",
-      text: `Develop practical ${category.toLowerCase()} skills, confidence, and teamwork through consistent involvement.`,
-    },
-    {
-      icon: "fas fa-user-friends",
-      title: "Find Your People",
-      text: "Meet students with similar interests and grow inside a welcoming school community.",
-    },
-    {
-      icon: "fas fa-graduation-cap",
-      title: "Strengthen Applications",
-      text: "Club participation helps demonstrate initiative, leadership, and long-term commitment.",
-    },
-    {
-      icon: "fas fa-star",
-      title: "Get Involved",
-      text: "Take part in school life through projects, events, and visible contributions beyond class time.",
-    },
-  ];
-}
-
-const photoLabels = [
-  "Club Meeting",
-  "Student Project",
-  "Team Collaboration",
-  "Event Day",
-  "Showcase Moment",
-  "Community Building",
-];
-
 export async function generateStaticParams() {
   const clubs = await getClubs();
   return clubs.map((club) => ({ id: String(club.id) }));
@@ -140,9 +68,6 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   }
 
   const primaryCategory = club.categories[0] ?? "Student Club";
-  const { intro, details } = splitDescription(club.description);
-  const activities = buildActivities(club.name, primaryCategory, club.dayOfMeeting);
-  const benefits = buildBenefits(primaryCategory);
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = formatTime(club.time);
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
@@ -162,24 +87,11 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
           <div className={styles.eyebrow}>
             <i className="fas fa-flask"></i>
-            {primaryCategory} Club
+            {primaryCategory}
           </div>
 
-          <h1 className={styles.title}>
-            {club.name} <span className={styles.titleAccent}>Club</span>
-          </h1>
-
-          <p className={styles.tagline}>{intro}</p>
-
-          <div className={styles.heroActions}>
-            <a href="#about" className={styles.heroButton}>
-              <i className="fas fa-compass"></i>
-              Explore This Club
-            </a>
-            <span className={styles.heroHint}>
-              Scroll to see meeting info, highlights, and how to get involved.
-            </span>
-          </div>
+          <h1 className={styles.title}>{club.name}</h1>
+          <p className={styles.tagline}>{club.description}</p>
 
           <div className={styles.heroStats}>
             <div>
@@ -202,58 +114,13 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         </div>
       </section>
 
-      <div className={styles.applyRail}>
-        <div className={styles.applyCard}>
-          <div className={styles.applyTab}>Apply</div>
-          <div className={styles.applyBody}>
-            <div className={styles.applyTitle}>
-              <i className="fas fa-paper-plane"></i> Join the Club
-            </div>
-            <div className={styles.applyList}>
-              <div className={styles.applyItem}>
-                <i className="fas fa-calendar-alt"></i>
-                <div>
-                  <strong>{meetingDay}</strong>
-                  <span>{meetingTime}</span>
-                </div>
-              </div>
-              <div className={styles.applyItem}>
-                <i className="fas fa-door-open"></i>
-                <div>
-                  <strong>{roomLabel}</strong>
-                  <span>{cadence}</span>
-                </div>
-              </div>
-              <div className={styles.applyItem}>
-                <i className="fas fa-chalkboard"></i>
-                <div>
-                  <strong>Classroom details</strong>
-                  <span>Available after sign-in</span>
-                </div>
-              </div>
-              <div className={styles.applyItem}>
-                <i className="fas fa-user-tie"></i>
-                <div>
-                  <strong>{club.teacherAdvisor ?? "Advisor TBA"}</strong>
-                  <span>Teacher advisor</span>
-                </div>
-              </div>
-            </div>
-            <Link href="/private/authentication" className={styles.applyButton}>
-              <i className="fas fa-arrow-right-to-bracket"></i>
-              Sign In For Join Details
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.aboutWrap} id="about">
+      <div className={styles.aboutWrap}>
         <section className={styles.section}>
           <div className={styles.aboutGrid}>
             <div>
-              <span className={styles.sectionEyebrow}>About Us</span>
-              <h2 className={styles.sectionTitle}>A place to explore, learn, and contribute</h2>
-              <div className={styles.sectionBody}>{details}</div>
+              <span className={styles.sectionEyebrow}>About</span>
+              <h2 className={styles.sectionTitle}>{club.name}</h2>
+              <div className={styles.sectionBody}>{club.description}</div>
 
               <div className={styles.badgeRow}>
                 <div className={styles.badge}>
@@ -269,144 +136,58 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
                   {club.categories.join(" · ")}
                 </div>
               </div>
-
-              <div className={styles.quote}>
-                <i className="fas fa-quote-left"></i> Student-led experiences grow when curiosity,
-                consistency, and community come together.
-              </div>
             </div>
 
             <div className={styles.aboutVisual}>
               <div className={styles.aboutVisualCaption}>
                 <strong>{club.name}</strong>
-                <div>{primaryCategory} at Dr. G.W. Williams S.S.</div>
+                <div>{primaryCategory}</div>
               </div>
             </div>
           </div>
         </section>
       </div>
 
-      <div className={styles.scienceWrap}>
-        <section className={styles.section}>
-          <div className={styles.headlineRow}>
-            <i className="fas fa-atom"></i>
-            <span>What We Do</span>
-          </div>
-
-          <div className={styles.cardsGrid}>
-            {activities.map((activity) => (
-              <article className={styles.featureCard} key={activity.title}>
-                <div className={styles.featureMedia}></div>
-                <div className={styles.featureBody}>
-                  <div className={styles.featureIcon}>
-                    <i className={activity.icon}></i>
-                  </div>
-                  <h3 className={styles.featureTitle}>{activity.title}</h3>
-                  <p className={styles.featureText}>{activity.text}</p>
-                  <div className={styles.featureNote}>
-                    <i className="far fa-clock"></i>
-                    {activity.note}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div className={styles.benefitsWrap}>
-        <section className={styles.section}>
-          <div className={styles.headlineRow}>
-            <i className="fas fa-star"></i>
-            <span>Why Join?</span>
-          </div>
-
-          <div className={styles.benefitsGrid}>
-            {benefits.map((benefit) => (
-              <article className={styles.benefitCard} key={benefit.title}>
-                <i className={benefit.icon}></i>
-                <h3>{benefit.title}</h3>
-                <p>{benefit.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div className={styles.photosWrap}>
-        <section className={styles.section}>
-          <div className={styles.headlineRow}>
-            <i className="fas fa-images"></i>
-            <span>Club In Action</span>
-          </div>
-
-          <div className={styles.photosGrid}>
-            {photoLabels.map((label) => (
-              <div className={styles.photoTile} key={label}>
-                <div className={styles.photoLabel}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div className={`${styles.infoWrap} ${styles.hiddenDesktop}`}>
-        <div className={styles.infoCards}>
-          <article className={styles.infoCard}>
-            <h3>
-              <i className="fas fa-paper-plane"></i>
-              Join This Club
-            </h3>
-            <p>
-              Meeting information is public, but classroom join details stay protected.
-              Sign in to view student-only access information for {club.name}.
-            </p>
-            <Link href="/private/authentication" className={styles.applyButton}>
-              <i className="fas fa-arrow-right-to-bracket"></i>
-              Sign In
-            </Link>
-          </article>
-
-          <article className={styles.infoCard}>
-            <h3>
-              <i className="fas fa-user-tie"></i>
-              Advisor Support
-            </h3>
-            <p>
-              {club.teacherAdvisor
-                ? `${club.teacherAdvisor} helps support the club and keep meetings running smoothly.`
-                : "Teacher advisor details will be shared when confirmed."}
-            </p>
-          </article>
-        </div>
-      </div>
-
       <div className={styles.infoWrap}>
-        <div className={styles.infoCards}>
-          <article className={styles.infoCard}>
-            <h3>
-              <i className="fas fa-bullhorn"></i>
-              Club Update
-            </h3>
-            <p>
-              {club.name} is part of the Williams student activities directory. Check back here
-              for future updates, event spotlights, and meeting reminders as more club-specific
-              content is added.
-            </p>
-          </article>
+        <section className={styles.section}>
+          <div className={styles.headlineRow}>
+            <i className="fas fa-info-circle"></i>
+            <span>Club Information</span>
+          </div>
 
-          <article className={styles.infoCard}>
-            <h3>
+          <div className={styles.infoGrid}>
+            <article className={styles.infoTile}>
+              <i className="fas fa-layer-group"></i>
+              <h3>Category</h3>
+              <p>{club.categories.join(", ") || "Not provided"}</p>
+            </article>
+            <article className={styles.infoTile}>
+              <i className="fas fa-calendar-alt"></i>
+              <h3>Meeting Day</h3>
+              <p>{meetingDay}</p>
+            </article>
+            <article className={styles.infoTile}>
+              <i className="fas fa-clock"></i>
+              <h3>Meeting Time</h3>
+              <p>{meetingTime}</p>
+            </article>
+            <article className={styles.infoTile}>
+              <i className="fas fa-repeat"></i>
+              <h3>Repetition</h3>
+              <p>{cadence}</p>
+            </article>
+            <article className={styles.infoTile}>
+              <i className="fas fa-door-open"></i>
+              <h3>Room</h3>
+              <p>{roomLabel}</p>
+            </article>
+            <article className={styles.infoTile}>
               <i className="fas fa-user-tie"></i>
-              Message From The Team
-            </h3>
-            <p>
-              Whether you&apos;re brand new or already interested in {primaryCategory.toLowerCase()},
-              this club is meant to help students participate, contribute, and find a place to
-              grow inside the school community.
-            </p>
-          </article>
-        </div>
+              <h3>Teacher Advisor</h3>
+              <p>{club.teacherAdvisor ?? "Not provided"}</p>
+            </article>
+          </div>
+        </section>
       </div>
     </main>
   );

@@ -152,8 +152,8 @@ function ClubCard({ club }: { club: Club }) {
             <div className={styles.clubMetaItem}>
               <i className="fas fa-arrow-right"></i>
               <div>
-                <strong>Open club page</strong>
-                <span>View details and updates</span>
+                <strong>{club.categories.join(", ") || "Club details"}</strong>
+                <span>Open club page</span>
               </div>
             </div>
           </div>
