@@ -114,57 +114,28 @@ function ClubCard({ club }: { club: Club }) {
 
   return (
     <Link href={`/clubs/${club.id}`} className={styles.clubCardLink}>
-      <article className={styles.clubCard}>
-        <div className={styles.clubCardHero}>
-          <div className={styles.clubCardEyebrow}>
-            <i className={getCategoryIcon(primaryCategory)}></i>
-            {primaryCategory}
-          </div>
-          <h3 className={styles.clubCardTitle}>{club.name}</h3>
-          <p className={styles.clubCardTagline}>
-            {club.description}
-          </p>
+      <article className={styles.club_card}>
+        <div className={styles.club_card_name}>
+          <h3>{club.name}</h3>
         </div>
-
-        <div className={styles.clubCardBody}>
-          <div className={styles.clubMetaGrid}>
-            <div className={styles.clubMetaItem}>
-              <i className="fas fa-calendar-alt"></i>
-              <div>
-                <strong>{formatDay(club.dayOfMeeting)}</strong>
-                <span>{formatTime(club.time)}</span>
-              </div>
-            </div>
-            <div className={styles.clubMetaItem}>
-              <i className="fas fa-door-open"></i>
-              <div>
-                <strong>{club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA"}</strong>
-                <span>{club.repetition ? club.repetition.toLowerCase() : "Schedule to be announced"}</span>
-              </div>
-            </div>
-            <div className={styles.clubMetaItem}>
-              <i className="fas fa-user-tie"></i>
-              <div>
-                <strong>{club.teacherAdvisor ?? "Advisor TBA"}</strong>
-                <span>Teacher advisor</span>
-              </div>
-            </div>
-            <div className={styles.clubMetaItem}>
-              <i className="fas fa-arrow-right"></i>
-              <div>
-                <strong>{club.categories.join(", ") || "Club details"}</strong>
-                <span>Open club page</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.clubCategoryTags}>
-            {club.categories.map((category) => (
-              <span className={styles.clubCategoryTag} key={category}>
-                {category}
-              </span>
-            ))}
-          </div>
+        <div className={styles.club_meta_row}>
+          <i className="fas fa-calendar-alt"></i>
+          <h4>{club.repetition} - {club.dayOfMeeting} @ {club.time}</h4>
+        </div>
+        <div className={styles.club_meta_row}>
+          <i className="fas fa-map-marker-alt"></i>
+          <h4>{club.roomNumber}</h4>
+        </div>
+        <p className={styles.club_card_description}>
+          {club.description}
+        </p>
+        <div className={styles.club_card_divider}></div>
+        <div className={styles.club_card_footer}>
+          <a className={styles.open_club_btn}>
+            View Details
+            <i className="fas fa-arrow-right"></i>
+            <span className={`${styles.club_tag} ${styles.open}`}></span>
+          </a>
         </div>
       </article>
     </Link>
