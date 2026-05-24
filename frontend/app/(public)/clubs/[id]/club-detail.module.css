@@ -1,0 +1,288 @@
+.page {
+  background: #f8f9fa;
+  color: #1e1e2a;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 4.75rem 2.5rem 4.25rem;
+  color: white;
+  background: linear-gradient(145deg, #071929 0%, #0e3050 52%, #1b4a6b 100%);
+  border-bottom: 6px solid var(--school-tertiary);
+}
+
+.hero::before,
+.hero::after {
+  position: absolute;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.hero::before {
+  content: "⚗";
+  top: -18px;
+  left: 8%;
+  font-size: 13rem;
+}
+
+.hero::after {
+  content: "⚛";
+  right: 7%;
+  bottom: -18px;
+  font-size: 12rem;
+  transform: rotate(14deg);
+}
+
+.heroInner,
+.section {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.breadcrumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
+}
+
+.breadcrumbs a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: white;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1rem;
+  margin-left: 0.25rem;
+  margin-top: 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 174, 45, 0.4);
+  background: rgba(246, 174, 45, 0.15);
+  color: var(--school-tertiary);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.75rem, 6vw, 4.85rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  max-width: 900px;
+}
+
+.tagline {
+  margin-top: 1.2rem;
+  max-width: 760px;
+  padding-left: 1.25rem;
+  border-left: 5px solid var(--school-tertiary);
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: pre-line;
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.heroStatNumber {
+  display: block;
+  color: var(--school-tertiary);
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.heroStatLabel {
+  display: block;
+  margin-top: 0.35rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.aboutWrap {
+  background: white;
+  border-bottom: 1px solid #dce3eb;
+}
+
+.infoWrap {
+  background: #f4f9fe;
+}
+
+.section {
+  padding: 4rem 2.5rem;
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.sectionEyebrow {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: #fef3d7;
+  color: #b87c1a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  margin-top: 1rem;
+  color: var(--school-primary);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 4vw, 2.65rem);
+  font-weight: 900;
+}
+
+.sectionBody {
+  margin-top: 1rem;
+  color: #4a5568;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid #d6e9f5;
+  background: #f4f9fe;
+  color: var(--school-primary);
+  font-weight: 800;
+}
+
+.aboutVisual {
+  min-height: 360px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(11, 28, 58, 0.14);
+  background:
+    linear-gradient(180deg, rgba(11, 28, 58, 0.12), rgba(11, 28, 58, 0.72)),
+    radial-gradient(circle at top left, rgba(246, 174, 45, 0.28), transparent 34%),
+    linear-gradient(135deg, #0f3556, #1a4b6d);
+  display: flex;
+  align-items: end;
+}
+
+.aboutVisualCaption {
+  width: 100%;
+  padding: 2rem 1.5rem 1.3rem;
+  color: white;
+  font-weight: 700;
+}
+
+.headlineRow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+  color: var(--school-primary);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 900;
+}
+
+.headlineRow i {
+  color: var(--school-tertiary);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.infoTile {
+  border-radius: 24px;
+  border: 1px solid #dce3eb;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 32, 64, 0.07);
+  padding: 1.6rem 1.4rem;
+}
+
+.infoTile i {
+  color: var(--school-tertiary);
+  font-size: 1.9rem;
+}
+
+.infoTile h3 {
+  margin-top: 1rem;
+  color: var(--school-primary);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.infoTile p {
+  margin-top: 0.65rem;
+  color: #4a5568;
+  line-height: 1.7;
+}
+
+@media (max-width: 1120px) {
+  .aboutGrid,
+  .infoGrid,
+  .heroStats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .hero,
+  .section {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .hero {
+    padding-top: 3.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .aboutGrid,
+  .infoGrid,
+  .heroStats {
+    grid-template-columns: 1fr;
+  }
+}

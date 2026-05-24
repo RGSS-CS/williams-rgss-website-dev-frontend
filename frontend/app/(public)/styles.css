@@ -1,8 +1,8 @@
-@import "./_styling/mobile-navigation.css";
-@import "./_styling/mobile-filters.css";
-@import "./_styling/navbar.css";
-@import "./_styling/footer.css";
-@import "./_styling/hero.css";
-@import "./_styling/filters.css";
-@import "./_styling/categories.css";
-@import "./_styling/utilities.css";
+@import "./_styles/base/page.css";
+@import "./_styles/layout/navigation.css";
+@import "./_styles/layout/footer.css";
+@import "./_styles/sections/hero.css";
+@import "./_styles/sections/filters.css";
+@import "./_styles/sections/filter-sidebar.css";
+@import "./_styles/sections/categories.css";
+@import "./_styles/utilities/helpers.css";
