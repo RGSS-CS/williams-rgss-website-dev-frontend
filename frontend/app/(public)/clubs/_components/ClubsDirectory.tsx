@@ -51,25 +51,6 @@ function getCategoryIcon(category: string) {
   return DEFAULT_CATEGORY_ICON;
 }
 
-function formatTime(time: string | null) {
-  if (!time) {
-    return "Time TBA";
-  }
-
-  const [hour, minute] = time.split(":");
-  const parsedHour = Number(hour);
-  const parsedMinute = Number(minute);
-
-  if (Number.isNaN(parsedHour) || Number.isNaN(parsedMinute)) {
-    return time;
-  }
-
-  return new Intl.DateTimeFormat("en-CA", {
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(2000, 0, 1, parsedHour, parsedMinute));
-}
-
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting Day TBA";
