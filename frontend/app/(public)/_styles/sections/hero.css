@@ -1,9 +1,5 @@
 /* Shared hero */
 
-body {
-  background: var(--white);
-}
-
 .hero {
   background: linear-gradient(150deg, var(--school-primary) 0%, var(--school-primary-light) 55%);
   padding: 4.5rem 2.5rem 0;
