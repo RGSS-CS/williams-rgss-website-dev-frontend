@@ -95,6 +95,7 @@ function formatDayChip(day: string | null) {
 function matchesQuery(club: Club, query: string) {
   const searchable = [
     club.name,
+    club.preview_description,
     club.description,
     club.teacherAdvisor ?? "",
     club.roomNumber ?? "",
@@ -128,15 +129,15 @@ function ClubCard({ club }: { club: Club }) {
           <h4>{club.roomNumber}</h4>
         </div>
         <p className={styles.club_card_description}>
-          {club.description}
+          {club.preview_description}
         </p>
         <div className={styles.club_card_divider}></div>
         <div className={styles.club_card_footer}>
-          <a className={styles.open_club_btn}>
+          <span className={styles.open_club_btn}>
             View Details
             <i className="fas fa-arrow-right"></i>
             <span className={`${styles.club_tag} ${styles.open}`}></span>
-          </a>
+          </span>
         </div>
       </article>
     </Link>
@@ -177,6 +178,13 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
   });
 
   const visibleCategories = categories
+    .filter((category) => {
+      if (activeCategory === "all") {
+        return true;
+      }
+
+      return slugifyCategory(category) === activeCategory;
+    })
     .map((category) => ({
       name: category,
       slug: slugifyCategory(category),

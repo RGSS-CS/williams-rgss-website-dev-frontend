@@ -6,6 +6,7 @@
   top: var(--navbar-height);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   position: sticky;
+  z-index: 80;
 }
 
 .filter_bar {

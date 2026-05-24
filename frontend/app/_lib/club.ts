@@ -1,6 +1,7 @@
 export type ClubApiRecord = {
   id: number;
   name: string;
+  preview_description: string;
   description: string;
   category: string[];
   day_of_meeting: string | null;
@@ -14,6 +15,7 @@ export type ClubApiRecord = {
 export type Club = {
   id: number;
   name: string;
+  preview_description: string;
   description: string;
   categories: string[];
   dayOfMeeting: string | null;
@@ -28,6 +30,7 @@ function normalizeClub(record: ClubApiRecord): Club {
   return {
     id: record.id,
     name: record.name,
+    preview_description: record.preview_description,
     description: record.description,
     categories: record.category ?? [],
     dayOfMeeting: record.day_of_meeting,

@@ -121,10 +121,9 @@
 
 .club_card_name {
   font-family: "montserrat", sans-serif;
-  font-size: 1.12rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--school-primary);
-  margin-bottom: 0.45rem;
   line-height: 1.2;
 }
 
@@ -133,6 +132,12 @@
   flex-direction: column;
   gap: 5px;
   margin-bottom: 1.1rem;
+}
+
+.club_meta_row h4 {
+  font-size: 0.9rem;
+  margin: 5px;
+  color: var(--school-primary-light);
 }
 
 .club_meta_row {

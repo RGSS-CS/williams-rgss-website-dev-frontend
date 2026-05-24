@@ -85,13 +85,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             <span>{club.name}</span>
           </div>
 
-          <div className={styles.eyebrow}>
-            <i className="fas fa-flask"></i>
-            {primaryCategory}
-          </div>
-
           <h1 className={styles.title}>{club.name}</h1>
-          <p className={styles.tagline}>{club.description}</p>
+          <p className={styles.tagline}>{club.preview_description}</p>
 
           <div className={styles.heroStats}>
             <div>
@@ -120,7 +115,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             <div>
               <span className={styles.sectionEyebrow}>About</span>
               <h2 className={styles.sectionTitle}>{club.name}</h2>
-              <div className={styles.sectionBody}>{club.description}</div>
+              <div className={styles.sectionBody}>{club.preview_description}</div>
 
               <div className={styles.badgeRow}>
                 <div className={styles.badge}>
