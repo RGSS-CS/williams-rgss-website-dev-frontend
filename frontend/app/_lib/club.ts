@@ -32,7 +32,11 @@ function getClubsApiUrl() {
     process.env.NEXT_PUBLIC_API_URL ??
     "http://localhost:8000";
 
-  return new URL("/club/?format=json", apiBaseUrl).toString();
+  try {
+    return new URL("/club/?format=json", apiBaseUrl).toString();
+  } catch {
+    return null;
+  }
 }
 
 function normalizeClub(record: ClubApiRecord): Club {
@@ -52,18 +56,28 @@ function normalizeClub(record: ClubApiRecord): Club {
 }
 
 export async function getClubs(): Promise<Club[]> {
-  const res = await fetch(getClubsApiUrl(), {
-    next: {
-      revalidate: 60,
-    },
-  });
+  const url = getClubsApiUrl();
 
-  if (!res.ok) {
-    throw new Error(`Failed to load clubs: ${res.status}`);
+  if (!url) {
+    return [];
   }
 
-  const clubs = (await res.json()) as ClubApiRecord[];
-  return clubs.map(normalizeClub);
+  try {
+    const res = await fetch(url, {
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const clubs = (await res.json()) as ClubApiRecord[];
+    return clubs.map(normalizeClub);
+  } catch {
+    return [];
+  }
 }
 
 export async function getClubById(id: number): Promise<Club | null> {
