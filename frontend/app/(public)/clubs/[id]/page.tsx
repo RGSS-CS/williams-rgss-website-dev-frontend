@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { getClubById, getClubs } from "@/app/_lib/club";
+import { getClubById } from "@/app/_lib/club";
 
 import styles from "./club-detail.module.css";
+
+export const dynamic = "force-dynamic";
 
 type ClubPageProps = {
   params: Promise<{
@@ -46,11 +48,6 @@ function sentenceCase(value: string | null, fallback: string) {
 
   const normalized = value.toLowerCase();
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-}
-
-export async function generateStaticParams() {
-  const clubs = await getClubs();
-  return clubs.map((club) => ({ id: String(club.id) }));
 }
 
 export default async function ClubDetailPage({ params }: ClubPageProps) {

@@ -26,6 +26,15 @@ export type Club = {
   teacherAdvisor: string | null;
 };
 
+function getClubsApiUrl() {
+  const apiBaseUrl =
+    process.env.API_URL ??
+    process.env.NEXT_PUBLIC_API_URL ??
+    "http://localhost:8000";
+
+  return new URL("/club/?format=json", apiBaseUrl).toString();
+}
+
 function normalizeClub(record: ClubApiRecord): Club {
   return {
     id: record.id,
@@ -43,7 +52,7 @@ function normalizeClub(record: ClubApiRecord): Club {
 }
 
 export async function getClubs(): Promise<Club[]> {
-  const res = await fetch("http://localhost:8000/club/?format=json", {
+  const res = await fetch(getClubsApiUrl(), {
     next: {
       revalidate: 60,
     },
