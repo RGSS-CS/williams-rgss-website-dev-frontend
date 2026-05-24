@@ -92,8 +92,6 @@ function matchesQuery(club: Club, query: string) {
 }
 
 function ClubCard({ club }: { club: Club }) {
-  const primaryCategory = club.categories[0] ?? "Club";
-
   return (
     <Link href={`/clubs/${club.id}`} className={styles.clubCardLink}>
       <article className={styles.club_card}>
