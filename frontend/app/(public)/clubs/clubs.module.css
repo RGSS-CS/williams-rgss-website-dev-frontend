@@ -229,7 +229,6 @@
 .ctaBtn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   background: var(--school-tertiary);
   color: var(--school-primary);
   font-family: "Montserrat", sans-serif;
@@ -242,6 +241,11 @@
   box-shadow: 0 6px 0 var(--school-tertiary-dark), 0 4px 18px rgba(0,0,0,0.2);
   transition: 0.1s ease;
   text-decoration: none;
+}
+
+.ctaBtn i {
+  margin-left: 0.6rem;
+  font-size: 1.1rem;
 }
 
 .ctaBtn:hover {
