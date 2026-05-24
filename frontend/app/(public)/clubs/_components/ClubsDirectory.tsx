@@ -51,15 +51,6 @@ function getCategoryIcon(category: string) {
   return DEFAULT_CATEGORY_ICON;
 }
 
-function formatDay(day: string | null) {
-  if (!day) {
-    return "Meeting Day TBA";
-  }
-
-  const normalized = day.toLowerCase();
-  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-}
-
 function formatDayChip(day: string | null) {
   const normalized = day?.slice(0, 3).toLowerCase();
   const map: Record<string, string> = {
