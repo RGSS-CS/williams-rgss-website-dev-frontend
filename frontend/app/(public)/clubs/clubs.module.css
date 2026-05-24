@@ -63,6 +63,7 @@
 
 .emptyState h3 {
   font-size: 3rem;
+  margin-bottom: 0.2rem;
   color: var(--school-primary);
 }
 
