@@ -1,6 +1,9 @@
-﻿.heroStats {
+.heroStats {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 2.5rem;
   margin-top: 2.8rem;
   padding-top: 2.2rem;
@@ -10,6 +13,7 @@
 .heroStat {
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 }
 
 .heroStat :global(.stat-num) {
@@ -40,9 +44,6 @@
 
 .mobileResultsBar {
   display: none;
-}
-
-.resultsCountMobile {
 }
 
 .emptyState {
