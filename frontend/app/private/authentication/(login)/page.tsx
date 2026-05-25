@@ -20,7 +20,7 @@ export default function SigninForm() {
               <input
                 id="student_number"
                 name="student_number"
-                type="number"
+                type="email"
                 placeholder="Student Number"
               />
             </div>
