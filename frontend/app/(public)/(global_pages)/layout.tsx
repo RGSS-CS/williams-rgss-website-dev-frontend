@@ -1,5 +1,5 @@
 // These styles apply to every route in the application
-import './styles.css';
+import '@/app/(public)/styles.css';
 import type { Metadata } from 'next';
 import Footer from '@/app/(public)/_components/Footer';
 import Navbar from '@/app/(public)/_components/Navbar';

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useDeferredValue, useState } from "react";
 
 import type { Club } from "@/app/_lib/club";
-import styles from "@/app/(public)/clubs/clubs.module.css";
+import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
 
 import ClubSearchInput from "./ClubSearchInput";

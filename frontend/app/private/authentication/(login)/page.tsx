@@ -14,14 +14,14 @@ export default function SigninForm() {
           </div>
 
           <div className={styles.form_group}>
-            <label htmlFor="student_number">Student Number</label>
+            <label htmlFor="student_number">YRDSB Email</label>
             <div className={styles.input_wrap}>
               <i className="fa-regular fa-envelope"></i>
               <input
                 id="student_number"
                 name="student_number"
-                type="number"
-                placeholder="Student Number"
+                type="email"
+                placeholder="Student Number/Teacher Email"
               />
             </div>
           </div>

@@ -1,3 +1,9 @@
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .tickerBar {
   display: flex;
   align-items: center;
