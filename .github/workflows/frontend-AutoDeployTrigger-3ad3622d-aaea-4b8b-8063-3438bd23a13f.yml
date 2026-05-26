@@ -50,6 +50,8 @@ jobs:
           provenance: false
           cache-from: type=gha,scope=frontend
           cache-to: type=gha,mode=max,scope=frontend
+          build-args: |
+            GIT_SHA=${{ github.sha }}
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
@@ -61,8 +63,8 @@ jobs:
       - name: Deploy to Azure Container App
         uses: azure/container-apps-deploy-action@v2
         with:
-          containerAppName: frontend
-          resourceGroup: williams-rgss-website-dev
+          containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
+          resourceGroup: ${{ secrets.RESOURCE_GROUP }}
           imageToDeploy: ${{ steps.image.outputs.name }}:${{ steps.meta.outputs.version }}
           registryUrl: ghcr.io
           registryUsername: ${{ github.actor }}
