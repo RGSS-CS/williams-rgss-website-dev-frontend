@@ -6,6 +6,8 @@ on:
       - "frontend/**"
       - ".github/workflows/docker-test.yml"
       - ".github/workflows/Azure+DockerBuild.yml"
+  merge_group:
+    types: [checks_requested]
   push:
     branches:
       - main
@@ -14,9 +16,12 @@ on:
 jobs:
   build-test-image:
     runs-on: ubuntu-latest
-    # Removed broken merged-only guard — the on: triggers already scope this correctly.
-    # The only case we skip is a PR that was closed WITHOUT merging.
-    if: github.event.action != 'closed' || github.event.pull_request.merged == true
+    if: >
+      github.event_name == 'merge_group' ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      github.event.pull_request.merged == true
     permissions:
       contents: read
       checks: write
@@ -30,6 +35,8 @@ jobs:
       # On pull_request events, context.sha is the ephemeral merge commit SHA,
       # not the head commit — branch protection checks the head SHA, so we must
       # use pull_request.head.sha explicitly.
+      # On merge_group events, context.sha is the temporary merge branch commit
+      # SHA, which is the correct target for status checks.
       - name: Resolve commit SHA
         id: sha
         uses: actions/github-script@v7
