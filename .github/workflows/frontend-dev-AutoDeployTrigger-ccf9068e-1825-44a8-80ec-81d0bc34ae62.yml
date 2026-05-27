@@ -42,7 +42,7 @@ jobs:
           registryPassword: ${{ secrets.FRONTENDDEV_REGISTRY_PASSWORD }}
           containerAppName: frontend-dev
           resourceGroup: williams-rgss-dev-REgroup
-          imageToBuild: ghcr.io/frontend-dev:${{ github.sha }}
+          imageToBuild: ghcr.io/rgss-cs/frontend-dev:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 
