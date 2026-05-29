@@ -8,6 +8,7 @@ services:
     networks:
       - internetwork
     pull_policy: always
+    
   cap:
     image: tiago2/cap:latest
     container_name: cap
