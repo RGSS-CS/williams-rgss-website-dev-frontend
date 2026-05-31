@@ -20,3 +20,4 @@ services:
 networks:
   internetwork:
     external: true
+    name: internetwork
