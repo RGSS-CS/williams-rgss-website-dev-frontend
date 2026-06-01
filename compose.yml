@@ -21,3 +21,5 @@ networks:
   internetwork:
     external: true
     name: internetwork
+    driver: bridge
+    
