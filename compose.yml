@@ -12,3 +12,4 @@ services:
 networks:
   internetwork:
     driver: bridge
+    external: true
