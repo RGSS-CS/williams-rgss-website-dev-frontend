@@ -28,6 +28,7 @@ export default function RootLayout({
                     crossOrigin='anonymous'
                     referrerPolicy='no-referrer'
                 />
+                <link rel="preload" href="./global.css" as="style" />
             </head>
             <body>{children}</body>
         </html>
