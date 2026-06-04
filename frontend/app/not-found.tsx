@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./(public)/_components/Navbar";
@@ -31,7 +31,7 @@ export default async function NotFound() {
         </div>
 
         <div className={styles.actions}>
-          <Link href="/" className={styles.btn_home}>
+          <Link href="/" className={styles.btn_home} prefetch={false}>
             <i className="fa-solid fa-house"></i>
             Go to Home
           </Link>
