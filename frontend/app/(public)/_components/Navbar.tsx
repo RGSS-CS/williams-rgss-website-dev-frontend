@@ -70,7 +70,7 @@ export default function Navbar() {
             >
               <i className="fa fa-bars"></i>
             </button>
-            <Link href="/" className="brand-link">
+            <Link href="/" className="brand-link" prefetch={false}>
               <div className="logo">
                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
               </div>
@@ -88,6 +88,7 @@ export default function Navbar() {
               href={link.href}
               className={isActivePath(pathname, link.href) ? "active" : ""}
               onClick={() => setSidebarOpen(false)}
+              prefetch={false}
             >
               <i className={link.iconClass}></i>
               {link.label}
@@ -113,6 +114,7 @@ export default function Navbar() {
               href={link.href}
               className={isActivePath(pathname, link.href) ? "active" : ""}
               onClick={() => setSidebarOpen(false)}
+              prefetch={false}
             >
               <i className={link.iconClass}></i>
               {link.label}

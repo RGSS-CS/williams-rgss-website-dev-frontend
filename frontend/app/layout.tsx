@@ -1,6 +1,6 @@
 import { Montserrat, Open_Sans } from "next/font/google";
 
-import "./global.css";
+import "@/app/global.css";
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -20,7 +20,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
+        <html lang="en" className={`${montserrat.variable} ${openSans.variable}`} data-scroll-behavior="smooth">
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <link rel="stylesheet"

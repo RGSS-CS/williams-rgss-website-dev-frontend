@@ -44,7 +44,7 @@
   padding: 6px 14px;
   border-radius: 40px;
   border: 1.5px solid var(--school-primary-light);
-  color: var(--muted);
+  color: var(--school-primary);
   background: transparent;
   cursor: pointer;
   transition: all 0.18s;
@@ -53,7 +53,7 @@
 
 .filter-chip:hover {
   border-color: var(--school-tertiary);
-  color: var(--school-primary);
+  color: var(--school-primary-dark);
 }
 
 .filter-chip.active {
