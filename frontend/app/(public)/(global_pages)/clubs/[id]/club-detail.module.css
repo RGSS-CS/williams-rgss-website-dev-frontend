@@ -2,18 +2,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--white);
   font-size: 0.92rem;
   border-bottom:var(--school-secondary) solid 1px;
+  margin-bottom: 1.2rem;
 }
 
 .breadcrumbs a {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--line);
   text-decoration: none;
 }
 
 .breadcrumbs a:hover {
   color: white;
+  transition: color 0.3s;
 }
 
 .aboutWrap {
