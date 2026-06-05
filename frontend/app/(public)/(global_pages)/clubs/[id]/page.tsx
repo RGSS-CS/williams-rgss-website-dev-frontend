@@ -85,7 +85,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <span>/</span>
               <a href="#">{club.name}</a>
             </div>
-            <div className="hero_title">
+            <div className={`hero_title ${styles_modules.hero_title}`}>
               <h1>{club.name}</h1>
             </div>
             <div className="hero_subtitle">
