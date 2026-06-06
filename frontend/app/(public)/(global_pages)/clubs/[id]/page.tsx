@@ -5,6 +5,7 @@ import { getClubById } from "@/app/_lib/club";
 
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
+import { toggleApplyPanel } from "@/app/(public)/(global_pages)/clubs/[id]/_components/ToggleApplyPanel";
 
 
 export const dynamic = "force-dynamic";
@@ -71,6 +72,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   const meetingTime = formatTime(club.time);
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
+  const classcode = club.classroomCode ? `Classroom Code: ${club.classroomCode}` : "Classroom code not provided";
 
   return (
     <main>
@@ -187,6 +189,30 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             </article>
           </div>
         </section>
+      </div>
+
+      <div className={styles_modules.floatingApplyTab} id="floating-apply-panel">
+        <div className={styles_modules.applyPanel} id="apply-panel">
+          <div className={styles_modules.applyPanelInner}>
+            <div className={styles_modules.applyPanelHeader}>
+              <h4>Join the Club</h4>
+              <button className={styles_modules.applyPanelClose} onClick={toggleApplyPanel} title="Close"><i className="fas fa-times"></i></button>
+            </div>
+            <div className={styles_modules.applyInfoRow}>
+              <i className="fas fa-calendar-alt"></i>
+              <p>Meetings: {meetingDay} at {meetingTime}</p>
+            </div>
+            <div className={styles_modules.applyInfoRow}>
+              <i className="fas fa-door-open"></i>
+              <p>Location: {roomLabel}</p>
+            </div>
+            <div className={styles_modules.applyInfoRow}>
+              <i className="fas fa-envelope"></i>
+              <p><strong>Google Classroom Code:</strong> <span className={styles_modules.applyCodeBadge}>{classcode}</span></p>
+            </div>
+          </div>
+          <button className={styles_modules.applyTabBtn} onClick={toggleApplyPanel} id="apply-btn" title="Apply for Club">Apply Now</button>
+        </div>
       </div>
     </main>
   );

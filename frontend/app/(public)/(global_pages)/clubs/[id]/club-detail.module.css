@@ -158,6 +158,157 @@
   line-height: 1.7;
 }
 
+.floatingApplyTab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 200;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: stretch;
+}
+
+.applyTabBtn {
+  background: var(--school-tertiary);
+  color: var(--school-primary);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding: 18px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.applyTabBtn:hover {
+  transform: rotate(90deg);
+  font-size: 1rem;
+}
+
+.applyPanel {
+  background: var(--school-primary);
+  color: var(--white);
+  width: 0;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16x 0 0 16px
+}
+
+.applyPanel.open {
+  width: 280px;
+}
+
+.applyPanelInner {
+  width: 280px;
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.applyPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.applyPanelClose {
+  background: rgba(var(--white), 0.08);
+  border: none;
+  color: rgba(var(--white), 0.6);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.15s;
+}
+
+.applyPanelClose:hover {
+  background: rgba(var(--white), 0.15);
+  color: var(--white);
+}
+
+.applyInfoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding-bottom: 0.8rem;
+}
+
+.applyInfoRow:last-of-type {
+  border-bottom: none;
+}
+
+.applyInfoRow i {
+  color: var(--wildcat-gold);
+  font-size: 0.9rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.applyInfoRow strong {
+  color: white;
+  display: block;
+  font-size: 0.92rem;
+}
+
+.applyTabBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--wildcat-gold);
+  color: var(--wildcat-navy);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #b87c1a;
+  transition: 0.1s;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.applyTabBtn:hover {
+  background: #ffc947;
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #b87c1a;
+}
+
+.applyCodeBadge {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: #ffe082;
+}
+
 @media (max-width: 1120px) {
   .aboutGrid,
   .infoGrid,
