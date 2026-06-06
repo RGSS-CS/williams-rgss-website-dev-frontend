@@ -5,7 +5,6 @@ import { getClubById } from "@/app/_lib/club";
 
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
-import FloatingApplyPanel from "./_components/FloatingApplyPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -71,7 +70,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   const meetingTime = formatTime(club.time);
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
-  const classcode = club.classroomCode ? `Classroom Code: ${club.classroomCode}` : "Classroom code not provided";
+  const classcode = club.classroomCode ?? "Not provided";
+  const demoClassroomInviteUrl = "https://classroom.google.com/c/NzAwMDAwMDAwMDAw?cjc=demo123";
 
   return (
     <main>
@@ -80,17 +80,22 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         <div className="heroInner">
           <div className="hero_left">
             <div className={styles_modules.breadcrumbs}>
-              <a href="/">Home</a>
+              <Link href="/">Home</Link>
               <span>/</span>
-              <a href="/clubs">Clubs</a>
+              <Link href="/clubs">Clubs</Link>
               <span>/</span>
-              <a href="#">{club.name}</a>
+              <span>{club.name}</span>
             </div>
             <div className={`hero_title ${styles_modules.hero_title}`}>
               <h1>{club.name}</h1>
             </div>
             <div className="hero_subtitle">
               <h5>{club.preview_description}</h5>
+            </div>
+            <div className={styles_modules.heroActions}>
+              <Link className={styles_modules.heroJoinButton} href="#join-club">
+                Apply Now
+              </Link>
             </div>
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
@@ -190,12 +195,59 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         </section>
       </div>
 
-      <FloatingApplyPanel
-        meetingDay={meetingDay}
-        meetingTime={meetingTime}
-        roomLabel={roomLabel}
-        classcode={classcode}
-      />
+      <section
+        className={styles_modules.applySection}
+        id="join-club"
+        aria-labelledby="join-club-heading"
+      >
+        <div className={styles_modules.applySectionShell}>
+          <div className={styles_modules.applySectionCopy}>
+            <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
+            <h2 id="join-club-heading">Join the Club</h2>
+            <p>
+              Grab the meeting details, then hop into Google Classroom to follow updates and announcements.
+            </p>
+          </div>
+
+          <div className={styles_modules.applyPanel}>
+            <div className={styles_modules.applyPanelInner}>
+              <div className={styles_modules.applyInfoCard}>
+                <div className={styles_modules.applyInfoRow}>
+                  <i className="fas fa-calendar-alt"></i>
+                  <p>
+                    <strong>Meetings</strong>
+                    {meetingDay} at {meetingTime}
+                  </p>
+                </div>
+                <div className={styles_modules.applyInfoRow}>
+                  <i className="fas fa-door-open"></i>
+                  <p>
+                    <strong>Location</strong>
+                    {roomLabel}
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles_modules.applyCodeCard}>
+                <span>Google Classroom Code</span>
+                <div>
+                  <span className={styles_modules.applyCodeBadge}>{classcode}</span>
+                </div>
+              </div>
+
+              <a
+                className={styles_modules.applyInviteLink}
+                href={demoClassroomInviteUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open Classroom Invite
+                <i className="fas fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
