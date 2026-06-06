@@ -208,7 +208,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             </div>
             <div className={styles_modules.applyInfoRow}>
               <i className="fas fa-envelope"></i>
-              <p>{classcode}</p>
+              <p><strong>Google Classroom Code:</strong> <span className={styles_modules.applyCodeBadge}>{classcode}</span></p>
             </div>
           </div>
           <button className={styles_modules.applyTabBtn} onClick={toggleApplyPanel} id="apply-btn" title="Apply for Club">Apply Now</button>
