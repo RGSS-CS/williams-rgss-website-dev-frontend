@@ -90,13 +90,14 @@ function ClubCard({ club }: { club: Club }) {
           <h3>{club.name}</h3>
         </div>
         <div className={styles.club_card_meta}>
+
+          <div className={styles.club_meta_row}>
+            <i className="fas fa-map-marker-alt"></i>
+            <h4>Room: {club.roomNumber}</h4>
+          </div>          
           <div className={styles.club_meta_row}>
             <i className="fas fa-calendar-alt"></i>
             <h4>{club.repetition}: {club.dayOfMeeting} @ {club.time}</h4>
-          </div>
-          <div className={styles.club_meta_row}>
-            <i className="fas fa-map-marker-alt"></i>
-            <h4>{club.roomNumber}</h4>
           </div>
         </div>
         <p className={styles.club_card_description}>
