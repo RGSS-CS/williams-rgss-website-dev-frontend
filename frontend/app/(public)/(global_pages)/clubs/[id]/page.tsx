@@ -230,7 +230,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
               <div className={styles_modules.applyCodeCard}>
                 <span>Google Classroom Code</span>
-                <div>
+                <div className={styles_modules.applyCodeRow}>
                   <span className={styles_modules.applyCodeBadge}>{classcode}</span>
                 </div>
               </div>
