@@ -190,6 +190,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </section>
       </div>
+
       <div className={styles_modules.floatingApplyTab} id="floating-apply-panel">
         <div className={styles_modules.applyPanel} id="apply-panel">
           <div className={styles_modules.applyPanelInner}>
@@ -209,7 +210,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <i className="fas fa-envelope"></i>
               <p>{classcode}</p>
             </div>
-          </div>  
+          </div>
+          <button className={styles_modules.applyTabBtn} onClick={toggleApplyPanel} id="apply-btn" title="Apply for Club">Apply Now</button>
         </div>
       </div>
     </main>

@@ -158,6 +158,20 @@
   line-height: 1.7;
 }
 
+.floatingApplyTab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 200;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: stretch;
+}
+
+.applyPanel {
+  
+}
+
 @media (max-width: 1120px) {
   .aboutGrid,
   .infoGrid,
