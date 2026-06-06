@@ -168,8 +168,27 @@
   align-items: stretch;
 }
 
-.applyPanel {
-  
+.applyTabBtn {
+  background: var(--school-tertiary);
+  color: var(--school-primary);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding: 18px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1120px) {
