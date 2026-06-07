@@ -1,5 +1,6 @@
 export default function Loading() {
-    return ((
+    return (
+        <></>
         //Add a skeleton loader here in the future
     )
 }
