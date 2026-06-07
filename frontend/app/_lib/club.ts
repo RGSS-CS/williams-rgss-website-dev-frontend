@@ -29,7 +29,6 @@ export type Club = {
 function getClubsApiUrl() {
   const apiBaseUrl =
     process.env.API_URL ||
-    "https://api.rgsscs.org" ||
     "http://localhost:8000";
     
   try {
