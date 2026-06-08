@@ -22,6 +22,8 @@
   font-size: 2rem;
   color: var(--school-tertiary);
   line-height: 1;
+  justify-content: center;
+  display: flex;
 }
 
 .heroStat :global(.stat-label) {

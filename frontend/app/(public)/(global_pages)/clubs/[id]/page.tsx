@@ -96,6 +96,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <Link className={styles_modules.heroJoinButton} href="#join-club">
                 Apply Now
               </Link>
+              <p><i className="fas fa-chevron-down"></i>Scroll to explore</p>
             </div>
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
@@ -123,8 +124,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         <section className={styles_modules.section}>
           <div className={styles_modules.aboutGrid}>
             <div>
-              <span className={styles_modules.sectionEyebrow}>About</span>
-              <h2 className={styles_modules.sectionTitle}>{club.name}</h2>
+              <span className={styles_modules.sectionEyebrow}>About Us</span>
+              <h2 className={styles_modules.sectionTitle}>{club.name}</h2> {/*replace with club tagline */}
               <div className={styles_modules.sectionBody}>{club.preview_description}</div>
 
               <div className={styles_modules.badgeRow}>
@@ -152,7 +153,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </section>
       </div>
-
+      <div className={`${styles_modules.divider} category-divider`}></div>
       <div className={styles_modules.infoWrap}>
         <section className={styles_modules.section}>
           <div className={styles_modules.headlineRow}>
