@@ -67,11 +67,19 @@
 
 .aboutWrap {
   background: var(--white);
-  border-bottom: 1px solid var(--line);
+}
+
+.divider {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.infoWrap {
+  background: var(--school-dull-tone);
 }
 
 .section {
-  padding: 4rem 2.5rem;
+  padding: 4rem 4rem;
 }
 
 .aboutGrid {

@@ -153,7 +153,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </section>
       </div>
-
+      <div className={`${styles_modules.divider} category-divider`}></div>
       <div className={styles_modules.infoWrap}>
         <section className={styles_modules.section}>
           <div className={styles_modules.headlineRow}>
