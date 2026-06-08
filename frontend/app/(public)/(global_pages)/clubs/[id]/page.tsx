@@ -5,6 +5,7 @@ import { getClubById } from "@/app/_lib/club";
 
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
+import AnchorLink from "@/app/(public)/_components/AnchorLink";
 
 export const dynamic = "force-dynamic";
 
@@ -93,9 +94,9 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <h5>{club.preview_description}</h5>
             </div>
             <div className={styles_modules.heroActions}>
-              <Link className={styles_modules.heroJoinButton} href="#join-club">
+              <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
                 Apply Now
-              </Link>
+              </AnchorLink>
               <p><i className="fas fa-chevron-down"></i>Scroll to explore</p>
             </div>
             <div className={styles.heroStats}>
