@@ -5,6 +5,7 @@ import { getClubById } from "@/app/_lib/club";
 
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
+import AnchorLink from "@/app/(public)/_components/AnchorLink";
 
 export const dynamic = "force-dynamic";
 
@@ -93,9 +94,10 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <h5>{club.preview_description}</h5>
             </div>
             <div className={styles_modules.heroActions}>
-              <Link className={styles_modules.heroJoinButton} href="#join-club">
+              <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
                 Apply Now
-              </Link>
+              </AnchorLink>
+              <p><i className="fas fa-chevron-down"></i>Scroll to explore</p>
             </div>
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
@@ -123,8 +125,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         <section className={styles_modules.section}>
           <div className={styles_modules.aboutGrid}>
             <div>
-              <span className={styles_modules.sectionEyebrow}>About</span>
-              <h2 className={styles_modules.sectionTitle}>{club.name}</h2>
+              <span className={styles_modules.sectionEyebrow}>About Us</span>
+              <h2 className={styles_modules.sectionTitle}>{club.name}</h2> {/*replace with club tagline */}
               <div className={styles_modules.sectionBody}>{club.preview_description}</div>
 
               <div className={styles_modules.badgeRow}>
@@ -152,7 +154,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </section>
       </div>
-
+      <div className={`${styles_modules.divider} category-divider`}></div>
       <div className={styles_modules.infoWrap}>
         <section className={styles_modules.section}>
           <div className={styles_modules.headlineRow}>

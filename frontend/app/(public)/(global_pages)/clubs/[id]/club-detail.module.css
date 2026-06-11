@@ -40,6 +40,11 @@
   outline-offset: 3px;
 }
 
+.heroActions p {
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
 .breadcrumbs {
   display: inline-flex;
   align-items: center;
@@ -62,11 +67,19 @@
 
 .aboutWrap {
   background: var(--white);
-  border-bottom: 1px solid var(--line);
+}
+
+.divider {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.infoWrap {
+  background: var(--school-dull-tone);
 }
 
 .section {
-  padding: 4rem 2.5rem;
+  padding: 4rem 4rem;
 }
 
 .aboutGrid {
@@ -118,8 +131,8 @@
   gap: 0.65rem;
   padding: 0.75rem 1.2rem;
   border-radius: 999px;
-  border: 2px solid var(--line);
-  background: var(--grey);
+  border: 2px solid var(--grey);
+  background: var(--white);
   color: var(--school-primary);
   font-weight: 800;
 }
