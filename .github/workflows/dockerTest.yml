@@ -4,8 +4,7 @@ on:
   pull_request:
     paths:
       - "frontend/**"
-      - ".github/workflows/docker-test.yml"
-      - ".github/workflows/Azure+DockerBuild.yml"
+      - ".github/workflows/dockerTest.yml"
   merge_group:
     types: [checks_requested]
   push:
