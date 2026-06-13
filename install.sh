@@ -251,8 +251,11 @@ setup_backend() {
     echo "  Provide remaining values (Enter = accept [default]):"
     echo ""
 
-    prompt_var "ALLOWED_HOSTS (comma-separated, e.g. localhost,api.rgsscs.org)" "localhost"
-    local allowed_hosts="$PROMPT_RESULT"
+    prompt_var "Public domain (e.g. api.rgsscs.org)" "api.rgsscs.org"
+    local domain="$PROMPT_RESULT"
+
+    local allowed_hosts="localhost,backend,${domain}"
+    local csrf_origins="https://${domain}"
 
     prompt_var "CSRF_TRUSTED_ORIGINS (comma-separated, e.g. https://api.rgsscs.org)" "http://localhost"
     local csrf_origins="$PROMPT_RESULT"
@@ -266,14 +269,14 @@ setup_backend() {
     prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true"
     local superuser_password="$PROMPT_RESULT"
 
-    prompt_var "POSTGRES_DB" "rgssdb"
+    prompt_var "POSTGRES_DB" "db"
     local postgres_db="$PROMPT_RESULT"
 
     # Default user is 'app' per project spec.
     # Using a non-superuser account for the application follows the principle
     # of least privilege — the app user only needs access to its own DB.
     # Source: https://www.postgresql.org/docs/current/sql-createrole.html
-    prompt_var "POSTGRES_USER" "app"
+    prompt_var "POSTGRES_USER" "postgres"
     local postgres_user="$PROMPT_RESULT"
 
     # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
