@@ -676,7 +676,9 @@ prompt_var() {
 
     if [[ "$secret" == "true" ]]; then
         # -s hides typed input (no echo) — standard for passwords
+        # -s hides typed input (no echo) — standard for passwords
         read -rsp "  $label (hidden): " PROMPT_RESULT
+        echo ""   # Print newline since -s suppresses it
         echo ""   # Print newline since -s suppresses it
     elif [[ -n "$default" ]]; then
         read -rp "  $label [$default]: " PROMPT_RESULT
@@ -715,7 +717,38 @@ install_portainer() {
 }
 
 # ── Project Setup ─────────────────────────────────────────────────────────────
+install_portainer() {
+    echo ""
+    echo "==> Installing Portainer..."
 
+    # Create persistent volume if it doesn't already exist
+    docker volume inspect portainer_data >/dev/null 2>&1 || \
+        docker volume create portainer_data
+
+    # Remove existing Portainer container if present
+    if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
+        echo "  -> Existing Portainer installation detected."
+        docker rm -f portainer >/dev/null 2>&1
+    fi
+
+    docker run -d \
+        --name portainer \
+        --restart=unless-stopped \
+        -p 9000:9000 \
+        -p 9443:9443 \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v portainer_data:/data \
+        portainer/portainer-ce:latest
+
+    echo ""
+    echo "  [OK] Portainer installed."
+    echo "  [OK] Web UI: https://localhost:9443"
+}
+
+# ── Project Setup ─────────────────────────────────────────────────────────────
+
+FRONTEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/main/compose.yml"
+BACKEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-backend/main/compose.yml"
 FRONTEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/main/compose.yml"
 BACKEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-backend/main/compose.yml"
 
@@ -727,9 +760,16 @@ setup_backend() {
     echo "  -> Downloading backend/compose.yml..."
     download_file "$BACKEND_RAW" "backend/compose.yml" || return 1
     echo "  [OK] backend/compose.yml downloaded."
+    mkdir -p backend
+
+    echo "  -> Downloading backend/compose.yml..."
+    download_file "$BACKEND_RAW" "backend/compose.yml" || return 1
+    echo "  [OK] backend/compose.yml downloaded."
 
     echo ""
     echo "  Generating secrets..."
+    # Django SECRET_KEY: must be long, random, and unpredictable.
+    # Django itself uses 50 chars; 64 hex chars (32 bytes) exceeds that.
     # Django SECRET_KEY: must be long, random, and unpredictable.
     # Django itself uses 50 chars; 64 hex chars (32 bytes) exceeds that.
     # Source: https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key
@@ -737,12 +777,16 @@ setup_backend() {
     secret_key=$(generate_secret 32)
 
     # Postgres password: 48 hex chars is well beyond any brute-force concern.
+    # Postgres password: 48 hex chars is well beyond any brute-force concern.
     local postgres_password
     postgres_password=$(generate_secret 24)
 
     echo "  [AUTO] SECRET_KEY       → ${secret_key:0:12}... (truncated for display)"
     echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated for display)"
+    echo "  [AUTO] SECRET_KEY       → ${secret_key:0:12}... (truncated for display)"
+    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated for display)"
     echo ""
+    echo "  Please provide the remaining values (press Enter to accept [defaults]):"
     echo "  Please provide the remaining values (press Enter to accept [defaults]):"
     echo ""
 
@@ -765,12 +809,17 @@ setup_backend() {
     local postgres_db="$PROMPT_RESULT"
 
     prompt_var "POSTGRES_USER" "rgssuser"
+    prompt_var "POSTGRES_USER" "rgssuser"
     local postgres_user="$PROMPT_RESULT"
 
     # Write the .env file. Heredoc with quoted delimiter ('EOF') prevents
     # variable expansion inside the content — we want literal values, not re-expansion.
     cat > "backend/.env" << EOF
+    # Write the .env file. Heredoc with quoted delimiter ('EOF') prevents
+    # variable expansion inside the content — we want literal values, not re-expansion.
+    cat > "backend/.env" << EOF
 # ── Django ─────────────────────────────────────────────────────────────────
+# AUTO-GENERATED — do not commit this file
 # AUTO-GENERATED — do not commit this file
 SECRET_KEY=${secret_key}
 ALLOWED_HOSTS=${allowed_hosts}
