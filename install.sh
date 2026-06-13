@@ -1,303 +1,5 @@
 #!/bin/bash
 
-echo "Starting Script"
-
-# ── Privilege Escalation ──────────────────────────────────────────────────────
-
-request_admin() {
-    if [[ "$OSTYPE" == linux* || "$OSTYPE" == darwin* ]]; then
-        if [[ "$EUID" -ne 0 ]]; then
-            echo "==> Elevated privileges required. Re-launching with sudo..."
-            exec sudo -E bash "$0" "$@"
-        else
-            echo "==> Running as root. Privilege check passed."
-        fi
-
-    elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-        if ! net session > /dev/null 2>&1; then
-            echo "==> Not running as Administrator."
-            echo "    Triggering UAC prompt to re-launch with elevated privileges..."
-            powershell -Command "Start-Process bash -ArgumentList '$0' -Verb RunAs -Wait"
-            exit 0
-        else
-            echo "==> Running as Administrator. Privilege check passed."
-        fi
-    fi
-}
-
-request_admin "$@"
-
-# ── OS Detection ──────────────────────────────────────────────────────────────
-
-get_os() {
-    if [[ "$OSTYPE" == linux* ]]; then
-        echo "OS is Linux, please confirm using y/n"
-        read -rp "y/n: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="linux" || ostype="undefined"
-
-    elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-        echo "OS is Windows, please confirm using y/n"
-        read -rp "y/n: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="windows" || ostype="undefined"
-
-    elif [[ "$OSTYPE" == darwin* ]]; then
-        echo "OS is macOS, please confirm using y/n"
-        read -rp "y/n: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="osx" || ostype="undefined"
-
-    else
-        echo "OS TYPE not supported. Please use Windows, Linux, or macOS."
-        ostype="undefined"
-    fi
-}
-
-# ── Docker Installers ─────────────────────────────────────────────────────────
-
-install_docker_linux() {
-    echo ""
-    echo "==> Installing Docker Engine (CLI) for Linux..."
-
-    if command -v apt-get &>/dev/null; then
-        echo "  -> Detected apt (Debian/Ubuntu)"
-        apt-get update -y
-        apt-get install -y ca-certificates curl gnupg lsb-release
-
-        install -m 0755 -d /etc/apt/keyrings
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-            | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-        chmod a+r /etc/apt/keyrings/docker.gpg
-
-        echo \
-          "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-          https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable" \
-          | tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-        apt-get update -y
-        apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    elif command -v dnf &>/dev/null; then
-        echo "  -> Detected dnf (Fedora/RHEL)"
-        dnf -y install dnf-plugins-core
-        dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-        dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    elif command -v yum &>/dev/null; then
-        echo "  -> Detected yum (CentOS/older RHEL)"
-        yum install -y yum-utils
-        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-        yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    elif command -v pacman &>/dev/null; then
-        echo "  -> Detected pacman (Arch Linux)"
-        pacman -Sy --noconfirm docker
-
-    else
-        echo "  [!] No supported package manager found."
-        echo "      Install Docker manually: https://docs.docker.com/engine/install/"
-        return 1
-    fi
-
-    systemctl enable --now docker
-    usermod -aG docker "$SUDO_USER"
-
-    echo ""
-    echo "  [OK] Docker Engine installed."
-    echo "  [!]  Log out and back in (or run 'newgrp docker') for group membership to take effect."
-}
-
-install_docker_mac() {
-    echo ""
-    echo "==> Installing Docker Desktop for macOS..."
-
-    if ! command -v brew &>/dev/null; then
-        echo "  -> Homebrew not found. Installing Homebrew first..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
-    else
-        echo "  -> Homebrew already installed: $(brew --version | head -1)"
-    fi
-
-    brew install --cask docker
-    echo ""
-    echo "  [OK] Docker Desktop installed. Launch /Applications/Docker.app to complete setup."
-}
-
-install_docker_windows() {
-    echo ""
-    echo "==> Installing Docker Desktop for Windows..."
-
-    if command -v winget &>/dev/null; then
-        winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
-    elif command -v choco &>/dev/null; then
-        choco install docker-desktop -y
-    else
-        echo "  [!] Neither winget nor Chocolatey found."
-        echo "      Download manually: https://www.docker.com/products/docker-desktop/"
-        return 1
-    fi
-
-    echo ""
-    echo "  [OK] Docker Desktop installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup."
-}
-
-# ── Utilities ─────────────────────────────────────────────────────────────────
-
-# Generates a cryptographically random hex string.
-# Uses openssl first (available on all platforms), falls back to python3 or /dev/urandom.
-# Source: https://www.openssl.org/docs/man3.0/man1/openssl-rand.html
-generate_secret() {
-    local bytes="${1:-32}"  # 32 bytes = 64 hex chars — well above Django's recommended 50-char key
-    if command -v openssl &>/dev/null; then
-        openssl rand -hex "$bytes"
-    elif command -v python3 &>/dev/null; then
-        python3 -c "import secrets; print(secrets.token_hex($bytes))"
-    else
-        # Last resort: read raw bytes from the kernel CSPRNG
-        # /dev/urandom is non-blocking and cryptographically safe on Linux ≥ 4.8 and macOS
-        # Source: https://man7.org/linux/man-pages/man4/urandom.4.html
-        cat /dev/urandom | tr -dc 'a-f0-9' | head -c "$((bytes * 2))"
-    fi
-}
-
-# Downloads a file with curl (preferred) or wget.
-# curl and wget both support HTTPS and follow redirects by default.
-download_file() {
-    local url="$1"
-    local dest="$2"
-    if command -v curl &>/dev/null; then
-        curl -fsSL "$url" -o "$dest"
-    elif command -v wget &>/dev/null; then
-        wget -q "$url" -O "$dest"
-    else
-        echo "  [!] Neither curl nor wget found. Cannot download files."
-        return 1
-    fi
-}
-
-# Clones a git repo into a target directory, or pulls latest if it already exists.
-# 'git clone' is used for fresh checkouts; 'git pull' only works on existing repos.
-# Source: https://git-scm.com/docs/git-clone
-#         https://git-scm.com/docs/git-pull
-
-clone_or_pull() {
-    local repo_url="$1"
-    local target_dir="$2"
-
-    if [[ -d "$target_dir/.git" ]]; then
-        echo "  -> '$target_dir' already cloned — pulling latest..."
-        git -C "$target_dir" pull
-    else
-        echo "  -> Cloning into '$target_dir'..."
-        git clone "$repo_url" "$target_dir"
-    fi
-}
-
-# Prompts the user for input; result written to global $PROMPT_RESULT.
-# Using a global avoids subshell issues where 'read' inside $() cannot access
-# /dev/tty on all platforms.
-
-PROMPT_RESULT=""
-
-prompt_var() {
-    local label="$1"
-    local default="$2"
-    local secret="${3:-false}"
-
-    if [[ "$secret" == "true" ]]; then
-        # -s suppresses echo for passwords
-        read -rsp "  $label (hidden): " PROMPT_RESULT
-        echo ""
-    elif [[ -n "$default" ]]; then
-        read -rp "  $label [$default]: " PROMPT_RESULT
-        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
-    else
-        read -rp "  $label: " PROMPT_RESULT
-    fi
-}
-
-# ── Project Setup (Steps 5 & 6) ───────────────────────────────────────────────
-
-BACKEND_REPO="https://github.com/RGSS-CS/williams-rgss-website-dev-backend.git"
-FRONTEND_REPO="https://github.com/RGSS-CS/williams-rgss-website-dev-frontend.git"
-
-setup_backend() {
-    echo ""
-    echo "==> Setting up backend..."
-
-    # Step 5: Clone (or update) the backend repository.
-    # The repo contains compose.yml and all application source.
-    clone_or_pull "$BACKEND_REPO" "backend" || return 1
-    echo "  [OK] Backend repository ready."
-
-    # Step 6: Generate secrets and write backend/.env
-    echo ""
-    echo "  Generating secrets..."
-
-    # Django SECRET_KEY: must be unpredictable and unique per deployment.
-    # 32 bytes = 64 hex chars — well above Django's 50-char minimum.
-    # Source: https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key
-    local secret_key
-    secret_key=$(generate_secret 32)
-
-    # PostgreSQL password: 24 bytes = 48 hex chars.
-    local postgres_password
-    postgres_password=$(generate_secret 24)
-
-    echo "  [AUTO] SECRET_KEY        → ${secret_key:0:12}... (truncated)"
-    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
-    echo ""
-    echo "  Provide remaining values (Enter = accept [default]):"
-    echo ""
-
-    prompt_var "Public domain (e.g. api.rgsscs.org)" "api.rgsscs.org"
-    local domain="$PROMPT_RESULT"
-
-    local allowed_hosts="localhost,backend,${domain}"
-    local csrf_origins="https://${domain}"
-
-    prompt_var "CSRF_TRUSTED_ORIGINS (comma-separated, e.g. https://api.rgsscs.org)" "http://localhost"
-    local csrf_origins="$PROMPT_RESULT"
-
-    prompt_var "DJANGO_SUPERUSER_USERNAME" "admin"
-    local superuser_username="$PROMPT_RESULT"
-
-    prompt_var "DJANGO_SUPERUSER_EMAIL" ""
-    local superuser_email="$PROMPT_RESULT"
-
-    prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true"
-    local superuser_password="$PROMPT_RESULT"
-
-    prompt_var "POSTGRES_DB" "db"
-    local postgres_db="$PROMPT_RESULT"
-
-    # Default user is 'app' per project spec.
-    # Using a non-superuser account for the application follows the principle
-    # of least privilege — the app user only needs access to its own DB.
-    # Source: https://www.postgresql.org/docs/current/sql-createrole.html
-    prompt_var "POSTGRES_USER" "postgres"
-    local postgres_user="$PROMPT_RESULT"
-
-    # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
-    # the content — all values are written as literal strings.
-    cat > "backend/.env" << 'ENVEOF'
-# ── Django ─────────────────────────────────────────────────────────────────
-# AUTO-GENERATED by install.sh — do NOT commit this file
-ENVEOF
-
-    # Append the actual values (unquoted heredoc so variables expand here)
-    cat >> "backend/.env" << EOF
-SECRET_KEY=${secret_key}
-ALLOWED_HOSTS=${allowed_hosts}
-CSRF_TRUSTED_ORIGINS=${csrf_origins}
-DJANGO_SUPERUSER_USERNAME=${superuser_username}
-DJANGO_SUPERUSER_EMAIL=${superuser_email}
-DJANGO_SUPERUSER_PASSWORD=${superuser_password}
-
-# ── PostgreSQL ─────────────────────────────────────────────────────────────
-# AUTO-GENERATED by install.sh #!/bin/bash
-
 # ══════════════════════════════════════════════════════════════════════════════
 #  RGSS Williams Portal — Installer
 #  Installs Docker, Portainer, and sets up the backend + frontend project.
@@ -305,7 +7,9 @@ DJANGO_SUPERUSER_PASSWORD=${superuser_password}
 #  Usage:
 #    chmod +x install.sh && ./install.sh
 #
-#  On Linux: re-run after reboot to skip Docker install and continue setup.
+#  On Linux: if a reboot is required (new docker group membership), the script
+#  registers a one-shot systemd service that automatically re-runs this script
+#  on the next boot and logs all output. No manual re-run is needed.
 # ══════════════════════════════════════════════════════════════════════════════
 
 echo ""
@@ -342,36 +46,52 @@ request_admin() {
 
 request_admin "$@"
 
+# ── Logging ────────────────────────────────────────────────────────────────────
+# Every run (whether started manually or auto-resumed after a reboot) tees its
+# output to a log file so the result of an unattended/automatic run can be
+# reviewed afterwards.
+# Source: https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution
+
+if [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
+    LOG_FILE="$(dirname "$(realpath "$0")")/rgss-install.log"
+else
+    LOG_FILE="/var/log/rgss-install.log"
+fi
+
+exec > >(tee -a "$LOG_FILE") 2>&1
+echo "==> Logging this run to: $LOG_FILE"
+
 # ── OS Detection ──────────────────────────────────────────────────────────────
+# Determined automatically from bash's built-in $OSTYPE — no user confirmation
+# required.
+# Source: https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables (OSTYPE)
 
 ostype=""
 
 get_os() {
-    if [[ "$OSTYPE" == linux* ]]; then
-        echo "OS detected: Linux"
-        read -rp "  Confirm? [y/n]: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="linux" || ostype="undefined"
+    case "$OSTYPE" in
+        linux*)
+            ostype="linux"
+            ;;
+        darwin*)
+            ostype="osx"
+            ;;
+        msys*|cygwin*)
+            ostype="windows"
+            ;;
+        *)
+            echo "  [!] Unsupported OS type: $OSTYPE"
+            echo "      Supported: Linux, Windows, macOS"
+            ostype="undefined"
+            ;;
+    esac
 
-    elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-        echo "OS detected: Windows"
-        read -rp "  Confirm? [y/n]: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="windows" || ostype="undefined"
-
-    elif [[ "$OSTYPE" == darwin* ]]; then
-        echo "OS detected: macOS"
-        read -rp "  Confirm? [y/n]: " confirmation
-        [[ "$confirmation" == "y" || "$confirmation" == "Y" ]] && ostype="osx" || ostype="undefined"
-
-    else
-        echo "  [!] Unsupported OS type: $OSTYPE"
-        echo "      Supported: Linux, Windows, macOS"
-        ostype="undefined"
-    fi
+    echo "==> Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
 }
 
 # ── Docker Check ──────────────────────────────────────────────────────────────
 # Returns 0 (true) if Docker is installed and the daemon is reachable.
-# Used to skip installation on re-runs after reboot.
+# Used to skip installation on re-runs (e.g. after an auto-resume reboot).
 
 check_docker() {
     if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
@@ -387,7 +107,6 @@ install_docker_linux() {
     echo "==> Installing Docker Engine for Linux..."
 
     if command -v apt-get &>/dev/null; then
-
         # Detect whether the distro is Debian or Ubuntu so the correct Docker
         # APT repository is used. Docker maintains separate repos for each.
         # Source: https://docs.docker.com/engine/install/debian/
@@ -408,26 +127,12 @@ install_docker_linux() {
         echo "  -> Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
 
         apt-get update -y
-
-        # git is needed for Step 5 (cloning the project repos).
-        # ca-certificates + curl are needed for the Docker GPG key download.
-        # gnupg is needed if gpg --dearmor is used (not needed for .asc, but
-        # kept for compatibility with scripts that may call it directly).
         apt-get install -y ca-certificates curl git gnupg
 
-        # Store the Docker GPG key as a non-armored .asc file.
-        # Using -o (output to file) rather than piping through gpg --dearmor
-        # is the approach recommended in Docker's current official docs.
-        # Source: https://docs.docker.com/engine/install/debian/#install-using-the-repository
         install -m 0755 -d /etc/apt/keyrings
         curl -fsSL "${docker_repo_url}/gpg" -o /etc/apt/keyrings/docker.asc
         chmod a+r /etc/apt/keyrings/docker.asc
 
-        # Write the repo definition in DEB822 format (.sources), which is the
-        # modern replacement for the legacy one-liner .list format.
-        # $(dpkg --print-architecture) → e.g. amd64, arm64
-        # $VERSION_CODENAME → e.g. bookworm, noble
-        # Source: https://wiki.debian.org/SourcesList#DEB822_format
         cat > /etc/apt/sources.list.d/docker.sources << EOF
 Types: deb
 URIs: ${docker_repo_url}
@@ -480,18 +185,22 @@ EOF
         echo "  [OK] Docker Engine installed."
         echo "  [!]  '$SUDO_USER' has been added to the 'docker' group."
         echo ""
-        echo "  ┌─────────────────────────────────────────────────────────────┐"
-        echo "  │  A reboot is required for the group change to take effect.  │"
-        echo "  │  Re-run this script after rebooting to continue setup.      │"
-        echo "  └─────────────────────────────────────────────────────────────┘"
+        echo "  A reboot is required for the group change to take effect."
+        echo "  This script will register itself to continue automatically"
+        echo "  after the reboot — no manual re-run needed."
         echo ""
+
+        setup_resume_service
+
         read -rp "  Reboot now? [Y/n]: " reboot_confirm
         if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
             echo "  -> Rebooting..."
             reboot
         else
-            echo "  -> Skipping reboot. Run 'newgrp docker' to apply group in the"
-            echo "     current shell, or log out and back in."
+            echo "  -> Skipping reboot for now."
+            echo "     Setup will continue automatically the next time this machine boots."
+            echo "     (Or run 'newgrp docker' / log out and back in, then re-run this script manually.)"
+            exit 0
         fi
     else
         echo "  [OK] Docker Engine installed."
@@ -505,23 +214,20 @@ install_docker_mac() {
     if ! command -v brew &>/dev/null; then
         echo "  -> Homebrew not found. Installing Homebrew first..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        # Add Homebrew to PATH for Apple Silicon Macs (installs to /opt/homebrew)
         [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
     else
         echo "  -> Homebrew already installed: $(brew --version | head -1)"
     fi
 
-    # Install git via Homebrew if not already present
     if ! command -v git &>/dev/null; then
         brew install git
     fi
 
-    # Docker Desktop for macOS — installs the daemon + CLI + Compose plugin
     brew install --cask docker
 
     echo ""
     echo "  [OK] Docker Desktop installed."
-    echo "  [!]  Launch /Applications/Docker.app to complete setup before continuing."
+    echo "  [!]  Launch /Applications/Docker.app to complete setup, then re-run this script."
 }
 
 install_docker_windows() {
@@ -543,10 +249,10 @@ install_docker_windows() {
 
     echo ""
     echo "  [OK] Docker Desktop and Git installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup."
+    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup, then re-run this script."
 }
 
-# ── Docker Verification (Step 3) ──────────────────────────────────────────────
+# ── Docker Verification ───────────────────────────────────────────────────────
 # Runs the official hello-world image to confirm the daemon, CLI, and image
 # pull pipeline are all working end-to-end.
 # Source: https://docs.docker.com/get-started/#test-docker-installation
@@ -566,32 +272,86 @@ verify_docker() {
     fi
 }
 
-# ── Portainer (Step 4) ────────────────────────────────────────────────────────
+# ── Auto-Resume After Reboot ──────────────────────────────────────────────────
+# Registers a one-shot systemd service that re-runs this script on the next
+# boot, so the user doesn't have to manually re-invoke it after the reboot
+# triggered by a fresh Docker install (new 'docker' group membership).
+# Output is appended to $LOG_FILE via StandardOutput/StandardError.
+# Source: man systemd.service — "Type=oneshot", "WantedBy=", "StandardOutput="
+
+RESUME_SERVICE_PATH="/etc/systemd/system/rgss-install-resume.service"
+
+setup_resume_service() {
+    if [[ "$ostype" != "linux" ]]; then
+        return 0
+    fi
+
+    if ! command -v systemctl &>/dev/null; then
+        echo "  [!] systemd not found — cannot auto-resume after reboot."
+        echo "      Re-run this script manually after rebooting."
+        return 1
+    fi
+
+    local script_path
+    script_path="$(realpath "$0")"
+
+    cat > "$RESUME_SERVICE_PATH" << EOF
+[Unit]
+Description=Resume RGSS Williams Portal installer after reboot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash ${script_path}
+StandardOutput=append:${LOG_FILE}
+StandardError=append:${LOG_FILE}
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable rgss-install-resume.service
+
+    echo "  [OK] Registered auto-resume service: $RESUME_SERVICE_PATH"
+    echo "       On next boot, install.sh will continue automatically."
+    echo "       Output is logged to: $LOG_FILE"
+}
+
+cleanup_resume_service() {
+    if [[ "$ostype" != "linux" ]]; then
+        return 0
+    fi
+
+    if [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
+        echo "==> Removing auto-resume service (no longer needed)..."
+        systemctl disable rgss-install-resume.service &>/dev/null
+        rm -f "$RESUME_SERVICE_PATH"
+        systemctl daemon-reload
+    fi
+}
+
+# ── Portainer ─────────────────────────────────────────────────────────────────
 # Portainer CE default ports:
 #   9000 → HTTP web UI
 #   9443 → HTTPS web UI  (preferred)
-#   8000 → Edge agent tunnel (not needed here, omitted to avoid conflict with
-#           the Django backend which also binds :8000)
 # Source: https://docs.portainer.io/start/install-ce/server/docker/linux
 
 install_portainer() {
     echo ""
     echo "==> Installing Portainer CE..."
 
-    # Create the persistent data volume if it doesn't already exist.
-    # docker volume inspect exits non-zero if the volume is absent.
     docker volume inspect portainer_data >/dev/null 2>&1 \
         || docker volume create portainer_data
 
-    # Remove any pre-existing Portainer container so we can recreate it cleanly.
     if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
         echo "  -> Existing Portainer container found — removing it..."
         docker rm -f portainer >/dev/null 2>&1
     fi
 
     # --restart=unless-stopped: restarts on crash/daemon-restart but respects
-    # a manual 'docker stop portainer', which is better for a dev environment.
-    # 'always' would ignore manual stops — less desirable here.
+    # a manual 'docker stop portainer'.
     # Source: https://docs.docker.com/config/containers/start-containers-automatically/
     docker run -d \
         --name portainer \
@@ -610,29 +370,22 @@ install_portainer() {
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
 
-# Generates a cryptographically secure random hex string.
-# Priority: openssl (cross-platform) → python3 secrets → /dev/urandom (Linux/macOS kernel CSPRNG).
-# 32 bytes = 64 hex chars, which exceeds Django's recommended 50-char SECRET_KEY length.
-# Source: https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key
-#         https://www.openssl.org/docs/man3.0/man1/openssl-rand.html
+# Generates a cryptographically random hex string.
+# Uses openssl first (available on all platforms), falls back to python3 or /dev/urandom.
+# Source: https://www.openssl.org/docs/man3.0/man1/openssl-rand.html
 #         https://man7.org/linux/man-pages/man4/urandom.4.html
-
 generate_secret() {
-    local bytes="${1:-32}"
+    local bytes="${1:-32}"  # 32 bytes = 64 hex chars — well above Django's recommended 50-char key
     if command -v openssl &>/dev/null; then
         openssl rand -hex "$bytes"
     elif command -v python3 &>/dev/null; then
         python3 -c "import secrets; print(secrets.token_hex($bytes))"
     else
-        # /dev/urandom is non-blocking and cryptographically safe on Linux ≥ 4.8 and macOS.
         cat /dev/urandom | tr -dc 'a-f0-9' | head -c "$((bytes * 2))"
     fi
 }
 
 # Downloads a file with curl (preferred) or wget.
-# -fsSL: fail on HTTP errors, silent, follow redirects.
-# Source: https://curl.se/docs/manpage.html
-
 download_file() {
     local url="$1"
     local dest="$2"
@@ -647,10 +400,8 @@ download_file() {
 }
 
 # Clones a git repo into a target directory, or pulls latest if it already exists.
-# 'git clone' is used for fresh checkouts; 'git pull' only works on existing repos.
 # Source: https://git-scm.com/docs/git-clone
 #         https://git-scm.com/docs/git-pull
-
 clone_or_pull() {
     local repo_url="$1"
     local target_dir="$2"
@@ -665,9 +416,8 @@ clone_or_pull() {
 }
 
 # Prompts the user for input; result written to global $PROMPT_RESULT.
-# Using a global avoids subshell issues where 'read' inside $() cannot access
-# /dev/tty on all platforms.
-
+# If no terminal is attached (e.g. running unattended via the resume service),
+# 'read' returns immediately/empty, so the default value is used automatically.
 PROMPT_RESULT=""
 prompt_var() {
     local label="$1"
@@ -675,11 +425,9 @@ prompt_var() {
     local secret="${3:-false}"
 
     if [[ "$secret" == "true" ]]; then
-        # -s hides typed input (no echo) — standard for passwords
-        # -s hides typed input (no echo) — standard for passwords
         read -rsp "  $label (hidden): " PROMPT_RESULT
-        echo ""   # Print newline since -s suppresses it
-        echo ""   # Print newline since -s suppresses it
+        echo ""
+        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
     elif [[ -n "$default" ]]; then
         read -rp "  $label [$default]: " PROMPT_RESULT
         PROMPT_RESULT="${PROMPT_RESULT:-$default}"
@@ -688,109 +436,45 @@ prompt_var() {
     fi
 }
 
-install_portainer() {
-    echo ""
-    echo "==> Installing Portainer..."
-
-    # Create persistent volume if it doesn't already exist
-    docker volume inspect portainer_data >/dev/null 2>&1 || \
-        docker volume create portainer_data
-
-    # Remove existing Portainer container if present
-    if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
-        echo "  -> Existing Portainer installation detected."
-        docker rm -f portainer >/dev/null 2>&1
-    fi
-
-    docker run -d \
-        --name portainer \
-        --restart=unless-stopped \
-        -p 9000:9000 \
-        -p 9443:9443 \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v portainer_data:/data \
-        portainer/portainer-ce:latest
-
-    echo ""
-    echo "  [OK] Portainer installed."
-    echo "  [OK] Web UI: https://localhost:9443"
-}
-
-# ── Project Setup ─────────────────────────────────────────────────────────────
-install_portainer() {
-    echo ""
-    echo "==> Installing Portainer..."
-
-    # Create persistent volume if it doesn't already exist
-    docker volume inspect portainer_data >/dev/null 2>&1 || \
-        docker volume create portainer_data
-
-    # Remove existing Portainer container if present
-    if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
-        echo "  -> Existing Portainer installation detected."
-        docker rm -f portainer >/dev/null 2>&1
-    fi
-
-    docker run -d \
-        --name portainer \
-        --restart=unless-stopped \
-        -p 9000:9000 \
-        -p 9443:9443 \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v portainer_data:/data \
-        portainer/portainer-ce:latest
-
-    echo ""
-    echo "  [OK] Portainer installed."
-    echo "  [OK] Web UI: https://localhost:9443"
-}
-
 # ── Project Setup ─────────────────────────────────────────────────────────────
 
-FRONTEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/main/compose.yml"
-BACKEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-backend/main/compose.yml"
-FRONTEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/main/compose.yml"
-BACKEND_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-backend/main/compose.yml"
+BACKEND_REPO="https://github.com/RGSS-CS/williams-rgss-website-dev-backend.git"
+FRONTEND_COMPOSE_RAW="https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/main/compose.yml"
 
 setup_backend() {
     echo ""
     echo "==> Setting up backend..."
-    mkdir -p backend
 
-    echo "  -> Downloading backend/compose.yml..."
-    download_file "$BACKEND_RAW" "backend/compose.yml" || return 1
-    echo "  [OK] backend/compose.yml downloaded."
-    mkdir -p backend
+    # Clone (or update) the backend repository — it contains its own
+    # compose.yml plus the Django application source.
+    clone_or_pull "$BACKEND_REPO" "backend" || return 1
+    echo "  [OK] Backend repository ready."
 
-    echo "  -> Downloading backend/compose.yml..."
-    download_file "$BACKEND_RAW" "backend/compose.yml" || return 1
-    echo "  [OK] backend/compose.yml downloaded."
+    if [[ -f "backend/.env" ]]; then
+        echo "  -> backend/.env already exists — leaving it untouched."
+        return 0
+    fi
 
     echo ""
     echo "  Generating secrets..."
-    # Django SECRET_KEY: must be long, random, and unpredictable.
-    # Django itself uses 50 chars; 64 hex chars (32 bytes) exceeds that.
-    # Django SECRET_KEY: must be long, random, and unpredictable.
-    # Django itself uses 50 chars; 64 hex chars (32 bytes) exceeds that.
+
+    # Django SECRET_KEY: must be unpredictable and unique per deployment.
+    # 32 bytes = 64 hex chars — well above Django's 50-char minimum.
     # Source: https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key
     local secret_key
     secret_key=$(generate_secret 32)
 
-    # Postgres password: 48 hex chars is well beyond any brute-force concern.
-    # Postgres password: 48 hex chars is well beyond any brute-force concern.
+    # PostgreSQL password: 24 bytes = 48 hex chars.
     local postgres_password
     postgres_password=$(generate_secret 24)
 
-    echo "  [AUTO] SECRET_KEY       → ${secret_key:0:12}... (truncated for display)"
-    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated for display)"
-    echo "  [AUTO] SECRET_KEY       → ${secret_key:0:12}... (truncated for display)"
-    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated for display)"
+    echo "  [AUTO] SECRET_KEY        → ${secret_key:0:12}... (truncated)"
+    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
     echo ""
-    echo "  Please provide the remaining values (press Enter to accept [defaults]):"
-    echo "  Please provide the remaining values (press Enter to accept [defaults]):"
+    echo "  Provide remaining values (Enter = accept [default]):"
     echo ""
 
-    prompt_var "ALLOWED_HOSTS (comma-separated, e.g. localhost,api.rgsscs.org)" "localhost"
+    prompt_var "ALLOWED_HOSTS (comma-separated, e.g. localhost,api.rgsscs.org)" "localhost,backend"
     local allowed_hosts="$PROMPT_RESULT"
 
     prompt_var "CSRF_TRUSTED_ORIGINS (comma-separated, e.g. https://api.rgsscs.org)" "http://localhost"
@@ -808,19 +492,20 @@ setup_backend() {
     prompt_var "POSTGRES_DB" "rgssdb"
     local postgres_db="$PROMPT_RESULT"
 
-    prompt_var "POSTGRES_USER" "rgssuser"
+    # Non-superuser app account, per least-privilege principle.
+    # Source: https://www.postgresql.org/docs/current/sql-createrole.html
     prompt_var "POSTGRES_USER" "rgssuser"
     local postgres_user="$PROMPT_RESULT"
 
-    # Write the .env file. Heredoc with quoted delimiter ('EOF') prevents
-    # variable expansion inside the content — we want literal values, not re-expansion.
-    cat > "backend/.env" << EOF
-    # Write the .env file. Heredoc with quoted delimiter ('EOF') prevents
-    # variable expansion inside the content — we want literal values, not re-expansion.
-    cat > "backend/.env" << EOF
+    # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
+    # the content — all values are written as literal strings.
+    cat > "backend/.env" << 'ENVEOF'
 # ── Django ─────────────────────────────────────────────────────────────────
-# AUTO-GENERATED — do not commit this file
-# AUTO-GENERATED — do not commit this file
+# AUTO-GENERATED by install.sh — do NOT commit this file
+ENVEOF
+
+    # Append the actual values (unquoted heredoc so variables expand here).
+    cat >> "backend/.env" << EOF
 SECRET_KEY=${secret_key}
 ALLOWED_HOSTS=${allowed_hosts}
 CSRF_TRUSTED_ORIGINS=${csrf_origins}
@@ -829,7 +514,6 @@ DJANGO_SUPERUSER_EMAIL=${superuser_email}
 DJANGO_SUPERUSER_PASSWORD=${superuser_password}
 
 # ── PostgreSQL ─────────────────────────────────────────────────────────────
-# AUTO-GENERATED by install.sh — do NOT commit this file
 POSTGRES_DB=${postgres_db}
 POSTGRES_USER=${postgres_user}
 POSTGRES_PASSWORD=${postgres_password}
@@ -845,8 +529,16 @@ setup_frontend() {
     echo ""
     echo "==> Setting up frontend..."
 
-    clone_or_pull "$FRONTEND_REPO" "frontend" || return 1
-    echo "  [OK] Frontend repository ready."
+    mkdir -p frontend
+
+    echo "  -> Downloading frontend/compose.yml..."
+    download_file "$FRONTEND_COMPOSE_RAW" "frontend/compose.yml" || return 1
+    echo "  [OK] frontend/compose.yml downloaded."
+
+    if [[ -f "frontend/.env" ]]; then
+        echo "  -> frontend/.env already exists — leaving it untouched."
+        return 0
+    fi
 
     echo ""
     echo "  Generating secrets..."
@@ -895,10 +587,14 @@ create_shared_network() {
 
 get_os
 echo ""
-echo "Detected OS: $ostype"
-echo ""
 
-# Step 1 + 2: Install Docker (skipped if already present — handles re-runs after reboot)
+if [[ "$ostype" == "undefined" ]]; then
+    echo "[!] OS undefined or unsupported — exiting."
+    exit 1
+fi
+
+# Step 1 + 2: Install Docker (skipped if already present — handles re-runs
+# triggered automatically after a reboot)
 if check_docker; then
     echo "==> Docker is already installed and running. Skipping installation."
 else
@@ -906,25 +602,25 @@ else
         linux)   install_docker_linux ;;
         osx)     install_docker_mac ;;
         windows) install_docker_windows ;;
-        *)
-            echo "[!] OS undefined or unsupported — exiting."
-            exit 1 ;;
     esac
 
-    # On Linux the script may have rebooted above. If it didn't (user declined
-    # or non-Linux), verify Docker is now reachable before continuing.
     if ! check_docker; then
         echo ""
         echo "[!] Docker does not appear to be running after installation."
-        echo "    - On Linux: reboot and re-run this script."
-        echo "    - On macOS: open Docker.app first, then re-run."
-        echo "    - On Windows: restart and re-run after Docker Desktop starts."
+        echo "    - On Linux: this is expected if a reboot was deferred — the"
+        echo "      install will resume automatically on next boot."
+        echo "    - On macOS: open Docker.app first, then re-run this script."
+        echo "    - On Windows: restart and re-run this script after Docker Desktop starts."
         exit 1
     fi
 fi
 
 # Step 3: Verify Docker with hello-world
 verify_docker
+
+# Now that Docker is confirmed working, the post-reboot resume service (if
+# any) has done its job — remove it so it doesn't fire on future boots.
+cleanup_resume_service
 
 # Step 4: Install Portainer
 install_portainer
@@ -944,7 +640,6 @@ project_dir="$PROMPT_RESULT"
 mkdir -p "$project_dir"
 cd "$project_dir" || { echo "[!] Could not enter $project_dir — exiting."; exit 1; }
 
-# Steps 5 + 6
 setup_backend  || { echo "[!] Backend setup failed."; exit 1; }
 setup_frontend || { echo "[!] Frontend setup failed."; exit 1; }
 
@@ -958,9 +653,9 @@ echo "  Files written:"
 echo "    $(pwd)/backend/.env         ← KEEP SECRET — never commit"
 echo "    $(pwd)/frontend/.env        ← KEEP SECRET — never commit"
 echo ""
-echo "  Repository source:"
+echo "  Repository / compose sources:"
 echo "    $(pwd)/backend/             ← cloned from GitHub"
-echo "    $(pwd)/frontend/            ← cloned from GitHub"
+echo "    $(pwd)/frontend/compose.yml ← downloaded from GitHub"
 echo "================================================================"
 echo ""
 
@@ -968,18 +663,18 @@ read -rp "==> Start services now with docker compose? [Y/n]: " start_confirm
 if [[ "$start_confirm" == "n" || "$start_confirm" == "N" ]]; then
     echo ""
     echo "  To start manually later:"
-    echo "    cd $(pwd)/backend  && docker compose up -d"
-    echo "    cd $(pwd)/frontend && docker compose up -d"
+    echo "    cd $(pwd)/backend  && docker compose up -d --wait"
+    echo "    cd $(pwd)/frontend && docker compose up -d --wait"
     exit 0
 fi
 
 echo ""
 echo "  -> Starting backend (PostgreSQL + Django)..."
-docker compose -f backend/compose.yml up -d
+docker compose -f backend/compose.yml up -d --wait
 
 echo ""
 echo "  -> Starting frontend (Next.js + Valkey)..."
-docker compose -f frontend/compose.yml up -d
+docker compose -f frontend/compose.yml up -d --wait
 
 echo ""
 echo "================================================================"
