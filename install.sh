@@ -793,28 +793,15 @@ setup_frontend() {
     echo ""
     echo "==> Setting up frontend..."
 
-    # Step 5: Clone (or update) the frontend repository.
     clone_or_pull "$FRONTEND_REPO" "frontend" || return 1
     echo "  [OK] Frontend repository ready."
 
-    # Step 6: Generate secrets and write frontend/.env
     echo ""
     echo "  Generating secrets..."
 
-    # ADMIN_KEY secures internal admin API routes — treat as a password.
     local admin_key
     admin_key=$(generate_secret 24)
     echo "  [AUTO] ADMIN_KEY → ${admin_key:0:8}... (truncated)"
-    echo ""
-    echo "  Provide remaining values:"
-    echo ""
-
-    # NEXT_PUBLIC_API_URL is embedded into the browser bundle at BUILD TIME,
-    # not at runtime. Changing this value only takes effect if the Docker image
-    # is rebuilt locally — the pre-built GHCR image has the build-time value fixed.
-    # Source: https://nextjs.org/docs/app/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-    prompt_var "NEXT_PUBLIC_API_URL (public-facing API URL)" "https://api.rgsscs.org"
-    local next_public_api_url="$PROMPT_RESULT"
 
     cat > "frontend/.env" << 'ENVEOF'
 # ── Frontend ───────────────────────────────────────────────────────────────
@@ -825,11 +812,6 @@ ENVEOF
 # Internal Docker-network URL for Next.js server-side fetches (SSR/RSC).
 # 'backend' resolves via Docker Compose's internal DNS on the shared network.
 API_URL=http://backend:8000
-
-# Public URL baked into the browser bundle at build time (NEXT_PUBLIC_* vars).
-# Only applies if you rebuild the Docker image locally — pre-built GHCR images
-# have this value fixed at the time they were built.
-NEXT_PUBLIC_API_URL=${next_public_api_url}
 
 # ── Captcha / Admin ────────────────────────────────────────────────────────
 ADMIN_KEY=${admin_key}
