@@ -387,7 +387,8 @@ setup_backend() {
         return 0
     fi
 
-    info "Generating backend secrets..."
+    echo ""
+    echo "  Generating secrets..."
 
     # Django SECRET_KEY: must be unpredictable and unique per deployment.
     # 32 bytes = 64 hex chars — well above Django's 50-char minimum.
@@ -399,8 +400,9 @@ setup_backend() {
     local postgres_password
     postgres_password=$(generate_secret 24)
 
-    info "SECRET_KEY → ${secret_key:0:12}... (truncated)"
-    info "POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
+    echo "  [AUTO] SECRET_KEY        → ${secret_key:0:12}... (truncated)"
+    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
+    echo ""
 
     local allowed_hosts="localhost,backend"
     local csrf_origins="http://localhost"
@@ -455,24 +457,26 @@ EOF
 }
 
 setup_frontend() {
-    section "Setting up frontend..."
+    echo ""
+    echo "==> Setting up frontend..."
 
     mkdir -p frontend
 
-    info "Downloading frontend/compose.yml..."
+    echo "  -> Downloading frontend/compose.yml..."
     download_file "$FRONTEND_COMPOSE_RAW" "frontend/compose.yml" || return 1
-    ok "frontend/compose.yml downloaded."
+    echo "  [OK] frontend/compose.yml downloaded."
 
     if [[ -f "frontend/.env" ]]; then
         info "frontend/.env already exists — leaving it untouched."
         return 0
     fi
 
-    info "Generating frontend secrets..."
+    echo ""
+    echo "  Generating secrets..."
 
     local admin_key
     admin_key=$(generate_secret 24)
-    info "ADMIN_KEY → ${admin_key:0:8}... (truncated)"
+    echo "  [AUTO] ADMIN_KEY → ${admin_key:0:8}... (truncated)"
 
     cat > "frontend/.env" << 'ENVEOF'
 # ── Frontend ───────────────────────────────────────────────────────────────
@@ -505,29 +509,30 @@ EOF
 # Source: https://docs.docker.com/compose/networking/#use-a-pre-existing-network
 
 create_shared_network() {
-    section "Ensuring shared Docker network 'internetwork' exists..."
+    echo ""
+    echo "==> Ensuring shared Docker network 'internetwork' exists..."
 
     if docker network ls --format '{{.Name}}' 2>/dev/null | grep -q '^internetwork$'; then
-        info "'internetwork' already exists. Skipping."
+        echo "  -> 'internetwork' already exists. Skipping."
     else
         docker network create internetwork
-        ok "'internetwork' network created."
+        echo "  [OK] 'internetwork' network created."
     fi
 }
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 get_os
-info ""
+echo ""
 
 if [[ "$ostype" == "undefined" ]]; then
-    error "OS undefined or unsupported — exiting."
+    echo "[!] OS undefined or unsupported — exiting."
     exit 1
 fi
 
 # Step 1 + 2: Install Docker (skipped if already present)
 if check_docker; then
-    ok "Docker is already installed and running. Skipping installation."
+    echo "==> Docker is already installed and running. Skipping installation."
 else
     case "$ostype" in
         linux)   install_docker_linux ;;
@@ -536,7 +541,8 @@ else
     esac
 
     if ! check_docker; then
-        warn "Docker does not appear to be running after installation."
+        echo ""
+        echo "[!] Docker does not appear to be running after installation."
         echo "    - On Linux/macOS: ensure the Docker daemon is running and re-run this script."
         echo "    - On Windows: start Docker Desktop and re-run this script."
         exit 1
@@ -575,34 +581,46 @@ setup_frontend || { echo "[!] Frontend setup failed."; exit 1; }
 
 create_shared_network
 
-section "Setup complete!"
-info "Files written:"
+echo ""
+echo "================================================================"
+echo "  Setup complete!"
+echo ""
+echo "  Files written:"
 echo "    $(pwd)/backend/.env         ← KEEP SECRET — never commit"
 echo "    $(pwd)/frontend/.env        ← KEEP SECRET — never commit"
 echo "    $(pwd)/credentials.txt      ← KEEP SECRET — never commit"
-info "Repository / compose sources:"
+echo ""
+echo "  Repository / compose sources:"
 echo "    $(pwd)/backend/             ← cloned from GitHub"
 echo "    $(pwd)/frontend/compose.yml ← downloaded from GitHub"
+echo "================================================================"
+echo ""
 
 start_confirm="Y"
 if [[ "$start_confirm" == "n" || "$start_confirm" == "N" ]]; then
-    info "To start manually later:"
+    echo ""
+    echo "  To start manually later:"
     echo "    cd $(pwd)/backend  && docker compose up -d --wait"
     echo "    cd $(pwd)/frontend && docker compose up -d --wait"
     exit 0
 fi
 
-info "Starting backend (PostgreSQL + Django)..."
+echo ""
+echo "  -> Starting backend (PostgreSQL + Django)..."
 docker compose -f backend/compose.yml up -d --wait
 
-info "Starting frontend (Next.js + Valkey)..."
+echo ""
+echo "  -> Starting frontend (Next.js + Valkey)..."
 docker compose -f frontend/compose.yml up -d --wait
 
-section "Services started:"
+echo ""
+echo "================================================================"
+echo "  Services started:"
 echo "    Frontend  → http://localhost:3000"
 echo "    Backend   → http://localhost:8000"
 echo "    Portainer → https://localhost:9443"
-
+echo "================================================================"
+echo ""
 echo "  Docker is running. Rebooting the computer in 5 seconds..."
 if [[ "$ostype" == "windows" ]]; then
     shutdown /r /t 5
