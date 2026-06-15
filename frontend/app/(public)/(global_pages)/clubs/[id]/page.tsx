@@ -250,9 +250,64 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </div>
       </section>
-      <div className={styles_modules.execWrapper}>
+      
+      <div className={styles_modules.exec_wrapper}>
         <section className={styles_modules.execContainer}>
-          
+          <div className={styles_modules.exec_title}>
+            <i className="fas fa-id-badge"></i> Meet Your Exec Team
+          </div>
+
+          <div class="exec-strip">
+
+            <!-- RANK 1 — Co-Presidents (largest photo, gold border) -->
+            <div class="exec-member rank-1">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=47" alt="Maya Chen" loading="lazy"/>
+              <div class="exec-role">Co-President</div>
+              <div class="exec-name">Maya Chen</div>
+            </div>
+            <div class="exec-member rank-1">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=52" alt="Jordan Taylor" loading="lazy"/>
+              <div class="exec-role">Co-President</div>
+              <div class="exec-name">Jordan Taylor</div>
+            </div>
+
+            <div class="exec-rank-divider"></div>
+
+            <!-- RANK 2 — Vice President -->
+            <div class="exec-member rank-2">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=33" alt="Alex Rivera" loading="lazy"/>
+              <div class="exec-role">Vice President</div>
+              <div class="exec-name">Alex Rivera</div>
+            </div>
+
+            <div class="exec-rank-divider"></div>
+
+            <!-- RANK 3 — Secretary & Treasurer -->
+            <div class="exec-member rank-3">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=26" alt="Priya Patel" loading="lazy"/>
+              <div class="exec-role">Secretary</div>
+              <div class="exec-name">Priya Patel</div>
+            </div>
+            <div class="exec-member rank-3">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=12" alt="Ethan Brooks" loading="lazy"/>
+              <div class="exec-role">Treasurer</div>
+              <div class="exec-name">Ethan Brooks</div>
+            </div>
+
+            <div class="exec-rank-divider"></div>
+
+            <!-- RANK 4 — Events & Communications -->
+            <div class="exec-member rank-4">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=20" alt="Sofia Nguyen" loading="lazy"/>
+              <div class="exec-role">Events Coord.</div>
+              <div class="exec-name">Sofia Nguyen</div>
+            </div>
+            <div class="exec-member rank-4">
+              <img class="exec-photo" src="https://i.pravatar.cc/200?img=15" alt="Marcus Lee" loading="lazy"/>
+              <div class="exec-role">Communications</div>
+              <div class="exec-name">Marcus Lee</div>
+            </div>
+          </div>
         </section>
       </div>
     </main>

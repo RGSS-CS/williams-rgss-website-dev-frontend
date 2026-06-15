@@ -7,30 +7,56 @@
 #  Usage:
 #    chmod +x install.sh && ./install.sh
 #
-#  If a reboot/restart is required (e.g. new docker group membership on
-#  Linux, or WSL2/Hyper-V setup on Windows), the script registers itself to
-#  resume automatically:
-#    - Linux:   systemd one-shot service (falls back to cron @reboot if no
-#               systemd), PLUS a shell-profile login-hook so progress is
-#               visible on screen at the next login.
-#    - macOS:   cron @reboot + a shell-profile login-hook.
-#    - Windows: Task Scheduler "on logon" entry that opens a terminal.
-#  All of these are removed automatically once Docker is verified working.
-#
-#  Optional: on Linux, the script can also enable automatic console (tty1)
-#  login for the invoking user so the machine doesn't sit at a login prompt
-#  after the unattended reboot. Combined with the login-hook above, this
-#  means the install visibly continues right after reboot with no input.
-#  This is removed automatically once setup finishes — see
-#  setup_auto_login_linux() / cleanup_auto_login_linux() below.
-#  Source: man systemd.unit (drop-in override files), man agetty (--autologin)
+#  The installer installs Docker, Portainer, and the backend/frontend
+#  stacks, then automatically reboots the machine 5 seconds after the
+#  services successfully start.
 # ══════════════════════════════════════════════════════════════════════════════
 
-echo ""
-echo "================================================================"
-echo "  Project Installer"
-echo "================================================================"
-echo ""
+supports_color() {
+    [[ -t 1 ]] && [[ "${TERM:-}" != "dumb" ]]
+}
+
+if supports_color; then
+    BOLD="\033[1m"
+    RESET="\033[0m"
+    RED="\033[31m"
+    GREEN="\033[32m"
+    YELLOW="\033[33m"
+    BLUE="\033[34m"
+    CYAN="\033[36m"
+else
+    BOLD=""
+    RESET=""
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    CYAN=""
+fi
+
+section() {
+    printf "\n%s%s%s\n" "$BOLD" "================================================================" "$RESET"
+    printf "%s  %s%s\n" "$BLUE" "$1" "$RESET"
+    printf "%s%s%s\n\n" "$BOLD" "================================================================" "$RESET"
+}
+
+info() {
+    printf "%s→ %s%s\n" "$CYAN" "$1" "$RESET"
+}
+
+ok() {
+    printf "%s✔ %s%s\n" "$GREEN" "$1" "$RESET"
+}
+
+warn() {
+    printf "%s⚠ %s%s\n" "$YELLOW" "$1" "$RESET"
+}
+
+error() {
+    printf "%s✖ %s%s\n" "$RED" "$1" "$RESET"
+}
+
+section "Project Installer"
 
 # ── Privilege Escalation ──────────────────────────────────────────────────────
 # Re-launches the script with elevated privileges if not already root/admin.
@@ -40,20 +66,20 @@ echo ""
 request_admin() {
     if [[ "$OSTYPE" == linux* || "$OSTYPE" == darwin* ]]; then
         if [[ "$EUID" -ne 0 ]]; then
-            echo "==> Elevated privileges required. Re-launching with sudo..."
+            info "Elevated privileges required. Re-launching with sudo..."
             exec sudo -E bash "$0" "$@"
         else
-            echo "==> Running as root. Privilege check passed."
+            ok "Running as root. Privilege check passed."
         fi
 
     elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
         if ! net session > /dev/null 2>&1; then
-            echo "==> Not running as Administrator."
-            echo "    Triggering UAC prompt to re-launch with elevated privileges..."
+            warn "Not running as Administrator."
+            info "Triggering UAC prompt to re-launch with elevated privileges..."
             powershell -Command "Start-Process bash -ArgumentList '$0' -Verb RunAs -Wait"
             exit 0
         else
-            echo "==> Running as Administrator. Privilege check passed."
+            ok "Running as Administrator. Privilege check passed."
         fi
     fi
 }
@@ -73,7 +99,7 @@ else
 fi
 
 exec > >(tee -a "$LOG_FILE") 2>&1
-echo "==> Logging this run to: $LOG_FILE"
+info "Logging this run to: $LOG_FILE"
 
 # ── OS Detection ──────────────────────────────────────────────────────────────
 # Determined automatically from bash's built-in $OSTYPE — no user confirmation
@@ -100,7 +126,7 @@ get_os() {
             ;;
     esac
 
-    echo "==> Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
+    info "Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
 }
 
 # ── Docker Check ──────────────────────────────────────────────────────────────
@@ -117,8 +143,7 @@ check_docker() {
 # ── Docker Installers ─────────────────────────────────────────────────────────
 
 install_docker_linux() {
-    echo ""
-    echo "==> Installing Docker Engine for Linux..."
+    section "Installing Docker Engine for Linux..."
 
     if command -v apt-get &>/dev/null; then
         # Detect whether the distro is Debian or Ubuntu so the correct Docker
@@ -138,7 +163,7 @@ install_docker_linux() {
                 ;;
         esac
 
-        echo "  -> Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
+        info "Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
 
         apt-get update -y
         apt-get install -y ca-certificates curl git gnupg
@@ -165,23 +190,23 @@ EOF
             docker-compose-plugin
 
     elif command -v dnf &>/dev/null; then
-        echo "  -> Detected dnf (Fedora/RHEL)"
+        info "Detected dnf (Fedora/RHEL)"
         dnf -y install dnf-plugins-core git
         dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
         dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v yum &>/dev/null; then
-        echo "  -> Detected yum (CentOS/older RHEL)"
+        info "Detected yum (CentOS/older RHEL)"
         yum install -y yum-utils git
         yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
         yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v pacman &>/dev/null; then
-        echo "  -> Detected pacman (Arch Linux)"
+        info "Detected pacman (Arch Linux)"
         pacman -Sy --noconfirm docker git
 
     else
-        echo "  [!] No supported package manager found."
+        error "No supported package manager found."
         echo "      Install Docker manually: https://docs.docker.com/engine/install/"
         return 1
     fi
@@ -195,55 +220,21 @@ EOF
     # Source: https://docs.docker.com/engine/install/linux-postinstall/
     if [[ -n "$SUDO_USER" ]]; then
         usermod -aG docker "$SUDO_USER"
-        echo ""
-        echo "  [OK] Docker Engine installed."
-        echo "  [!]  '$SUDO_USER' has been added to the 'docker' group."
-        echo ""
-        echo "  A reboot is required for the group change to take effect."
-        echo "  This script will register itself to continue automatically"
-        echo "  after the reboot — no manual re-run needed."
-        echo ""
-
-        setup_resume_service
-
-        echo ""
-        echo "  Optional: enable automatic console login for '$SUDO_USER' on tty1"
-        echo "  until setup finishes? This lets you watch the install log right"
-        echo "  after reboot without typing a password. It is removed"
-        echo "  automatically once Docker is verified working."
-        echo "  Security note: while enabled, anyone with physical/console"
-        echo "  access gets a shell as '$SUDO_USER' with no password prompt."
-        read -rp "  Enable temporary auto-login? [y/N]: " autologin_confirm
-        if [[ "$autologin_confirm" == "y" || "$autologin_confirm" == "Y" ]]; then
-            setup_auto_login_linux "$SUDO_USER"
-        fi
-
-        echo ""
-        read -rp "  Reboot now? [Y/n]: " reboot_confirm
-        if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
-            echo "  -> Rebooting..."
-            reboot
-        else
-            echo "  -> Skipping reboot for now."
-            echo "     Setup will continue automatically the next time this machine boots."
-            echo "     (Or run 'newgrp docker' / log out and back in, then re-run this script manually.)"
-            exit 0
-        fi
-    else
-        echo "  [OK] Docker Engine installed."
     fi
+
+    ok "Docker Engine installed."
+
 }
 
 install_docker_mac() {
-    echo ""
-    echo "==> Installing Docker Desktop for macOS..."
+    section "Installing Docker Desktop for macOS..."
 
     if ! command -v brew &>/dev/null; then
-        echo "  -> Homebrew not found. Installing Homebrew first..."
+        info "Homebrew not found. Installing Homebrew first..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
     else
-        echo "  -> Homebrew already installed: $(brew --version | head -1)"
+        info "Homebrew already installed: $(brew --version | head -1)"
     fi
 
     if ! command -v git &>/dev/null; then
@@ -252,14 +243,12 @@ install_docker_mac() {
 
     brew install --cask docker
 
-    echo ""
-    echo "  [OK] Docker Desktop installed."
-    echo "  [!]  Launch /Applications/Docker.app to complete setup, then re-run this script."
+    ok "Docker Desktop installed."
+    warn "Launch /Applications/Docker.app to complete setup, then re-run this script."
 }
 
 install_docker_windows() {
-    echo ""
-    echo "==> Installing Docker Desktop for Windows..."
+    section "Installing Docker Desktop for Windows..."
 
     if command -v winget &>/dev/null; then
         winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
@@ -267,34 +256,16 @@ install_docker_windows() {
     elif command -v choco &>/dev/null; then
         choco install docker-desktop git -y
     else
-        echo "  [!] Neither winget nor Chocolatey found."
+        error "Neither winget nor Chocolatey found."
         echo "      Download manually:"
         echo "        Docker: https://www.docker.com/products/docker-desktop/"
         echo "        Git:    https://git-scm.com/download/win"
         return 1
     fi
 
-    echo ""
-    echo "  [OK] Docker Desktop and Git installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup."
-    echo ""
-    echo "  This script will register a Task Scheduler entry to resume"
-    echo "  automatically — a terminal will open and continue setup the"
-    echo "  next time you log in."
-    echo ""
-
-    setup_resume_service
-
-    read -rp "  Restart now? [Y/n]: " reboot_confirm
-    if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
-        echo "  -> Restarting..."
-        shutdown /r /t 5
-    else
-        echo "  -> Skipping restart for now."
-        echo "     Setup will continue automatically the next time you log in."
-        echo "     (Or re-run this script manually after Docker Desktop starts.)"
-        exit 0
-    fi
+    ok "Docker Desktop and Git installation triggered."
+    warn "A restart may be required to complete WSL2/Hyper-V setup."
+    info "Restart Windows manually if prompted, then re-run this script once Docker Desktop is running."
 }
 
 # ── Docker Verification ───────────────────────────────────────────────────────
@@ -303,288 +274,16 @@ install_docker_windows() {
 # Source: https://docs.docker.com/get-started/#test-docker-installation
 
 verify_docker() {
-    echo ""
-    echo "==> Verifying Docker installation..."
+    section "Verifying Docker installation..."
 
     if docker run --rm hello-world &>/dev/null; then
-        echo "  [OK] Docker is working correctly (hello-world ran successfully)."
+        ok "Docker is working correctly (hello-world ran successfully)."
     else
-        echo "  [!] Docker verification failed."
+        error "Docker verification failed."
         echo "      - Check that the Docker daemon is running: systemctl status docker"
         echo "      - Ensure your user is in the docker group and you have re-logged in."
         echo "      - Run manually: docker run hello-world"
         exit 1
-    fi
-}
-
-# ── Auto-Resume After Reboot/Login ────────────────────────────────────────────
-# Two complementary mechanisms re-launch this script so an interrupted install
-# continues without the user re-typing the command:
-#
-#   1. A background scheduler — systemd service on Linux, falling back to
-#      cron's "@reboot" on Linux/macOS without systemd, or a Task Scheduler
-#      "on logon" entry on Windows. Runs even if nobody is at the console;
-#      output goes to $LOG_FILE only.
-#   2. A login-hook appended to the invoking user's shell profile
-#      (.profile/.bash_profile/.zprofile) — runs the script in the
-#      FOREGROUND of the next interactive login, so progress is visible on
-#      screen. This is what makes auto-login actually useful: without it,
-#      the background scheduler runs invisibly and it looks like "nothing
-#      happened" after login.
-#
-# Both are gated by a marker file ($RESUME_MARKER): present = "resume
-# pending". Whichever mechanism fires first does the work; re-running is
-# harmless because check_docker() skips steps that are already done.
-# cleanup_resume_service() removes the marker and every mechanism once Docker
-# is verified working.
-#
-# Sources: man systemd.service       — "Type=oneshot", "WantedBy="
-#          man 5 crontab              — "@reboot"
-#          man bash, INVOCATION       — login shells read .profile/.bash_profile (Linux), .zprofile (macOS, default zsh)
-#          schtasks /create /sc onlogon — https://learn.microsoft.com/windows-server/administration/windows-commands/schtasks-create
-
-RESUME_SERVICE_PATH="/etc/systemd/system/install-resume.service"
-RESUME_TASK_NAME="InstallResume"
-RESUME_PROFILE_BEGIN="# >>> install.sh auto-resume (auto-added, safe to remove) >>>"
-RESUME_PROFILE_END="# <<< install.sh auto-resume <<<"
-
-setup_resume_service() {
-    local script_path
-    script_path="$(realpath "$0")"
-
-    touch "$RESUME_MARKER" 2>/dev/null
-
-    case "$ostype" in
-        linux)
-            if command -v systemctl &>/dev/null; then
-                cat > "$RESUME_SERVICE_PATH" << EOF
-[Unit]
-Description=Resume project installer after reboot
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash ${script_path}
-StandardOutput=append:${LOG_FILE}
-StandardError=append:${LOG_FILE}
-
-[Install]
-WantedBy=multi-user.target
-EOF
-                systemctl daemon-reload
-                systemctl enable install-resume.service
-                echo "  [OK] Registered systemd resume service: $RESUME_SERVICE_PATH"
-            else
-                echo "  [!] systemd not found — using cron @reboot instead."
-                setup_resume_cron "$script_path"
-            fi
-            setup_resume_login_hook "$script_path"
-            ;;
-        osx)
-            setup_resume_cron "$script_path"
-            setup_resume_login_hook "$script_path"
-            ;;
-        windows)
-            setup_resume_windows "$script_path"
-            ;;
-    esac
-
-    echo "       On next boot/login, install.sh will continue automatically"
-    echo "       and print its progress to the screen."
-    echo "       Full output is also logged to: $LOG_FILE"
-}
-
-# Cron fallback for systems without systemd (also used on macOS).
-# Runs in the background as root, like the systemd service — output only
-# goes to $LOG_FILE, not the screen. The login-hook below covers visibility.
-setup_resume_cron() {
-    local script_path="$1"
-
-    if ! command -v crontab &>/dev/null; then
-        echo "  [!] cron not available — relying on the login hook only."
-        return 1
-    fi
-
-    ( crontab -l 2>/dev/null | grep -vF "$script_path"
-      echo "@reboot /bin/bash $script_path >> $LOG_FILE 2>&1" ) | crontab -
-
-    echo "  [OK] Registered cron @reboot job to resume install.sh (root crontab)."
-}
-
-cleanup_resume_cron() {
-    command -v crontab &>/dev/null || return 0
-    local script_path
-    script_path="$(realpath "$0")"
-
-    if crontab -l 2>/dev/null | grep -qF "$script_path"; then
-        echo "==> Removing cron @reboot resume entry..."
-        crontab -l 2>/dev/null | grep -vF "$script_path" | crontab -
-    fi
-}
-
-# Windows: opens a visible terminal at the next logon and re-runs the
-# installer (no systemd/cron equivalent exists, so Task Scheduler is used).
-setup_resume_windows() {
-    local script_path="$1"
-    local win_path="$script_path"
-    command -v cygpath &>/dev/null && win_path="$(cygpath -w "$script_path")"
-
-    schtasks /create /tn "$RESUME_TASK_NAME" /sc onlogon /rl highest /f \
-        /tr "cmd /k bash \"$win_path\"" >/dev/null
-
-    echo "  [OK] Registered Task Scheduler entry '$RESUME_TASK_NAME'."
-    echo "       It opens a terminal and resumes install.sh at the next logon."
-}
-
-cleanup_resume_windows() {
-    command -v schtasks &>/dev/null || return 0
-    if schtasks /query /tn "$RESUME_TASK_NAME" &>/dev/null; then
-        echo "==> Removing Task Scheduler resume entry..."
-        schtasks /delete /tn "$RESUME_TASK_NAME" /f >/dev/null
-    fi
-}
-
-# Login-hook: on the next interactive login, checks for $RESUME_MARKER and —
-# if present — re-runs the installer in the foreground so it's actually
-# visible on screen (the gap that background schedulers can't fill).
-setup_resume_login_hook() {
-    local script_path="$1"
-    local user="${SUDO_USER:-$(logname 2>/dev/null)}"
-
-    if [[ -z "$user" ]]; then
-        echo "  [!] Could not determine the invoking user — skipping login hook."
-        return 1
-    fi
-
-    local home_dir
-    if [[ "$ostype" == "osx" ]]; then
-        home_dir=$(dscl . -read "/Users/$user" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
-    else
-        home_dir=$(getent passwd "$user" 2>/dev/null | cut -d: -f6)
-    fi
-    [[ -z "$home_dir" ]] && home_dir="/home/$user"
-
-    local profile_files=("$home_dir/.profile" "$home_dir/.bash_profile")
-    [[ "$ostype" == "osx" ]] && profile_files+=("$home_dir/.zprofile")
-
-    local f
-    for f in "${profile_files[@]}"; do
-        touch "$f"
-        if ! grep -qF "$RESUME_PROFILE_BEGIN" "$f" 2>/dev/null; then
-            cat >> "$f" << EOF
-
-$RESUME_PROFILE_BEGIN
-if [[ -f "$RESUME_MARKER" ]]; then
-    echo ""
-    echo "==> Resuming installer after reboot/login..."
-    sudo /bin/bash "$script_path"
-fi
-$RESUME_PROFILE_END
-EOF
-        fi
-        chown "$user" "$f" 2>/dev/null
-    done
-
-    echo "  [OK] Added a login-hook to ${user}'s shell profile to resume install.sh visibly."
-}
-
-cleanup_resume_login_hook() {
-    local user="${SUDO_USER:-$(logname 2>/dev/null)}"
-    [[ -z "$user" ]] && return 0
-
-    local home_dir
-    if [[ "$ostype" == "osx" ]]; then
-        home_dir=$(dscl . -read "/Users/$user" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
-    else
-        home_dir=$(getent passwd "$user" 2>/dev/null | cut -d: -f6)
-    fi
-    [[ -z "$home_dir" ]] && return 0
-
-    local f
-    for f in "$home_dir/.profile" "$home_dir/.bash_profile" "$home_dir/.zprofile"; do
-        [[ -f "$f" ]] || continue
-        if grep -qF "$RESUME_PROFILE_BEGIN" "$f"; then
-            echo "==> Removing login-hook from $f..."
-            sed -i.bak "/$RESUME_PROFILE_BEGIN/,/$RESUME_PROFILE_END/d" "$f"
-            rm -f "$f.bak"
-        fi
-    done
-}
-
-cleanup_resume_service() {
-    rm -f "$RESUME_MARKER" 2>/dev/null
-
-    if [[ "$ostype" == "linux" ]] && [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
-        echo "==> Removing systemd resume service (no longer needed)..."
-        systemctl disable install-resume.service &>/dev/null
-        rm -f "$RESUME_SERVICE_PATH"
-        systemctl daemon-reload
-    fi
-
-    if [[ "$ostype" == "linux" || "$ostype" == "osx" ]]; then
-        cleanup_resume_cron
-        cleanup_resume_login_hook
-    fi
-
-    [[ "$ostype" == "windows" ]] && cleanup_resume_windows
-
-    cleanup_auto_login_linux
-}
-
-# ── Auto-Login After Reboot (optional) ────────────────────────────────────────
-# The systemd resume service above already runs on boot without anyone logging
-# in (WantedBy=multi-user.target doesn't require a session). This is purely an
-# extra convenience for someone sitting at the machine: it skips the console
-# login prompt on tty1 so the in-progress install log is immediately visible
-# after the automatic reboot. It is reverted automatically by
-# cleanup_resume_service() once Docker is confirmed working.
-#
-# SECURITY NOTE: while enabled, anyone with physical/console access to tty1
-# gets a logged-in shell as the specified user with NO password prompt. Only
-# enable this on a trusted machine, and only for the duration of the install.
-# Source: man systemd.unit (drop-in override directories, "*.service.d/")
-#         man agetty — "--autologin" option
-
-AUTOLOGIN_OVERRIDE_DIR="/etc/systemd/system/getty@tty1.service.d"
-AUTOLOGIN_OVERRIDE_FILE="${AUTOLOGIN_OVERRIDE_DIR}/autologin.conf"
-
-setup_auto_login_linux() {
-    local user="$1"
-
-    if [[ -z "$user" ]]; then
-        echo "  [!] No user specified — skipping auto-login setup."
-        return 1
-    fi
-
-    if ! command -v systemctl &>/dev/null; then
-        echo "  [!] systemd not found — cannot configure auto-login."
-        return 1
-    fi
-
-    mkdir -p "$AUTOLOGIN_OVERRIDE_DIR"
-
-    # Empty ExecStart= clears the default, the following line redefines it
-    # with --autologin so getty drops straight into a shell as $user.
-    cat > "$AUTOLOGIN_OVERRIDE_FILE" << EOF
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin ${user} --noclear %I \$TERM
-EOF
-
-    systemctl daemon-reload
-
-    echo "  [OK] Console auto-login enabled for '${user}' on tty1."
-    echo "  [!]  This will be removed automatically once setup completes."
-    echo "       To remove it manually:"
-    echo "         rm -rf ${AUTOLOGIN_OVERRIDE_DIR} && systemctl daemon-reload"
-}
-
-cleanup_auto_login_linux() {
-    if [[ -f "$AUTOLOGIN_OVERRIDE_FILE" ]] && command -v systemctl &>/dev/null; then
-        echo "==> Removing console auto-login override (no longer needed)..."
-        rm -rf "$AUTOLOGIN_OVERRIDE_DIR"
-        systemctl daemon-reload
     fi
 }
 
@@ -595,14 +294,13 @@ cleanup_auto_login_linux() {
 # Source: https://docs.portainer.io/start/install-ce/server/docker/linux
 
 install_portainer() {
-    echo ""
-    echo "==> Installing Portainer CE..."
+    section "Installing Portainer CE..."
 
     docker volume inspect portainer_data >/dev/null 2>&1 \
         || docker volume create portainer_data
 
     if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
-        echo "  -> Existing Portainer container found — removing it..."
+        info "Existing Portainer container found — removing it..."
         docker rm -f portainer >/dev/null 2>&1
     fi
 
@@ -618,10 +316,9 @@ install_portainer() {
         -v portainer_data:/data \
         portainer/portainer-ce:latest
 
-    echo ""
-    echo "  [OK] Portainer installed."
-    echo "  [OK] Web UI (HTTPS): https://localhost:9443"
-    echo "  [OK] Web UI (HTTP):  http://localhost:9000"
+    ok "Portainer installed."
+    ok "Web UI (HTTPS): https://localhost:9443"
+    ok "Web UI (HTTP):  http://localhost:9000"
 }
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
@@ -671,34 +368,6 @@ clone_or_pull() {
     fi
 }
 
-# Prompts the user for input; result written to global $PROMPT_RESULT.
-# If no terminal is attached (e.g. running unattended via the resume service),
-# 'read' returns immediately/empty, so the default value is used automatically.
-# An optional 4th argument prints a short explanatory line above the prompt,
-# so the user knows what the value is for and where it ends up.
-PROMPT_RESULT=""
-prompt_var() {
-    local label="$1"
-    local default="$2"
-    local secret="${3:-false}"
-    local help="${4:-}"
-
-    if [[ -n "$help" ]]; then
-        echo "  ${help}"
-    fi
-
-    if [[ "$secret" == "true" ]]; then
-        read -rsp "  $label (hidden): " PROMPT_RESULT
-        echo ""
-        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
-    elif [[ -n "$default" ]]; then
-        read -rp "  $label [$default]: " PROMPT_RESULT
-        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
-    else
-        read -rp "  $label: " PROMPT_RESULT
-    fi
-}
-
 # ── Project Setup ─────────────────────────────────────────────────────────────
 
 BACKEND_REPO="https://github.com/RGSS-CS/williams-rgss-website-dev-backend.git"
@@ -711,15 +380,14 @@ setup_backend() {
     # Clone (or update) the backend repository — it contains its own
     # compose.yml plus the Django application source.
     clone_or_pull "$BACKEND_REPO" "backend" || return 1
-    echo "  [OK] Backend repository ready."
+    ok "Backend repository ready."
 
     if [[ -f "backend/.env" ]]; then
-        echo "  -> backend/.env already exists — leaving it untouched."
+        info "backend/.env already exists — leaving it untouched."
         return 0
     fi
 
-    echo ""
-    echo "  Generating secrets..."
+    info "Generating backend secrets..."
 
     # Django SECRET_KEY: must be unpredictable and unique per deployment.
     # 32 bytes = 64 hex chars — well above Django's 50-char minimum.
@@ -731,45 +399,20 @@ setup_backend() {
     local postgres_password
     postgres_password=$(generate_secret 24)
 
-    echo "  [AUTO] SECRET_KEY        → ${secret_key:0:12}... (truncated)"
-    echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
-    echo ""
-    echo "  Provide remaining values (Enter = accept [default]):"
-    echo ""
+    info "SECRET_KEY → ${secret_key:0:12}... (truncated)"
+    info "POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
 
-    prompt_var "ALLOWED_HOSTS" "localhost,backend" "" \
-        "ALLOWED_HOSTS — comma-separated hostnames/IPs Django will accept requests for (no spaces). Add your domain here too, e.g. localhost,backend,api.example.com. https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts"
-    local allowed_hosts="$PROMPT_RESULT"
+    local allowed_hosts="localhost,backend"
+    local csrf_origins="http://localhost"
 
-    prompt_var "CSRF_TRUSTED_ORIGINS" "http://localhost" "" \
-        "CSRF_TRUSTED_ORIGINS — comma-separated origins (with scheme, e.g. https://example.com) that are trusted to make POST requests, such as your frontend's URL. https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins"
-    local csrf_origins="$PROMPT_RESULT"
+    local superuser_username="admin"
+    local superuser_email="admin@localhost"
 
-    prompt_var "DJANGO_SUPERUSER_USERNAME" "admin" "" \
-        "Username for the initial Django admin account (used to log into /admin)."
-    local superuser_username="$PROMPT_RESULT"
+    local superuser_password
+    superuser_password=$(generate_secret 24)
 
-    prompt_var "DJANGO_SUPERUSER_EMAIL" "" "" \
-        "Email for the admin account (optional — used for password-reset emails)."
-    local superuser_email="$PROMPT_RESULT"
-
-    prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true" \
-        "Password for the admin account. Input is hidden; leave blank to auto-generate a secure random password."
-    local superuser_password="$PROMPT_RESULT"
-    if [[ -z "$superuser_password" ]]; then
-        superuser_password=$(generate_secret 12)
-        echo "  [AUTO] DJANGO_SUPERUSER_PASSWORD → ${superuser_password:0:4}... (truncated, auto-generated)"
-    fi
-
-    prompt_var "POSTGRES_DB" "appdb" "" \
-        "Name of the PostgreSQL database the backend will use."
-    local postgres_db="$PROMPT_RESULT"
-
-    # Non-superuser app account, per least-privilege principle.
-    # Source: https://www.postgresql.org/docs/current/sql-createrole.html
-    prompt_var "POSTGRES_USER" "appuser" "" \
-        "Non-superuser PostgreSQL role the backend connects as (least-privilege)."
-    local postgres_user="$PROMPT_RESULT"
+    local postgres_db="db"
+    local postgres_user="db"
 
     # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
     # the content — all values are written as literal strings.
@@ -795,31 +438,41 @@ DB_HOST=db
 DB_PORT=5432
 EOF
 
-    echo ""
-    echo "  [OK] backend/.env written."
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Backend credentials ─────────────────────────────────────────────────────
+SECRET_KEY=${secret_key}
+DJANGO_SUPERUSER_USERNAME=${superuser_username}
+DJANGO_SUPERUSER_EMAIL=${superuser_email}
+DJANGO_SUPERUSER_PASSWORD=${superuser_password}
+POSTGRES_DB=${postgres_db}
+POSTGRES_USER=${postgres_user}
+POSTGRES_PASSWORD=${postgres_password}
+EOF
+    fi
+
+    ok "backend/.env written."
 }
 
 setup_frontend() {
-    echo ""
-    echo "==> Setting up frontend..."
+    section "Setting up frontend..."
 
     mkdir -p frontend
 
-    echo "  -> Downloading frontend/compose.yml..."
+    info "Downloading frontend/compose.yml..."
     download_file "$FRONTEND_COMPOSE_RAW" "frontend/compose.yml" || return 1
-    echo "  [OK] frontend/compose.yml downloaded."
+    ok "frontend/compose.yml downloaded."
 
     if [[ -f "frontend/.env" ]]; then
-        echo "  -> frontend/.env already exists — leaving it untouched."
+        info "frontend/.env already exists — leaving it untouched."
         return 0
     fi
 
-    echo ""
-    echo "  Generating secrets..."
+    info "Generating frontend secrets..."
 
     local admin_key
     admin_key=$(generate_secret 24)
-    echo "  [AUTO] ADMIN_KEY → ${admin_key:0:8}... (truncated)"
+    info "ADMIN_KEY → ${admin_key:0:8}... (truncated)"
 
     cat > "frontend/.env" << 'ENVEOF'
 # ── Frontend ───────────────────────────────────────────────────────────────
@@ -836,8 +489,14 @@ ADMIN_KEY=${admin_key}
 REDIS_URL=redis://valkey:6379
 EOF
 
-    echo ""
-    echo "  [OK] frontend/.env written."
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Frontend credentials ────────────────────────────────────────────────────
+ADMIN_KEY=${admin_key}
+EOF
+    fi
+
+    ok "frontend/.env written."
 }
 
 # Creates the shared Docker bridge network both Compose stacks attach to.
@@ -846,40 +505,29 @@ EOF
 # Source: https://docs.docker.com/compose/networking/#use-a-pre-existing-network
 
 create_shared_network() {
-    echo ""
-    echo "==> Ensuring shared Docker network 'internetwork' exists..."
+    section "Ensuring shared Docker network 'internetwork' exists..."
 
     if docker network ls --format '{{.Name}}' 2>/dev/null | grep -q '^internetwork$'; then
-        echo "  -> 'internetwork' already exists. Skipping."
+        info "'internetwork' already exists. Skipping."
     else
         docker network create internetwork
-        echo "  [OK] 'internetwork' network created."
+        ok "'internetwork' network created."
     fi
 }
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 get_os
-echo ""
+info ""
 
 if [[ "$ostype" == "undefined" ]]; then
-    echo "[!] OS undefined or unsupported — exiting."
+    error "OS undefined or unsupported — exiting."
     exit 1
 fi
 
-# Marker file used by the auto-resume mechanisms (systemd/cron/Task
-# Scheduler + login-hook) to know a resume is pending. See the
-# "Auto-Resume After Reboot/Login" section above.
-if [[ "$ostype" == "windows" ]]; then
-    RESUME_MARKER="$(dirname "$(realpath "$0")")/.install-resume-marker"
-else
-    RESUME_MARKER="/etc/install-resume.marker"
-fi
-
-# Step 1 + 2: Install Docker (skipped if already present — handles re-runs
-# triggered automatically after a reboot)
+# Step 1 + 2: Install Docker (skipped if already present)
 if check_docker; then
-    echo "==> Docker is already installed and running. Skipping installation."
+    ok "Docker is already installed and running. Skipping installation."
 else
     case "$ostype" in
         linux)   install_docker_linux ;;
@@ -888,12 +536,9 @@ else
     esac
 
     if ! check_docker; then
-        echo ""
-        echo "[!] Docker does not appear to be running after installation."
-        echo "    - On Linux: this is expected if a reboot was deferred — the"
-        echo "      install will resume automatically on next boot."
-        echo "    - On macOS: open Docker.app first, then re-run this script."
-        echo "    - On Windows: restart and re-run this script after Docker Desktop starts."
+        warn "Docker does not appear to be running after installation."
+        echo "    - On Linux/macOS: ensure the Docker daemon is running and re-run this script."
+        echo "    - On Windows: start Docker Desktop and re-run this script."
         exit 1
     fi
 fi
@@ -901,68 +546,67 @@ fi
 # Step 3: Verify Docker with hello-world
 verify_docker
 
-# Now that Docker is confirmed working, the post-reboot resume service (if
-# any) has done its job — remove it so it doesn't fire on future boots.
-cleanup_resume_service
-
 # Step 4: Install Portainer
 install_portainer
 
 # ── Project Setup Prompt ──────────────────────────────────────────────────────
 
 echo ""
-read -rp "==> Set up the project? [Y/n]: " setup_confirm
+setup_confirm="Y"
 if [[ "$setup_confirm" == "n" || "$setup_confirm" == "N" ]]; then
     echo "  Skipping project setup."
     exit 0
 fi
 
-prompt_var "Project directory" "./project"
-project_dir="$PROMPT_RESULT"
+project_dir="./project"
 
 mkdir -p "$project_dir"
 cd "$project_dir" || { echo "[!] Could not enter $project_dir — exiting."; exit 1; }
+
+CREDENTIALS_FILE="$(pwd)/credentials.txt"
+cat > "$CREDENTIALS_FILE" << EOF
+# AUTO-GENERATED credentials file. KEEP SECRET.
+# Contains generated Django, PostgreSQL, and frontend keys.
+EOF
+chmod 600 "$CREDENTIALS_FILE" 2>/dev/null || true
 
 setup_backend  || { echo "[!] Backend setup failed."; exit 1; }
 setup_frontend || { echo "[!] Frontend setup failed."; exit 1; }
 
 create_shared_network
 
-echo ""
-echo "================================================================"
-echo "  Setup complete!"
-echo ""
-echo "  Files written:"
+section "Setup complete!"
+info "Files written:"
 echo "    $(pwd)/backend/.env         ← KEEP SECRET — never commit"
 echo "    $(pwd)/frontend/.env        ← KEEP SECRET — never commit"
-echo ""
-echo "  Repository / compose sources:"
+echo "    $(pwd)/credentials.txt      ← KEEP SECRET — never commit"
+info "Repository / compose sources:"
 echo "    $(pwd)/backend/             ← cloned from GitHub"
 echo "    $(pwd)/frontend/compose.yml ← downloaded from GitHub"
-echo "================================================================"
-echo ""
 
-read -rp "==> Start services now with docker compose? [Y/n]: " start_confirm
+start_confirm="Y"
 if [[ "$start_confirm" == "n" || "$start_confirm" == "N" ]]; then
-    echo ""
-    echo "  To start manually later:"
+    info "To start manually later:"
     echo "    cd $(pwd)/backend  && docker compose up -d --wait"
     echo "    cd $(pwd)/frontend && docker compose up -d --wait"
     exit 0
 fi
 
-echo ""
-echo "  -> Starting backend (PostgreSQL + Django)..."
+info "Starting backend (PostgreSQL + Django)..."
 docker compose -f backend/compose.yml up -d --wait
 
-echo ""
-echo "  -> Starting frontend (Next.js + Valkey)..."
+info "Starting frontend (Next.js + Valkey)..."
 docker compose -f frontend/compose.yml up -d --wait
 
-echo ""
-echo "================================================================"
-echo "  Services started:"
+section "Services started:"
 echo "    Frontend  → http://localhost:3000"
 echo "    Backend   → http://localhost:8000"
 echo "    Portainer → https://localhost:9443"
-echo "================================================================"
+
+echo "  Docker is running. Rebooting the computer in 5 seconds..."
+if [[ "$ostype" == "windows" ]]; then
+    shutdown /r /t 5
+else
+    sleep 5
+    reboot
+fi
