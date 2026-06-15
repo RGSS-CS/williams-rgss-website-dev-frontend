@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  RGSS Williams Portal — Installer
+#  Project Installer
 #  Installs Docker, Portainer, and sets up the backend + frontend project.
 #
 #  Usage:
@@ -10,11 +10,18 @@
 #  On Linux: if a reboot is required (new docker group membership), the script
 #  registers a one-shot systemd service that automatically re-runs this script
 #  on the next boot and logs all output. No manual re-run is needed.
+#
+#  Optional: on Linux, the script can also enable automatic console (tty1)
+#  login for the invoking user so the machine doesn't sit at a login prompt
+#  after the unattended reboot. This is purely a convenience for headless/VM
+#  setups and is removed automatically once setup finishes — see
+#  setup_auto_login_linux() / cleanup_auto_login_linux() below.
+#  Source: man systemd.unit (drop-in override files), man agetty (--autologin)
 # ══════════════════════════════════════════════════════════════════════════════
 
 echo ""
 echo "================================================================"
-echo "  RGSS Williams Portal — Installer"
+echo "  Project Installer"
 echo "================================================================"
 echo ""
 
@@ -53,9 +60,9 @@ request_admin "$@"
 # Source: https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution
 
 if [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-    LOG_FILE="$(dirname "$(realpath "$0")")/rgss-install.log"
+    LOG_FILE="$(dirname "$(realpath "$0")")/install.log"
 else
-    LOG_FILE="/var/log/rgss-install.log"
+    LOG_FILE="/var/log/install.log"
 fi
 
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -192,6 +199,19 @@ EOF
 
         setup_resume_service
 
+        echo ""
+        echo "  Optional: enable automatic console login for '$SUDO_USER' on tty1"
+        echo "  until setup finishes? This lets you watch the install log right"
+        echo "  after reboot without typing a password. It is removed"
+        echo "  automatically once Docker is verified working."
+        echo "  Security note: while enabled, anyone with physical/console"
+        echo "  access gets a shell as '$SUDO_USER' with no password prompt."
+        read -rp "  Enable temporary auto-login? [y/N]: " autologin_confirm
+        if [[ "$autologin_confirm" == "y" || "$autologin_confirm" == "Y" ]]; then
+            setup_auto_login_linux "$SUDO_USER"
+        fi
+
+        echo ""
         read -rp "  Reboot now? [Y/n]: " reboot_confirm
         if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
             echo "  -> Rebooting..."
@@ -279,7 +299,7 @@ verify_docker() {
 # Output is appended to $LOG_FILE via StandardOutput/StandardError.
 # Source: man systemd.service — "Type=oneshot", "WantedBy=", "StandardOutput="
 
-RESUME_SERVICE_PATH="/etc/systemd/system/rgss-install-resume.service"
+RESUME_SERVICE_PATH="/etc/systemd/system/install-resume.service"
 
 setup_resume_service() {
     if [[ "$ostype" != "linux" ]]; then
@@ -297,7 +317,7 @@ setup_resume_service() {
 
     cat > "$RESUME_SERVICE_PATH" << EOF
 [Unit]
-Description=Resume RGSS Williams Portal installer after reboot
+Description=Resume project installer after reboot
 After=network-online.target
 Wants=network-online.target
 
@@ -312,7 +332,7 @@ WantedBy=multi-user.target
 EOF
 
     systemctl daemon-reload
-    systemctl enable rgss-install-resume.service
+    systemctl enable install-resume.service
 
     echo "  [OK] Registered auto-resume service: $RESUME_SERVICE_PATH"
     echo "       On next boot, install.sh will continue automatically."
@@ -326,8 +346,66 @@ cleanup_resume_service() {
 
     if [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
         echo "==> Removing auto-resume service (no longer needed)..."
-        systemctl disable rgss-install-resume.service &>/dev/null
+        systemctl disable install-resume.service &>/dev/null
         rm -f "$RESUME_SERVICE_PATH"
+        systemctl daemon-reload
+    fi
+
+    cleanup_auto_login_linux
+}
+
+# ── Auto-Login After Reboot (optional) ────────────────────────────────────────
+# The systemd resume service above already runs on boot without anyone logging
+# in (WantedBy=multi-user.target doesn't require a session). This is purely an
+# extra convenience for someone sitting at the machine: it skips the console
+# login prompt on tty1 so the in-progress install log is immediately visible
+# after the automatic reboot. It is reverted automatically by
+# cleanup_resume_service() once Docker is confirmed working.
+#
+# SECURITY NOTE: while enabled, anyone with physical/console access to tty1
+# gets a logged-in shell as the specified user with NO password prompt. Only
+# enable this on a trusted machine, and only for the duration of the install.
+# Source: man systemd.unit (drop-in override directories, "*.service.d/")
+#         man agetty — "--autologin" option
+
+AUTOLOGIN_OVERRIDE_DIR="/etc/systemd/system/getty@tty1.service.d"
+AUTOLOGIN_OVERRIDE_FILE="${AUTOLOGIN_OVERRIDE_DIR}/autologin.conf"
+
+setup_auto_login_linux() {
+    local user="$1"
+
+    if [[ -z "$user" ]]; then
+        echo "  [!] No user specified — skipping auto-login setup."
+        return 1
+    fi
+
+    if ! command -v systemctl &>/dev/null; then
+        echo "  [!] systemd not found — cannot configure auto-login."
+        return 1
+    fi
+
+    mkdir -p "$AUTOLOGIN_OVERRIDE_DIR"
+
+    # Empty ExecStart= clears the default, the following line redefines it
+    # with --autologin so getty drops straight into a shell as $user.
+    cat > "$AUTOLOGIN_OVERRIDE_FILE" << EOF
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin ${user} --noclear %I \$TERM
+EOF
+
+    systemctl daemon-reload
+
+    echo "  [OK] Console auto-login enabled for '${user}' on tty1."
+    echo "  [!]  This will be removed automatically once setup completes."
+    echo "       To remove it manually:"
+    echo "         rm -rf ${AUTOLOGIN_OVERRIDE_DIR} && systemctl daemon-reload"
+}
+
+cleanup_auto_login_linux() {
+    if [[ -f "$AUTOLOGIN_OVERRIDE_FILE" ]] && command -v systemctl &>/dev/null; then
+        echo "==> Removing console auto-login override (no longer needed)..."
+        rm -rf "$AUTOLOGIN_OVERRIDE_DIR"
         systemctl daemon-reload
     fi
 }
@@ -418,11 +496,18 @@ clone_or_pull() {
 # Prompts the user for input; result written to global $PROMPT_RESULT.
 # If no terminal is attached (e.g. running unattended via the resume service),
 # 'read' returns immediately/empty, so the default value is used automatically.
+# An optional 4th argument prints a short explanatory line above the prompt,
+# so the user knows what the value is for and where it ends up.
 PROMPT_RESULT=""
 prompt_var() {
     local label="$1"
     local default="$2"
     local secret="${3:-false}"
+    local help="${4:-}"
+
+    if [[ -n "$help" ]]; then
+        echo "  ${help}"
+    fi
 
     if [[ "$secret" == "true" ]]; then
         read -rsp "  $label (hidden): " PROMPT_RESULT
@@ -474,27 +559,38 @@ setup_backend() {
     echo "  Provide remaining values (Enter = accept [default]):"
     echo ""
 
-    prompt_var "ALLOWED_HOSTS (comma-separated, e.g. localhost,api.rgsscs.org)" "localhost,backend"
+    prompt_var "ALLOWED_HOSTS" "localhost,backend" "" \
+        "ALLOWED_HOSTS — comma-separated hostnames/IPs Django will accept requests for (no spaces). Add your domain here too, e.g. localhost,backend,api.example.com. https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts"
     local allowed_hosts="$PROMPT_RESULT"
 
-    prompt_var "CSRF_TRUSTED_ORIGINS (comma-separated, e.g. https://api.rgsscs.org)" "http://localhost"
+    prompt_var "CSRF_TRUSTED_ORIGINS" "http://localhost" "" \
+        "CSRF_TRUSTED_ORIGINS — comma-separated origins (with scheme, e.g. https://example.com) that are trusted to make POST requests, such as your frontend's URL. https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins"
     local csrf_origins="$PROMPT_RESULT"
 
-    prompt_var "DJANGO_SUPERUSER_USERNAME" "admin"
+    prompt_var "DJANGO_SUPERUSER_USERNAME" "admin" "" \
+        "Username for the initial Django admin account (used to log into /admin)."
     local superuser_username="$PROMPT_RESULT"
 
-    prompt_var "DJANGO_SUPERUSER_EMAIL" ""
+    prompt_var "DJANGO_SUPERUSER_EMAIL" "" "" \
+        "Email for the admin account (optional — used for password-reset emails)."
     local superuser_email="$PROMPT_RESULT"
 
-    prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true"
+    prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true" \
+        "Password for the admin account. Input is hidden; leave blank to auto-generate a secure random password."
     local superuser_password="$PROMPT_RESULT"
+    if [[ -z "$superuser_password" ]]; then
+        superuser_password=$(generate_secret 12)
+        echo "  [AUTO] DJANGO_SUPERUSER_PASSWORD → ${superuser_password:0:4}... (truncated, auto-generated)"
+    fi
 
-    prompt_var "POSTGRES_DB" "rgssdb"
+    prompt_var "POSTGRES_DB" "appdb" "" \
+        "Name of the PostgreSQL database the backend will use."
     local postgres_db="$PROMPT_RESULT"
 
     # Non-superuser app account, per least-privilege principle.
     # Source: https://www.postgresql.org/docs/current/sql-createrole.html
-    prompt_var "POSTGRES_USER" "rgssuser"
+    prompt_var "POSTGRES_USER" "appuser" "" \
+        "Non-superuser PostgreSQL role the backend connects as (least-privilege)."
     local postgres_user="$PROMPT_RESULT"
 
     # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
@@ -628,13 +724,13 @@ install_portainer
 # ── Project Setup Prompt ──────────────────────────────────────────────────────
 
 echo ""
-read -rp "==> Set up the RGSS Williams portal project? [Y/n]: " setup_confirm
+read -rp "==> Set up the project? [Y/n]: " setup_confirm
 if [[ "$setup_confirm" == "n" || "$setup_confirm" == "N" ]]; then
     echo "  Skipping project setup."
     exit 0
 fi
 
-prompt_var "Project directory" "./williams-portal"
+prompt_var "Project directory" "./project"
 project_dir="$PROMPT_RESULT"
 
 mkdir -p "$project_dir"
