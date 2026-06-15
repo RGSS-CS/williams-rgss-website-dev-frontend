@@ -1,61 +1,48 @@
-# Requires: Run PowerShell as Administrator
+```powershell
+# Run as Administrator
 
 $ErrorActionPreference = "Stop"
 
-Write-Host ""
-Write-Host "========================================="
-Write-Host " RGSS Williams Portal Installer Launcher"
-Write-Host "========================================="
-Write-Host ""
-
-# Install Git (includes Git Bash)
-
+# Install Git if needed
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-Write-Host "Installing Git for Windows..."
-
-```
-if (Get-Command winget -ErrorAction SilentlyContinue) {
     winget install --id Git.Git --exact `
         --accept-source-agreements `
         --accept-package-agreements
 }
-else {
-    throw "winget not found. Install Git manually from https://git-scm.com/download/win"
-}
-```
 
-}
-
-# Locate Git Bash
-
-$gitBash = @(
-"$env:ProgramFiles\Git\bin\bash.exe",
-"$env:ProgramFiles\Git\usr\bin\bash.exe",
-"${env:ProgramFiles(x86)}\Git\bin\bash.exe"
+# Find Git Bash
+$bash = @(
+    "$env:ProgramFiles\Git\bin\bash.exe",
+    "$env:ProgramFiles\Git\usr\bin\bash.exe",
+    "${env:ProgramFiles(x86)}\Git\bin\bash.exe"
 ) | Where-Object { Test-Path $_ } | Select-Object -First 1
 
-if (-not $gitBash) {
-throw "Git Bash not found after installation."
+if (-not $bash) {
+    throw "Git Bash not found."
 }
 
-# Create working directory
+# Download installer
+$scriptDir = "$env:ProgramData\RGSSInstaller"
+New-Item -ItemType Directory -Force -Path $scriptDir | Out-Null
 
-$installDir = Join-Path $env:ProgramData "RGSSInstaller"
-New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+$scriptFile = Join-Path $scriptDir "install.sh"
+$logFile = Join-Path $scriptDir "install.log"
 
-$scriptPath = Join-Path $installDir "install.sh"
+Invoke-WebRequest `
+    -Uri "https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/install.sh" `
+    -OutFile $scriptFile
 
-Write-Host "Downloading install.sh..."
-
-Invoke-WebRequest `    -Uri "https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/install.sh"`
--OutFile $scriptPath
-
-Write-Host "Launching installer with Git Bash..."
+Write-Host "Running installer..."
+Write-Host "Log: $logFile"
 Write-Host ""
 
-Start-Process `    -FilePath $gitBash`
--ArgumentList "`"$scriptPath`"" `    -Verb RunAs`
--Wait
+# Run bash and capture output
+& $bash -x $scriptFile *>&1 | Tee-Object -FilePath $logFile
 
 Write-Host ""
-Write-Host "Installer finished."
+Write-Host "Installer exited with code $LASTEXITCODE"
+Write-Host "Log saved to: $logFile"
+Write-Host ""
+
+Read-Host "Press Enter to close"
+```
