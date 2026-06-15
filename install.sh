@@ -409,6 +409,19 @@ DB_HOST=db
 DB_PORT=5432
 EOF
 
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Backend credentials ─────────────────────────────────────────────────────
+SECRET_KEY=${secret_key}
+DJANGO_SUPERUSER_USERNAME=${superuser_username}
+DJANGO_SUPERUSER_EMAIL=${superuser_email}
+DJANGO_SUPERUSER_PASSWORD=${superuser_password}
+POSTGRES_DB=${postgres_db}
+POSTGRES_USER=${postgres_user}
+POSTGRES_PASSWORD=${postgres_password}
+EOF
+    fi
+
     echo ""
     echo "  [OK] backend/.env written."
 }
@@ -449,6 +462,13 @@ API_URL=http://backend:8000
 ADMIN_KEY=${admin_key}
 REDIS_URL=redis://valkey:6379
 EOF
+
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Frontend credentials ────────────────────────────────────────────────────
+ADMIN_KEY=${admin_key}
+EOF
+    fi
 
     echo ""
     echo "  [OK] frontend/.env written."
@@ -520,10 +540,15 @@ project_dir="./project"
 mkdir -p "$project_dir"
 cd "$project_dir" || { echo "[!] Could not enter $project_dir — exiting."; exit 1; }
 
+CREDENTIALS_FILE="$(pwd)/credentials.txt"
+cat > "$CREDENTIALS_FILE" << EOF
+# AUTO-GENERATED credentials file. KEEP SECRET.
+# Contains generated Django, PostgreSQL, and frontend keys.
+EOF
+chmod 600 "$CREDENTIALS_FILE" 2>/dev/null || true
+
 setup_backend  || { echo "[!] Backend setup failed."; exit 1; }
 setup_frontend || { echo "[!] Frontend setup failed."; exit 1; }
-
-cat > credentials.txt /dev/null 2>&1 || true
 
 create_shared_network
 
@@ -534,6 +559,7 @@ echo ""
 echo "  Files written:"
 echo "    $(pwd)/backend/.env         ← KEEP SECRET — never commit"
 echo "    $(pwd)/frontend/.env        ← KEEP SECRET — never commit"
+echo "    $(pwd)/credentials.txt      ← KEEP SECRET — never commit"
 echo ""
 echo "  Repository / compose sources:"
 echo "    $(pwd)/backend/             ← cloned from GitHub"
