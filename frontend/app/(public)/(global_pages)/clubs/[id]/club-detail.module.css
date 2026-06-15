@@ -108,6 +108,10 @@
   font-family: "Montserrat", sans-serif;
   font-size: clamp(2rem, 4vw, 2.65rem);
   font-weight: 900;
+  background: var(--light-grey);
+  padding: 10px 20px;
+  border-left: var(--school-tertiary) solid 7px;
+  border-radius: 5px;
 }
 
 .sectionBody {
@@ -132,7 +136,7 @@
   padding: 0.75rem 1.2rem;
   border-radius: 999px;
   border: 2px solid var(--grey);
-  background: var(--white);
+  background: var(--light-grey);
   color: var(--school-primary);
   font-weight: 800;
 }

@@ -101,8 +101,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             </div>
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
-                <span className="stat-num">{club.categories.length || 1}</span>
-                <span className="stat-label">Categories</span>
+                <span className="stat-num">{meetingTime}</span>
+                <span className="stat-label">Time</span>
               </div>
               <div className={styles.heroStat}>
                 <span className="stat-num">{meetingDay.split(" ")[0]}</span>
@@ -250,6 +250,11 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </div>
       </section>
+      <div className={styles_modules.execWrapper}>
+        <section className={styles_modules.execContainer}>
+          
+        </section>
+      </div>
     </main>
   );
 }
