@@ -1,3 +1,6 @@
+#CURRENTLY IN VERY BROKEN STATE
+
+
 # ════════════════════════════════════════════════════════════════════════════
 #  RGSS Williams Portal — Installer Launcher (Windows)
 #
