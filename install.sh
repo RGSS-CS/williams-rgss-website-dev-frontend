@@ -12,11 +12,51 @@
 #  services successfully start.
 # ══════════════════════════════════════════════════════════════════════════════
 
-echo ""
-echo "================================================================"
-echo "  Project Installer"
-echo "================================================================"
-echo ""
+supports_color() {
+    [[ -t 1 ]] && [[ "${TERM:-}" != "dumb" ]]
+}
+
+if supports_color; then
+    BOLD="\033[1m"
+    RESET="\033[0m"
+    RED="\033[31m"
+    GREEN="\033[32m"
+    YELLOW="\033[33m"
+    BLUE="\033[34m"
+    CYAN="\033[36m"
+else
+    BOLD=""
+    RESET=""
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    CYAN=""
+fi
+
+section() {
+    printf "\n%s%s%s\n" "$BOLD" "================================================================" "$RESET"
+    printf "%s  %s%s\n" "$BLUE" "$1" "$RESET"
+    printf "%s%s%s\n\n" "$BOLD" "================================================================" "$RESET"
+}
+
+info() {
+    printf "%s→ %s%s\n" "$CYAN" "$1" "$RESET"
+}
+
+ok() {
+    printf "%s✔ %s%s\n" "$GREEN" "$1" "$RESET"
+}
+
+warn() {
+    printf "%s⚠ %s%s\n" "$YELLOW" "$1" "$RESET"
+}
+
+error() {
+    printf "%s✖ %s%s\n" "$RED" "$1" "$RESET"
+}
+
+section "Project Installer"
 
 # ── Privilege Escalation ──────────────────────────────────────────────────────
 # Re-launches the script with elevated privileges if not already root/admin.
@@ -26,20 +66,20 @@ echo ""
 request_admin() {
     if [[ "$OSTYPE" == linux* || "$OSTYPE" == darwin* ]]; then
         if [[ "$EUID" -ne 0 ]]; then
-            echo "==> Elevated privileges required. Re-launching with sudo..."
+            info "Elevated privileges required. Re-launching with sudo..."
             exec sudo -E bash "$0" "$@"
         else
-            echo "==> Running as root. Privilege check passed."
+            ok "Running as root. Privilege check passed."
         fi
 
     elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
         if ! net session > /dev/null 2>&1; then
-            echo "==> Not running as Administrator."
-            echo "    Triggering UAC prompt to re-launch with elevated privileges..."
+            warn "Not running as Administrator."
+            info "Triggering UAC prompt to re-launch with elevated privileges..."
             powershell -Command "Start-Process bash -ArgumentList '$0' -Verb RunAs -Wait"
             exit 0
         else
-            echo "==> Running as Administrator. Privilege check passed."
+            ok "Running as Administrator. Privilege check passed."
         fi
     fi
 }
@@ -59,7 +99,7 @@ else
 fi
 
 exec > >(tee -a "$LOG_FILE") 2>&1
-echo "==> Logging this run to: $LOG_FILE"
+info "Logging this run to: $LOG_FILE"
 
 # ── OS Detection ──────────────────────────────────────────────────────────────
 # Determined automatically from bash's built-in $OSTYPE — no user confirmation
@@ -86,7 +126,7 @@ get_os() {
             ;;
     esac
 
-    echo "==> Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
+    info "Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
 }
 
 # ── Docker Check ──────────────────────────────────────────────────────────────
@@ -103,8 +143,7 @@ check_docker() {
 # ── Docker Installers ─────────────────────────────────────────────────────────
 
 install_docker_linux() {
-    echo ""
-    echo "==> Installing Docker Engine for Linux..."
+    section "Installing Docker Engine for Linux..."
 
     if command -v apt-get &>/dev/null; then
         # Detect whether the distro is Debian or Ubuntu so the correct Docker
@@ -124,7 +163,7 @@ install_docker_linux() {
                 ;;
         esac
 
-        echo "  -> Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
+        info "Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
 
         apt-get update -y
         apt-get install -y ca-certificates curl git gnupg
@@ -151,23 +190,23 @@ EOF
             docker-compose-plugin
 
     elif command -v dnf &>/dev/null; then
-        echo "  -> Detected dnf (Fedora/RHEL)"
+        info "Detected dnf (Fedora/RHEL)"
         dnf -y install dnf-plugins-core git
         dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
         dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v yum &>/dev/null; then
-        echo "  -> Detected yum (CentOS/older RHEL)"
+        info "Detected yum (CentOS/older RHEL)"
         yum install -y yum-utils git
         yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
         yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v pacman &>/dev/null; then
-        echo "  -> Detected pacman (Arch Linux)"
+        info "Detected pacman (Arch Linux)"
         pacman -Sy --noconfirm docker git
 
     else
-        echo "  [!] No supported package manager found."
+        error "No supported package manager found."
         echo "      Install Docker manually: https://docs.docker.com/engine/install/"
         return 1
     fi
@@ -183,20 +222,19 @@ EOF
         usermod -aG docker "$SUDO_USER"
     fi
 
-    echo "  [OK] Docker Engine installed."
+    ok "Docker Engine installed."
 
 }
 
 install_docker_mac() {
-    echo ""
-    echo "==> Installing Docker Desktop for macOS..."
+    section "Installing Docker Desktop for macOS..."
 
     if ! command -v brew &>/dev/null; then
-        echo "  -> Homebrew not found. Installing Homebrew first..."
+        info "Homebrew not found. Installing Homebrew first..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
     else
-        echo "  -> Homebrew already installed: $(brew --version | head -1)"
+        info "Homebrew already installed: $(brew --version | head -1)"
     fi
 
     if ! command -v git &>/dev/null; then
@@ -205,14 +243,12 @@ install_docker_mac() {
 
     brew install --cask docker
 
-    echo ""
-    echo "  [OK] Docker Desktop installed."
-    echo "  [!]  Launch /Applications/Docker.app to complete setup, then re-run this script."
+    ok "Docker Desktop installed."
+    warn "Launch /Applications/Docker.app to complete setup, then re-run this script."
 }
 
 install_docker_windows() {
-    echo ""
-    echo "==> Installing Docker Desktop for Windows..."
+    section "Installing Docker Desktop for Windows..."
 
     if command -v winget &>/dev/null; then
         winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
@@ -220,18 +256,16 @@ install_docker_windows() {
     elif command -v choco &>/dev/null; then
         choco install docker-desktop git -y
     else
-        echo "  [!] Neither winget nor Chocolatey found."
+        error "Neither winget nor Chocolatey found."
         echo "      Download manually:"
         echo "        Docker: https://www.docker.com/products/docker-desktop/"
         echo "        Git:    https://git-scm.com/download/win"
         return 1
     fi
 
-    echo ""
-    echo "  [OK] Docker Desktop and Git installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup."
-    echo ""
-    echo "  Restart Windows manually if prompted, then re-run this script once Docker Desktop is running."
+    ok "Docker Desktop and Git installation triggered."
+    warn "A restart may be required to complete WSL2/Hyper-V setup."
+    info "Restart Windows manually if prompted, then re-run this script once Docker Desktop is running."
 }
 
 # ── Docker Verification ───────────────────────────────────────────────────────
@@ -240,13 +274,12 @@ install_docker_windows() {
 # Source: https://docs.docker.com/get-started/#test-docker-installation
 
 verify_docker() {
-    echo ""
-    echo "==> Verifying Docker installation..."
+    section "Verifying Docker installation..."
 
     if docker run --rm hello-world &>/dev/null; then
-        echo "  [OK] Docker is working correctly (hello-world ran successfully)."
+        ok "Docker is working correctly (hello-world ran successfully)."
     else
-        echo "  [!] Docker verification failed."
+        error "Docker verification failed."
         echo "      - Check that the Docker daemon is running: systemctl status docker"
         echo "      - Ensure your user is in the docker group and you have re-logged in."
         echo "      - Run manually: docker run hello-world"
@@ -261,14 +294,13 @@ verify_docker() {
 # Source: https://docs.portainer.io/start/install-ce/server/docker/linux
 
 install_portainer() {
-    echo ""
-    echo "==> Installing Portainer CE..."
+    section "Installing Portainer CE..."
 
     docker volume inspect portainer_data >/dev/null 2>&1 \
         || docker volume create portainer_data
 
     if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
-        echo "  -> Existing Portainer container found — removing it..."
+        info "Existing Portainer container found — removing it..."
         docker rm -f portainer >/dev/null 2>&1
     fi
 
@@ -284,10 +316,9 @@ install_portainer() {
         -v portainer_data:/data \
         portainer/portainer-ce:latest
 
-    echo ""
-    echo "  [OK] Portainer installed."
-    echo "  [OK] Web UI (HTTPS): https://localhost:9443"
-    echo "  [OK] Web UI (HTTP):  http://localhost:9000"
+    ok "Portainer installed."
+    ok "Web UI (HTTPS): https://localhost:9443"
+    ok "Web UI (HTTP):  http://localhost:9000"
 }
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
@@ -349,10 +380,10 @@ setup_backend() {
     # Clone (or update) the backend repository — it contains its own
     # compose.yml plus the Django application source.
     clone_or_pull "$BACKEND_REPO" "backend" || return 1
-    echo "  [OK] Backend repository ready."
+    ok "Backend repository ready."
 
     if [[ -f "backend/.env" ]]; then
-        echo "  -> backend/.env already exists — leaving it untouched."
+        info "backend/.env already exists — leaving it untouched."
         return 0
     fi
 
@@ -422,8 +453,7 @@ POSTGRES_PASSWORD=${postgres_password}
 EOF
     fi
 
-    echo ""
-    echo "  [OK] backend/.env written."
+    ok "backend/.env written."
 }
 
 setup_frontend() {
@@ -437,7 +467,7 @@ setup_frontend() {
     echo "  [OK] frontend/compose.yml downloaded."
 
     if [[ -f "frontend/.env" ]]; then
-        echo "  -> frontend/.env already exists — leaving it untouched."
+        info "frontend/.env already exists — leaving it untouched."
         return 0
     fi
 
@@ -470,8 +500,7 @@ ADMIN_KEY=${admin_key}
 EOF
     fi
 
-    echo ""
-    echo "  [OK] frontend/.env written."
+    ok "frontend/.env written."
 }
 
 # Creates the shared Docker bridge network both Compose stacks attach to.
