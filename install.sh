@@ -1,22 +1,62 @@
 #!/bin/bash
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  RGSS Williams Portal — Installer
+#  Project Installer
 #  Installs Docker, Portainer, and sets up the backend + frontend project.
 #
 #  Usage:
 #    chmod +x install.sh && ./install.sh
 #
-#  On Linux: if a reboot is required (new docker group membership), the script
-#  registers a one-shot systemd service that automatically re-runs this script
-#  on the next boot and logs all output. No manual re-run is needed.
+#  The installer installs Docker, Portainer, and the backend/frontend
+#  stacks, then automatically reboots the machine 5 seconds after the
+#  services successfully start.
 # ══════════════════════════════════════════════════════════════════════════════
 
-echo ""
-echo "================================================================"
-echo "  RGSS Williams Portal — Installer"
-echo "================================================================"
-echo ""
+supports_color() {
+    [[ -t 1 ]] && [[ "${TERM:-}" != "dumb" ]]
+}
+
+if supports_color; then
+    BOLD="\033[1m"
+    RESET="\033[0m"
+    RED="\033[31m"
+    GREEN="\033[32m"
+    YELLOW="\033[33m"
+    BLUE="\033[34m"
+    CYAN="\033[36m"
+else
+    BOLD=""
+    RESET=""
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    CYAN=""
+fi
+
+section() {
+    printf "\n%s%s%s\n" "$BOLD" "================================================================" "$RESET"
+    printf "%s  %s%s\n" "$BLUE" "$1" "$RESET"
+    printf "%s%s%s\n\n" "$BOLD" "================================================================" "$RESET"
+}
+
+info() {
+    printf "%s→ %s%s\n" "$CYAN" "$1" "$RESET"
+}
+
+ok() {
+    printf "%s✔ %s%s\n" "$GREEN" "$1" "$RESET"
+}
+
+warn() {
+    printf "%s⚠ %s%s\n" "$YELLOW" "$1" "$RESET"
+}
+
+error() {
+    printf "%s✖ %s%s\n" "$RED" "$1" "$RESET"
+}
+
+section "Project Installer"
 
 # ── Privilege Escalation ──────────────────────────────────────────────────────
 # Re-launches the script with elevated privileges if not already root/admin.
@@ -26,20 +66,20 @@ echo ""
 request_admin() {
     if [[ "$OSTYPE" == linux* || "$OSTYPE" == darwin* ]]; then
         if [[ "$EUID" -ne 0 ]]; then
-            echo "==> Elevated privileges required. Re-launching with sudo..."
+            info "Elevated privileges required. Re-launching with sudo..."
             exec sudo -E bash "$0" "$@"
         else
-            echo "==> Running as root. Privilege check passed."
+            ok "Running as root. Privilege check passed."
         fi
 
     elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
         if ! net session > /dev/null 2>&1; then
-            echo "==> Not running as Administrator."
-            echo "    Triggering UAC prompt to re-launch with elevated privileges..."
+            warn "Not running as Administrator."
+            info "Triggering UAC prompt to re-launch with elevated privileges..."
             powershell -Command "Start-Process bash -ArgumentList '$0' -Verb RunAs -Wait"
             exit 0
         else
-            echo "==> Running as Administrator. Privilege check passed."
+            ok "Running as Administrator. Privilege check passed."
         fi
     fi
 }
@@ -53,13 +93,13 @@ request_admin "$@"
 # Source: https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution
 
 if [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-    LOG_FILE="$(dirname "$(realpath "$0")")/rgss-install.log"
+    LOG_FILE="$(dirname "$(realpath "$0")")/install.log"
 else
-    LOG_FILE="/var/log/rgss-install.log"
+    LOG_FILE="/var/log/install.log"
 fi
 
 exec > >(tee -a "$LOG_FILE") 2>&1
-echo "==> Logging this run to: $LOG_FILE"
+info "Logging this run to: $LOG_FILE"
 
 # ── OS Detection ──────────────────────────────────────────────────────────────
 # Determined automatically from bash's built-in $OSTYPE — no user confirmation
@@ -86,7 +126,7 @@ get_os() {
             ;;
     esac
 
-    echo "==> Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
+    info "Detected OS: $ostype (\$OSTYPE=$OSTYPE)"
 }
 
 # ── Docker Check ──────────────────────────────────────────────────────────────
@@ -103,8 +143,7 @@ check_docker() {
 # ── Docker Installers ─────────────────────────────────────────────────────────
 
 install_docker_linux() {
-    echo ""
-    echo "==> Installing Docker Engine for Linux..."
+    section "Installing Docker Engine for Linux..."
 
     if command -v apt-get &>/dev/null; then
         # Detect whether the distro is Debian or Ubuntu so the correct Docker
@@ -124,7 +163,7 @@ install_docker_linux() {
                 ;;
         esac
 
-        echo "  -> Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
+        info "Detected apt (${distro_id^}). Using Docker repo: $docker_repo_url"
 
         apt-get update -y
         apt-get install -y ca-certificates curl git gnupg
@@ -151,23 +190,23 @@ EOF
             docker-compose-plugin
 
     elif command -v dnf &>/dev/null; then
-        echo "  -> Detected dnf (Fedora/RHEL)"
+        info "Detected dnf (Fedora/RHEL)"
         dnf -y install dnf-plugins-core git
         dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
         dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v yum &>/dev/null; then
-        echo "  -> Detected yum (CentOS/older RHEL)"
+        info "Detected yum (CentOS/older RHEL)"
         yum install -y yum-utils git
         yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
         yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     elif command -v pacman &>/dev/null; then
-        echo "  -> Detected pacman (Arch Linux)"
+        info "Detected pacman (Arch Linux)"
         pacman -Sy --noconfirm docker git
 
     else
-        echo "  [!] No supported package manager found."
+        error "No supported package manager found."
         echo "      Install Docker manually: https://docs.docker.com/engine/install/"
         return 1
     fi
@@ -181,42 +220,21 @@ EOF
     # Source: https://docs.docker.com/engine/install/linux-postinstall/
     if [[ -n "$SUDO_USER" ]]; then
         usermod -aG docker "$SUDO_USER"
-        echo ""
-        echo "  [OK] Docker Engine installed."
-        echo "  [!]  '$SUDO_USER' has been added to the 'docker' group."
-        echo ""
-        echo "  A reboot is required for the group change to take effect."
-        echo "  This script will register itself to continue automatically"
-        echo "  after the reboot — no manual re-run needed."
-        echo ""
-
-        setup_resume_service
-
-        read -rp "  Reboot now? [Y/n]: " reboot_confirm
-        if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
-            echo "  -> Rebooting..."
-            reboot
-        else
-            echo "  -> Skipping reboot for now."
-            echo "     Setup will continue automatically the next time this machine boots."
-            echo "     (Or run 'newgrp docker' / log out and back in, then re-run this script manually.)"
-            exit 0
-        fi
-    else
-        echo "  [OK] Docker Engine installed."
     fi
+
+    ok "Docker Engine installed."
+
 }
 
 install_docker_mac() {
-    echo ""
-    echo "==> Installing Docker Desktop for macOS..."
+    section "Installing Docker Desktop for macOS..."
 
     if ! command -v brew &>/dev/null; then
-        echo "  -> Homebrew not found. Installing Homebrew first..."
+        info "Homebrew not found. Installing Homebrew first..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
     else
-        echo "  -> Homebrew already installed: $(brew --version | head -1)"
+        info "Homebrew already installed: $(brew --version | head -1)"
     fi
 
     if ! command -v git &>/dev/null; then
@@ -225,14 +243,12 @@ install_docker_mac() {
 
     brew install --cask docker
 
-    echo ""
-    echo "  [OK] Docker Desktop installed."
-    echo "  [!]  Launch /Applications/Docker.app to complete setup, then re-run this script."
+    ok "Docker Desktop installed."
+    warn "Launch /Applications/Docker.app to complete setup, then re-run this script."
 }
 
 install_docker_windows() {
-    echo ""
-    echo "==> Installing Docker Desktop for Windows..."
+    section "Installing Docker Desktop for Windows..."
 
     if command -v winget &>/dev/null; then
         winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
@@ -240,16 +256,16 @@ install_docker_windows() {
     elif command -v choco &>/dev/null; then
         choco install docker-desktop git -y
     else
-        echo "  [!] Neither winget nor Chocolatey found."
+        error "Neither winget nor Chocolatey found."
         echo "      Download manually:"
         echo "        Docker: https://www.docker.com/products/docker-desktop/"
         echo "        Git:    https://git-scm.com/download/win"
         return 1
     fi
 
-    echo ""
-    echo "  [OK] Docker Desktop and Git installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup, then re-run this script."
+    ok "Docker Desktop and Git installation triggered."
+    warn "A restart may be required to complete WSL2/Hyper-V setup."
+    info "Restart Windows manually if prompted, then re-run this script once Docker Desktop is running."
 }
 
 # ── Docker Verification ───────────────────────────────────────────────────────
@@ -258,77 +274,16 @@ install_docker_windows() {
 # Source: https://docs.docker.com/get-started/#test-docker-installation
 
 verify_docker() {
-    echo ""
-    echo "==> Verifying Docker installation..."
+    section "Verifying Docker installation..."
 
     if docker run --rm hello-world &>/dev/null; then
-        echo "  [OK] Docker is working correctly (hello-world ran successfully)."
+        ok "Docker is working correctly (hello-world ran successfully)."
     else
-        echo "  [!] Docker verification failed."
+        error "Docker verification failed."
         echo "      - Check that the Docker daemon is running: systemctl status docker"
         echo "      - Ensure your user is in the docker group and you have re-logged in."
         echo "      - Run manually: docker run hello-world"
         exit 1
-    fi
-}
-
-# ── Auto-Resume After Reboot ──────────────────────────────────────────────────
-# Registers a one-shot systemd service that re-runs this script on the next
-# boot, so the user doesn't have to manually re-invoke it after the reboot
-# triggered by a fresh Docker install (new 'docker' group membership).
-# Output is appended to $LOG_FILE via StandardOutput/StandardError.
-# Source: man systemd.service — "Type=oneshot", "WantedBy=", "StandardOutput="
-
-RESUME_SERVICE_PATH="/etc/systemd/system/rgss-install-resume.service"
-
-setup_resume_service() {
-    if [[ "$ostype" != "linux" ]]; then
-        return 0
-    fi
-
-    if ! command -v systemctl &>/dev/null; then
-        echo "  [!] systemd not found — cannot auto-resume after reboot."
-        echo "      Re-run this script manually after rebooting."
-        return 1
-    fi
-
-    local script_path
-    script_path="$(realpath "$0")"
-
-    cat > "$RESUME_SERVICE_PATH" << EOF
-[Unit]
-Description=Resume RGSS Williams Portal installer after reboot
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash ${script_path}
-StandardOutput=append:${LOG_FILE}
-StandardError=append:${LOG_FILE}
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    systemctl daemon-reload
-    systemctl enable rgss-install-resume.service
-
-    echo "  [OK] Registered auto-resume service: $RESUME_SERVICE_PATH"
-    echo "       On next boot, install.sh will continue automatically."
-    echo "       Output is logged to: $LOG_FILE"
-}
-
-cleanup_resume_service() {
-    if [[ "$ostype" != "linux" ]]; then
-        return 0
-    fi
-
-    if [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
-        echo "==> Removing auto-resume service (no longer needed)..."
-        systemctl disable rgss-install-resume.service &>/dev/null
-        rm -f "$RESUME_SERVICE_PATH"
-        systemctl daemon-reload
     fi
 }
 
@@ -339,14 +294,13 @@ cleanup_resume_service() {
 # Source: https://docs.portainer.io/start/install-ce/server/docker/linux
 
 install_portainer() {
-    echo ""
-    echo "==> Installing Portainer CE..."
+    section "Installing Portainer CE..."
 
     docker volume inspect portainer_data >/dev/null 2>&1 \
         || docker volume create portainer_data
 
     if docker ps -a --format '{{.Names}}' | grep -q '^portainer$'; then
-        echo "  -> Existing Portainer container found — removing it..."
+        info "Existing Portainer container found — removing it..."
         docker rm -f portainer >/dev/null 2>&1
     fi
 
@@ -362,10 +316,9 @@ install_portainer() {
         -v portainer_data:/data \
         portainer/portainer-ce:latest
 
-    echo ""
-    echo "  [OK] Portainer installed."
-    echo "  [OK] Web UI (HTTPS): https://localhost:9443"
-    echo "  [OK] Web UI (HTTP):  http://localhost:9000"
+    ok "Portainer installed."
+    ok "Web UI (HTTPS): https://localhost:9443"
+    ok "Web UI (HTTP):  http://localhost:9000"
 }
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
@@ -415,27 +368,6 @@ clone_or_pull() {
     fi
 }
 
-# Prompts the user for input; result written to global $PROMPT_RESULT.
-# If no terminal is attached (e.g. running unattended via the resume service),
-# 'read' returns immediately/empty, so the default value is used automatically.
-PROMPT_RESULT=""
-prompt_var() {
-    local label="$1"
-    local default="$2"
-    local secret="${3:-false}"
-
-    if [[ "$secret" == "true" ]]; then
-        read -rsp "  $label (hidden): " PROMPT_RESULT
-        echo ""
-        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
-    elif [[ -n "$default" ]]; then
-        read -rp "  $label [$default]: " PROMPT_RESULT
-        PROMPT_RESULT="${PROMPT_RESULT:-$default}"
-    else
-        read -rp "  $label: " PROMPT_RESULT
-    fi
-}
-
 # ── Project Setup ─────────────────────────────────────────────────────────────
 
 BACKEND_REPO="https://github.com/RGSS-CS/williams-rgss-website-dev-backend.git"
@@ -448,10 +380,10 @@ setup_backend() {
     # Clone (or update) the backend repository — it contains its own
     # compose.yml plus the Django application source.
     clone_or_pull "$BACKEND_REPO" "backend" || return 1
-    echo "  [OK] Backend repository ready."
+    ok "Backend repository ready."
 
     if [[ -f "backend/.env" ]]; then
-        echo "  -> backend/.env already exists — leaving it untouched."
+        info "backend/.env already exists — leaving it untouched."
         return 0
     fi
 
@@ -471,31 +403,18 @@ setup_backend() {
     echo "  [AUTO] SECRET_KEY        → ${secret_key:0:12}... (truncated)"
     echo "  [AUTO] POSTGRES_PASSWORD → ${postgres_password:0:8}... (truncated)"
     echo ""
-    echo "  Provide remaining values (Enter = accept [default]):"
-    echo ""
 
-    prompt_var "ALLOWED_HOSTS (comma-separated, e.g. localhost,api.rgsscs.org)" "localhost,backend"
-    local allowed_hosts="$PROMPT_RESULT"
+    local allowed_hosts="localhost,backend"
+    local csrf_origins="http://localhost"
 
-    prompt_var "CSRF_TRUSTED_ORIGINS (comma-separated, e.g. https://api.rgsscs.org)" "http://localhost"
-    local csrf_origins="$PROMPT_RESULT"
+    local superuser_username="admin"
+    local superuser_email="admin@localhost"
 
-    prompt_var "DJANGO_SUPERUSER_USERNAME" "admin"
-    local superuser_username="$PROMPT_RESULT"
+    local superuser_password
+    superuser_password=$(generate_secret 24)
 
-    prompt_var "DJANGO_SUPERUSER_EMAIL" ""
-    local superuser_email="$PROMPT_RESULT"
-
-    prompt_var "DJANGO_SUPERUSER_PASSWORD" "" "true"
-    local superuser_password="$PROMPT_RESULT"
-
-    prompt_var "POSTGRES_DB" "rgssdb"
-    local postgres_db="$PROMPT_RESULT"
-
-    # Non-superuser app account, per least-privilege principle.
-    # Source: https://www.postgresql.org/docs/current/sql-createrole.html
-    prompt_var "POSTGRES_USER" "rgssuser"
-    local postgres_user="$PROMPT_RESULT"
+    local postgres_db="db"
+    local postgres_user="db"
 
     # Heredoc with quoted delimiter ('EOF') prevents variable expansion inside
     # the content — all values are written as literal strings.
@@ -521,8 +440,20 @@ DB_HOST=db
 DB_PORT=5432
 EOF
 
-    echo ""
-    echo "  [OK] backend/.env written."
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Backend credentials ─────────────────────────────────────────────────────
+SECRET_KEY=${secret_key}
+DJANGO_SUPERUSER_USERNAME=${superuser_username}
+DJANGO_SUPERUSER_EMAIL=${superuser_email}
+DJANGO_SUPERUSER_PASSWORD=${superuser_password}
+POSTGRES_DB=${postgres_db}
+POSTGRES_USER=${postgres_user}
+POSTGRES_PASSWORD=${postgres_password}
+EOF
+    fi
+
+    ok "backend/.env written."
 }
 
 setup_frontend() {
@@ -536,7 +467,7 @@ setup_frontend() {
     echo "  [OK] frontend/compose.yml downloaded."
 
     if [[ -f "frontend/.env" ]]; then
-        echo "  -> frontend/.env already exists — leaving it untouched."
+        info "frontend/.env already exists — leaving it untouched."
         return 0
     fi
 
@@ -562,8 +493,14 @@ ADMIN_KEY=${admin_key}
 REDIS_URL=redis://valkey:6379
 EOF
 
-    echo ""
-    echo "  [OK] frontend/.env written."
+    if [[ -n "$CREDENTIALS_FILE" ]]; then
+        cat >> "$CREDENTIALS_FILE" << EOF
+# ── Frontend credentials ────────────────────────────────────────────────────
+ADMIN_KEY=${admin_key}
+EOF
+    fi
+
+    ok "frontend/.env written."
 }
 
 # Creates the shared Docker bridge network both Compose stacks attach to.
@@ -593,8 +530,7 @@ if [[ "$ostype" == "undefined" ]]; then
     exit 1
 fi
 
-# Step 1 + 2: Install Docker (skipped if already present — handles re-runs
-# triggered automatically after a reboot)
+# Step 1 + 2: Install Docker (skipped if already present)
 if check_docker; then
     echo "==> Docker is already installed and running. Skipping installation."
 else
@@ -607,10 +543,8 @@ else
     if ! check_docker; then
         echo ""
         echo "[!] Docker does not appear to be running after installation."
-        echo "    - On Linux: this is expected if a reboot was deferred — the"
-        echo "      install will resume automatically on next boot."
-        echo "    - On macOS: open Docker.app first, then re-run this script."
-        echo "    - On Windows: restart and re-run this script after Docker Desktop starts."
+        echo "    - On Linux/macOS: ensure the Docker daemon is running and re-run this script."
+        echo "    - On Windows: start Docker Desktop and re-run this script."
         exit 1
     fi
 fi
@@ -618,27 +552,29 @@ fi
 # Step 3: Verify Docker with hello-world
 verify_docker
 
-# Now that Docker is confirmed working, the post-reboot resume service (if
-# any) has done its job — remove it so it doesn't fire on future boots.
-cleanup_resume_service
-
 # Step 4: Install Portainer
 install_portainer
 
 # ── Project Setup Prompt ──────────────────────────────────────────────────────
 
 echo ""
-read -rp "==> Set up the RGSS Williams portal project? [Y/n]: " setup_confirm
+setup_confirm="Y"
 if [[ "$setup_confirm" == "n" || "$setup_confirm" == "N" ]]; then
     echo "  Skipping project setup."
     exit 0
 fi
 
-prompt_var "Project directory" "./williams-portal"
-project_dir="$PROMPT_RESULT"
+project_dir="./project"
 
 mkdir -p "$project_dir"
 cd "$project_dir" || { echo "[!] Could not enter $project_dir — exiting."; exit 1; }
+
+CREDENTIALS_FILE="$(pwd)/credentials.txt"
+cat > "$CREDENTIALS_FILE" << EOF
+# AUTO-GENERATED credentials file. KEEP SECRET.
+# Contains generated Django, PostgreSQL, and frontend keys.
+EOF
+chmod 600 "$CREDENTIALS_FILE" 2>/dev/null || true
 
 setup_backend  || { echo "[!] Backend setup failed."; exit 1; }
 setup_frontend || { echo "[!] Frontend setup failed."; exit 1; }
@@ -652,6 +588,7 @@ echo ""
 echo "  Files written:"
 echo "    $(pwd)/backend/.env         ← KEEP SECRET — never commit"
 echo "    $(pwd)/frontend/.env        ← KEEP SECRET — never commit"
+echo "    $(pwd)/credentials.txt      ← KEEP SECRET — never commit"
 echo ""
 echo "  Repository / compose sources:"
 echo "    $(pwd)/backend/             ← cloned from GitHub"
@@ -659,7 +596,7 @@ echo "    $(pwd)/frontend/compose.yml ← downloaded from GitHub"
 echo "================================================================"
 echo ""
 
-read -rp "==> Start services now with docker compose? [Y/n]: " start_confirm
+start_confirm="Y"
 if [[ "$start_confirm" == "n" || "$start_confirm" == "N" ]]; then
     echo ""
     echo "  To start manually later:"
@@ -683,3 +620,11 @@ echo "    Frontend  → http://localhost:3000"
 echo "    Backend   → http://localhost:8000"
 echo "    Portainer → https://localhost:9443"
 echo "================================================================"
+echo ""
+echo "  Docker is running. Rebooting the computer in 5 seconds..."
+if [[ "$ostype" == "windows" ]]; then
+    shutdown /r /t 5
+else
+    sleep 5
+    reboot
+fi
