@@ -7,14 +7,21 @@
 #  Usage:
 #    chmod +x install.sh && ./install.sh
 #
-#  On Linux: if a reboot is required (new docker group membership), the script
-#  registers a one-shot systemd service that automatically re-runs this script
-#  on the next boot and logs all output. No manual re-run is needed.
+#  If a reboot/restart is required (e.g. new docker group membership on
+#  Linux, or WSL2/Hyper-V setup on Windows), the script registers itself to
+#  resume automatically:
+#    - Linux:   systemd one-shot service (falls back to cron @reboot if no
+#               systemd), PLUS a shell-profile login-hook so progress is
+#               visible on screen at the next login.
+#    - macOS:   cron @reboot + a shell-profile login-hook.
+#    - Windows: Task Scheduler "on logon" entry that opens a terminal.
+#  All of these are removed automatically once Docker is verified working.
 #
 #  Optional: on Linux, the script can also enable automatic console (tty1)
 #  login for the invoking user so the machine doesn't sit at a login prompt
-#  after the unattended reboot. This is purely a convenience for headless/VM
-#  setups and is removed automatically once setup finishes — see
+#  after the unattended reboot. Combined with the login-hook above, this
+#  means the install visibly continues right after reboot with no input.
+#  This is removed automatically once setup finishes — see
 #  setup_auto_login_linux() / cleanup_auto_login_linux() below.
 #  Source: man systemd.unit (drop-in override files), man agetty (--autologin)
 # ══════════════════════════════════════════════════════════════════════════════
@@ -269,7 +276,25 @@ install_docker_windows() {
 
     echo ""
     echo "  [OK] Docker Desktop and Git installation triggered."
-    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup, then re-run this script."
+    echo "  [!]  A restart may be required to complete WSL2/Hyper-V setup."
+    echo ""
+    echo "  This script will register a Task Scheduler entry to resume"
+    echo "  automatically — a terminal will open and continue setup the"
+    echo "  next time you log in."
+    echo ""
+
+    setup_resume_service
+
+    read -rp "  Restart now? [Y/n]: " reboot_confirm
+    if [[ "$reboot_confirm" != "n" && "$reboot_confirm" != "N" ]]; then
+        echo "  -> Restarting..."
+        shutdown /r /t 5
+    else
+        echo "  -> Skipping restart for now."
+        echo "     Setup will continue automatically the next time you log in."
+        echo "     (Or re-run this script manually after Docker Desktop starts.)"
+        exit 0
+    fi
 }
 
 # ── Docker Verification ───────────────────────────────────────────────────────
@@ -292,30 +317,47 @@ verify_docker() {
     fi
 }
 
-# ── Auto-Resume After Reboot ──────────────────────────────────────────────────
-# Registers a one-shot systemd service that re-runs this script on the next
-# boot, so the user doesn't have to manually re-invoke it after the reboot
-# triggered by a fresh Docker install (new 'docker' group membership).
-# Output is appended to $LOG_FILE via StandardOutput/StandardError.
-# Source: man systemd.service — "Type=oneshot", "WantedBy=", "StandardOutput="
+# ── Auto-Resume After Reboot/Login ────────────────────────────────────────────
+# Two complementary mechanisms re-launch this script so an interrupted install
+# continues without the user re-typing the command:
+#
+#   1. A background scheduler — systemd service on Linux, falling back to
+#      cron's "@reboot" on Linux/macOS without systemd, or a Task Scheduler
+#      "on logon" entry on Windows. Runs even if nobody is at the console;
+#      output goes to $LOG_FILE only.
+#   2. A login-hook appended to the invoking user's shell profile
+#      (.profile/.bash_profile/.zprofile) — runs the script in the
+#      FOREGROUND of the next interactive login, so progress is visible on
+#      screen. This is what makes auto-login actually useful: without it,
+#      the background scheduler runs invisibly and it looks like "nothing
+#      happened" after login.
+#
+# Both are gated by a marker file ($RESUME_MARKER): present = "resume
+# pending". Whichever mechanism fires first does the work; re-running is
+# harmless because check_docker() skips steps that are already done.
+# cleanup_resume_service() removes the marker and every mechanism once Docker
+# is verified working.
+#
+# Sources: man systemd.service       — "Type=oneshot", "WantedBy="
+#          man 5 crontab              — "@reboot"
+#          man bash, INVOCATION       — login shells read .profile/.bash_profile (Linux), .zprofile (macOS, default zsh)
+#          schtasks /create /sc onlogon — https://learn.microsoft.com/windows-server/administration/windows-commands/schtasks-create
 
 RESUME_SERVICE_PATH="/etc/systemd/system/install-resume.service"
+RESUME_TASK_NAME="InstallResume"
+RESUME_PROFILE_BEGIN="# >>> install.sh auto-resume (auto-added, safe to remove) >>>"
+RESUME_PROFILE_END="# <<< install.sh auto-resume <<<"
 
 setup_resume_service() {
-    if [[ "$ostype" != "linux" ]]; then
-        return 0
-    fi
-
-    if ! command -v systemctl &>/dev/null; then
-        echo "  [!] systemd not found — cannot auto-resume after reboot."
-        echo "      Re-run this script manually after rebooting."
-        return 1
-    fi
-
     local script_path
     script_path="$(realpath "$0")"
 
-    cat > "$RESUME_SERVICE_PATH" << EOF
+    touch "$RESUME_MARKER" 2>/dev/null
+
+    case "$ostype" in
+        linux)
+            if command -v systemctl &>/dev/null; then
+                cat > "$RESUME_SERVICE_PATH" << EOF
 [Unit]
 Description=Resume project installer after reboot
 After=network-online.target
@@ -330,26 +372,162 @@ StandardError=append:${LOG_FILE}
 [Install]
 WantedBy=multi-user.target
 EOF
+                systemctl daemon-reload
+                systemctl enable install-resume.service
+                echo "  [OK] Registered systemd resume service: $RESUME_SERVICE_PATH"
+            else
+                echo "  [!] systemd not found — using cron @reboot instead."
+                setup_resume_cron "$script_path"
+            fi
+            setup_resume_login_hook "$script_path"
+            ;;
+        osx)
+            setup_resume_cron "$script_path"
+            setup_resume_login_hook "$script_path"
+            ;;
+        windows)
+            setup_resume_windows "$script_path"
+            ;;
+    esac
 
-    systemctl daemon-reload
-    systemctl enable install-resume.service
+    echo "       On next boot/login, install.sh will continue automatically"
+    echo "       and print its progress to the screen."
+    echo "       Full output is also logged to: $LOG_FILE"
+}
 
-    echo "  [OK] Registered auto-resume service: $RESUME_SERVICE_PATH"
-    echo "       On next boot, install.sh will continue automatically."
-    echo "       Output is logged to: $LOG_FILE"
+# Cron fallback for systems without systemd (also used on macOS).
+# Runs in the background as root, like the systemd service — output only
+# goes to $LOG_FILE, not the screen. The login-hook below covers visibility.
+setup_resume_cron() {
+    local script_path="$1"
+
+    if ! command -v crontab &>/dev/null; then
+        echo "  [!] cron not available — relying on the login hook only."
+        return 1
+    fi
+
+    ( crontab -l 2>/dev/null | grep -vF "$script_path"
+      echo "@reboot /bin/bash $script_path >> $LOG_FILE 2>&1" ) | crontab -
+
+    echo "  [OK] Registered cron @reboot job to resume install.sh (root crontab)."
+}
+
+cleanup_resume_cron() {
+    command -v crontab &>/dev/null || return 0
+    local script_path
+    script_path="$(realpath "$0")"
+
+    if crontab -l 2>/dev/null | grep -qF "$script_path"; then
+        echo "==> Removing cron @reboot resume entry..."
+        crontab -l 2>/dev/null | grep -vF "$script_path" | crontab -
+    fi
+}
+
+# Windows: opens a visible terminal at the next logon and re-runs the
+# installer (no systemd/cron equivalent exists, so Task Scheduler is used).
+setup_resume_windows() {
+    local script_path="$1"
+    local win_path="$script_path"
+    command -v cygpath &>/dev/null && win_path="$(cygpath -w "$script_path")"
+
+    schtasks /create /tn "$RESUME_TASK_NAME" /sc onlogon /rl highest /f \
+        /tr "cmd /k bash \"$win_path\"" >/dev/null
+
+    echo "  [OK] Registered Task Scheduler entry '$RESUME_TASK_NAME'."
+    echo "       It opens a terminal and resumes install.sh at the next logon."
+}
+
+cleanup_resume_windows() {
+    command -v schtasks &>/dev/null || return 0
+    if schtasks /query /tn "$RESUME_TASK_NAME" &>/dev/null; then
+        echo "==> Removing Task Scheduler resume entry..."
+        schtasks /delete /tn "$RESUME_TASK_NAME" /f >/dev/null
+    fi
+}
+
+# Login-hook: on the next interactive login, checks for $RESUME_MARKER and —
+# if present — re-runs the installer in the foreground so it's actually
+# visible on screen (the gap that background schedulers can't fill).
+setup_resume_login_hook() {
+    local script_path="$1"
+    local user="${SUDO_USER:-$(logname 2>/dev/null)}"
+
+    if [[ -z "$user" ]]; then
+        echo "  [!] Could not determine the invoking user — skipping login hook."
+        return 1
+    fi
+
+    local home_dir
+    if [[ "$ostype" == "osx" ]]; then
+        home_dir=$(dscl . -read "/Users/$user" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+    else
+        home_dir=$(getent passwd "$user" 2>/dev/null | cut -d: -f6)
+    fi
+    [[ -z "$home_dir" ]] && home_dir="/home/$user"
+
+    local profile_files=("$home_dir/.profile" "$home_dir/.bash_profile")
+    [[ "$ostype" == "osx" ]] && profile_files+=("$home_dir/.zprofile")
+
+    local f
+    for f in "${profile_files[@]}"; do
+        touch "$f"
+        if ! grep -qF "$RESUME_PROFILE_BEGIN" "$f" 2>/dev/null; then
+            cat >> "$f" << EOF
+
+$RESUME_PROFILE_BEGIN
+if [[ -f "$RESUME_MARKER" ]]; then
+    echo ""
+    echo "==> Resuming installer after reboot/login..."
+    sudo /bin/bash "$script_path"
+fi
+$RESUME_PROFILE_END
+EOF
+        fi
+        chown "$user" "$f" 2>/dev/null
+    done
+
+    echo "  [OK] Added a login-hook to ${user}'s shell profile to resume install.sh visibly."
+}
+
+cleanup_resume_login_hook() {
+    local user="${SUDO_USER:-$(logname 2>/dev/null)}"
+    [[ -z "$user" ]] && return 0
+
+    local home_dir
+    if [[ "$ostype" == "osx" ]]; then
+        home_dir=$(dscl . -read "/Users/$user" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+    else
+        home_dir=$(getent passwd "$user" 2>/dev/null | cut -d: -f6)
+    fi
+    [[ -z "$home_dir" ]] && return 0
+
+    local f
+    for f in "$home_dir/.profile" "$home_dir/.bash_profile" "$home_dir/.zprofile"; do
+        [[ -f "$f" ]] || continue
+        if grep -qF "$RESUME_PROFILE_BEGIN" "$f"; then
+            echo "==> Removing login-hook from $f..."
+            sed -i.bak "/$RESUME_PROFILE_BEGIN/,/$RESUME_PROFILE_END/d" "$f"
+            rm -f "$f.bak"
+        fi
+    done
 }
 
 cleanup_resume_service() {
-    if [[ "$ostype" != "linux" ]]; then
-        return 0
-    fi
+    rm -f "$RESUME_MARKER" 2>/dev/null
 
-    if [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
-        echo "==> Removing auto-resume service (no longer needed)..."
+    if [[ "$ostype" == "linux" ]] && [[ -f "$RESUME_SERVICE_PATH" ]] && command -v systemctl &>/dev/null; then
+        echo "==> Removing systemd resume service (no longer needed)..."
         systemctl disable install-resume.service &>/dev/null
         rm -f "$RESUME_SERVICE_PATH"
         systemctl daemon-reload
     fi
+
+    if [[ "$ostype" == "linux" || "$ostype" == "osx" ]]; then
+        cleanup_resume_cron
+        cleanup_resume_login_hook
+    fi
+
+    [[ "$ostype" == "windows" ]] && cleanup_resume_windows
 
     cleanup_auto_login_linux
 }
@@ -687,6 +865,15 @@ echo ""
 if [[ "$ostype" == "undefined" ]]; then
     echo "[!] OS undefined or unsupported — exiting."
     exit 1
+fi
+
+# Marker file used by the auto-resume mechanisms (systemd/cron/Task
+# Scheduler + login-hook) to know a resume is pending. See the
+# "Auto-Resume After Reboot/Login" section above.
+if [[ "$ostype" == "windows" ]]; then
+    RESUME_MARKER="$(dirname "$(realpath "$0")")/.install-resume-marker"
+else
+    RESUME_MARKER="/etc/install-resume.marker"
 fi
 
 # Step 1 + 2: Install Docker (skipped if already present — handles re-runs
