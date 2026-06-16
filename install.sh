@@ -349,7 +349,14 @@ install_portainer() {
     # --restart=unless-stopped: restarts on crash/daemon-restart but respects
     # a manual 'docker stop portainer'.
     # Source: https://docs.docker.com/config/containers/start-containers-automatically/
-    docker run -d \
+    # MSYS_NO_PATHCONV=1 prevents Git Bash/MSYS on Windows from rewriting the
+    # /var/run/docker.sock and /data arguments below into Windows-style paths
+    # (e.g. C:/Program Files/Git/var/run/docker.sock), which would break the
+    # bind mount inside the Linux VM that Docker Desktop runs. It's a no-op
+    # (unused env var) on Linux/macOS.
+    # Source: https://github.com/borekb/docker-path-workaround
+    #         https://www.pascallandau.com/blog/setting-up-git-bash-mingw-msys2-on-windows/
+    MSYS_NO_PATHCONV=1 docker run -d \
         --name portainer \
         --restart=unless-stopped \
         -p 9000:9000 \
