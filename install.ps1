@@ -59,7 +59,7 @@ $isAdmin = (New-Object Security.Principal.WindowsPrincipal($currentIdentity)).Is
 
 if (-not $isAdmin) {
     Write-Host "Elevation required - requesting Administrator privileges..."
-    $scriptPath = $MyInvocation.MyCommand.Path
+    $scriptPath = $PSCommandPath
     if (-not $scriptPath) {
         Write-Host "ERROR: Cannot determine script path. Run from an elevated PowerShell prompt."
         Read-Host "Press Enter to exit"
@@ -160,7 +160,7 @@ function Register-ResumeOnBoot {
     # scripts because it preserves the "Run with highest privileges" flag
     # across reboots, avoiding a second UAC prompt on resume.
     # Source: https://learn.microsoft.com/powershell/module/scheduledtasks/register-scheduledtask
-    $scriptPath = $MyInvocation.MyCommand.Path
+    $scriptPath = $PSCommandPath
 
     $action = New-ScheduledTaskAction `
         -Execute "powershell.exe" `
@@ -181,7 +181,7 @@ function Register-ResumeOnBoot {
         -LogonType Interactive
 
     Register-ScheduledTask `
-        -TaskName "RGSSInstaller" `
+        -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" `
         -Action $action `
         -Trigger $trigger `
         -Settings $settings `
@@ -192,8 +192,8 @@ function Register-ResumeOnBoot {
 }
 
 function Remove-ResumeOnBoot {
-    if (Get-ScheduledTask -TaskName "RGSSInstaller" -ErrorAction SilentlyContinue) {
-        Unregister-ScheduledTask -TaskName "RGSSInstaller" -Confirm:$false
+    if (Get-ScheduledTask -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" -Confirm:$false
         Write-Info "Removed auto-resume scheduled task."
     }
 }
@@ -234,7 +234,7 @@ function Install-DockerWindows {
     Register-ResumeOnBoot
 
     Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
-    shutdown /r /t 10 /c "RGSS Installer: rebooting to complete Docker/WSL2 setup."
+    shutdown /r /t 10 /c "WILLIAMS-RGSS-PORTAL Installer: rebooting to complete Docker/WSL2 setup."
     exit 0
 }
 
@@ -507,4 +507,4 @@ Write-Host ""
 Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
 
 Write-Host "  Rebooting in 10 seconds..."
-shutdown /r /t 10 /c "RGSS Williams Portal install complete."
+shutdown /r /t 10 /c "RGSS-WILLIAMS-PORTAL install complete."
