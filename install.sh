@@ -88,44 +88,6 @@ request_admin() {
             fi
             ok "Running as standard user (required on macOS)."
             ;;
-
-        msys*|cygwin*)
-            # 'net session' only succeeds when the current shell is elevated —
-            # this is the standard way to test for admin rights from a shell.
-            # Source: https://learn.microsoft.com/windows-server/administration/windows-commands/net-session
-            if ! net session > /dev/null 2>&1; then
-                warn "Not running as Administrator."
-                info "Triggering UAC prompt to re-launch with elevated privileges..."
-
-                # Resolve to absolute Windows-style paths: the elevated
-                # process can start from a different working directory
-                # (e.g. C:\Windows\System32), so both the script path and
-                # the desired working directory must be passed explicitly.
-                # cygpath -w converts an MSYS/POSIX path to a Windows path.
-                # Source: https://www.man7.org/linux/man-pages/man1/cygpath.1.html
-                local bash_path script_path work_dir arg_list a
-                bash_path="$(cygpath -w "$(command -v bash)")"
-                script_path="$(cygpath -w "$(realpath "$0")")"
-                work_dir="$(cygpath -w "$PWD")"
-
-                # Build a PowerShell array literal for -ArgumentList so the
-                # script path and any original CLI args are passed through
-                # as separate arguments to the elevated bash process.
-                # -Verb RunAs triggers the UAC prompt; -Wait blocks this
-                # script until the elevated copy exits.
-                # Source: https://learn.microsoft.com/powershell/module/microsoft.powershell.management/start-process
-                arg_list="'$script_path'"
-                for a in "$@"; do
-                    arg_list+=",'$a'"
-                done
-
-                powershell -NoProfile -Command \
-                    "Start-Process -FilePath '$bash_path' -ArgumentList @($arg_list) -Verb RunAs -Wait -WorkingDirectory '$work_dir'"
-                exit 0
-            else
-                ok "Running as Administrator. Privilege check passed."
-            fi
-            ;;
     esac
 }
 
@@ -150,10 +112,7 @@ case "$OSTYPE" in
         LOG_FILE="$HOME/Library/Logs/install.log"
         mkdir -p "$(dirname "$LOG_FILE")"
         ;;
-    *)
-        # Windows (Git Bash) and any other shell: log next to the script.
-        LOG_FILE="$(dirname "$(realpath "$0")")/install.log"
-        ;;
+
 esac
 
 exec > >(tee -a "$LOG_FILE") 2>&1
@@ -174,12 +133,9 @@ get_os() {
         darwin*)
             ostype="osx"
             ;;
-        msys*|cygwin*)
-            ostype="windows"
-            ;;
         *)
             echo "  [!] Unsupported OS type: $OSTYPE"
-            echo "      Supported: Linux, Windows, macOS"
+            echo "      Supported: Linux, macOS"
             ostype="undefined"
             ;;
     esac
@@ -326,47 +282,9 @@ install_docker_mac() {
     fi
 }
 
-install_docker_windows() {
-    section "Installing Docker Desktop for Windows..."
-
-    if command -v winget &>/dev/null; then
-        winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
-        winget install --id Git.Git --exact --accept-source-agreements --accept-package-agreements
-    elif command -v choco &>/dev/null; then
-        choco install docker-desktop git -y
-    else
-        error "Neither winget nor Chocolatey found."
-        echo "      Download manually:"
-        echo "        Docker: https://www.docker.com/products/docker-desktop/"
-        echo "        Git:    https://git-scm.com/download/win"
-        return 1
-    fi
-
-    ok "Docker Desktop and Git installation triggered."
-    warn "A restart may be required to complete WSL2/Hyper-V setup."
-
-    # Try to launch Docker Desktop so the user doesn't have to find it
-    # manually. The leading /c/... here is intentionally left for MSYS to
-    # convert into a Windows path (C:\...) — that conversion is what we
-    # want in this case, unlike the volume-mount paths in install_portainer().
-    # Source: https://github.com/borekb/docker-path-workaround
-    local docker_desktop_exe="/c/Program Files/Docker/Docker/Docker Desktop.exe"
-    if [[ -x "$docker_desktop_exe" ]]; then
-        info "Launching Docker Desktop..."
-        "$docker_desktop_exe" >/dev/null 2>&1 &
-    fi
-
-    if wait_for_docker 180; then
-        ok "Docker Desktop is running."
-    else
-        warn "Docker Desktop did not finish starting within 3 minutes."
-        warn "A reboot is often required after the first install (for WSL2/Hyper-V)."
-        info "Restart Windows if prompted, start Docker Desktop manually, then re-run this script."
-    fi
-}
 
 # Polls `docker info` until the daemon responds or the timeout elapses.
-# Useful right after installing/launching Docker Desktop on macOS/Windows,
+# Useful right after installing/launching Docker Desktop on macOS,
 # which can take anywhere from a few seconds to a couple of minutes to start
 # its VM/backend before the `docker` CLI can talk to it.
 wait_for_docker() {
@@ -405,10 +323,6 @@ verify_docker() {
                 echo "      - Make sure Docker Desktop is running (check the menu bar icon)."
                 echo "      - Open Docker.app and wait for it to say 'Docker Desktop is running'."
                 ;;
-            windows)
-                echo "      - Make sure Docker Desktop is running (check the system tray icon)."
-                echo "      - It may need a Windows restart after first install (WSL2/Hyper-V)."
-                ;;
         esac
         echo "      - Run manually: docker run hello-world"
         exit 1
@@ -435,14 +349,7 @@ install_portainer() {
     # --restart=unless-stopped: restarts on crash/daemon-restart but respects
     # a manual 'docker stop portainer'.
     # Source: https://docs.docker.com/config/containers/start-containers-automatically/
-    # MSYS_NO_PATHCONV=1 prevents Git Bash/MSYS on Windows from rewriting the
-    # /var/run/docker.sock and /data arguments below into Windows-style paths
-    # (e.g. C:/Program Files/Git/var/run/docker.sock), which would break the
-    # bind mount inside the Linux VM that Docker Desktop runs. It's a no-op
-    # (unused env var) on Linux/macOS.
-    # Source: https://github.com/borekb/docker-path-workaround
-    #         https://www.pascallandau.com/blog/setting-up-git-bash-mingw-msys2-on-windows/
-    MSYS_NO_PATHCONV=1 docker run -d \
+    docker run -d \
         --name portainer \
         --restart=unless-stopped \
         -p 9000:9000 \
@@ -672,14 +579,12 @@ else
     case "$ostype" in
         linux)   install_docker_linux ;;
         osx)     install_docker_mac ;;
-        windows) install_docker_windows ;;
     esac
 
     if ! check_docker; then
         echo ""
         echo "[!] Docker does not appear to be running after installation."
-        echo "    - On Linux/macOS: ensure the Docker daemon is running and re-run this script."
-        echo "    - On Windows: start Docker Desktop and re-run this script."
+        echo "    - Ensure the Docker daemon is running and re-run this script."
         exit 1
     fi
 fi
@@ -758,9 +663,6 @@ echo "================================================================"
 echo ""
 echo "  Docker is running. Rebooting the computer in 5 seconds..."
 case "$ostype" in
-    windows)
-        shutdown /r /t 5
-        ;;
     osx)
         # The script runs as a normal user on macOS (see request_admin), so
         # 'reboot' needs a one-off sudo prompt here.

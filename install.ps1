@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+    #Requires -Version 5.1
 
 # ==============================================================================
 #  RGSS Williams Portal -- Windows Installer (Native PowerShell)
@@ -59,7 +59,7 @@ $isAdmin = (New-Object Security.Principal.WindowsPrincipal($currentIdentity)).Is
 
 if (-not $isAdmin) {
     Write-Host "Elevation required - requesting Administrator privileges..."
-    $scriptPath = $MyInvocation.MyCommand.Path
+    $scriptPath = $MyInvocation.MyCommand
     if (-not $scriptPath) {
         Write-Host "ERROR: Cannot determine script path. Run from an elevated PowerShell prompt."
         Read-Host "Press Enter to exit"
@@ -160,7 +160,7 @@ function Register-ResumeOnBoot {
     # scripts because it preserves the "Run with highest privileges" flag
     # across reboots, avoiding a second UAC prompt on resume.
     # Source: https://learn.microsoft.com/powershell/module/scheduledtasks/register-scheduledtask
-    $scriptPath = $MyInvocation.MyCommand.Path
+    $scriptPath = $PSCommandPath
 
     $action = New-ScheduledTaskAction `
         -Execute "powershell.exe" `
