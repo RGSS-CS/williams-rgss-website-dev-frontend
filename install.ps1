@@ -181,7 +181,7 @@ function Register-ResumeOnBoot {
         -LogonType Interactive
 
     Register-ScheduledTask `
-        -TaskName "RGSSInstaller" `
+        -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" `
         -Action $action `
         -Trigger $trigger `
         -Settings $settings `
@@ -192,8 +192,8 @@ function Register-ResumeOnBoot {
 }
 
 function Remove-ResumeOnBoot {
-    if (Get-ScheduledTask -TaskName "RGSSInstaller" -ErrorAction SilentlyContinue) {
-        Unregister-ScheduledTask -TaskName "RGSSInstaller" -Confirm:$false
+    if (Get-ScheduledTask -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" -ErrorAction SilentlyContinue) {
+        Unregister-ScheduledTask -TaskName "WILLIAMS-RGSS-PORTAL-INSTALLER" -Confirm:$false
         Write-Info "Removed auto-resume scheduled task."
     }
 }
@@ -234,7 +234,7 @@ function Install-DockerWindows {
     Register-ResumeOnBoot
 
     Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
-    shutdown /r /t 10 /c "RGSS Installer: rebooting to complete Docker/WSL2 setup."
+    shutdown /r /t 10 /c "WILLIAMS-RGSS-PORTAL Installer: rebooting to complete Docker/WSL2 setup."
     exit 0
 }
 
@@ -507,4 +507,4 @@ Write-Host ""
 Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
 
 Write-Host "  Rebooting in 10 seconds..."
-shutdown /r /t 10 /c "RGSS Williams Portal install complete."
+shutdown /r /t 10 /c "RGSS-WILLIAMS-PORTAL install complete."
