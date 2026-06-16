@@ -59,7 +59,7 @@ $isAdmin = (New-Object Security.Principal.WindowsPrincipal($currentIdentity)).Is
 
 if (-not $isAdmin) {
     Write-Host "Elevation required - requesting Administrator privileges..."
-    $scriptPath = $MyInvocation.MyCommand
+    $scriptPath = $PSCommandPath
     if (-not $scriptPath) {
         Write-Host "ERROR: Cannot determine script path. Run from an elevated PowerShell prompt."
         Read-Host "Press Enter to exit"
