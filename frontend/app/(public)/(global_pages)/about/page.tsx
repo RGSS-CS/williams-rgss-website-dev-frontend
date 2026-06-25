@@ -13,16 +13,13 @@ export default function AboutPage() {
                         </div>
                         <div className="hero_subtitle">
                             <h5>
-                                We are a dedicated group of students committed to representing the interests and voices of our student body.
-                            </h5>
-                            <h5>
-                                Our goal is to foster a positive, inclusive, and engaging school community through leadership, service, and school spirit.
+                                We are a dedicated group of students committed to representing the interests and voices of our student body. Our goal is to foster a positive, inclusive, and engaging school community through leadership, service, and school spirit.
                             </h5>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
             <section className={styles.section}>
                 <div className={styles.sectionHeader}>
                     <span className={styles.sectionEyebrow}>
