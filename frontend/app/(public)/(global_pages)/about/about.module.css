@@ -1,11 +1,3 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  background: var(--white);
-  color: var(--school-primary);
-}
-
 .sectionWrap {
   padding: 3rem 4.5rem 0;
 }
