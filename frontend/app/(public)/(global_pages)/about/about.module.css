@@ -2,108 +2,49 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  background: var(--school-dull-tone);
+  background: var(--white);
   color: var(--school-primary);
 }
 
-.heroSection {
-  background: linear-gradient(150deg, var(--school-primary) 0%, var(--school-primary-light) 55%);
-  color: var(--white);
-  padding: 4rem 1.5rem 3rem;
-  position: relative;
-  overflow: hidden;
+.sectionWrap {
+  padding: 3rem 4.5rem 0;
 }
 
-.heroSection::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(246, 174, 45, 0.08) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.heroInner {
+.sectionContent {
   max-width: 1400px;
   margin: 0 auto;
-  display: grid;
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
 }
 
-.heroEyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  padding: 0.75rem 1.2rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--white);
-  width: fit-content;
-}
-
-.heroTitle h1 {
-  font-size: clamp(2.8rem, 6vw, 4.2rem);
-  line-height: 1.02;
-  margin: 1rem 0 1.25rem;
-  letter-spacing: -0.02em;
-}
-
-.heroTitle h1 span {
-  color: var(--school-tertiary);
-}
-
-.heroSubtitle {
-  border-left: 4px solid var(--school-tertiary);
-  padding-left: 1.2rem;
-  max-width: 760px;
-}
-
-.heroSubtitle p {
-  margin: 0 0 1rem;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.section {
-  padding: 3rem 1.5rem;
-}
-
-.sectionHeader {
+.sectionTitleRow {
   display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  max-width: 980px;
-  margin-bottom: 1.8rem;
-}
-
-.sectionEyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--school-tertiary-dark);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  gap: 12px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .sectionTitle {
-  font-size: clamp(2rem, 4vw, 2.6rem);
-  margin: 0;
-  color: var(--school-primary);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitleAccent {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--school-tertiary);
+  border-radius: 50%;
 }
 
 .sectionLead {
   max-width: 72ch;
-  margin: 0;
-  color: var(--school-primary);
+  margin: 0 0 2rem;
+  color: var(--black);
   opacity: 0.8;
   line-height: 1.8;
 }
@@ -120,8 +61,8 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.infoCard,
 .card,
+.infoCard,
 .memberCard,
 .contactItem,
 .creditCard {
@@ -296,15 +237,7 @@
 }
 
 @media (max-width: 720px) {
-  .heroSection {
-    padding: 3rem 1rem 2.5rem;
-  }
-
-  .heroTitle h1 {
-    font-size: clamp(2.4rem, 8vw, 3.4rem);
-  }
-
-  .heroSubtitle {
-    padding-left: 1rem;
+  .sectionWrap {
+    padding: 3rem 1.5rem 0;
   }
 }
