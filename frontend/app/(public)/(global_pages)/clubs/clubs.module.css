@@ -22,6 +22,8 @@
   font-size: 2rem;
   color: var(--school-tertiary);
   line-height: 1;
+  justify-content: center;
+  display: flex;
 }
 
 .heroStat :global(.stat-label) {
@@ -126,6 +128,8 @@
   font-weight: 800;
   color: var(--school-primary);
   line-height: 1.2;
+  margin-bottom: 0.6rem;
+  text-decoration: underline;
 }
 
 .club_card_meta {
@@ -135,32 +139,39 @@
   margin-bottom: 1.1rem;
 }
 
-.club_meta_row h4 {
-  font-size: 0.9rem;
-  margin: 5px;
-  color: var(--school-primary-light);
-}
-
 .club_meta_row {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 7px;
-  font-size: 0.84rem;
   color: var(--school-primary-light);
 }
 
 .club_meta_row i {
+  flex-shrink: 0;
   font-size: 0.78rem;
   color: var(--school-primary);
   opacity: 0.5;
   width: 14px;
   text-align: center;
-  flex-shrink: 0;
+  margin-right: 0;
+}
+
+.club_meta_row h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--school-primary-light);
+  line-height: 1.4;
 }
 
 .club_card_description {
   font-size: 0.84rem;
-  color: var(--school-primary-light);
+  color: var(--school-primary);
+  border: solid 4px var(--school-tertiary);
+  border-radius: 12px;
+  padding: 0.5rem;
   line-height: 1.55;
   margin-bottom: 1.3rem;
   flex: 1;

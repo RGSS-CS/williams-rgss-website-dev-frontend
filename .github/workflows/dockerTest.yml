@@ -2,10 +2,8 @@ name: Test Docker Image
 
 on:
   pull_request:
-    paths:
-      - "frontend/**"
-      - ".github/workflows/docker-test.yml"
-      - ".github/workflows/Azure+DockerBuild.yml"
+    branches:
+      - main
   merge_group:
     types: [checks_requested]
   push:

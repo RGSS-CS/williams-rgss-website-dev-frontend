@@ -164,3 +164,9 @@
     transform: scale(0.98)
 }
 
+.signup {
+    margin-top: 18px;
+    font-size: 0.82rem;
+    color: var(--school-primary-light);
+    text-align: center;
+}
