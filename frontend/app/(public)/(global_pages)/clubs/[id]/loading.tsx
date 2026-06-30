@@ -1,11 +1,23 @@
 import clubStyles from "../clubs.module.css";
 import detailStyles from "./club-detail.module.css";
+import { Suspense, useState, use } from "react";
 
 const HERO_STATS = 4;
 const INFO_TILES = 6;
 
 export default function Loading() {
+    const [promise] = useState<Promise<void>>(() => new Promise<void>((resolve) => setTimeout(resolve, 500)));
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+    <AsyncComponent promise={promise} />
+    </Suspense>
+  );
+}
+
+function AsyncComponent({ promise }: { promise: Promise<void> }) {
+    use(promise);
+
+    return (
     <main aria-busy="true" aria-label="Loading club details">
       <section className="hero">
         <div className="hero_shape"></div>
