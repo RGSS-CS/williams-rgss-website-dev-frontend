@@ -1,0 +1,235 @@
+.sectionWrap {
+  padding: 3rem 4.5rem 0;
+}
+
+.sectionContent {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  gap: 12px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.sectionTitle {
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitleAccent {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--school-tertiary);
+  border-radius: 50%;
+}
+
+.sectionLead {
+  max-width: 72ch;
+  margin: 0 0 2rem;
+  color: var(--black);
+  opacity: 0.8;
+  line-height: 1.8;
+}
+
+.cardsGrid,
+.memberGrid,
+.contactGrid,
+.creditsGrid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.cardsGrid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card,
+.infoCard,
+.memberCard,
+.contactItem,
+.creditCard {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 30px rgba(11, 28, 58, 0.05);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.cardIcon,
+.infoIcon,
+.contactIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(246, 174, 45, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--school-tertiary-dark);
+  font-size: 1rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--school-primary);
+}
+
+.cardText {
+  margin: 0;
+  color: var(--school-primary);
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+.infoCard {
+  display: grid;
+  gap: 1rem;
+}
+
+.memberGrid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.memberCard {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+}
+
+.memberAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--school-primary-light), var(--school-tertiary));
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.memberName {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--school-primary);
+}
+
+.memberRole {
+  margin: 0;
+  color: var(--school-tertiary-dark);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.contactGrid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.contactItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.contactLabel {
+  margin: 0 0 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--school-tertiary-dark);
+}
+
+.contactText,
+.contactLink {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--school-primary);
+  line-height: 1.7;
+}
+
+.contactLink {
+  text-decoration: none;
+}
+
+.contactLink:hover,
+.contactLink:focus {
+  text-decoration: underline;
+}
+
+.creditCard {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.creditRole {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(246, 174, 45, 0.1);
+  color: var(--school-tertiary-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.techBadges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.techLabel {
+  font-size: 0.78rem;
+  color: var(--school-primary);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.techBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--school-primary);
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .sectionWrap {
+    padding: 3rem 1.5rem 0;
+  }
+}
