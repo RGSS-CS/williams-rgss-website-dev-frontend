@@ -26,14 +26,20 @@
 }
 
 .footer-col p,
-.footer-col a {
+.footer-col a,
+.footer-col button {
   font-size: 0.9rem;
   line-height: 1.8;
   text-decoration: none;
   color: var(--school-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
-.footer-col a:hover {
+.footer-col a:hover,
+.footer-col button:hover {
   color: var(--school-tertiary);
 }
 

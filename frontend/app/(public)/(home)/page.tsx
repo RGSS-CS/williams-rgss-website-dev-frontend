@@ -4,16 +4,8 @@ import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
 import Navbar from "@/app/(public)/_components/Navbar";
 import Footer from "@/app/(public)/_components/Footer";
-// import { Club } from "@/types/club";
-
-//async function getDjangoAPI(): Promise<Club[]> {
-//    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
-//        cache: "no-store",
-//    });
-
-//    if (!res.ok) throw new Error("Failed to fetch clubs");
-//    return res.json();
-//}
+import { isMobile } from "@/app/_utils/isMobile";
+import MobileFooter from "@/app/(public)/_components/mobileFooter";
 
 export default async function Page() {
   //const clubs = await getDjangoAPI();
@@ -116,7 +108,7 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <Footer />
+      {isMobile(navigator.userAgent) ? <MobileFooter /> : <Footer />}
     </main >
   );
 }

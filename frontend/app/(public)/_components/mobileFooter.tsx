@@ -1,13 +1,4 @@
-"use client";
-import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
-
-export default function Footer() {
-  const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-
-  const handleCopy = async (text: string) => {
-    await copyToClipboard(text);
-  }
-
+export default function MobileFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -21,10 +12,9 @@ export default function Footer() {
               11 Spring Farm Road, L4G 7W2
             </a>
           </p>
-          <button onClick={() => handleCopy("(905) 727-3131")}>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}          
-            {copyStatus === 'error' && <p>Failed to copy.</p>}
-          </button>
+          <p>
+            <a href="tel:+19057273131">(905) 727-3131</a>
+          </p>
         </div>
         <div className="footer-col">
           <h4>Follow Us</h4>
