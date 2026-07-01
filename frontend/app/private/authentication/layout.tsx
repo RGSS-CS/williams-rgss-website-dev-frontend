@@ -3,7 +3,6 @@ import Link from "next/link";
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css";
 import Footer from "@/app/(public)/_components/Footer";
-import LoginBackButton from "@/app/private/authentication/_components/LoginBackButton";
 
 export default function RootLayout({
     children,
@@ -15,7 +14,6 @@ export default function RootLayout({
             <nav className="navbar">
                 <div className="header-container">
                     <div className="title-container">
-                        <LoginBackButton />
                         <Link href="/" className="brand-link">
                             <div className="logo">
                                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />

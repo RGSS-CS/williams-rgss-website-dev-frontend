@@ -2,17 +2,20 @@ import Link from "next/link";
 
 import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
+import LoginBackButton from "../_components/LoginBackButton";
 
 export default function SigninForm() {
   return (
+    <main>        
     <div className={styles.body}>
+      
       <form action={signin}>
         <div className={styles.login_card}>
+          <LoginBackButton />
           <div className={styles.card_header}>
-            <h2>Welcome back</h2>
+            <h1>Welcome back</h1>
             <p>Sign in to access the STUCO Dashboard</p>
           </div>
-
           <div className={styles.form_group}>
             <label htmlFor="student_number">YRDSB Email</label>
             <div className={styles.input_wrap}>
@@ -60,5 +63,6 @@ export default function SigninForm() {
         </div>
       </form>
     </div>
+    </main>
   );
 }

@@ -4,31 +4,6 @@
   display: none;
 }
 
-.nav-back-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--school-tertiary);
-  border: none;
-  color: var(--school-primary);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background 0.18s;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  flex: 0 0 auto;
-}
-
-.nav-back-button:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.nav-back-button i {
-  margin-right: 0;
-}
-
 .navbar {
   position: sticky;
   top: 0;

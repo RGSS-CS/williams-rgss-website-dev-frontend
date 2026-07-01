@@ -18,11 +18,12 @@ export default function Footer() {
           <p>Aurora, Ontario, Canada</p>
           <p>
             <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
+              <i className="fas fa-map-marker-alt"></i>
               11 Spring Farm Road, L4G 7W2
             </a>
           </p>
-          <button onClick={() => handleCopy("(905) 727-3131")}>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}          
+          <button onClick={() => handleCopy("(905) 727-3131")}> <i className="fas fa-copy"></i>
+            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
             {copyStatus === 'error' && <p>Failed to copy.</p>}
           </button>
         </div>
