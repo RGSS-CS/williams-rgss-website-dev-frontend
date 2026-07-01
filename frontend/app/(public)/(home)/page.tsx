@@ -6,6 +6,19 @@ import Navbar from "@/app/(public)/_components/Navbar";
 import Footer from "@/app/(public)/_components/Footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/mobileFooter";
+import { headers } from "next/headers";
+
+export async function FooterWrapper() {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isMobileDevice = isMobile(userAgent);
+
+  return isMobileDevice ? (
+    <MobileFooter />
+  ) : (
+    <Footer />
+  )
+}
 
 export default async function Page() {
   //const clubs = await getDjangoAPI();
@@ -108,7 +121,7 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      {isMobile(navigator.userAgent) ? <MobileFooter /> : <Footer />}
+      <FooterWrapper />
     </main >
   );
 }
