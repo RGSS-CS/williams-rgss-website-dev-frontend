@@ -42,9 +42,22 @@ main {
   flex: 1;
 }
 
-h1,
-h2,
-h3 {
+h1 {
   font-family: "Montserrat", sans-serif;
-  font-weight: 700;
+}
+
+h2 {
+  font-family: "Futura", sans-serif;
+}
+
+h3 {
+  font-family: "Neue Machina bold", sans-serif;
+}
+
+h4 {
+  font-family: "Promima Nova", sans-serif;
+}
+
+p {
+  font-family: "Acumin variable", sans-serif;
 }
