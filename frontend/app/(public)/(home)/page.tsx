@@ -48,18 +48,24 @@ export default async function Page() {
               <h5>Representing Student Voice.</h5>
               <h5>Building Wildcat Spirit.</h5>
             </div>
+
             <div className={styles.heroButtons}>
-              <div className={styles.heroBtnPrimary}>
-                <Link href="/clubs" className={styles.heroBtnText}>
-                  <i className="fas fa-paper-plane"></i> Our Clubs
-                </Link>
-              </div>
-              <div className={styles.heroBtnSecondary}>
-                <a className={styles.heroBtnTextAlt} href="#events">
-                  <i className="fas fa-calendar-alt fas_fa_calendar_alt"></i>{" "}
-                  Upcoming Events
-                </a>
-              </div>
+              <a href="/clubs">
+                <div className={styles.heroBtnPrimary}>
+                  <p className={styles.heroBtnText}>
+                    <i className="fas fa-paper-plane"></i> Our Clubs
+                  </p>
+                </div>
+              </a>
+
+              <a href="/events">
+                <div className={styles.heroBtnSecondary}>
+                  <p className={styles.heroBtnTextAlt}>
+                    <i className="fas fa-calendar-alt fas_fa_calendar_alt"></i>{" "}
+                    Upcoming Events
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
           <div className={styles.heroBadgeImage}>
@@ -111,6 +117,6 @@ export default async function Page() {
         </div>
       </div>
       <Footer />
-    </main>
+    </main >
   );
 }
