@@ -28,9 +28,9 @@ export default async function Page() {
         <Navbar />
         <div className={styles.tickerBar}>
           <div className={styles.tickerHeader}>
-            <h4>
+            <h3>
               <i className="fas fa-star"></i> Updates
-            </h4>
+            </h3>
           </div>
 
           <div className="ticker_track">
@@ -43,15 +43,15 @@ export default async function Page() {
         <div className="hero_inner">
           <div className="hero_left">
             <div className={styles.heroTag}>
-              <h4>Student Council {getSchoolYear()}</h4>
+              <p>Student Council {getSchoolYear()}</p>
             </div>
             <div className="hero_title">
               <h1>GW. Williams</h1>
               <h2>STUCO</h2>
             </div>
             <div className="hero_subtitle">
-              <h5>Representing Student Voice.</h5>
-              <h5>Building Wildcat Spirit.</h5>
+              <p>Representing Student Voice.</p>
+              <p>Building Wildcat Spirit.</p>
             </div>
 
             <div className={styles.heroButtons}>
