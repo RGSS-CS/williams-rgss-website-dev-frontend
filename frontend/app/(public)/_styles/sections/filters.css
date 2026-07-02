@@ -20,7 +20,6 @@
 }
 
 .filter_label {
-  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
@@ -38,7 +37,6 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 0.78rem;
   padding: 6px 14px;
