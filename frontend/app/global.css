@@ -31,7 +31,8 @@ html {
 body {
   background-color: var(--school-primary);
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-weight: 400;
   width: 100%;
   min-height: 100vh;
   display: flex;

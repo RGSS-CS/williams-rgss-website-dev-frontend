@@ -91,7 +91,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <h1>{club.name}</h1>
             </div>
             <div className="hero_subtitle">
-              <h5>{club.preview_description}</h5>
+              <p>{club.preview_description}</p>
             </div>
             <div className={styles_modules.heroActions}>
               <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">

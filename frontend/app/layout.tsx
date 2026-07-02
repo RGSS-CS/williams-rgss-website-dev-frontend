@@ -38,7 +38,11 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" data-scroll-behavior="smooth">
+        <html
+            lang="en"
+            data-scroll-behavior="smooth"
+            className={`${montserrat.variable} ${ibmPlexSans.variable}`}
+        >
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <link rel="stylesheet"
