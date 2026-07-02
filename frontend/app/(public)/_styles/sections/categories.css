@@ -26,7 +26,6 @@
 }
 
 .category-title {
-  font-family: "Montserrat", sans-serif;
   font-size: 1.30rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -35,7 +34,6 @@
 }
 
 .category-count {
-  font-family: "Montserrat", sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--school-primary-light);

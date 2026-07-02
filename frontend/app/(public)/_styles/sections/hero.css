@@ -6,7 +6,6 @@
   color: var(--white);
   position: relative;
   overflow: hidden;
-  font-family: "Montserrat", sans-serif;
   padding-bottom: 30px;
 }
 
@@ -68,7 +67,7 @@
   margin-bottom: 2rem;
 }
 
-.hero_subtitle h5 {
+.hero_subtitle p {
   font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 400;
   opacity: 0.85;
@@ -102,7 +101,6 @@
   border: 2px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.1);
   color: var(--white);
-  font-family: "Open Sans", sans-serif;
   font-size: 0.95rem;
   transition: all 0.2s;
   outline: none;

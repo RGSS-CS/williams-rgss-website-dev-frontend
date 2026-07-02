@@ -4,16 +4,21 @@ import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
 import Navbar from "@/app/(public)/_components/Navbar";
 import Footer from "@/app/(public)/_components/Footer";
-// import { Club } from "@/types/club";
+import { isMobile } from "@/app/_utils/isMobile";
+import MobileFooter from "@/app/(public)/_components/mobileFooter";
+import { headers } from "next/headers";
 
-//async function getDjangoAPI(): Promise<Club[]> {
-//    const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/clubs', {
-//        cache: "no-store",
-//    });
+export async function FooterWrapper() {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isMobileDevice = isMobile(userAgent);
 
-//    if (!res.ok) throw new Error("Failed to fetch clubs");
-//    return res.json();
-//}
+  return isMobileDevice ? (
+    <MobileFooter />
+  ) : (
+    <Footer />
+  )
+}
 
 export default async function Page() {
   //const clubs = await getDjangoAPI();
@@ -23,9 +28,9 @@ export default async function Page() {
         <Navbar />
         <div className={styles.tickerBar}>
           <div className={styles.tickerHeader}>
-            <h4>
+            <h3>
               <i className="fas fa-star"></i> Updates
-            </h4>
+            </h3>
           </div>
 
           <div className="ticker_track">
@@ -38,15 +43,15 @@ export default async function Page() {
         <div className="hero_inner">
           <div className="hero_left">
             <div className={styles.heroTag}>
-              <h4>Student Council {getSchoolYear()}</h4>
+              <p>Student Council {getSchoolYear()}</p>
             </div>
             <div className="hero_title">
               <h1>GW. Williams</h1>
               <h2>STUCO</h2>
             </div>
             <div className="hero_subtitle">
-              <h5>Representing Student Voice.</h5>
-              <h5>Building Wildcat Spirit.</h5>
+              <p>Representing Student Voice.</p>
+              <p>Building Wildcat Spirit.</p>
             </div>
 
             <div className={styles.heroButtons}>
@@ -116,7 +121,7 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterWrapper />
     </main >
   );
 }

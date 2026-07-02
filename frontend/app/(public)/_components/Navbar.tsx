@@ -75,7 +75,7 @@ export default function Navbar() {
                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
               </div>
               <div className="brand-copy">
-                <h1 className="school-title">Dr. GW Williams S.S.</h1>
+                <span className="school-title">Dr. GW Williams S.S.</span>
                 <span className="school-subtitle">Student Council</span>
               </div>
             </Link>

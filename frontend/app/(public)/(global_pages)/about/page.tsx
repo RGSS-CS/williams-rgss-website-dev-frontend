@@ -12,9 +12,9 @@ export default function AboutPage() {
                             <h2>STUCO</h2>
                         </div>
                         <div className="hero_subtitle">
-                            <h5>
+                            <p>
                                 We are a dedicated group of students committed to representing the interests and voices of our student body. Our goal is to foster a positive, inclusive, and engaging school community through leadership, service, and school spirit.
-                            </h5>
+                            </p>
                         </div>
                     </div>
                 </div>
