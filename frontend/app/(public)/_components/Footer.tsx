@@ -1,7 +1,6 @@
-import getYear from "@/app/(public)/_utils/getYear";
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
 
-export default async function Footer() {
-  const currentYear = await getYear();
   return (
     <footer className="site-footer">
       <div className="footer-inner">
