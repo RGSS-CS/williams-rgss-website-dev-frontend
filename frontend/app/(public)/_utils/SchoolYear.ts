@@ -1,12 +1,11 @@
-export async function getSchoolYear(school_year: string) {
+export function getSchoolYear(): string {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
-    if (month >= 8) {
-        var school_year = `${year}-${year + 1}`;
-    } else {
-        var school_year = `${year - 1}-${year}`;
-    }
 
-    return (school_year);
+    if (month >= 8) {
+        return `${year}-${year + 1}`;
+    } else {
+        return `${year - 1}-${year}`;
+    }
 }

@@ -55,7 +55,6 @@ function normalizeClub(record: ClubApiRecord): Club {
 }
 
 export async function getClubs(): Promise<Club[]> {
-  "use cache: private";
   const url = getClubsApiUrl();
 
   if (!url) {
