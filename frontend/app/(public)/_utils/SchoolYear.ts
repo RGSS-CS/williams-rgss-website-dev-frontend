@@ -1,4 +1,5 @@
 export async function getSchoolYear(school_year: string) {
+    "use cache";
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
