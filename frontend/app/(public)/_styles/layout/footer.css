@@ -38,6 +38,10 @@
   padding: 0;
 }
 
+.footer-col .no-pointer {
+  pointer-events: none;
+}
+
 .footer-col a:hover,
 .footer-col button:hover {
   color: var(--school-tertiary);

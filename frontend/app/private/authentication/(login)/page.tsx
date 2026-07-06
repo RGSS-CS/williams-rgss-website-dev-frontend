@@ -32,6 +32,7 @@ export default function SigninForm() {
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
               <div className={styles.input_wrap}>
+                <i className="fa-solid fa-key"></i>
                 <input
                   id="password"
                   name="password"
