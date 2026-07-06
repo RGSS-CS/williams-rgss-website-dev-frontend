@@ -1,5 +1,14 @@
+"use client";
+
+import { getSchoolYear } from "@/app/(public)/_utils/getYear";
+import { useEffect, useState } from "react";
+
 export default function MobileFooter() {
-  const currentYear = new Date().getFullYear();
+  const [schoolYear, setSchoolYear] = useState<string | null>(null);
+
+    useEffect(() => {
+        setSchoolYear(getSchoolYear());
+    }, []);
 
   return (
     <footer className="site-footer">
@@ -44,8 +53,8 @@ export default function MobileFooter() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>Dr. G.W. Williams S.S. Student Council {currentYear}</span>
-        <span>&copy; {currentYear} Williams STUCO. All rights reserved.</span>
+        <span>Dr. G.W. Williams S.S. Student Council {schoolYear ?? ''}</span>
+        <span>&copy; {schoolYear ?? ''} Williams STUCO. All rights reserved.</span>
       </div>
     </footer>
   );
