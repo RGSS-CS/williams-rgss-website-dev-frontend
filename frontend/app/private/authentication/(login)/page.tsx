@@ -4,6 +4,10 @@ import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
 import LoginBackButton from "../_components/LoginBackButton";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons'
+
 export default function SigninForm() {
   return (
     <main>
@@ -19,7 +23,7 @@ export default function SigninForm() {
             <div className={styles.form_group}>
               <label htmlFor="student_number">YRDSB Email</label>
               <div className={styles.input_wrap}>
-                <i className="fa-regular fa-envelope"></i>
+                <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
                 <input
                   id="student_number"
                   name="student_number"
@@ -32,7 +36,7 @@ export default function SigninForm() {
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
               <div className={styles.input_wrap}>
-                <i className="fa-solid fa-key"></i>
+                <FontAwesomeIcon icon={faKey} className={styles.fas} />
                 <input
                   id="password"
                   name="password"
@@ -46,13 +50,13 @@ export default function SigninForm() {
                   type="button"
                   aria-label="Toggle password visibility"
                 >
-                  <i className="fa-regular fa-eye" id="toggleIcon"></i>
+                  <FontAwesomeIcon icon={faEye} className={styles.fas} />
                 </button>
               </div>
             </div>
 
             <button className={styles.btn_login} type="submit" id="loginBtn">
-              <i className="fa-solid fa-arrow-right-to-bracket"></i>
+              <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
               Sign In
             </button>
             <div className={styles.signUp}>

@@ -52,7 +52,7 @@
     background: var(--school-tertiary-dark);
 }
 
-.back_button i {
+.back_button .fas {
     margin-right: 0;
 }
 
@@ -105,7 +105,7 @@
     position: relative;
 }
 
-.input_wrap > i {
+.input_wrap > .fas {
     position: absolute;
     left: 13px;
     top: 50%;
