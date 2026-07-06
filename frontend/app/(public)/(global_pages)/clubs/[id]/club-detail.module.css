@@ -16,7 +16,6 @@
   border-radius: 999px;
   background: var(--school-tertiary);
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-size: 0.92rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -95,7 +94,6 @@
   border-radius: 999px;
   background: var(--school-tertiary);
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -105,7 +103,6 @@
 .sectionTitle {
   margin-top: 1rem;
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-size: clamp(2rem, 4vw, 2.65rem);
   font-weight: 900;
 }
@@ -160,7 +157,6 @@
   gap: 0.9rem;
   margin-bottom: 2rem;
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 900;
 }
@@ -191,7 +187,6 @@
 .infoTile h3 {
   margin-top: 1rem;
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
 }
@@ -240,7 +235,6 @@
 
 .applySectionCopy h2 {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
 }
@@ -368,7 +362,6 @@
   background: var(--white);
   border-radius: 999px;
   padding: 0.35rem 0.7rem;
-  font-family: monospace;
   font-size: clamp(0.9rem, 3vw, 1rem);
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -388,7 +381,6 @@
   border-radius: 14px;
   background: var(--school-tertiary);
   color: var(--school-primary);
-  font-family: "Montserrat", sans-serif;
   font-weight: 900;
   font-size: 0.86rem;
   letter-spacing: 0.04em;
@@ -409,6 +401,209 @@
 .applyInviteLink:focus-visible {
   outline: 3px solid var(--school-secondary);
   outline-offset: 3px;
+}
+
+.loadingBreadcrumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.loadingBreadcrumbs span {
+  width: 4.2rem;
+  height: 0.9rem;
+}
+
+.loadingBreadcrumbs span:last-child {
+  width: min(34vw, 8rem);
+}
+
+.loadingHeroTitle {
+  width: min(78vw, 660px);
+  margin-bottom: 2rem;
+}
+
+.loadingHeroTitle span {
+  height: clamp(3rem, 7vw, 5.4rem);
+}
+
+.loadingHeroSubtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: min(680px, 100%);
+  margin-bottom: 2rem;
+  padding-left: 1.2rem;
+  border-left: 5px solid var(--school-tertiary);
+}
+
+.loadingHeroSubtitle span {
+  height: 1.2rem;
+}
+
+.loadingHeroSubtitle span:first-child {
+  width: min(100%, 610px);
+}
+
+.loadingHeroSubtitle span:last-child {
+  width: min(72%, 420px);
+}
+
+.loadingHeroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.loadingHeroButton {
+  width: 9rem;
+  height: 2.9rem;
+  border-radius: 999px;
+  background: rgba(219, 152, 32, 0.65);
+}
+
+.loadingHeroHint {
+  width: 9.5rem;
+  height: 0.95rem;
+}
+
+.loadingEyebrow,
+.loadingSectionTitle,
+.loadingSectionBody span,
+.loadingBadge,
+.loadingVisualCaption,
+.loadingHeadlineIcon,
+.loadingHeadlineText,
+.loadingTileIcon,
+.loadingTileTitle,
+.loadingTileText {
+  background: #e7edf4;
+}
+
+.loadingEyebrow {
+  width: 6.5rem;
+  height: 1.55rem;
+  border-radius: 999px;
+}
+
+.loadingSectionTitle {
+  width: min(70vw, 420px);
+  height: clamp(2rem, 4vw, 2.65rem);
+  margin-top: 1rem;
+}
+
+.loadingSectionBody {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.loadingSectionBody span {
+  height: 1rem;
+}
+
+.loadingSectionBody span:nth-child(1) {
+  width: 100%;
+}
+
+.loadingSectionBody span:nth-child(2) {
+  width: 92%;
+}
+
+.loadingSectionBody span:nth-child(3) {
+  width: 68%;
+}
+
+.loadingBadge {
+  width: 10rem;
+  height: 2.8rem;
+  border-radius: 999px;
+}
+
+.loadingAboutVisual {
+  background: #d9e4ef;
+  position: relative;
+}
+
+.loadingVisualCaption {
+  width: 70%;
+  height: 3.3rem;
+  margin: auto 1.5rem 1.3rem;
+}
+
+.loadingHeadlineIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.loadingHeadlineText {
+  width: min(66vw, 360px);
+  height: clamp(2rem, 4vw, 2.5rem);
+}
+
+.loadingTileIcon {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 12px;
+}
+
+.loadingTileTitle {
+  width: 65%;
+  height: 1.25rem;
+  margin-top: 1rem;
+}
+
+.loadingTileText {
+  width: 82%;
+  height: 1rem;
+  margin-top: 0.75rem;
+}
+
+.loadingApplyEyebrow,
+.loadingApplyTitle,
+.loadingApplyText,
+.loadingApplyRow,
+.loadingApplyCode,
+.loadingApplyButton {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.loadingApplyEyebrow {
+  width: 7rem;
+  height: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.loadingApplyTitle {
+  width: min(80%, 290px);
+  height: clamp(2rem, 4vw, 3rem);
+}
+
+.loadingApplyText {
+  width: min(100%, 430px);
+  height: 1rem;
+  margin-top: 1rem;
+}
+
+.loadingApplyRow {
+  height: 4.2rem;
+  border-radius: 14px;
+}
+
+.loadingApplyCode {
+  height: 3.6rem;
+  border-radius: 16px;
+}
+
+.loadingApplyButton {
+  height: 3.1rem;
+  border-radius: 14px;
+  background: rgba(219, 152, 32, 0.72);
 }
 
 @media (max-width: 1120px) {

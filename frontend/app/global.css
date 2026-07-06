@@ -31,7 +31,8 @@ html {
 body {
   background-color: var(--school-primary);
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-weight: 400;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -42,9 +43,22 @@ main {
   flex: 1;
 }
 
-h1,
-h2,
-h3 {
+h1 {
   font-family: "Montserrat", sans-serif;
-  font-weight: 700;
+}
+
+h2 {
+  font-family: "Futura", sans-serif;
+}
+
+h3 {
+  font-family: "Neue Machina bold", sans-serif;
+}
+
+h4 {
+  font-family: "Promima Nova", sans-serif;
+}
+
+p {
+  font-family: "Acumin variable", sans-serif;
 }

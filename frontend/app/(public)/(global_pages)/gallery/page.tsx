@@ -16,8 +16,8 @@ export default function GalleryPage() {
                             <h1>Gallery</h1>
                         </div>
                         <div className="hero_subtitle">
-                            <h5>Where photos tell our story.</h5>
-                            <h5>Events, clubs, competitions, and everyday Wildcat moments.</h5>
+                            <p>Where photos tell our story.</p>
+                            <p>Events, clubs, competitions, and everyday Wildcat moments.</p>
                         </div>
                         <div className="search_container">
                             <i className="fas fa-search"></i>

@@ -181,8 +181,8 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
               <h2>club</h2>
             </div>
             <div className="hero_subtitle">
-              <h5>Explore every club, team, and organization at Dr. GW. Williams S.S.</h5>
-              <h5>Find where you belong</h5>
+              <p>Explore every club, team, and organization at Dr. GW. Williams S.S.</p>
+              <p>Find where you belong</p>
             </div>
             <div className="search_container">
               <i className="fas fa-search"></i>

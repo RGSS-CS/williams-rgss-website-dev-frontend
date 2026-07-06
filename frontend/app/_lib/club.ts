@@ -63,9 +63,7 @@ export async function getClubs(): Promise<Club[]> {
 
   try {
     const res = await fetch(url, {
-      next: {
-        revalidate: 60,
-      },
+      cache: "no-store",
     });
 
     if (!res.ok) {

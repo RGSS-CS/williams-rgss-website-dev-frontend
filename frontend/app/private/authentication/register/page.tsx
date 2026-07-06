@@ -5,7 +5,7 @@ export default function SignupForm() {
     <div className={styles.body}>
       <div className={`${styles.login_card} ${styles.register_card}`}>
         <div className={styles.card_header}>
-          <h2>Please notify STUCO</h2>
+          <h1>Please notify STUCO</h1>
           <p>Please register your account with STUCO first, then return to <a href="/private/authentication">login</a></p>
         </div>
       </div>

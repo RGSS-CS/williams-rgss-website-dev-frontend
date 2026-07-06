@@ -1,13 +1,4 @@
-"use client";
-import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
-
-export default function Footer() {
-  const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-
-  const handleCopy = async (text: string) => {
-    await copyToClipboard(text);
-  }
-
+export default function MobileFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -18,14 +9,12 @@ export default function Footer() {
           <span className="no-pointer"><p>Aurora, Ontario, Canada</p></span>
           <p>
             <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
-              <i className="fas fa-map-marker-alt"></i>
               11 Spring Farm Road, L4G 7W2
             </a>
           </p>
-          <button onClick={() => handleCopy("(905) 727-3131")}> <i className="fas fa-copy"></i>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
-            {copyStatus === 'error' && <p>Failed to copy.</p>}
-          </button>
+          <p>
+            <a href="tel:+19057273131">(905) 727-3131</a>
+          </p>
         </div>
         <div className="footer-col">
           <h4>Follow Us</h4>
