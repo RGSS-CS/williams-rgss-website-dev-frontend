@@ -1,14 +1,18 @@
 "use client";
 import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   const handleCopy = async (text: string) => {
     await copyToClipboard(text);
-  }
-
-  const currentYear = new Date().getFullYear();
+  };
 
   return (
     <footer className="site-footer">
@@ -54,8 +58,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>Dr. G.W. Williams S.S. Student Council {currentYear}</span>
-        <span>&copy; {currentYear} Williams STUCO. All rights reserved.</span>
+        <span>Dr. G.W. Williams S.S. Student Council {year ?? ''}</span>
+        <span>&copy; {year ?? ''} Williams STUCO. All rights reserved.</span>
       </div>
     </footer>
   );
