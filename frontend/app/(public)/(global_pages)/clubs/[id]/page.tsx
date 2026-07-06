@@ -7,8 +7,6 @@ import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
 
-export const dynamic = "force-dynamic";
-
 type ClubPageProps = {
   params: Promise<{
     id: string;
