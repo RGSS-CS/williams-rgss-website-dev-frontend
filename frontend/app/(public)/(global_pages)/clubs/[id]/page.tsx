@@ -7,6 +7,10 @@ import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
 type ClubPageProps = {
   params: Promise<{
     id: string;
@@ -95,7 +99,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
                 Apply Now
               </AnchorLink>
-              <p><i className="fas fa-chevron-down"></i>Scroll to explore</p>
+              <p><FontAwesomeIcon icon={faChevronDown} />Scroll to explore</p>
             </div>
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
@@ -129,15 +133,15 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
               <div className={styles_modules.badgeRow}>
                 <div className={styles_modules.badge}>
-                  <i className="fas fa-calendar-check"></i>
+                  <FontAwesomeIcon icon={faCalendarCheck} />
                   {meetingDay} · {meetingTime}
                 </div>
                 <div className={styles_modules.badge}>
-                  <i className="fas fa-door-open"></i>
+                  <FontAwesomeIcon icon={faDoorOpen} />
                   {roomLabel}
                 </div>
                 <div className={styles_modules.badge}>
-                  <i className="fas fa-layer-group"></i>
+                  <FontAwesomeIcon icon={faLayerGroup} />
                   {club.categories.join(" · ")}
                 </div>
               </div>
@@ -156,38 +160,38 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
       <div className={styles_modules.infoWrap}>
         <section className={styles_modules.section}>
           <div className={styles_modules.headlineRow}>
-            <i className="fas fa-info-circle"></i>
+            <FontAwesomeIcon icon={faInfoCircle} className={styles_modules.fas} />
             <span>Club Information</span>
           </div>
 
           <div className={styles_modules.infoGrid}>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-layer-group"></i>
+              <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
               <h3>Category</h3>
               <p>{club.categories.join(", ") || "Not provided"}</p>
             </article>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-calendar-alt"></i>
+              <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
               <h3>Meeting Day</h3>
               <p>{meetingDay}</p>
             </article>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-clock"></i>
+              <FontAwesomeIcon icon={faClock} className={styles_modules.fas} />
               <h3>Meeting Time</h3>
               <p>{meetingTime}</p>
             </article>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-repeat"></i>
+              <FontAwesomeIcon icon={faRepeat} className={styles_modules.fas}/>
               <h3>Repetition</h3>
               <p>{cadence}</p>
             </article>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-door-open"></i>
+              <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas}/>
               <h3>Room</h3>
               <p>{roomLabel}</p>
             </article>
             <article className={styles_modules.infoTile}>
-              <i className="fas fa-user-tie"></i>
+              <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas}/>
               <h3>Teacher Advisor</h3>
               <p>{club.teacherAdvisor ?? "Not provided"}</p>
             </article>
@@ -213,14 +217,14 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             <div className={styles_modules.applyPanelInner}>
               <div className={styles_modules.applyInfoCard}>
                 <div className={styles_modules.applyInfoRow}>
-                  <i className="fas fa-calendar-alt"></i>
+                  <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
                   <p>
                     <strong>Meetings</strong>
                     {meetingDay} at {meetingTime}
                   </p>
                 </div>
                 <div className={styles_modules.applyInfoRow}>
-                  <i className="fas fa-door-open"></i>
+                  <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
                   <p>
                     <strong>Location</strong>
                     {roomLabel}
@@ -242,7 +246,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
                 rel="noreferrer"
               >
                 Open Classroom Invite
-                <i className="fas fa-arrow-up-right-from-square"></i>
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </a>
             </div>
           </div>

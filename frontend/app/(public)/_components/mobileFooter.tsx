@@ -2,6 +2,10 @@
 
 import { getSchoolYear } from "@/app/(public)/_utils/getYear";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 
 export default function MobileFooter() {
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
@@ -37,7 +41,7 @@ export default function MobileFooter() {
               title="Instagram"
               aria-label="Instagram"
             >
-              <i className="fab fa-instagram"></i>
+              <FontAwesomeIcon icon={faInstagram} />
             </a>
             <a
               href="https://drgwwilliams-ss.yrdsb.ca/"
@@ -47,7 +51,7 @@ export default function MobileFooter() {
               title="School website"
               aria-label="School website"
             >
-              <i className="fa fa-globe"></i>
+              <FontAwesomeIcon icon={faGlobe} />
             </a>
           </div>
         </div>
