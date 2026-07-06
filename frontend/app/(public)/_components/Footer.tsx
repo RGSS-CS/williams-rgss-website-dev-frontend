@@ -1,21 +1,28 @@
-import getYear from "@/app/(public)/_utils/getYear";
+"use client";
+import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
 
-export default async function Footer() {
-  const currentYear = await getYear();
+export default function Footer() {
+  const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
+
+  const handleCopy = async (text: string) => {
+    await copyToClipboard(text);
+  }
+
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-col">
           <h4>School Info</h4> {/*Change to school info pulled from backend API */}
-          <span className="no-pointer"><p>Aurora, Ontario, Canada</p></span>
+          <p>Aurora, Ontario, Canada</p>
           <p>
             <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
-              <i className="fas fa-map-marker-alt"></i>
               11 Spring Farm Road, L4G 7W2
             </a>
           </p>
-          <button onClick={() => handleCopy("(905) 727-3131")}> <i className="fas fa-copy"></i>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
+          <button onClick={() => handleCopy("(905) 727-3131")}>
+            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}          
             {copyStatus === 'error' && <p>Failed to copy.</p>}
           </button>
         </div>
