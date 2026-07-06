@@ -302,22 +302,22 @@ export default function AboutPage() {
                     <div className={styles.techBadges}>
                         <span className={styles.techLabel}>Built with</span>
                         <div className={styles.badgeRow}>
-                            <span className={styles.techBadge}>
+                            <a className={styles.techBadge} href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
                                 <Image src="/images/icons_builtOn/nextjs-light.svg" alt="Next.js" width={24} height={24} />
                                 Next.js
-                            </span>
-                            <span className={styles.techBadge}>
+                            </a>
+                            <a className={styles.techBadge} href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">
                                 <Image src="/images/icons_builtOn/django.svg" alt="Django" width={24} height={24} />
                                 Django
-                            </span>
-                            <span className={styles.techBadge}>
+                            </a>
+                            <a className={styles.techBadge} href="https://github.com/features/actions" target="_blank" rel="noopener noreferrer">
                                 <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub Actions" width={24} height={24} />
                                 GitHub Actions
-                            </span>
-                            <span className={styles.techBadge}>
+                            </a>
+                            <a className={styles.techBadge} href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">
                                     <Image src="/images/icons_builtOn/google_fonts.svg" alt="Google Fonts" width={24} height={24} />
                                 Google Fonts
-                            </span>
+                            </a>
                         </div>
                     </div>
                 </div>
