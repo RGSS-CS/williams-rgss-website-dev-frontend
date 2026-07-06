@@ -1,4 +1,4 @@
-export async function getSchoolYear(school_year: string) {
+export async function getSchoolYear() {
     "use cache";
     const now = new Date();
     const year = now.getFullYear();

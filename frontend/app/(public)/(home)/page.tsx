@@ -7,6 +7,7 @@ import Footer from "@/app/(public)/_components/Footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/mobileFooter";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 export async function FooterWrapper() {
   const headersList = await headers();
@@ -121,7 +122,8 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <FooterWrapper />
+      <Suspense><FooterWrapper /></Suspense>
+      
     </main >
   );
 }

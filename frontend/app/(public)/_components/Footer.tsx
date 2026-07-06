@@ -1,14 +1,19 @@
 "use client";
 import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
+import { getSchoolYear } from "@/app/(public)/_utils/getYear";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 
 export default function Footer() {
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-  const [year, setYear] = useState<number | null>(null);
+  const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+    useEffect(() => {
+        setSchoolYear(getSchoolYear());
+    }, []);
 
   const handleCopy = async (text: string) => {
     await copyToClipboard(text);
@@ -42,7 +47,7 @@ export default function Footer() {
               title="Instagram"
               aria-label="Instagram"
             >
-              <i className="fab fa-instagram"></i>
+              <FontAwesomeIcon icon={faInstagram} />
             </a>
             <a
               href="https://drgwwilliams-ss.yrdsb.ca/"
@@ -52,14 +57,14 @@ export default function Footer() {
               title="School website"
               aria-label="School website"
             >
-              <i className="fa fa-globe"></i>
+              <FontAwesomeIcon icon={faGlobe} />
             </a>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>Dr. G.W. Williams S.S. Student Council {year ?? ''}</span>
-        <span>&copy; {year ?? ''} Williams STUCO. All rights reserved.</span>
+        <span>Dr. G.W. Williams S.S. Student Council {schoolYear ?? ''}</span>
+        <span>&copy; {schoolYear ?? ''} Williams STUCO. All rights reserved.</span>
       </div>
     </footer>
   );
