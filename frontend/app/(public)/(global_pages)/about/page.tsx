@@ -265,7 +265,7 @@ export default function AboutPage() {
                                 Frontend architecture, CI/CD pipeline, Azure deployment.
                             </p>
                             <a className={styles.contactLink} href="#" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/github-light.svg" alt="GitHub" width={24} height={24} />
                             </a>
                         </article>
                         <article className={styles.creditCard}>
@@ -275,7 +275,7 @@ export default function AboutPage() {
                                 Django REST API, PostgreSQL schema, authentication.
                             </p>
                             <a className={styles.contactLink} href="#" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/github-light.svg" alt="GitHub" width={24} height={24} />
                             </a>
                         </article>
                         <article className={styles.creditCard}>
@@ -285,7 +285,7 @@ export default function AboutPage() {
                                 Visual design, component system, accessibility.
                             </p>
                             <a className={styles.contactLink} href="#" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/github-light.svg" alt="GitHub" width={24} height={24} />
                             </a>
                         </article>
                         <article className={styles.creditCard}>
@@ -295,7 +295,7 @@ export default function AboutPage() {
                                 Club listings, event copy, photography coordination.
                             </p>
                             <a className={styles.contactLink} href="#" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/github-light.svg" alt="GitHub" width={24} height={24} />
                             </a>
                         </article>
                     </div>
@@ -303,19 +303,19 @@ export default function AboutPage() {
                         <span className={styles.techLabel}>Built with</span>
                         <div className={styles.badgeRow}>
                             <a className={styles.techBadge} href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/nextjs-light.svg" alt="Next.js" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/nextjs-light.svg" alt="Next.js" width={24} height={24} />
                                 Next.js
                             </a>
                             <a className={styles.techBadge} href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/django.svg" alt="Django" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/django.svg" alt="Django" width={24} height={24} />
                                 Django
                             </a>
                             <a className={styles.techBadge} href="https://github.com/features/actions" target="_blank" rel="noopener noreferrer">
-                                <Image src="/images/icons_builtOn/github-light.svg" alt="GitHub Actions" width={24} height={24} />
+                                <Image src="/Images/pages/public/about/media/github-light.svg" alt="GitHub Actions" width={24} height={24} />
                                 GitHub Actions
                             </a>
                             <a className={styles.techBadge} href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">
-                                    <Image src="/images/icons_builtOn/google_fonts.svg" alt="Google Fonts" width={24} height={24} />
+                                    <Image src="/Images/pages/public/about/media/google_fonts.svg" alt="Google Fonts" width={24} height={24} />
                                 Google Fonts
                             </a>
                         </div>
