@@ -1,6 +1,11 @@
 import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans } from "next/font/google";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
 
 import "@/app/global.css";
+
+library.add(fas);
 
 const montserrat = Montserrat({
     subsets: ["latin"],
