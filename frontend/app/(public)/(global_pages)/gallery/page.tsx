@@ -1,12 +1,17 @@
 import Image from "next/image";
-
 import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPanel";
 import styles from "./gallery.module.css";
-
+import { Metadata } from 'next';
 import GalleryFilterContent from "./_components/GalleryFilterContent";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+
+const metadata: Metadata = {
+    title: "Gallery",
+    description: "Where photos tell our story. Events, clubs, competitions, and everyday school moments.",
+};
 
 export default function GalleryPage() {
     return (
@@ -20,7 +25,7 @@ export default function GalleryPage() {
                         </div>
                         <div className="hero_subtitle">
                             <p>Where photos tell our story.</p>
-                            <p>Events, clubs, competitions, and everyday Wildcat moments.</p>
+                            <p>Events, clubs, competitions, and everyday school moments.</p>
                         </div>
                         <div className={`search_container ${styles.search_container}`}>
                             <FontAwesomeIcon icon={faSearch} className={styles.fas}/>
