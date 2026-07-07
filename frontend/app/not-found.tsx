@@ -4,13 +4,13 @@ import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./(public)/_components/Navbar";
 import Footer from "./(public)/_components/Footer";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Icons
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
+  description: "The page you are looking for does not exist.",
 };
 
 export default async function NotFound() {

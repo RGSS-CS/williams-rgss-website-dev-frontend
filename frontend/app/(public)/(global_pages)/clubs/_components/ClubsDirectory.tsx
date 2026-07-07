@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { JSX, useDeferredValue, useState } from "react";
+import { JSX, Suspense, useDeferredValue, useState } from "react";
 
 import type { Club } from "@/app/_lib/club";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
@@ -14,6 +14,7 @@ import ResetFiltersButton from "./ResetFiltersButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faLayerGroup, faBook, faPalette, faHandsHelping, faRunning, faFlask, faMicrochip, faMusic, faBriefcase, faSearch, faArrowRight, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import Loading from "../loading";
 
 const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
 
@@ -98,7 +99,7 @@ function ClubCard({ club }: { club: Club }) {
           <div className={styles.club_meta_row}>
             <FontAwesomeIcon icon={faMapMarkerAlt} />
             <h4>Room: {club.roomNumber}</h4>
-          </div>          
+          </div>
           <div className={styles.club_meta_row}>
             <FontAwesomeIcon icon={faCalendarAlt} />
             <h4>{club.repetition}: {club.dayOfMeeting} @ {club.time}</h4>
@@ -176,93 +177,95 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
 
   return (
     <main>
-      <div className="hero">
-        <div className="hero_shape"></div>
-        <div className="hero_inner">
-          <div className="hero_left">
-            <div className="hero_title">
-              <h1>Find your</h1>
-              <h2>club</h2>
-            </div>
-            <div className="hero_subtitle">
-              <p>Explore every club, team, and organization at Dr. GW. Williams S.S.</p>
-              <p>Find where you belong</p>
-            </div>
-            <div className="search_container">
-              <FontAwesomeIcon icon={faSearch} className="fas" />
-              <ClubSearchInput value={query} onChange={setQuery} />
-            </div>
-            <div className={styles.heroStats}>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{clubs.length}</span>
-                <span className="stat-label">Total Clubs</span>
+      <Suspense fallback={<Loading />}>
+        <div className="hero">
+          <div className="hero_shape"></div>
+          <div className="hero_inner">
+            <div className="hero_left">
+              <div className="hero_title">
+                <h1>Find your</h1>
+                <h2>club</h2>
               </div>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{categories.length}</span>
-                <span className="stat-label">Categories</span>
+              <div className="hero_subtitle">
+                <p>Explore every club, team, and organization at Dr. GW. Williams S.S.</p>
+                <p>Find where you belong</p>
+              </div>
+              <div className="search_container">
+                <FontAwesomeIcon icon={faSearch} className="fas" />
+                <ClubSearchInput value={query} onChange={setQuery} />
+              </div>
+              <div className={styles.heroStats}>
+                <div className={styles.heroStat}>
+                  <span className="stat-num">{clubs.length}</span>
+                  <span className="stat-label">Total Clubs</span>
+                </div>
+                <div className={styles.heroStat}>
+                  <span className="stat-num">{categories.length}</span>
+                  <span className="stat-label">Categories</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="sticky-wrapper">
-        <ResponsiveFilterPanel>
-          <ClubsFilterControls
-            categories={categoryFilters}
-            activeCategory={activeCategory}
-            activeDay={activeDay}
-            onCategoryChange={setActiveCategory}
-            onDayChange={setActiveDay}
-          />
-          <span className={`results-count ${styles.resultsCount}`}>
-            Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
-          </span>
-        </ResponsiveFilterPanel>
+        <div className="sticky-wrapper">
+          <ResponsiveFilterPanel>
+            <ClubsFilterControls
+              categories={categoryFilters}
+              activeCategory={activeCategory}
+              activeDay={activeDay}
+              onCategoryChange={setActiveCategory}
+              onDayChange={setActiveDay}
+            />
+            <span className={`results-count ${styles.resultsCount}`}>
+              Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
+            </span>
+          </ResponsiveFilterPanel>
 
-        <div className={styles.mobileResultsBar}>
-          <span className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`}>
-            Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
-          </span>
+          <div className={styles.mobileResultsBar}>
+            <span className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`}>
+              Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          <div className="category_container">
+            {visibleCategories.map((section) => (
+              <div className="category-section" data-category={section.slug} id={`cat-${section.slug}`} key={section.slug}>
+                <div className="category-header">
+                  <div className="category-accent"></div>
+                  <span className="category-title">
+                    {getCategoryIcon(section.name)}
+                    {section.name}
+                  </span>
+                  <div className="category-divider"></div>
+                  <span className="category-count">
+                    {section.clubs.length} club{section.clubs.length === 1 ? "" : "s"}
+                  </span>
+                </div>
+                <div className={`cards-grid ${styles.clubCardsGrid}`}>
+                  {section.clubs.map((club) => (
+                    <ClubCard club={club} key={`${section.slug}-${club.id}`} />
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {visibleCategories.length === 0 && (
+              <div className={styles.emptyState}>
+                <FontAwesomeIcon icon={faSearch} size="3x" />
+                <h3>No Clubs Found</h3>
+                <p>Try a different search term or clear your filters</p>
+                <ResetFiltersButton onReset={handleReset} />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="category_container">
-          {visibleCategories.map((section) => (
-            <div className="category-section" data-category={section.slug} id={`cat-${section.slug}`} key={section.slug}>
-              <div className="category-header">
-                <div className="category-accent"></div>
-                <span className="category-title">
-                  {getCategoryIcon(section.name)}
-                  {section.name}
-                </span>
-                <div className="category-divider"></div>
-                <span className="category-count">
-                  {section.clubs.length} club{section.clubs.length === 1 ? "" : "s"}
-                </span>
-              </div>
-              <div className={`cards-grid ${styles.clubCardsGrid}`}>
-                {section.clubs.map((club) => (
-                  <ClubCard club={club} key={`${section.slug}-${club.id}`} />
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {visibleCategories.length === 0 && (
-            <div className={styles.emptyState}>
-              <FontAwesomeIcon icon={faSearch} size="3x" />
-              <h3>No Clubs Found</h3>
-              <p>Try a different search term or clear your filters</p>
-              <ResetFiltersButton onReset={handleReset} />
-            </div>
-          )}
+        <div className={styles.ctaBanner}>
+          <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
+          <p>Any GW Williams student can start a new club. Talk to a teacher that is interested with your idea.</p>
         </div>
-      </div>
-
-      <div className={styles.ctaBanner}>
-        <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
-        <p>Any GW Williams student can start a new club. Talk to a teacher that is interested with your idea.</p>
-      </div>
+      </Suspense>
     </main>
   );
 }
