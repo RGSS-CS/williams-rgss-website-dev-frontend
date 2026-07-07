@@ -27,8 +27,8 @@ export default function GalleryPage() {
                             <p>Where photos tell our story.</p>
                             <p>Events, clubs, competitions, and everyday school moments.</p>
                         </div>
-                        <div className={`search_container ${styles.search_container}`}>
-                            <FontAwesomeIcon icon={faSearch} className={styles.fas}/>
+                        <div className="search_container">
+                            <FontAwesomeIcon icon={faSearch} className="search_container_icon"/>
                             <input className="search_input" id="gallery_search" type="text" placeholder="Search by club name, event, people..."></input>
                         </div>
                     </div>

@@ -191,7 +191,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
                 <p>Find where you belong</p>
               </div>
               <div className="search_container">
-                <FontAwesomeIcon icon={faSearch} className="fas" />
+                <FontAwesomeIcon icon={faSearch} className="search_container_icon" />
                 <ClubSearchInput value={query} onChange={setQuery} />
               </div>
               <div className={styles.heroStats}>

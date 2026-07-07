@@ -179,16 +179,6 @@
   border-radius: 12px;
 }
 
-.search_container .fas {
-  position: absolute;
-  left: 1.2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 1rem;
-  pointer-events: none;
-}
-
 @keyframes skeletonShimmer {
   100% {
     transform: translateX(100%);
