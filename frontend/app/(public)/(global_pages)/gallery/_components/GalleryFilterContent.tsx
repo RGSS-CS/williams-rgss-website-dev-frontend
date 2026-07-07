@@ -1,21 +1,25 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//ICONS
+import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faFilter } from "@fortawesome/free-solid-svg-icons";
+
 const categorySections = [
-  { key: "academic", iconClass: "fas fa-book", label: "Academic" },
-  { key: "arts", iconClass: "fas fa-palette", label: "Arts" },
-  { key: "community", iconClass: "fas fa-hands-helping", label: "Community" },
-  { key: "sports", iconClass: "fas fa-running", label: "Sports & Recreation" },
-  { key: "events", iconClass: "fas fa-calendar-check", label: "Events" },
+  { key: "academic", icon: <FontAwesomeIcon icon={faBook} />, label: "Academic" },
+  { key: "arts", icon: <FontAwesomeIcon icon={faPalette} />, label: "Arts" },
+  { key: "community", icon: <FontAwesomeIcon icon={faHandsHelping} />, label: "Community" },
+  { key: "sports", icon: <FontAwesomeIcon icon={faRunning} />, label: "Sports & Recreation" },
+  { key: "events", icon: <FontAwesomeIcon icon={faCalendarCheck} />, label: "Events" },
 ] as const;
 
 export default function GalleryFilterContent() {
   return (
     <>
       <span className="filter_label">
-        <i className="fas fa-filter"></i>
+        <FontAwesomeIcon icon={faFilter} />
         Filter
       </span>
       {categorySections.map((section) => (
         <button key={section.key} className="filter-chip" type="button">
-          <i className={section.iconClass}></i>
+          {section.icon}
           {section.label}
         </button>
       ))}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useCallback } from 'react';
 
 type CopyStatus = 'idle' | 'success' | 'error';

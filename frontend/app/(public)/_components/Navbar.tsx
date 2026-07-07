@@ -4,17 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
 import "@/app/(public)/styles.css";
 
 const links = [
-  { href: "/", iconClass: "fas fa-home", label: "Home" },
-  { href: "/clubs", iconClass: "fas fa-users", label: "Clubs" },
-  { href: "/gallery", iconClass: "fas fa-images", label: "Gallery" },
-  { href: "/about", iconClass: "fas fa-info-circle", label: "About" },
+  { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
+  { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
+  { href: "/gallery", icon: <FontAwesomeIcon icon={faImages} />, label: "Gallery" },
+  { href: "/about", icon: <FontAwesomeIcon icon={faInfoCircle} />, label: "About" },
   {
     href: "/private/authentication",
-    iconClass: "fas fa-solid fa-arrow-right-to-bracket",
+    icon: <FontAwesomeIcon icon={faArrowRightToBracket} />,
     label: "Login",
   },
 ];
@@ -68,7 +71,7 @@ export default function Navbar() {
               onClick={() => setSidebarOpen(true)}
               aria-label="Open menu"
             >
-              <i className="fa fa-bars"></i>
+              <FontAwesomeIcon icon={faBars} />
             </button>
             <Link href="/" className="brand-link" prefetch={false}>
               <div className="logo">
@@ -83,15 +86,15 @@ export default function Navbar() {
 
           <div className="nav-links">
             {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={isActivePath(pathname, link.href) ? "active" : ""}
-              onClick={() => setSidebarOpen(false)}
-              prefetch={false}
-            >
-              <i className={link.iconClass}></i>
-              {link.label}
+              <Link
+                key={link.href}
+                href={link.href}
+                className={isActivePath(pathname, link.href) ? "active" : ""}
+                onClick={() => setSidebarOpen(false)}
+                prefetch={false}
+              >
+                {link.icon}
+                {link.label}
               </Link>
             ))}
           </div>
@@ -105,7 +108,7 @@ export default function Navbar() {
           onClick={() => setSidebarOpen(false)}
           aria-label="Close menu"
         >
-          <i className="fas fa-times"></i>
+          <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className="sidebar-links">
           {links.map((link) => (
@@ -116,7 +119,7 @@ export default function Navbar() {
               onClick={() => setSidebarOpen(false)}
               prefetch={false}
             >
-              <i className={link.iconClass}></i>
+              {link.icon}
               {link.label}
             </Link>
           ))}

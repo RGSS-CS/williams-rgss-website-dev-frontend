@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 type ResponsiveFilterPanelProps = {
   children: React.ReactNode;
@@ -27,7 +31,7 @@ export default function ResponsiveFilterPanel({
           onClick={() => setOpen(true)}
           aria-label="Open filters"
         >
-          <i className="fas fa-filter"></i>
+          <FontAwesomeIcon icon={faFilter} />
           Filters
         </button>
       </div>
@@ -37,7 +41,7 @@ export default function ResponsiveFilterPanel({
       <div className={`filter-sidebar ${open ? "open" : ""}`}>
         <div className="filter-sidebar-header">
           <span className="filter-sidebar-title">
-            <i className="fas fa-filter"></i>
+            <FontAwesomeIcon icon={faFilter} />
             Filters
           </span>
           <button
@@ -45,7 +49,7 @@ export default function ResponsiveFilterPanel({
             onClick={() => setOpen(false)}
             aria-label="Close filters"
           >
-            <i className="fas fa-times"></i>
+            <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
         <div className="filter-sidebar-body">{children}</div>

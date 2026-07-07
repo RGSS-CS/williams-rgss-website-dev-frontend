@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useDeferredValue, useState } from "react";
+import { JSX, useDeferredValue, useState } from "react";
 
 import type { Club } from "@/app/_lib/club";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
@@ -11,19 +11,23 @@ import ClubSearchInput from "./ClubSearchInput";
 import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";
 import ResetFiltersButton from "./ResetFiltersButton";
 
-const DEFAULT_CATEGORY_ICON = "fas fa-layer-group";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faLayerGroup, faBook, faPalette, faHandsHelping, faRunning, faFlask, faMicrochip, faMusic, faBriefcase, faSearch, faArrowRight, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
-const CATEGORY_ICON_MAP: Record<string, string> = {
-  academic: "fas fa-book",
-  arts: "fas fa-palette",
-  community: "fas fa-hands-helping",
-  sports: "fas fa-running",
-  recreation: "fas fa-running",
-  stem: "fas fa-flask",
-  science: "fas fa-flask",
-  technology: "fas fa-microchip",
-  music: "fas fa-music",
-  business: "fas fa-briefcase",
+const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
+
+const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
+  academic: <FontAwesomeIcon icon={faBook} />,
+  arts: <FontAwesomeIcon icon={faPalette} />,
+  community: <FontAwesomeIcon icon={faHandsHelping} />,
+  sports: <FontAwesomeIcon icon={faRunning} />,
+  recreation: <FontAwesomeIcon icon={faRunning} />,
+  stem: <FontAwesomeIcon icon={faFlask} />,
+  science: <FontAwesomeIcon icon={faFlask} />,
+  technology: <FontAwesomeIcon icon={faMicrochip} />,
+  music: <FontAwesomeIcon icon={faMusic} />,
+  business: <FontAwesomeIcon icon={faBriefcase} />,
 };
 
 type ClubsDirectoryProps = {
@@ -92,11 +96,11 @@ function ClubCard({ club }: { club: Club }) {
         <div className={styles.club_card_meta}>
 
           <div className={styles.club_meta_row}>
-            <i className="fas fa-map-marker-alt"></i>
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
             <h4>Room: {club.roomNumber}</h4>
           </div>          
           <div className={styles.club_meta_row}>
-            <i className="fas fa-calendar-alt"></i>
+            <FontAwesomeIcon icon={faCalendarAlt} />
             <h4>{club.repetition}: {club.dayOfMeeting} @ {club.time}</h4>
           </div>
         </div>
@@ -107,7 +111,7 @@ function ClubCard({ club }: { club: Club }) {
         <div className={styles.club_card_footer}>
           <span className={styles.open_club_btn}>
             View Details
-            <i className="fas fa-arrow-right"></i>
+            <FontAwesomeIcon icon={faArrowRight} />
             <span className={`${styles.club_tag} ${styles.open}`}></span>
           </span>
         </div>
@@ -131,7 +135,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
     ...categories.map((category) => ({
       value: slugifyCategory(category),
       label: category,
-      iconClass: getCategoryIcon(category),
+      icon: getCategoryIcon(category),
     })),
   ];
 
@@ -185,7 +189,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
               <p>Find where you belong</p>
             </div>
             <div className="search_container">
-              <i className="fas fa-search"></i>
+              <FontAwesomeIcon icon={faSearch} className="fas" />
               <ClubSearchInput value={query} onChange={setQuery} />
             </div>
             <div className={styles.heroStats}>
@@ -228,7 +232,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
               <div className="category-header">
                 <div className="category-accent"></div>
                 <span className="category-title">
-                  <i className={getCategoryIcon(section.name)}></i>
+                  {getCategoryIcon(section.name)}
                   {section.name}
                 </span>
                 <div className="category-divider"></div>
@@ -246,7 +250,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
 
           {visibleCategories.length === 0 && (
             <div className={styles.emptyState}>
-              <i className="fas fa-search"></i>
+              <FontAwesomeIcon icon={faSearch} size="3x" />
               <h3>No Clubs Found</h3>
               <p>Try a different search term or clear your filters</p>
               <ResetFiltersButton onReset={handleReset} />

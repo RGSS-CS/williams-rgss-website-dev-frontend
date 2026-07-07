@@ -57,7 +57,7 @@
   text-align: center;
 }
 
-.emptyState i {
+.emptyState .fas {
   font-size: 3rem;
   opacity: 0.3;
 }
@@ -144,7 +144,7 @@
   color: var(--school-primary-light);
 }
 
-.club_meta_row i {
+.club_meta_row .fas {
   flex-shrink: 0;
   font-size: 0.78rem;
   color: var(--school-primary);
@@ -251,7 +251,7 @@
   text-decoration: none;
 }
 
-.ctaBtn i {
+.ctaBtn .fas {
   margin-left: 0.6rem;
   font-size: 1.1rem;
 }

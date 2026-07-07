@@ -4,6 +4,9 @@ import ResponsiveFilterPanel from "@/app/(public)/_components/ResponsiveFilterPa
 import styles from "./gallery.module.css";
 
 import GalleryFilterContent from "./_components/GalleryFilterContent";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function GalleryPage() {
     return (
@@ -20,7 +23,7 @@ export default function GalleryPage() {
                             <p>Events, clubs, competitions, and everyday Wildcat moments.</p>
                         </div>
                         <div className="search_container">
-                            <i className="fas fa-search"></i>
+                            <FontAwesomeIcon icon={faSearch} />
                             <input className="search_input" id="gallery_search" type="text" placeholder="Search by club name, event, people..."></input>
                         </div>
                     </div>
@@ -35,11 +38,11 @@ export default function GalleryPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title">
-                                <i className="fas fa-book"></i> Academic
+                                <FontAwesomeIcon icon={faBook} /> Academic
                             </span>
                             <div className="category-divider"></div>
                             <span className="category-count">
-                                <i className="fas fa-images"></i>
+                                <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
@@ -49,11 +52,11 @@ export default function GalleryPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title">
-                                <i className="fas fa-palette"></i> Arts
+                                <FontAwesomeIcon icon={faPalette} /> Arts
                             </span>
                             <div className="category-divider"></div>
                             <span className="category-count">
-                                <i className="fas fa-images"></i>
+                                <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
@@ -64,11 +67,11 @@ export default function GalleryPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title">
-                                <i className="fas fa-hands-helping"></i> Community
+                                <FontAwesomeIcon icon={faHandsHelping} /> Community
                             </span>
                             <div className="category-divider"></div>
                             <span className="category-count">
-                                <i className="fas fa-images"></i>
+                                <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
@@ -78,11 +81,11 @@ export default function GalleryPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title">
-                                <i className="fas fa-running"></i> Sports &amp; Recreation
+                                <FontAwesomeIcon icon={faRunning} /> Sports &amp; Recreation
                             </span>
                             <div className="category-divider"></div>
                             <span className="category-count">
-                                <i className="fas fa-images"></i>
+                                <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
@@ -92,11 +95,11 @@ export default function GalleryPage() {
                         <div className="category-header">
                             <div className="category-accent"></div>
                             <span className="category-title">
-                                <i className="fas fa-calendar-check"></i> Events
+                                <FontAwesomeIcon icon={faCalendarCheck} /> Events
                             </span>
                             <div className="category-divider"></div>
                             <span className="category-count">
-                                <i className="fas fa-images"></i>
+                                <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
@@ -104,8 +107,8 @@ export default function GalleryPage() {
                 </div>
             </div>
             <div className={styles.lightboxOverlay} id="lightbox">
-                <button className="lightbox-nav-btn prev" title="Previous image" aria-label="Previous image"><i className="fas fa-chevron-left"></i></button>
-                <button className="lightbox-nav-btn next" title="Next image" aria-label="Next image"><i className="fas fa-chevron-right"></i></button>
+                <button className="lightbox-nav-btn prev" title="Previous image" aria-label="Previous image"><FontAwesomeIcon icon={faChevronLeft} /></button>
+                <button className="lightbox-nav-btn next" title="Next image" aria-label="Next image"><FontAwesomeIcon icon={faChevronRight} /></button>
                 <div className={styles.lightboxInner}>
                     <div className={styles.lightboxImgContainer} id="lightboxImgWrap">
                         <Image

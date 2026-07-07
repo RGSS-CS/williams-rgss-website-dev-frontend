@@ -7,6 +7,10 @@ import Footer from "@/app/(public)/_components/Footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/mobileFooter";
 import { headers } from "next/headers";
+import { Suspense } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faCalendarAlt, faPaperPlane, faStar } from '@fortawesome/free-solid-svg-icons'
 
 export async function FooterWrapper() {
   const headersList = await headers();
@@ -29,7 +33,7 @@ export default async function Page() {
         <div className={styles.tickerBar}>
           <div className={styles.tickerHeader}>
             <h3>
-              <i className="fas fa-star"></i> Updates
+              <FontAwesomeIcon icon={faStar} /> Updates
             </h3>
           </div>
 
@@ -58,7 +62,7 @@ export default async function Page() {
               <a href="/clubs">
                 <div className={styles.heroBtnPrimary}>
                   <p className={styles.heroBtnText}>
-                    <i className="fas fa-paper-plane"></i> Our Clubs
+                    <FontAwesomeIcon icon={faPaperPlane} /> Our Clubs
                   </p>
                 </div>
               </a>
@@ -66,8 +70,7 @@ export default async function Page() {
               <a href="/events">
                 <div className={styles.heroBtnSecondary}>
                   <p className={styles.heroBtnTextAlt}>
-                    <i className="fas fa-calendar-alt fas_fa_calendar_alt"></i>{" "}
-                    Upcoming Events
+                    <FontAwesomeIcon icon={faCalendarAlt} /> Upcoming Events
                   </p>
                 </div>
               </a>
@@ -121,7 +124,8 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <FooterWrapper />
+      <Suspense><FooterWrapper /></Suspense>
+      
     </main >
   );
 }
