@@ -1,5 +1,11 @@
 import styles from './about.module.css';
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "About STUCO",
+    description: "Learn more about the School Student Council."
+};
 
 export default function AboutPage() {
     return (
@@ -14,7 +20,7 @@ export default function AboutPage() {
                         </div>
                         <div className="hero_subtitle">
                             <p>
-                                Description
+                                Learn more about the School Student Council.
                             </p>
                         </div>
                     </div>
@@ -30,7 +36,7 @@ export default function AboutPage() {
                         </h2>
                     </div>
                     <p className={styles.sectionLead}>
-                        The Dr. G.W. Williams Secondary School Student Council is dedicated to the following core principles that guide everything we do.
+                        The School Student Council is dedicated to the following core principles that guide everything we do.
                     </p>
                     <div className={styles.cardsGrid}>
                         <article className={styles.card}>
