@@ -9,8 +9,14 @@ import MobileFooter from "@/app/(public)/_components/mobileFooter";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Metadata } from 'next';
 //ICONS
 import { faCalendarAlt, faPaperPlane, faStar } from '@fortawesome/free-solid-svg-icons'
+
+export const metadata: Metadata = {
+  title: 'Dr. GW Williams STUCO',
+  description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
+};
 
 export async function FooterWrapper() {
   const headersList = await headers();

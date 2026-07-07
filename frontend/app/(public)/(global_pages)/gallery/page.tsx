@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
     title: "Gallery",
     description: "Where photos tell our story. Events, clubs, competitions, and everyday school moments.",
 };
