@@ -1,4 +1,4 @@
-import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans } from "next/font/google";
+import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } from "next/font/google";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import "@/app/global.css";
@@ -35,6 +35,12 @@ const ibmPlexSans = IBM_Plex_Sans({
     variable: "--font-ibm-plex-sans",
     weight: ["400", "500", "600", "700"],
 });
+    
+const quicksand = Quicksand({
+    subsets: ["latin"],
+    variable: "--font-quicksand",
+    weight: ["400", "500", "600", "700"],
+});
 
 export default function RootLayout({
     children,
@@ -45,7 +51,7 @@ export default function RootLayout({
         <html
             lang="en"
             data-scroll-behavior="smooth"
-            className={`${montserrat.variable} ${ibmPlexSans.variable}`}
+            className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
         >
             <head>
                 <meta charSet="UTF-8" />
