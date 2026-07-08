@@ -234,7 +234,9 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
                 <div className="category-header">
                   <div className="category-accent"></div>
                   <span className="category-title">
-                    {getCategoryIcon(section.name)}
+                    <span className="category-icon">
+                      {getCategoryIcon(section.name)}
+                    </span>
                     {section.name}
                   </span>
                   <div className="category-divider"></div>
