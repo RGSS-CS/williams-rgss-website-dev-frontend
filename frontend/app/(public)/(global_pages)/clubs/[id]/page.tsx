@@ -67,14 +67,14 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   if (!club) {
     notFound();
   }
-
+  
   const primaryCategory = club.categories[0] ?? "Student Club";
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = formatTime(club.time);
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
   const classcode = club.classroomCode ?? "Not provided";
-  const demoClassroomInviteUrl = "https://classroom.google.com/c/NzAwMDAwMDAwMDAw?cjc=demo123";
+  const ClassroomInviteUrl = club.applicationFormLink;
 
   return (
     <main>
@@ -128,7 +128,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           <div className={styles_modules.aboutGrid}>
             <div>
               <span className={styles_modules.sectionEyebrow}>About Us</span>
-              <h2 className={styles_modules.sectionTitle}>{club.name}</h2> {/*replace with club tagline */}
+              <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2> {/*replace with club tagline */}
               <div className={styles_modules.sectionBody}>{club.preview_description}</div>
 
               <div className={styles_modules.badgeRow}>
@@ -241,7 +241,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
               <a
                 className={styles_modules.applyInviteLink}
-                href={demoClassroomInviteUrl}
+                href={ClassroomInviteUrl}
                 target="_blank"
                 rel="noreferrer"
               >
