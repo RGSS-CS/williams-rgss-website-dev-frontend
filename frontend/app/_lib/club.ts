@@ -3,13 +3,15 @@ export type ClubApiRecord = {
   name: string;
   preview_description: string;
   description: string;
+  tagline: string | null;
   category: string[];
   day_of_meeting: string | null;
   time: string | null;
   repetition: string | null;
-  room_num: number | string | null;
+  room_number: number | string | null;
   classroom_code: string | null;
   teacher_advisor: string | null;
+  application_form_link: string;
 };
 
 export type Club = {
@@ -17,6 +19,7 @@ export type Club = {
   name: string;
   preview_description: string;
   description: string;
+  tagline: string | null;
   categories: string[];
   dayOfMeeting: string | null;
   time: string | null;
@@ -24,6 +27,7 @@ export type Club = {
   roomNumber: string | null;
   classroomCode: string | null;
   teacherAdvisor: string | null;
+  applicationFormLink: string;
 };
 
 function getClubsApiUrl() {
@@ -44,17 +48,20 @@ function normalizeClub(record: ClubApiRecord): Club {
     name: record.name,
     preview_description: record.preview_description,
     description: record.description,
+    tagline: record.tagline,
     categories: record.category ?? [],
     dayOfMeeting: record.day_of_meeting,
     time: record.time,
     repetition: record.repetition,
-    roomNumber: record.room_num === null ? null : String(record.room_num),
+    roomNumber: record.room_number === null ? null : String(record.room_number),
     classroomCode: record.classroom_code,
     teacherAdvisor: record.teacher_advisor,
+    applicationFormLink: record.application_form_link,
   };
 }
 
 export async function getClubs(): Promise<Club[]> {
+  "use cache: private";
   const url = getClubsApiUrl();
 
   if (!url) {
@@ -63,7 +70,10 @@ export async function getClubs(): Promise<Club[]> {
 
   try {
     const res = await fetch(url, {
-      cache: "no-store",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {

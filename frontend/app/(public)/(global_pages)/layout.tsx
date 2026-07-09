@@ -3,11 +3,8 @@ import '@/app/(public)/styles.css';
 import type { Metadata } from 'next';
 import Footer from '@/app/(public)/_components/Footer';
 import Navbar from '@/app/(public)/_components/Navbar';
+import { Suspense } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Dr. GW Williams STUCO',
-  description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
-};
 export default function RootLayout({
   children,
 }: {
@@ -15,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
       <>
+      <Suspense fallback={<div></div>}>
         <Navbar />
+      </Suspense>
         {children}
         <Footer />
       </>

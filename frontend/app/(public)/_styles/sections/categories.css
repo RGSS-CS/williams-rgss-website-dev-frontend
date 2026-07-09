@@ -33,6 +33,10 @@
   color: var(--school-primary);
 }
 
+.category-icon {
+  margin-right: 0.5rem;
+}
+
 .category-count {
   font-size: 0.9rem;
   font-weight: 700;

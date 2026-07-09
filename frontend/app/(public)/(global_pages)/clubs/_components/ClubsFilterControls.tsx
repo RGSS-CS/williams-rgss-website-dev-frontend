@@ -1,8 +1,14 @@
 "use client";
 
+import { JSX } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
+
 export type CategoryFilter = {
   value: string;
   label: string;
+  icon?: JSX.Element;
   iconClass?: string;
 };
 
@@ -27,7 +33,7 @@ export default function ClubsFilterControls({
   return (
     <>
       <span className="filter_label">
-        <i className="fas fa-filter"></i>
+        <FontAwesomeIcon icon={faFilter} />
         Filter
       </span>
       {categories.map((filter) => (
@@ -36,7 +42,7 @@ export default function ClubsFilterControls({
           className={`filter-chip${activeCategory === filter.value ? " active gold" : ""}`}
           onClick={() => onCategoryChange(filter.value)}
         >
-          {filter.iconClass && <i className={filter.iconClass}></i>}
+          {filter.icon ?? (filter.iconClass ? <i className={filter.iconClass}></i> : null)}
           {filter.label}
         </button>
       ))}

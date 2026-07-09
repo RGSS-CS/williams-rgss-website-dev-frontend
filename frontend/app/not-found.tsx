@@ -4,9 +4,13 @@ import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./(public)/_components/Navbar";
 import Footer from "./(public)/_components/Footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//Icons
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
+  description: "The page you are looking for does not exist.",
 };
 
 export default async function NotFound() {
@@ -32,7 +36,7 @@ export default async function NotFound() {
 
         <div className={styles.actions}>
           <Link href="/" className={styles.btn_home} prefetch={false}>
-            <i className="fa-solid fa-house"></i>
+            <FontAwesomeIcon icon={faHouse} />
             Go to Home
           </Link>
         </div>

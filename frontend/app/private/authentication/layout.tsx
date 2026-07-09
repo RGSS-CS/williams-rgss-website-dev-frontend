@@ -3,6 +3,12 @@ import Link from "next/link";
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css";
 import Footer from "@/app/(public)/_components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Authentication",
+    description: "Login or register to access your account.",
+};
 
 export default function RootLayout({
     children,

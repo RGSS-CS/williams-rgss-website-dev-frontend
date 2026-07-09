@@ -161,7 +161,7 @@
   font-weight: 900;
 }
 
-.headlineRow i {
+.headlineRow .fas {
   color: var(--school-tertiary);
 }
 
@@ -179,7 +179,7 @@
   padding: 1.6rem 1.4rem;
 }
 
-.infoTile i {
+.infoTile .fas {
   color: var(--school-tertiary);
   font-size: 1.9rem;
 }
@@ -305,11 +305,11 @@
   padding: 0.75rem;
 }
 
-.applyInfoRow i {
+.applyInfoRow .fas {
   color: var(--school-tertiary);
   background: var(--school-primary-light);
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 10px;
   font-size: 0.95rem;
   margin-top: 1px;
