@@ -1,6 +1,6 @@
 import styles from "./club-detail.module.css";
 
-export default function Loading() {
+export default async function Loading() {
   return (
     <main aria-busy="true" aria-label="Loading club details">
       <section className="hero">
@@ -25,6 +25,12 @@ export default function Loading() {
             <div className={styles.loadingHeroActions}>
               <span className={styles.loadingHeroButton}></span>
               <span className={styles.loadingHeroHint}></span>
+              <div className={styles.loadingHeroStats}>
+                <span className={styles.loadingHeroStat}></span>
+                <span className={styles.loadingHeroStat}></span>
+                <span className={styles.loadingHeroStat}></span>
+                <span className={styles.loadingHeroStat}></span>
+              </div>
             </div>
           </div>
         </div>

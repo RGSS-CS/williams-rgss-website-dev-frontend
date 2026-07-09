@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 import { getClubById } from "@/app/_lib/club";
-
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
