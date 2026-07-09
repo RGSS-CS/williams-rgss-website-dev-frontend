@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 
 export default function Footer() {
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
@@ -26,10 +26,12 @@ export default function Footer() {
           <h4>School Info</h4> {/*Change to school info pulled from backend API */}
           <span className="no-pointer"><p>Aurora, Ontario, Canada</p></span>
           <p>
+            <FontAwesomeIcon icon={faLocationDot} className="fas" />
             <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
               11 Spring Farm Road, L4G 7W2
             </a>
           </p>
+          <FontAwesomeIcon icon={faPhone} className="fas" />
           <button onClick={() => handleCopy("(905) 727-3131")}>
             {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}          
             {copyStatus === 'error' && <p>Failed to copy.</p>}
