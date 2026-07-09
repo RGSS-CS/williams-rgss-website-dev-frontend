@@ -24,7 +24,7 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-col">
           <h4>School Info</h4> {/*Change to school info pulled from backend API */}
-          <p>Aurora, Ontario, Canada</p>
+          <span className="no-pointer"><p>Aurora, Ontario, Canada</p></span>
           <p>
             <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
               11 Spring Farm Road, L4G 7W2
