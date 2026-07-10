@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link, { LinkProps } from "next/link";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
-import Navbar from "./(public)/_components/Navbar";
-import Footer from "./(public)/_components/Footer";
+import Navbar from "./(public)/_components/navbar";
+import Footer from "./(public)/_components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Icons
 import { faHouse } from "@fortawesome/free-solid-svg-icons";

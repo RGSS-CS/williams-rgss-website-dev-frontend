@@ -1,6 +1,4 @@
-/* Primary navigation */
-
-.nav-hamburger {
+.nav_hamburger {
   display: none;
 }
 
@@ -16,7 +14,7 @@
   padding-bottom: 12px;
 }
 
-.navbar .header-container {
+.navbar .header_container {
   max-width: 95%;
   margin: 0 auto;
   display: flex;
@@ -27,7 +25,7 @@
   flex-wrap: nowrap;
 }
 
-.title-container {
+.title_container {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -36,7 +34,7 @@
   flex: 1 1 auto;
 }
 
-.brand-link {
+.brand_link {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -45,7 +43,7 @@
   text-decoration: none;
 }
 
-.brand-copy {
+.brand_copy {
   min-width: 0;
 }
 
@@ -54,7 +52,7 @@
   flex: 0 0 auto;
 }
 
-.school-title {
+.school_title {
   display: block;
   margin: 0;
   font-size: clamp(1rem, 1.8vw, 1.45rem);
@@ -63,7 +61,7 @@
   line-height: 1.1;
 }
 
-.school-subtitle {
+.school_subtitle {
   display: block;
   color: var(--school-secondary);
   font-size: clamp(0.72rem, 1vw, 0.9rem);
@@ -73,7 +71,7 @@
   line-height: 1.2;
 }
 
-.nav-links {
+.nav_links {
   display: flex;
   flex: 0 1 auto;
   flex-wrap: nowrap;
@@ -83,7 +81,7 @@
   min-width: 0;
 }
 
-.nav-links a {
+.nav_links a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -97,61 +95,61 @@
   white-space: nowrap;
 }
 
-.nav-links a:hover {
+.nav_links a:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
-.nav-links .active {
+.nav_links .active {
   background: var(--school-tertiary) !important;
   color: var(--school-primary) !important;
 }
 
 @media (max-width: 1100px) {
-  .navbar .header-container {
+  .navbar .header_container {
     padding-inline: 1.5rem;
     gap: 14px;
   }
 
-  .school-title {
+  .school_title {
     font-size: clamp(0.95rem, 1.5vw, 1.2rem);
   }
 
-  .school-subtitle {
+  .school_subtitle {
     font-size: clamp(0.68rem, 0.8vw, 0.82rem);
   }
 
-  .nav-links a {
+  .nav_links a {
     font-size: clamp(1rem, 1vw, 1.2rem);
     padding-inline: clamp(8px, 0.9vw, 14px);
   }
 }
 
 @media (max-width: 900px) {
-  .navbar .header-container {
+  .navbar .header_container {
     padding-inline: 1rem;
   }
 
-  .school-title {
+  .school_title {
     font-size: clamp(1.1rem, 1.9vw, 1.05rem);
   }
 
-  .school-subtitle {
+  .school_subtitle {
     font-size: 0.9rem;
     letter-spacing: 0.04rem;
   }
 
-  .nav-links a {
+  .nav_links a {
     font-size: 0.72rem;
     padding: 8px 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .nav-links {
+  .nav_links {
     display: none !important;
   }
 
-  .nav-hamburger {
+  .nav_hamburger {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,19 +166,19 @@
     z-index: 20000;
   }
 
-  .nav-hamburger:hover {
+  .nav_hamburger:hover {
     background: rgba(255, 255, 255, 0.12);
   }
 }
 
-.sidebar-overlay {
+.sidebar_overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   z-index: 199;
 }
 
-.nav-sidebar {
+.nav_sidebar {
   position: fixed;
   top: 0;
   right: 0;
@@ -196,11 +194,11 @@
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.25);
 }
 
-.nav-sidebar.open {
+.nav_sidebar.open {
   transform: translateX(0);
 }
 
-.sidebar-close {
+.sidebar_close {
   align-self: flex-end;
   background: none;
   border: none;
@@ -213,17 +211,17 @@
   transition: background 0.15s;
 }
 
-.sidebar-close:hover {
+.sidebar_close:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
-.sidebar-links {
+.sidebar_links {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.sidebar-links a {
+.sidebar_links a {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -236,11 +234,11 @@
   transition: background 0.18s;
 }
 
-.sidebar-links a:hover {
+.sidebar_links a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.sidebar-links a.active {
+.sidebar_links a.active {
   background: var(--school-tertiary);
   color: var(--school-primary);
 }
