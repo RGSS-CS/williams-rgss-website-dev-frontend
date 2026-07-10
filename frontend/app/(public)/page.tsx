@@ -6,15 +6,17 @@ import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Metadata } from 'next';
-import type { Management } from "../_lib/management";
-import { getManagementSettings } from "../_lib/management";
+import { Metadata, ResolvingMetadata } from 'next';
+import { getManagementSettings } from "@/app/_lib/management";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
-export const metadata: Metadata = {
-  title: 'Dr. GW Williams STUCO',
-  description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+  const management = await getManagementSettings();  
+  return{
+    title: (`${management?.schoolName} ${management?.councilName}`),
+    description: (`This is the School Council Website of ${management?.schoolName}`),
+  }
 };
 
 export async function FooterWrapper() {
@@ -30,7 +32,7 @@ export async function FooterWrapper() {
   ) : (
     <Footer management={management}/>
   )
-}
+};
 
 export default async function Page() {
   const management = await getManagementSettings();
