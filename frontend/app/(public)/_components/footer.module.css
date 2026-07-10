@@ -1,12 +1,10 @@
-/* Footer */
-
-.site-footer {
+.site_footer {
   background: var(--school-primary);
   color: var(--school-secondary);
   padding: 3rem 2.5rem 2.5rem;
 }
 
-.footer-inner {
+.footer_inner {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
@@ -17,7 +15,7 @@
   margin-bottom: 1.5rem;
 }
 
-.footer-col h4 {
+.footer_col h4 {
   font-size: 0.85rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -25,9 +23,9 @@
   margin-bottom: 1rem;
 }
 
-.footer-col p,
-.footer-col a,
-.footer-col button {
+.footer_col p,
+.footer_col a,
+.footer_col button {
   font-size: 0.9rem;
   line-height: 1.8;
   text-decoration: none;
@@ -38,22 +36,22 @@
   padding: 0;
 }
 
-.footer-col .no-pointer {
-  pointer-events: none;
+.footer_col .no_pointer {
+  pointer-events: initial;
 }
 
-.footer-col a:hover,
-.footer-col button:hover {
+.footer_col a:hover,
+.footer_col button:hover {
   color: var(--school-tertiary);
 }
 
-.social-row {
+.social_row {
   display: flex;
   gap: 14px;
   margin-top: 0.75rem;
 }
 
-.social-link {
+.social_link {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -67,12 +65,12 @@
   font-size: 0.9rem;
 }
 
-.social-link:hover {
+.social_link:hover {
   border-color: var(--school-tertiary);
   color: var(--school-primary);
 }
 
-.footer-bottom {
+.footer_bottom {
   max-width: 1400px;
   margin: 0 auto;
   font-size: 0.82rem;
@@ -80,4 +78,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.fas {
+  margin-right: 6px;
 }
