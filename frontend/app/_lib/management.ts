@@ -34,20 +34,20 @@ export type ManagementApiRecord = {
 
 export type Management = {
   maintainanceMode: boolean;
-  schoolName: string;
-  councilName: string;
-  schoolEmail: string;
-  schoolPhone: string;
-  socialMedia: unknown[];
-  favicon: string;
-  stucoImage: string;
-  aboutStuco: string;
-  aboutSchool: string;
-  schoolLocation: SchoolLocation[];
-  schoolMascot: string;
-  schoolPrimaryColor: string;
-  schoolSecondaryColor: string;
-  schoolTertiaryColor: string;
+  schoolName: string | null;
+  councilName: string | null;
+  schoolEmail: string | null;
+  schoolPhone: string | null;
+  socialMedia: unknown[] | null;
+  favicon: string | null;
+  stucoImage: string | null;
+  aboutStuco: string | null;
+  aboutSchool: string | null;
+  schoolLocation: SchoolLocation[] | null;
+  schoolMascot: string | null;
+  schoolPrimaryColor: string | null;
+  schoolSecondaryColor: string | null;
+  schoolTertiaryColor: string | null;
 };
 
 function getManagementApiUrl() {
@@ -75,20 +75,20 @@ function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocatio
 function normalizeManagement(record: ManagementApiRecord): Management {
   return {
     maintainanceMode: record.maintainance_mode,
-    schoolName: record.school_name,
-    councilName: record.council_name,
-    schoolEmail: record.school_email,
-    schoolPhone: record.school_phone,
-    socialMedia: record.social_media ?? [],
-    favicon: record.favicon,
-    stucoImage: record.stuco_image,
-    aboutStuco: record.about_stuco,
-    aboutSchool: record.about_school,
-    schoolLocation: (record.school_location ?? []).map(normalizeSchoolLocation),
-    schoolMascot: record.school_mascot,
-    schoolPrimaryColor: record.school_primary_color,
-    schoolSecondaryColor: record.school_secondary_color,
-    schoolTertiaryColor: record.school_tertiary_color,
+    schoolName: record.school_name ?? null,
+    councilName: record.council_name ?? null,
+    schoolEmail: record.school_email ?? null,
+    schoolPhone: record.school_phone ?? null,
+    socialMedia: record.social_media ?? null,
+    favicon: record.favicon ?? null,
+    stucoImage: record.stuco_image ?? null,
+    aboutStuco: record.about_stuco ?? null,
+    aboutSchool: record.about_school ?? null,
+    schoolLocation: record.school_location ? record.school_location.map(normalizeSchoolLocation) : null,
+    schoolMascot: record.school_mascot ?? null,
+    schoolPrimaryColor: record.school_primary_color ?? null,
+    schoolSecondaryColor: record.school_secondary_color ?? null,
+    schoolTertiaryColor: record.school_tertiary_color ?? null,
   };
 }
 
