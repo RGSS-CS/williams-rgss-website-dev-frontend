@@ -87,7 +87,6 @@ function normalizeManagement(record: ManagementApiRecord): Management {
 }
 
 export async function getManagement(): Promise<Management[]> {
-  "use cache: private";
   const url = getManagementApiUrl();
 
   if (!url) {
@@ -100,6 +99,10 @@ export async function getManagement(): Promise<Management[]> {
       headers: {
         "Content-Type": "application/json",
       },
+      next: {
+        revalidate: 3600,
+        tags: ["management"],
+      }
     });
 
     if (!res.ok) {
