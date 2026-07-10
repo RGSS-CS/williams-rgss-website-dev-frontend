@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "@/app/(public)/_styles/sections/filters.module.css";
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faFilter } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,12 +14,12 @@ const categorySections = [
 export default function GalleryFilterContent() {
   return (
     <>
-      <span className="filter_label">
+      <span className={styles.filter_label}>
         <FontAwesomeIcon icon={faFilter} />
         Filter
       </span>
       {categorySections.map((section) => (
-        <button key={section.key} className="filter-chip" type="button">
+        <button key={section.key} className={styles.filter_chip} type="button">
           {section.icon}
           {section.label}
         </button>

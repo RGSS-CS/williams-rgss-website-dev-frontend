@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import filterStyles from "@/app/(public)/_styles/sections/filters.module.css";
+import sidebarStyles from "@/app/(public)/_styles/sections/filter-sidebar.module.css";
 //ICONS
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -25,9 +27,9 @@ export default function ResponsiveFilterPanel({
 
   return (
     <>
-      <div className="filter_bar_container">
+      <div className={filterStyles.filter_bar_container}>
         <button
-          className="filter-toggle-btn"
+          className={filterStyles.filter_toggle_btn}
           onClick={() => setOpen(true)}
           aria-label="Open filters"
         >
@@ -36,27 +38,27 @@ export default function ResponsiveFilterPanel({
         </button>
       </div>
 
-      {open && <div className="filter-sidebar-overlay" onClick={() => setOpen(false)} />}
+      {open && <div className="filter_sidebar_overlay" onClick={() => setOpen(false)} />}
 
-      <div className={`filter-sidebar ${open ? "open" : ""}`}>
-        <div className="filter-sidebar-header">
-          <span className="filter-sidebar-title">
+      <div className={`${sidebarStyles.filter_sidebar} ${open ? "open" : ""}`}>
+        <div className={sidebarStyles.filter_sidebar_header}>
+          <span className={sidebarStyles.filter_sidebar_title}>
             <FontAwesomeIcon icon={faFilter} />
             Filters
           </span>
           <button
-            className="filter-sidebar-close"
+            className={sidebarStyles.filter_sidebar_close}
             onClick={() => setOpen(false)}
             aria-label="Close filters"
           >
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
-        <div className="filter-sidebar-body">{children}</div>
+        <div className={sidebarStyles.filter_sidebar_body}>{children}</div>
       </div>
 
-      <div className="filter_bar_container filter_bar_container--desktop">
-        <div className="filter_bar">{children}</div>
+      <div className={`${filterStyles.filter_bar_container} filter_bar_container_desktop`}>
+        <div className={filterStyles.filter_bar}>{children}</div>
       </div>
     </>
   );

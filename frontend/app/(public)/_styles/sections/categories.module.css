@@ -6,18 +6,18 @@
   padding: 2.8rem 2.5rem 5rem;
 }
 
-.category-section {
+.category_section {
   margin-bottom: 3.5rem;
 }
 
-.category-header {
+.category_header {
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 1.5rem;
 }
 
-.category-accent {
+.category_accent {
   width: 6px;
   height: 32px;
   background: var(--school-tertiary);
@@ -25,7 +25,7 @@
   flex-shrink: 0;
 }
 
-.category-title {
+.category_title {
   font-size: 1.30rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -33,11 +33,11 @@
   color: var(--school-primary);
 }
 
-.category-icon {
+.category_icon {
   margin-right: 0.5rem;
 }
 
-.category-count {
+.category_count {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--school-primary-light);
@@ -47,13 +47,13 @@
   white-space: nowrap;
 }
 
-.category-divider {
+.category_divider {
   flex: 1;
   height: 1px;
   background: var(--line);
 }
 
-.cards-grid {
+.cards_grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 1.4rem;
