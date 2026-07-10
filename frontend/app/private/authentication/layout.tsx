@@ -1,10 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css"; 
-import Footer from "@/app/(public)/_components/footer";
+import Footer from "@/app/(public)/_components/footer/footer";
 import { Metadata } from "next";
-import Navbar from "@/app/(public)/_components/navbar";
+import Navbar from "@/app/(public)/_components/navbar/navbar";
 
 export const metadata: Metadata = {
     title: "Authentication",

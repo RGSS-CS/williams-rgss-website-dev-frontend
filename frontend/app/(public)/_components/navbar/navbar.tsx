@@ -109,7 +109,7 @@ export default function Navbar() {
           onClick={() => setSidebarOpen(false)}
           aria-label="Close menu"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <FontAwesomeIcon icon={faTimes}/>
         </button>
         <div className={styles.sidebar_links}>
           {links.map((link) => (

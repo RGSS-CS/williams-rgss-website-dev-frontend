@@ -1,16 +1,14 @@
 import Image from "next/image";
 import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
-import Navbar from "@/app/(public)/_components/navbar";
-import Footer from "@/app/(public)/_components/footer";
+import Footer from "@/app/(public)/_components/footer/footer";
 import { isMobile } from "@/app/_utils/isMobile";
-import MobileFooter from "@/app/(public)/_components/mobileFooter";
+import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
-import { Suspense } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata } from 'next';
 //ICONS
-import { faCalendarAlt, faPaperPlane, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 export const metadata: Metadata = {
   title: 'Dr. GW Williams STUCO',
@@ -33,20 +31,6 @@ export default async function Page() {
   //const clubs = await getDjangoAPI();
   return (
     <main>
-      <div className={styles.topBar}>
-        <Navbar />
-        <div className={styles.tickerBar}>
-          <div className={styles.tickerHeader}>
-            <h3>
-              <FontAwesomeIcon icon={faStar} /> Updates
-            </h3>
-          </div>
-
-          <div className="ticker_track">
-            <div className="ticker_inner" id="ticker-inner"></div>
-          </div>
-        </div>
-      </div>
       <div className="hero">
         <div className="hero_shape"></div>
         <div className="hero_inner">
@@ -128,9 +112,7 @@ export default async function Page() {
             <div className="card_row">{/*Add section for school council*/}</div>
           </div>
         </div>
-      </div>
-      <Suspense><FooterWrapper /></Suspense>
-      
+      </div>     
     </main >
   );
 }
