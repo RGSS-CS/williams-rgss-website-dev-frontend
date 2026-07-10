@@ -1,11 +1,14 @@
+.navbar_container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .nav_hamburger {
   display: none;
 }
 
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
   background: var(--school-primary);
   color: var(--white);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);

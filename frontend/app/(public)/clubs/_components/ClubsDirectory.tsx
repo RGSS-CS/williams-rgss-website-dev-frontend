@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { JSX, Suspense, useDeferredValue, useState } from "react";
 import type { Club } from "@/app/_lib/club";
-import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
+import styles from "@/app/(public)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import ClubSearchInput from "./ClubSearchInput";
 import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";

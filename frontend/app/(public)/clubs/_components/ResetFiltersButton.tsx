@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
+import styles from "@/app/(public)/clubs/clubs.module.css";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS

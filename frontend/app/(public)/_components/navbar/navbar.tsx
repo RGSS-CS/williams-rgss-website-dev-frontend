@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import TickerBar from "../tickerBar";
 //ICONS
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
@@ -64,44 +65,46 @@ export default function Navbar() {
 
   return (
     <>
-      <nav ref={navRef} className={styles.navbar}>
-        <div className={styles.header_container}>
-          <div className={styles.title_container}>
-            <button
-              className={styles.nav_hamburger}
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open menu"
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </button>
-            <Link href="/" className={styles.brand_link} prefetch={false}>
-              <div className={styles.logo}>
-                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-              </div>
-              <div className={styles.brand_copy}>
-                <span className={styles.school_title}>Dr. GW Williams S.S.</span>
-                <span className={styles.school_subtitle}>Student Council</span>
-              </div>
-            </Link>
-          </div>
-
-          <div className={styles.nav_links}>
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={isActivePath(pathname, link.href) ? styles.active : ""}
-                onClick={() => setSidebarOpen(false)}
-                prefetch={false}
+      <div className={styles.navbar_container}>
+        <nav ref={navRef} className={styles.navbar}>
+          <div className={styles.header_container}>
+            <div className={styles.title_container}>
+              <button
+                className={styles.nav_hamburger}
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Open menu"
               >
-                {link.icon}
-                {link.label}
+                <FontAwesomeIcon icon={faBars} />
+              </button>
+              <Link href="/" className={styles.brand_link} prefetch={false}>
+                <div className={styles.logo}>
+                  <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+                </div>
+                <div className={styles.brand_copy}>
+                  <span className={styles.school_title}>Dr. GW Williams S.S.</span>
+                  <span className={styles.school_subtitle}>Student Council</span>
+                </div>
               </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+            </div>
 
+            <div className={styles.nav_links}>
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={isActivePath(pathname, link.href) ? styles.active : ""}
+                  onClick={() => setSidebarOpen(false)}
+                  prefetch={false}
+                >
+                  {link.icon}
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </nav>
+        {pathname === "/" && <TickerBar />}
+      </div>
       {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
       <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>
         <button
@@ -109,7 +112,7 @@ export default function Navbar() {
           onClick={() => setSidebarOpen(false)}
           aria-label="Close menu"
         >
-          <FontAwesomeIcon icon={faTimes}/>
+          <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className={styles.sidebar_links}>
           {links.map((link) => (
