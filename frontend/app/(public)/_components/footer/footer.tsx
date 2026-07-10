@@ -18,7 +18,7 @@ export default function Footer({ management }: ManagementProps) {
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-  const address = management?.schoolLocation?.[0]?.location;
+  const address = management.schoolLocation?.[0]?.location;
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null;
