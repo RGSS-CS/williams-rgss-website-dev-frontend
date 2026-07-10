@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/(public)/styles.css";
-import styles from "./authentication.module.css";
+import styles from "./authentication.module.css"; 
 import Footer from "@/app/(public)/_components/footer";
 import { Metadata } from "next";
+import Navbar from "@/app/(public)/_components/navbar";
 
 export const metadata: Metadata = {
     title: "Authentication",
@@ -17,21 +18,7 @@ export default function RootLayout({
 }) {
     return (
         <main className={styles.page}>
-            <nav className="navbar">
-                <div className="header-container">
-                    <div className="title-container">
-                        <Link href="/" className="brand-link">
-                            <div className="logo">
-                                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-                            </div>
-                            <div className="brand-copy">
-                                <span className="school-title">Dr. GW Williams S.S.</span>
-                                <span className="school-subtitle">Student Council</span>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar />
             <div className={styles.content}>
                 {children}
             </div>
