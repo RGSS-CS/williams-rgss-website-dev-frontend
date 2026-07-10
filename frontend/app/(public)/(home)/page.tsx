@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
