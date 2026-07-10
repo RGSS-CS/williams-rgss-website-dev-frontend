@@ -1,13 +1,16 @@
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css"; 
 import Footer from "@/app/(public)/_components/footer/footer";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import Navbar from "@/app/(public)/_components/navbar/navbar";
 import { getManagementSettings } from "@/app/_lib/management";
 
-export const metadata: Metadata = {
-    title: "Authentication",
-    description: "Login or register to access your account.",
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+  const management = await getManagementSettings();  
+  return{
+    title: (`Authentication - ${management?.schoolName} ${management?.councilName}`),
+    description: (`This is the School Council Website of ${management?.schoolName}`),
+  }
 };
 
 export default async function RootLayout({

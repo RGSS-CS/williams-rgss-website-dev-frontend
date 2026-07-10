@@ -2,16 +2,20 @@ import Image from "next/image";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import styles from "./gallery.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import GalleryFilterContent from "./_components/GalleryFilterControls";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getManagementSettings } from "@/app/_lib/management";
 
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
-export const metadata: Metadata = {
-    title: "Gallery",
-    description: "Where photos tell our story. Events, clubs, competitions, and everyday school moments.",
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+  const management = await getManagementSettings();  
+  return{
+    title: (`Gallery - ${management?.schoolName} ${management?.councilName}`),
+    description: (`This is the School Council Website of ${management?.schoolName}`),
+  }
 };
 
 export default function GalleryPage() {

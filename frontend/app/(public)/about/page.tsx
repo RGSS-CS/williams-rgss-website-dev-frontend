@@ -1,10 +1,14 @@
 import styles from './about.module.css';
 import Image from 'next/image';
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getManagementSettings } from '@/app/_lib/management';
 
-export const metadata: Metadata = {
-    title: "About STUCO",
-    description: "Learn more about the School Student Council."
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+  const management = await getManagementSettings();
+  return{
+    title: (`About - ${management?.schoolName} ${management?.councilName}`),
+    description: (`This is the School Council Website of ${management?.schoolName}`),
+  }
 };
 
 export default function AboutPage() {
