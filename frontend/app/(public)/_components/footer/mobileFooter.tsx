@@ -3,31 +3,54 @@
 import { getSchoolYear } from "@/app/(public)/_utils/getYear";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { Management } from "@/app/_lib/management"
 import styles from "./footer.module.css";
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 
-export default function MobileFooter() {
+type FooterProps = {
+  management: Management;
+};
+
+export default function MobileFooter({ management }: FooterProps) {
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-    useEffect(() => {
-        setSchoolYear(getSchoolYear());
-    }, []);
+  const address = management.schoolLocation?.[0]?.location;
+  const mapsUrl = address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+    : null;
+  const { displayAddress, regionLine } = address
+    ? (() => {
+      const parts = address.split(",").map(s => s.trim());
+      const [name, houseNumber, street, city, region, , province, , country] = parts;
+      const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
+        .filter(Boolean)
+        .join(", ");
+      const regionLine = [city, region, province, country].filter(Boolean).join(", ");
+      return { displayAddress, regionLine };
+    })()
+    : { displayAddress: null, regionLine: null };
+
+  useEffect(() => {
+    setSchoolYear(getSchoolYear());
+  }, []);
 
   return (
     <footer className={styles.site_footer}>
       <div className={styles.footer_inner}>
         <div className={styles.footer_col}>
           <h4>School Info</h4> {/*Change to school info pulled from backend API */}
-          <span className={styles.no_pointer}><p>Aurora, Ontario, Canada</p></span>
+          <span className={styles.no_pointer}><p>{regionLine}</p></span>
           <p>
-            <a href="https://maps.app.goo.gl/4MHrcdbASUjSuxsi7">
-              11 Spring Farm Road, L4G 7W2
-            </a>
-          </p>
-          <p>
-            <a href="tel:+19057273131">(905) 727-3131</a>
+            <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
+            {mapsUrl ? (
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                Open In Google Maps
+              </a>
+            ) : (
+              <span>Address unavailable</span>
+            )}
           </p>
         </div>
         <div className={styles.footer_col}>
@@ -58,7 +81,7 @@ export default function MobileFooter() {
         </div>
       </div>
       <div className={styles.footer_bottom}>
-        <span>Dr. G.W. Williams S.S. Student Council {schoolYear ?? ''}</span>
+        <span>{management.schoolName} {schoolYear ?? ''}</span>
         <span>&copy; {schoolYear ?? ''} Williams STUCO. All rights reserved.</span>
       </div>
     </footer>

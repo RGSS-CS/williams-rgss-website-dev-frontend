@@ -3,12 +3,14 @@ import Link from "next/link";
 import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
 import LoginBackButton from "../_components/LoginBackButton";
-
+import { getManagementSettings } from "@/app/_lib/management";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons'
 
-export default function SigninForm() {
+export default async function SigninForm() {
+  const management = await getManagementSettings();
+  if (!management) return null;
   return (
     <main>
       <div className={styles.body}>
@@ -17,8 +19,8 @@ export default function SigninForm() {
           <div className={styles.login_card}>
             <LoginBackButton />
             <div className={styles.card_header}>
-              <h1>Welcome Wildcat</h1>
-              <p>Sign in to access the STUCO Dashboard</p>
+              <h1>Welcome {management.schoolMascot}</h1>
+              <p>Sign in to access the {management.councilName} Dashboard</p>
             </div>
             <div className={styles.form_group}>
               <label htmlFor="student_number">YRDSB Email</label>

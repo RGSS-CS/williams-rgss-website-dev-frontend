@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { JSX, Suspense, useDeferredValue, useState } from "react";
 import type { Club } from "@/app/_lib/club";
+import type { Management } from "@/app/_lib/management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import ClubSearchInput from "./ClubSearchInput";
@@ -31,6 +32,7 @@ const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
 
 type ClubsDirectoryProps = {
   clubs: Club[];
+  management: Management;
 };
 
 function slugifyCategory(category: string) {
@@ -119,7 +121,7 @@ function ClubCard({ club }: { club: Club }) {
   );
 }
 
-export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
+export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeDay, setActiveDay] = useState("All Days");
@@ -263,7 +265,7 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
 
         <div className={styles.ctaBanner}>
           <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
-          <p>Any GW Williams student can start a new club. Talk to a teacher that is interested with your idea.</p>
+          <p>Any {management.schoolName ?? ''} student can start a new club. Talk to a teacher that is interested with your idea.</p>
         </div>
       </Suspense>
     </main>

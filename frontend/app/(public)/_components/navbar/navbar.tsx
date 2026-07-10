@@ -5,11 +5,17 @@ import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TickerBar from "../tickerBar";
+import type { Management } from "@/app/_lib/management";
 //ICONS
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
 import styles from "./navigation.module.css";
 import "@/app/(public)/styles.css";
+
+type NavbarProps = {
+  management: Management;
+}
+
 
 const links = [
   { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
@@ -31,7 +37,7 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function Navbar() {
+export default function Navbar({ management }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,7 +60,7 @@ export default function Navbar() {
                   <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
                 </div>
                 <div className={styles.brand_copy}>
-                  <span className={styles.school_title}>Dr. GW Williams S.S.</span>
+                  <span className={styles.school_title}>{management.schoolName}</span>
                   <span className={styles.school_subtitle}>Student Council</span>
                 </div>
               </Link>

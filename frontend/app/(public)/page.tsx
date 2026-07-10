@@ -7,6 +7,8 @@ import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata } from 'next';
+import type { Management } from "../_lib/management";
+import { getManagementSettings } from "../_lib/management";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,15 +21,20 @@ export async function FooterWrapper() {
   const headersList = await headers();
   const userAgent = headersList.get("user-agent") || "";
   const isMobileDevice = isMobile(userAgent);
+  const management = await getManagementSettings();
+
+  if (!management) return null;
 
   return isMobileDevice ? (
-    <MobileFooter />
+    <MobileFooter management={management}/>
   ) : (
-    <Footer />
+    <Footer management={management}/>
   )
 }
 
 export default async function Page() {
+  const management = await getManagementSettings();
+  if (!management) return null;
   //const clubs = await getDjangoAPI();
   return (
     <main>
@@ -36,11 +43,11 @@ export default async function Page() {
         <div className="hero_inner">
           <div className="hero_left">
             <div className={styles.heroTag}>
-              <p>Student Council {getSchoolYear()}</p>
+              <p>{management.councilName} {getSchoolYear()}</p>
             </div>
             <div className="hero_title">
-              <h1>GW. Williams</h1>
-              <h2>STUCO</h2>
+              <h1>{management.schoolName}</h1>
+              <h2>{management.councilName}</h2>
             </div>
             <div className="hero_subtitle">
               <p>Representing Student Voice.</p>
