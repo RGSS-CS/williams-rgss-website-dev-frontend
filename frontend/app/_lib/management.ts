@@ -18,6 +18,8 @@ export type ManagementApiRecord = {
   maintainance_mode: boolean;
   school_name: string;
   council_name: string;
+  school_email: string;
+  school_phone: string;
   social_media: unknown[];
   favicon: string;
   stuco_image: string;
@@ -34,6 +36,8 @@ export type Management = {
   maintainanceMode: boolean;
   schoolName: string;
   councilName: string;
+  schoolEmail: string;
+  schoolPhone: string;
   socialMedia: unknown[];
   favicon: string;
   stucoImage: string;
@@ -73,6 +77,8 @@ function normalizeManagement(record: ManagementApiRecord): Management {
     maintainanceMode: record.maintainance_mode,
     schoolName: record.school_name,
     councilName: record.council_name,
+    schoolEmail: record.school_email,
+    schoolPhone: record.school_phone,
     socialMedia: record.social_media ?? [],
     favicon: record.favicon,
     stucoImage: record.stuco_image,
