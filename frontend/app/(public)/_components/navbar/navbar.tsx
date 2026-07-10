@@ -1,9 +1,8 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TickerBar from "../tickerBar";
 //ICONS
@@ -36,32 +35,6 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = sidebarOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [sidebarOpen]);
-
-  useEffect(() => {
-    const navElement = navRef.current;
-    if (!navElement) {
-      return;
-    }
-
-    const updateNavbarHeight = () => {
-      const height = navElement.offsetHeight;
-      document.documentElement.style.setProperty("--navbar-height", `${height}px`);
-    };
-
-    updateNavbarHeight();
-
-    const observer = new ResizeObserver(updateNavbarHeight);
-    observer.observe(navElement);
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <>
