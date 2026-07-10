@@ -2,6 +2,7 @@
 import '@/app/(public)/styles.css';
 import Footer from '@/app/(public)/_components/footer/footer';
 import Navbar from '@/app/(public)/_components/navbar/navbar';
+import { Suspense } from 'react';
 import { getManagement } from '@/app/_lib/management';
 
 export default async function RootLayout({
@@ -11,10 +12,12 @@ export default async function RootLayout({
 }) {
   const management = await getManagement();
   return (
-      <>
+    <>
+      <Suspense>
         <Navbar />
-        {children}
-        <Footer management={management}/>
-      </>
+      </Suspense>
+      {children}
+      <Footer management={management} />
+    </>
   )
 }
