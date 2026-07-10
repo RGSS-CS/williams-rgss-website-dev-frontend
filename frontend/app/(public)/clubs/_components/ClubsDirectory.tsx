@@ -32,7 +32,7 @@ const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
 
 type ClubsDirectoryProps = {
   clubs: Club[];
-  management?: Management | null;
+  management: Management;
 };
 
 function slugifyCategory(category: string) {
@@ -265,7 +265,7 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
 
         <div className={styles.ctaBanner}>
           <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
-          <p>Any {management?.schoolName ?? ''} student can start a new club. Talk to a teacher that is interested with your idea.</p>
+          <p>Any {management.schoolName ?? ''} student can start a new club. Talk to a teacher that is interested with your idea.</p>
         </div>
       </Suspense>
     </main>

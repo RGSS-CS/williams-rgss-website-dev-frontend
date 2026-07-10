@@ -10,7 +10,7 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 
 type ManagementProps = {
-  management: Management | null;
+  management: Management;
 };
 
 export default function Footer({ management }: ManagementProps) {
@@ -66,7 +66,7 @@ export default function Footer({ management }: ManagementProps) {
         </div>
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
-          <p>Stay connected with {management?.councilName || 'student council'}</p>
+          <p>Stay connected with {management.councilName || 'student council'}</p>
           <div className={styles.social_row}>
             <a href="https://www.instagram.com/drgwwilliams" target="_blank" rel="noopener noreferrer" className={styles.social_link} title="Instagram" aria-label="Instagram">
               <FontAwesomeIcon icon={faInstagram} />
@@ -78,8 +78,8 @@ export default function Footer({ management }: ManagementProps) {
         </div>
       </div>
       <div className={styles.footer_bottom}>
-        <span>Dr. G.W. Williams S.S. Student Council {schoolYear ?? ''}</span>
-        <span>&copy; {schoolYear ?? ''} Williams STUCO. All rights reserved.</span>
+        <span>{management.schoolName} {management.councilName} {schoolYear ?? ''}</span>
+        <span>&copy; {schoolYear ?? ''} {management.schoolName} {management.councilName}. All rights reserved.</span>
       </div>
     </footer>
   );

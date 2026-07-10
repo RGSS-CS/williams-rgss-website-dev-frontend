@@ -11,10 +11,15 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const management = await getManagementSettings();
+
+  if (!management) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <Suspense>
-        <Navbar />
+        <Navbar management={management}/>
       </Suspense>
       {children}
       <Footer management={management} />

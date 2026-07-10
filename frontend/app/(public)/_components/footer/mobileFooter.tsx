@@ -10,13 +10,13 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 
 type FooterProps = {
-  management?: Management[];
+  management: Management;
 };
 
 export default function MobileFooter({ management }: FooterProps) {
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-  const address = management?.[0]?.schoolLocation?.[0]?.location;
+  const address = management.schoolLocation?.[0]?.location;
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null;
@@ -81,7 +81,7 @@ export default function MobileFooter({ management }: FooterProps) {
         </div>
       </div>
       <div className={styles.footer_bottom}>
-        <span>Dr. G.W. Williams S.S. Student Council {schoolYear ?? ''}</span>
+        <span>{management.schoolName} {schoolYear ?? ''}</span>
         <span>&copy; {schoolYear ?? ''} Williams STUCO. All rights reserved.</span>
       </div>
     </footer>

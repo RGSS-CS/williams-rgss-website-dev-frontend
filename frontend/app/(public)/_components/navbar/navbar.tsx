@@ -12,6 +12,11 @@ import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, 
 import styles from "./navigation.module.css";
 import "@/app/(public)/styles.css";
 
+type NavbarProps = {
+  management: Management;
+}
+
+
 const links = [
   { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
   { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
@@ -32,7 +37,7 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function Navbar() {
+export default function Navbar({ management }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -55,7 +60,7 @@ export default function Navbar() {
                   <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
                 </div>
                 <div className={styles.brand_copy}>
-                  <span className={styles.school_title}>Dr. GW Williams S.S.</span>
+                  <span className={styles.school_title}>{management.schoolName}</span>
                   <span className={styles.school_subtitle}>Student Council</span>
                 </div>
               </Link>
