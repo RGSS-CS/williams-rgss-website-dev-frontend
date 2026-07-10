@@ -40,14 +40,14 @@ export default function Loading() {
         </div>
 
         <div className="category_container">
-          <div className="category-section">
-            <div className="category-header">
-              <div className="category-accent"></div>
+          <div className="category_section">
+            <div className="category_header">
+              <div className="category_accent"></div>
               <span className={`${styles.skeletonBlock} ${styles.loadingCategoryTitle}`}></span>
-              <div className="category-divider"></div>
+              <div className="category_divider"></div>
               <span className={`${styles.skeletonBlock} ${styles.loadingCategoryCount}`}></span>
             </div>
-            <div className={`cards-grid ${styles.loadingGalleryGrid}`}>
+            <div className={`cards_grid ${styles.loadingGalleryGrid}`}>
               {Array.from({ length: THUMBNAIL_COUNT }).map((_, index) => (
                 <div className={styles.loadingGalleryThumb} key={index}></div>
               ))}

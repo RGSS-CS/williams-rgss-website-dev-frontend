@@ -1,8 +1,9 @@
 import Image from "next/image";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import styles from "./gallery.module.css";
+import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
 import { Metadata } from 'next';
-import GalleryFilterContent from "./_components/GalleryFilterContent";
+import GalleryFilterContent from "./_components/GalleryFilterControls";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //ICONS
@@ -38,29 +39,29 @@ export default function GalleryPage() {
                 <ResponsiveFilterPanel>
                     <GalleryFilterContent />
                 </ResponsiveFilterPanel>
-                <div className="category_container">
-                    <div className="category-section" data-section="academic">
-                        <div className="category-header">
-                            <div className="category-accent"></div>
-                            <span className="category-title">
+                <div className={catStyles.category_container}>
+                    <div className={catStyles.category_section} data-section="academic">
+                        <div className={catStyles.category_header}>
+                            <div className={catStyles.category_accent}></div>
+                            <span className={catStyles.category_title}>
                                 <FontAwesomeIcon icon={faBook} /> Academic
                             </span>
-                            <div className="category-divider"></div>
-                            <span className="category-count">
+                            <div className={catStyles.category_divider}></div>
+                            <span className={catStyles.category_count}>
                                 <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="category-section" data-section="arts">
-                        <div className="category-header">
-                            <div className="category-accent"></div>
-                            <span className="category-title">
+                    <div className={catStyles.category_section} data-section="arts">
+                        <div className={catStyles.category_header}>
+                            <div className={catStyles.category_accent}></div>
+                            <span className={catStyles.category_title}>
                                 <FontAwesomeIcon icon={faPalette} /> Arts
                             </span>
-                            <div className="category-divider"></div>
-                            <span className="category-count">
+                            <div className={catStyles.category_divider}></div>
+                            <span className={catStyles.category_count}>
                                 <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
@@ -68,42 +69,42 @@ export default function GalleryPage() {
 
 
                     </div>
-                    <div className="category-section" data-section="community">
-                        <div className="category-header">
-                            <div className="category-accent"></div>
-                            <span className="category-title">
+                    <div className={catStyles.category_section} data-section="community">
+                        <div className={catStyles.category_header}>
+                            <div className={catStyles.category_accent}></div>
+                            <span className={catStyles.category_title}>
                                 <FontAwesomeIcon icon={faHandsHelping} /> Community
                             </span>
-                            <div className="category-divider"></div>
-                            <span className="category-count">
+                            <div className={catStyles.category_divider}></div>
+                            <span className={catStyles.category_count}>
                                 <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="category-section" data-section="sports">
-                        <div className="category-header">
-                            <div className="category-accent"></div>
-                            <span className="category-title">
+                    <div className={catStyles.category_section} data-section="sports">
+                        <div className={catStyles.category_header}>
+                            <div className={catStyles.category_accent}></div>
+                            <span className={catStyles.category_title}>
                                 <FontAwesomeIcon icon={faRunning} /> Sports &amp; Recreation
                             </span>
-                            <div className="category-divider"></div>
-                            <span className="category-count">
+                            <div className={catStyles.category_divider}></div>
+                            <span className={catStyles.category_count}>
                                 <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>
                         </div>
 
                     </div>
-                    <div className="category-section" data-section="events">
-                        <div className="category-header">
-                            <div className="category-accent"></div>
-                            <span className="category-title">
+                    <div className={catStyles.category_section} data-section="events">
+                        <div className={catStyles.category_header}>
+                            <div className={catStyles.category_accent}></div>
+                            <span className={catStyles.category_title}>
                                 <FontAwesomeIcon icon={faCalendarCheck} /> Events
                             </span>
-                            <div className="category-divider"></div>
-                            <span className="category-count">
+                            <div className={catStyles.category_divider}></div>
+                            <span className={catStyles.category_count}>
                                 <FontAwesomeIcon icon={faImages} />
                                 0 photos
                             </span>

@@ -51,14 +51,14 @@ export default function Loading() {
         </div>
 
         <div className="category_container">
-          <div className="category-section">
-            <div className="category-header">
-              <div className="category-accent"></div>
+          <div className="category_section">
+            <div className="category_header">
+              <div className="category_accent"></div>
               <span className={`${styles.skeletonBlock} ${styles.loadingCategoryTitle}`}></span>
-              <div className="category-divider"></div>
+              <div className="category_divider"></div>
               <span className={`${styles.skeletonBlock} ${styles.loadingCategoryCount}`}></span>
             </div>
-            <div className={`cards-grid ${styles.clubCardsGrid}`}>
+            <div className={`cards_grid ${styles.clubCardsGrid}`}>
               {Array.from({ length: CLUB_CARD_COUNT }).map((_, index) => (
                 <article className={`${styles.club_card} ${styles.loadingClubCard}`} key={index}>
                   <span className={`${styles.skeletonBlock} ${styles.loadingClubName}`}></span>

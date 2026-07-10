@@ -1,15 +1,13 @@
 "use client";
-
 import Link from "next/link";
 import { JSX, Suspense, useDeferredValue, useState } from "react";
-
 import type { Club } from "@/app/_lib/club";
 import styles from "@/app/(public)/(global_pages)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
-
 import ClubSearchInput from "./ClubSearchInput";
 import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";
 import ResetFiltersButton from "./ResetFiltersButton";
+import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
@@ -228,23 +226,23 @@ export default function ClubsDirectory({ clubs }: ClubsDirectoryProps) {
             </span>
           </div>
 
-          <div className="category_container">
+          <div className={catStyles.category_container}>
             {visibleCategories.map((section) => (
-              <div className="category-section" data-category={section.slug} id={`cat-${section.slug}`} key={section.slug}>
-                <div className="category-header">
-                  <div className="category-accent"></div>
-                  <span className="category-title">
-                    <span className="category-icon">
+              <div className={catStyles.category_section} data-category={section.slug} id={`cat-${section.slug}`} key={section.slug}>
+                <div className={catStyles.category_header}>
+                  <div className={catStyles.category_accent}></div>
+                  <span className={catStyles.category_title}>
+                    <span className={catStyles.category_icon}>
                       {getCategoryIcon(section.name)}
                     </span>
                     {section.name}
                   </span>
-                  <div className="category-divider"></div>
-                  <span className="category-count">
+                  <div className={catStyles.category_divider}></div>
+                  <span className={catStyles.category_count}>
                     {section.clubs.length} club{section.clubs.length === 1 ? "" : "s"}
                   </span>
                 </div>
-                <div className={`cards-grid ${styles.clubCardsGrid}`}>
+                <div className={`${catStyles.cards_grid} ${styles.clubCardsGrid}`}>
                   {section.clubs.map((club) => (
                     <ClubCard club={club} key={`${section.slug}-${club.id}`} />
                   ))}

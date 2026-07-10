@@ -33,7 +33,7 @@
   margin-right: 4px;
 }
 
-.filter-chip {
+.filter_chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -49,18 +49,24 @@
   letter-spacing: 0.02em;
 }
 
-.filter-chip:hover {
+.filter_chip:hover {
   border-color: var(--school-tertiary);
   color: var(--school-primary-dark);
 }
 
-.filter-chip.active {
+.filter_chip.active {
   background: var(--school-primary);
   border-color: var(--school-primary);
   color: white;
 }
 
-.filter-chip.active.gold {
+.filter_chip_active {
+  background: var(--school-primary);
+  border-color: var(--school-primary);
+  color: white;
+}
+
+.filter_chip_active_gold {
   background: var(--school-tertiary);
   border-color: var(--school-tertiary);
   color: var(--school-primary);
@@ -71,4 +77,8 @@
   height: 22px;
   background: var(--school-primary-light);
   margin: 0 4px;
+}
+
+.filter_toggle_btn {
+  display: none;
 }
