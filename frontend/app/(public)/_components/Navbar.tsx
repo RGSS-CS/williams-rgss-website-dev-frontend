@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
+import styles from "./navigation.module.css";
 import "@/app/(public)/styles.css";
 
 const links = [
@@ -63,33 +64,33 @@ export default function Navbar() {
 
   return (
     <>
-      <nav ref={navRef} className="navbar">
-        <div className="header-container">
-          <div className="title-container">
+      <nav ref={navRef} className={styles.navbar}>
+        <div className={styles.header_container}>
+          <div className={styles.title_container}>
             <button
-              className="nav-hamburger"
+              className={styles.nav_hamburger}
               onClick={() => setSidebarOpen(true)}
               aria-label="Open menu"
             >
               <FontAwesomeIcon icon={faBars} />
             </button>
-            <Link href="/" className="brand-link" prefetch={false}>
-              <div className="logo">
+            <Link href="/" className={styles.brand_link} prefetch={false}>
+              <div className={styles.logo}>
                 <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
               </div>
-              <div className="brand-copy">
-                <span className="school-title">Dr. GW Williams S.S.</span>
-                <span className="school-subtitle">Student Council</span>
+              <div className={styles.brand_copy}>
+                <span className={styles.school_title}>Dr. GW Williams S.S.</span>
+                <span className={styles.school_subtitle}>Student Council</span>
               </div>
             </Link>
           </div>
 
-          <div className="nav-links">
+          <div className={styles.nav_links}>
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={isActivePath(pathname, link.href) ? "active" : ""}
+                className={isActivePath(pathname, link.href) ? styles.active : ""}
                 onClick={() => setSidebarOpen(false)}
                 prefetch={false}
               >
@@ -101,21 +102,21 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
-      <div className={`nav-sidebar ${sidebarOpen ? "open" : ""}`}>
+      {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
+      <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>
         <button
-          className="sidebar-close"
+          className={styles.sidebar_close}
           onClick={() => setSidebarOpen(false)}
           aria-label="Close menu"
         >
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <div className="sidebar-links">
+        <div className={styles.sidebar_links}>
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={isActivePath(pathname, link.href) ? "active" : ""}
+              className={isActivePath(pathname, link.href) ? styles.active : ""}
               onClick={() => setSidebarOpen(false)}
               prefetch={false}
             >

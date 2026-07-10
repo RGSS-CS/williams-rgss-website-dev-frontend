@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css";
-import Footer from "@/app/(public)/_components/Footer";
+import Footer from "@/app/(public)/_components/footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
