@@ -1,22 +1,20 @@
 // These styles apply to every route in the application
 import '@/app/(public)/styles.css';
-import type { Metadata } from 'next';
 import Footer from '@/app/(public)/_components/Footer';
 import Navbar from '@/app/(public)/_components/Navbar';
-import { Suspense } from 'react';
+import { getManagement } from '@/app/_lib/management';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const management = await getManagement();
   return (
       <>
-      <Suspense fallback={<div></div>}>
         <Navbar />
-      </Suspense>
         {children}
-        <Footer />
+        <Footer management={management}/>
       </>
   )
 }
