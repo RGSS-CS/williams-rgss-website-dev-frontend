@@ -166,3 +166,48 @@
     display: none !important;
   }
 }
+
+.skeletonBlock {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--school-secondary) 25%,
+    var(--school-primary-light) 50%,
+    var(--school-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.loadingHeroTag {
+  width: 220px;
+  height: 24px;
+  margin-bottom: 1.2rem;
+}
+
+.loadingHeroTitle {
+  width: 60%;
+  height: 3rem;
+  margin-bottom: 0.6rem;
+}
+
+.loadingHeroSubtitle {
+  width: 40%;
+  height: 1.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.loadingHeroButtons {
+  width: 320px;
+  height: 44px;
+}

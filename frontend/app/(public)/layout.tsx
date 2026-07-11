@@ -6,24 +6,31 @@ import { Suspense } from 'react';
 
 import { getManagementSettings } from '@/app/_lib/management';
 
-export const dynamic = "force-dynamic";
-export default async function RootLayout({
+async function NavbarSlot() {
+  const management = await getManagementSettings();
+  if (!management) return null;
+  return <Navbar management={management} />;
+}
+ 
+async function FooterSlot() {
+  const management = await getManagementSettings();
+  if (!management) return null;
+  return <Footer management={management} />;
+}
+ 
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const management = await getManagementSettings();
-
-  if (!management) {
-    return <>{children}</>;
-  }
-
   return (
     <>
-      <Suspense>
-        <Navbar management={management}/>
+      <Suspense fallback={null}>
+        <NavbarSlot />
+      </Suspense>
       {children}
-      <Footer management={management} />
+      <Suspense fallback={null}>
+        <FooterSlot />
       </Suspense>
     </>
   )

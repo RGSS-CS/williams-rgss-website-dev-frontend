@@ -30,6 +30,28 @@
     justify-content: center;
 }
 
+.skeletonBlock {
+    display: block;
+    background: linear-gradient(
+        90deg,
+        var(--school-secondary, #eee) 25%,
+        var(--school-primary-light, #f5f5f5) 50%,
+        var(--school-secondary, #eee) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 .back_button {
     justify-content: center;
     align-items: center;
