@@ -4,7 +4,6 @@ import Footer from "@/app/(public)/_components/footer/footer";
 import { Metadata, ResolvingMetadata } from "next";
 import Navbar from "@/app/(public)/_components/navbar/navbar";
 import { getManagementSettings } from "@/app/_lib/management";
-import { Suspense } from "react";
 
 export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
   const management = await getManagementSettings();  
@@ -14,7 +13,12 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
   }
 };
 
-async function AuthChrome({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+    children,
+}: {
+    children: React.ReactNode
+}) {
+
     const management = await getManagementSettings();
     if (!management) return null;
     return (
@@ -28,19 +32,4 @@ async function AuthChrome({ children }: { children: React.ReactNode }) {
             </div>
         </main>
     )
-}
-
-export default async function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-
-    const management = await getManagementSettings();
-    if (!management) return null;
-    return (
-        <Suspense fallback={null}>
-            <AuthChrome>{children}</AuthChrome>
-        </Suspense>
-    );
 }

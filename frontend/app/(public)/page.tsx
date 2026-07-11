@@ -35,11 +35,12 @@ export async function FooterWrapper() {
   )
 };
 
-async function HomeContent() {
+export default async function Page() {
   const management = await getManagementSettings();
   if (!management) return null;
+  //const clubs = await getDjangoAPI();
   return (
-    <>
+    <main>
       <div className="hero">
         <div className="hero_shape"></div>
         <div className="hero_inner">
@@ -122,16 +123,6 @@ async function HomeContent() {
           </div>
         </div>
       </div>     
-    </>
-  );
-}
-
-export default function Page() {
-  return (
-    <main>
-      <Suspense fallback={null}>
-        <HomeContent />
-      </Suspense>
-    </main>
+    </main >
   );
 }

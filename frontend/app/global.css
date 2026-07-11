@@ -1,13 +1,10 @@
 /* Global Styles
 /* --------------------------------------------- */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+
 :root {
   /* School Colors */
   --school-primary: #0b1c3a;
   --school-primary-light: #0d2e52;
-  --school-primary-dark: #061020;
   --school-secondary: #9ad9ea;
   --school-tertiary: #db9820;
   --school-tertiary-dark: #b87c1a;

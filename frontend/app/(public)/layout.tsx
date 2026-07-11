@@ -1,10 +1,15 @@
+// These styles apply to every route in the application
 import '@/app/(public)/styles.css';
 import Footer from '@/app/(public)/_components/footer/footer';
 import Navbar from '@/app/(public)/_components/navbar/navbar';
 import { Suspense } from 'react';
 import { getManagementSettings } from '@/app/_lib/management';
 
-async function SiteChrome({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const management = await getManagementSettings();
 
   if (!management) {
@@ -13,21 +18,11 @@ async function SiteChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navbar management={management} />
+    <Suspense>
+      <Navbar management={management}/>
       {children}
       <Footer management={management} />
-    </>
-  );
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <Suspense fallback={<>{children}</>}>
-      <SiteChrome>{children}</SiteChrome>
     </Suspense>
+    </>
   )
 }

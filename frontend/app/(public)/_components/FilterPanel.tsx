@@ -27,9 +27,9 @@ export default function ResponsiveFilterPanel({
 
   return (
     <>
-      <div className={`${filterStyles.filter_bar_container} ${sidebarStyles.filter_bar_container}`}>
+      <div className={filterStyles.filter_bar_container}>
         <button
-          className={`${filterStyles.filter_toggle_btn} ${sidebarStyles.filter_toggle_btn}`}
+          className={filterStyles.filter_toggle_btn}
           onClick={() => setOpen(true)}
           aria-label="Open filters"
         >
@@ -38,9 +38,9 @@ export default function ResponsiveFilterPanel({
         </button>
       </div>
 
-      {open && <div className={sidebarStyles.filter_sidebar_overlay} onClick={() => setOpen(false)} />}
+      {open && <div className="filter_sidebar_overlay" onClick={() => setOpen(false)} />}
 
-      <div className={`${sidebarStyles.filter_sidebar} ${open ? sidebarStyles.open : ""}`}>
+      <div className={`${sidebarStyles.filter_sidebar} ${open ? "open" : ""}`}>
         <div className={sidebarStyles.filter_sidebar_header}>
           <span className={sidebarStyles.filter_sidebar_title}>
             <FontAwesomeIcon icon={faFilter} />
@@ -57,7 +57,7 @@ export default function ResponsiveFilterPanel({
         <div className={sidebarStyles.filter_sidebar_body}>{children}</div>
       </div>
 
-      <div className={`${filterStyles.filter_bar_container} ${sidebarStyles.filter_bar_container_desktop}`}>
+      <div className={`${filterStyles.filter_bar_container} filter_bar_container_desktop`}>
         <div className={filterStyles.filter_bar}>{children}</div>
       </div>
     </>

@@ -2,7 +2,6 @@ import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } fr
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import "@/app/global.css";
-import Script from "next/script";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false
@@ -36,7 +35,7 @@ const ibmPlexSans = IBM_Plex_Sans({
     variable: "--font-ibm-plex-sans",
     weight: ["400", "500", "600", "700"],
 });
-
+    
 const quicksand = Quicksand({
     subsets: ["latin"],
     variable: "--font-quicksand",
@@ -58,12 +57,7 @@ export default function RootLayout({
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
             </head>
-            <body>
-                <Script id="disable-sticky-hover" strategy="beforeInteractive">
-                    {`document.addEventListener('touchstart', function () {}, false);`}
-                </Script>
-                {children}
-            </body>
+            <body>{children}</body>
         </html>
     )
 }
