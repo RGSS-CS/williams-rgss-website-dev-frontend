@@ -18,11 +18,11 @@ export default async function RootLayout({
 
   return (
     <>
-      <Suspense>
-        <Navbar management={management}/>
-      </Suspense>
+    <Suspense>
+      <Navbar management={management}/>
       {children}
       <Footer management={management} />
+    </Suspense>
     </>
   )
 }
