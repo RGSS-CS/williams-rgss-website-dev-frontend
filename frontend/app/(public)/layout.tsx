@@ -3,8 +3,10 @@ import '@/app/(public)/styles.css';
 import Footer from '@/app/(public)/_components/footer/footer';
 import Navbar from '@/app/(public)/_components/navbar/navbar';
 import { Suspense } from 'react';
+
 import { getManagementSettings } from '@/app/_lib/management';
 
+export const dynamic = "force-dynamic";
 export default async function RootLayout({
   children,
 }: {
