@@ -7,7 +7,7 @@ import type { Management } from "@/app/_lib/management"
 import styles from "./footer.module.css";
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 type FooterProps = {
   management: Management;
