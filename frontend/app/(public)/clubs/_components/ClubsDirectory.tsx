@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { JSX, Suspense, useDeferredValue, useState } from "react";
+import { JSX, useDeferredValue, useState } from "react";
 import type { Club } from "@/app/_lib/club";
 import type { Management } from "@/app/_lib/management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
@@ -13,7 +13,6 @@ import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faLayerGroup, faBook, faPalette, faHandsHelping, faRunning, faFlask, faMicrochip, faMusic, faBriefcase, faSearch, faArrowRight, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
-import Loading from "../loading";
 
 const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
 
@@ -177,7 +176,7 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
 
   return (
     <main>
-      <Suspense fallback={<Loading />}>
+      <>
         <div className="hero">
           <div className="hero_shape"></div>
           <div className="hero_inner">
@@ -267,7 +266,7 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
           <h2>Don&apos;t See Your Club? <span>Start One.</span></h2>
           <p>Any {management.schoolName ?? ''} student can start a new club. Talk to a teacher that is interested with your idea.</p>
         </div>
-      </Suspense>
+      </>
     </main>
   );
 }
