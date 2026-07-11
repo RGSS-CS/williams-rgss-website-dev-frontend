@@ -20,17 +20,14 @@ export default function MobileFooter({ management }: FooterProps) {
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null;
-  const { displayAddress, regionLine } = address
+  const { regionLine } = address
     ? (() => {
       const parts = address.split(",").map(s => s.trim());
-      const [name, houseNumber, street, city, region, , province, , country] = parts;
-      const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
-        .filter(Boolean)
-        .join(", ");
+      const [, , , city, region, , province, , country] = parts;
       const regionLine = [city, region, province, country].filter(Boolean).join(", ");
-      return { displayAddress, regionLine };
+      return { regionLine };
     })()
-    : { displayAddress: null, regionLine: null };
+    : { regionLine: null };
 
   useEffect(() => {
     setSchoolYear(getSchoolYear());
