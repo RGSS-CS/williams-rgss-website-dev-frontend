@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
-import AnchorLink from "@/app/(public)/_components/anchorLink";
+import AnchorLink from "@/app/(public)/_components/AnchorLink";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
