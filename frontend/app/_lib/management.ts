@@ -96,6 +96,7 @@ export async function getManagement(): Promise<Management[]> {
   const url = getManagementApiUrl();
 
   if (!url) {
+    console.error("getManagement: could not build API URL (check API_URL env var)");
     return [];
   }
 
@@ -112,12 +113,14 @@ export async function getManagement(): Promise<Management[]> {
     });
 
     if (!res.ok) {
+      console.error(`getManagement: backend responded with ${res.status} ${res.statusText} for ${url}`);
       return [];
     }
 
     const management = (await res.json()) as ManagementApiRecord[];
     return management.map(normalizeManagement);
-  } catch {
+  } catch (err) {
+    console.error(`getManagement: fetch to ${url} failed:`, err);
     return [];
   }
 }

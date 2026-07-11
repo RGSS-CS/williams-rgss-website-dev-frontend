@@ -1,7 +1,7 @@
 "use client";
-
 import { JSX } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styles from "@/app/(public)/_styles/sections/filters.module.css";
 //ICONS
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
@@ -32,25 +32,25 @@ export default function ClubsFilterControls({
 
   return (
     <>
-      <span className="filter_label">
+      <span className={styles.filter_label}>
         <FontAwesomeIcon icon={faFilter} />
         Filter
       </span>
       {categories.map((filter) => (
         <button
           key={filter.value}
-          className={`filter-chip${activeCategory === filter.value ? " active gold" : ""}`}
+          className={`${styles.filter_chip}${activeCategory === filter.value ? ` ${styles.filter_chip_active_gold}` : ""}`}
           onClick={() => onCategoryChange(filter.value)}
         >
           {filter.icon ?? (filter.iconClass ? <i className={filter.iconClass}></i> : null)}
           {filter.label}
         </button>
       ))}
-      <div className="filter_divider"></div>
+      <div className={styles.filter_divider}></div>
       {dayFilters.map((day) => (
         <button
           key={day}
-          className={`filter-chip${activeDay === day ? " active" : ""}`}
+          className={`${styles.filter_chip}${activeDay === day ? ` ${styles.filter_chip_active}` : ""}`}
           onClick={() => onDayChange(day)}
         >
           {day}

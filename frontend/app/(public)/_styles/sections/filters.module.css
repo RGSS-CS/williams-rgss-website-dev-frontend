@@ -49,9 +49,11 @@
   letter-spacing: 0.02em;
 }
 
-.filter_chip:hover {
-  border-color: var(--school-tertiary);
-  color: var(--school-primary-dark);
+@media (hover: hover) and (pointer: fine) {
+  .filter_chip:hover {
+    border-color: var(--school-tertiary);
+    color: var(--school-primary-dark);
+  }
 }
 
 .filter_chip.active {

@@ -5,6 +5,7 @@ import Footer from "@/app/(public)/_components/footer/footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata, ResolvingMetadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
@@ -34,12 +35,11 @@ export async function FooterWrapper() {
   )
 };
 
-export default async function Page() {
+async function HomeContent() {
   const management = await getManagementSettings();
   if (!management) return null;
-  //const clubs = await getDjangoAPI();
   return (
-    <main>
+    <>
       <div className="hero">
         <div className="hero_shape"></div>
         <div className="hero_inner">
@@ -122,6 +122,16 @@ export default async function Page() {
           </div>
         </div>
       </div>     
-    </main >
+    </>
+  );
+}
+
+export default function Page() {
+  return (
+    <main>
+      <Suspense fallback={null}>
+        <HomeContent />
+      </Suspense>
+    </main>
   );
 }
