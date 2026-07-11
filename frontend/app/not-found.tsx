@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./(public)/_components/navbar/navbar";

@@ -7,7 +7,7 @@ import type { Management } from "@/app/_lib/management"
 import styles from "./footer.module.css";
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 type FooterProps = {
   management: Management;
@@ -20,17 +20,14 @@ export default function MobileFooter({ management }: FooterProps) {
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null;
-  const { displayAddress, regionLine } = address
+  const { regionLine } = address
     ? (() => {
       const parts = address.split(",").map(s => s.trim());
-      const [name, houseNumber, street, city, region, , province, , country] = parts;
-      const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
-        .filter(Boolean)
-        .join(", ");
+      const [, , , city, region, , province, , country] = parts;
       const regionLine = [city, region, province, country].filter(Boolean).join(", ");
-      return { displayAddress, regionLine };
+      return { regionLine };
     })()
-    : { displayAddress: null, regionLine: null };
+    : { regionLine: null };
 
   useEffect(() => {
     setSchoolYear(getSchoolYear());
