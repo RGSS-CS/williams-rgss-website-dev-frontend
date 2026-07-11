@@ -33,19 +33,11 @@
   color: var(--school-primary);
 }
 
-<<<<<<< HEAD:frontend/app/(public)/_styles/sections/categories.module.css
 .category_icon {
   margin-right: 0.5rem;
 }
 
 .category_count {
-=======
-.category-icon {
-  margin-right: 0.5rem;
-}
-
-.category-count {
->>>>>>> origin/main:frontend/app/(public)/_styles/sections/categories.css
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--school-primary-light);
