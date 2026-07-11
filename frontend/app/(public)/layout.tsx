@@ -20,9 +20,9 @@ export default async function RootLayout({
     <>
       <Suspense>
         <Navbar management={management}/>
-      </Suspense>
       {children}
       <Footer management={management} />
+      </Suspense>
     </>
   )
 }

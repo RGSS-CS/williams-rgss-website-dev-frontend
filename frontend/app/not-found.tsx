@@ -7,7 +7,6 @@ import Footer from "./(public)/_components/footer/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Icons
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { getManagementSettings } from "./_lib/management";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -15,11 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default async function NotFound() {
-  const management = await getManagementSettings();
-  if (!management) return null;
   return (
     <main>
-      <Navbar management={management}/>
       <div className={styles.content}>
         <div className={styles.gif_stage}>
           <div className={styles.overlay_404}>
@@ -44,7 +40,6 @@ export default async function NotFound() {
           </Link>
         </div>
       </div>
-      <Footer management={management}/>
     </main>
   );
 }
