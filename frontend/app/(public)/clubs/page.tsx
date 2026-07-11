@@ -18,11 +18,3 @@ export default async function ClubsPage() {
 
     return <ClubsDirectory clubs={clubs} management={management} />;
 }
-
-export default function ClubsPage() {
-    return (
-        <Suspense fallback={null}>
-            <ClubsContent />
-        </Suspense>
-    );
-}
