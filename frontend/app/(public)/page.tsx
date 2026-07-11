@@ -5,6 +5,7 @@ import Footer from "@/app/(public)/_components/footer/footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
+<<<<<<< HEAD:frontend/app/(public)/page.tsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata, ResolvingMetadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
@@ -17,6 +18,17 @@ export async function generateMetadata(parent: ResolvingMetadata): Promise<Metad
     title: (`${management?.schoolName} ${management?.councilName}`),
     description: (`This is the School Council Website of ${management?.schoolName}`),
   }
+=======
+import { Suspense } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Metadata } from 'next';
+//ICONS
+import { faCalendarAlt, faPaperPlane, faStar } from '@fortawesome/free-solid-svg-icons'
+
+export const metadata: Metadata = {
+  title: 'Dr. GW Williams STUCO',
+  description: 'STUCO Cloud Portal for Dr. GW Williams Secondary School',
+>>>>>>> origin/main:frontend/app/(public)/(home)/page.tsx
 };
 
 export async function FooterWrapper() {
@@ -40,6 +52,23 @@ export default async function Page() {
   //const clubs = await getDjangoAPI();
   return (
     <main>
+<<<<<<< HEAD:frontend/app/(public)/page.tsx
+=======
+      <div className={styles.topBar}>
+        <Navbar />
+        <div className={styles.tickerBar}>
+          <div className={styles.tickerHeader}>
+            <h3>
+              <FontAwesomeIcon icon={faStar} /> Updates
+            </h3>
+          </div>
+
+          <div className="ticker_track">
+            <div className="ticker_inner" id="ticker-inner"></div>
+          </div>
+        </div>
+      </div>
+>>>>>>> origin/main:frontend/app/(public)/(home)/page.tsx
       <div className="hero">
         <div className="hero_shape"></div>
         <div className="hero_inner">
@@ -121,7 +150,13 @@ export default async function Page() {
             <div className="card_row">{/*Add section for school council*/}</div>
           </div>
         </div>
+<<<<<<< HEAD:frontend/app/(public)/page.tsx
       </div>     
+=======
+      </div>
+      <Suspense><FooterWrapper /></Suspense>
+      
+>>>>>>> origin/main:frontend/app/(public)/(home)/page.tsx
     </main >
   );
 }

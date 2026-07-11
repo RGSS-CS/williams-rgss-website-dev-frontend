@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faUndo } from '@fortawesome/free-solid-svg-icons'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//ICONS
+import { faUndo } from '@fortawesome/free-solid-svg-icons'
+
 type ResetFiltersButtonProps = {
   onReset: () => void;
 };

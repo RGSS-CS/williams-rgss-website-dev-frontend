@@ -121,7 +121,11 @@
     font-size: clamp(0.78rem, 0.8vw, 0.82rem);
   }
 
+<<<<<<< HEAD:frontend/app/(public)/_components/navbar/navigation.module.css
   .nav_links a {
+=======
+  .nav-links a {
+>>>>>>> origin/main:frontend/app/(public)/_styles/layout/navigation.css
     font-size: clamp(1rem, 1vw, 1.2rem);
     padding-inline: clamp(8px, 0.9vw, 14px);
   }
