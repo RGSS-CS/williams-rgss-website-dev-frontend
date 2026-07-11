@@ -4,18 +4,15 @@ import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
 import LoginBackButton from "../_components/LoginBackButton";
 import { getManagementSettings } from "@/app/_lib/management";
-import { Metadata, ResolvingMetadata } from "next";
+import { getSiteMetadata } from "@/app/_lib/metadata";
+import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons'
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
-  const management = await getManagementSettings();  
-  return{
-    title: (`Authentication - ${management?.schoolName} ${management?.councilName}`),
-    description: (`This is the School Council Website of ${management?.schoolName}`),
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata("Authentication");
+}
 
 export default async function SigninForm() {
   const management = await getManagementSettings();

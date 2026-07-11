@@ -1,14 +1,11 @@
 import { getClubs } from "@/app/_lib/club";
 import { getManagementSettings } from "@/app/_lib/management";
+import { getSiteMetadata } from "@/app/_lib/metadata";
 import ClubsDirectory from "./_components/ClubsDirectory";
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
-  const management = await getManagementSettings();  
-  return{
-    title: (`Clubs - ${management?.schoolName} ${management?.councilName}`),
-    description: (`This is the School Council Website of ${management?.schoolName}`),
-  }
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata("Clubs");
 };
 
 export default async function ClubsPage() {
