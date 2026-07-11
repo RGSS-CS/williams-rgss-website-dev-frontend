@@ -1,15 +1,11 @@
 import styles from './about.module.css';
 import Image from 'next/image';
-import { Metadata, ResolvingMetadata } from 'next';
-import { getManagementSettings } from '@/app/_lib/management';
+import { Metadata } from 'next';
+import { getSiteMetadata } from '@/app/_lib/metadata';
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
-  const management = await getManagementSettings();
-  return{
-    title: (`About - ${management?.schoolName} ${management?.councilName}`),
-    description: (`This is the School Council Website of ${management?.schoolName}`),
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata("About");
+}
 
 export default function AboutPage() {
     return (

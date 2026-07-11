@@ -6,18 +6,15 @@ import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
+import { getSiteMetadata } from "@/app/_lib/metadata";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
-  const management = await getManagementSettings();  
-  return{
-    title: (`${management?.schoolName} ${management?.councilName}`),
-    description: (`This is the School Council Website of ${management?.schoolName}`),
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata();
+}
 
 export async function FooterWrapper() {
   const headersList = await headers();

@@ -2,21 +2,17 @@ import Image from "next/image";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import styles from "./gallery.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import GalleryFilterContent from "./_components/GalleryFilterControls";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getManagementSettings } from "@/app/_lib/management";
+import { getSiteMetadata } from "@/app/_lib/metadata";
 
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
-  const management = await getManagementSettings();  
-  return{
-    title: (`Gallery - ${management?.schoolName} ${management?.councilName}`),
-    description: (`This is the School Council Website of ${management?.schoolName}`),
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata("Gallery");
+}
 
 export default function GalleryPage() {
     return (
