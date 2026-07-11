@@ -1,12 +1,13 @@
 import Image from "next/image";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
-import Navbar from "./(public)/_components/Navbar";
-import Footer from "./(public)/_components/Footer";
+import Navbar from "./(public)/_components/navbar/navbar";
+import Footer from "./(public)/_components/footer/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Icons
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { getManagementSettings } from "./_lib/management";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -14,9 +15,11 @@ export const metadata: Metadata = {
 };
 
 export default async function NotFound() {
+  const management = await getManagementSettings();
+  if (!management) return null;
   return (
     <main>
-      <Navbar />
+      <Navbar management={management}/>
       <div className={styles.content}>
         <div className={styles.gif_stage}>
           <div className={styles.overlay_404}>
@@ -41,7 +44,7 @@ export default async function NotFound() {
           </Link>
         </div>
       </div>
-      <Footer />
+      <Footer management={management}/>
     </main>
   );
 }

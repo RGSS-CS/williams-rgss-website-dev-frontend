@@ -1,42 +1,34 @@
-import Image from "next/image";
-import Link from "next/link";
 import "@/app/(public)/styles.css";
-import styles from "./authentication.module.css";
-import Footer from "@/app/(public)/_components/Footer";
-import { Metadata } from "next";
+import styles from "./authentication.module.css"; 
+import Footer from "@/app/(public)/_components/footer/footer";
+import { Metadata, ResolvingMetadata } from "next";
+import Navbar from "@/app/(public)/_components/navbar/navbar";
+import { getManagementSettings } from "@/app/_lib/management";
 
-export const metadata: Metadata = {
-    title: "Authentication",
-    description: "Login or register to access your account.",
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+  const management = await getManagementSettings();  
+  return{
+    title: (`Authentication - ${management?.schoolName} ${management?.councilName}`),
+    description: (`This is the School Council Website of ${management?.schoolName}`),
+  }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+
+    const management = await getManagementSettings();
+    if (!management) return null;
     return (
         <main className={styles.page}>
-            <nav className="navbar">
-                <div className="header-container">
-                    <div className="title-container">
-                        <Link href="/" className="brand-link">
-                            <div className="logo">
-                                <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-                            </div>
-                            <div className="brand-copy">
-                                <span className="school-title">Dr. GW Williams S.S.</span>
-                                <span className="school-subtitle">Student Council</span>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar management={management}/>
             <div className={styles.content}>
                 {children}
             </div>
             <div className={styles.footerWrap}>
-                <Footer />
+                <Footer management={management}/>
             </div>
         </main>
     )
