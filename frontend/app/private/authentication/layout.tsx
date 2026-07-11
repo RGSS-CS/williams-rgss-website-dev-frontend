@@ -30,11 +30,14 @@ async function AuthChrome({ children }: { children: React.ReactNode }) {
     )
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+
+    const management = await getManagementSettings();
+    if (!management) return null;
     return (
         <Suspense fallback={null}>
             <AuthChrome>{children}</AuthChrome>

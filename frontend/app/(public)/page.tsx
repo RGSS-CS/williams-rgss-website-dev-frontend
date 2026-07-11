@@ -5,10 +5,10 @@ import Footer from "@/app/(public)/_components/footer/footer";
 import { isMobile } from "@/app/_utils/isMobile";
 import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
 import { headers } from "next/headers";
-import { Suspense } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata, ResolvingMetadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
+import { Suspense } from "react";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
