@@ -101,11 +101,13 @@ export async function getManagement(): Promise<Management[]> {
 
   try {
     const res = await fetch(url, {
-      cache: "force-cache",
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      next: {
+        revalidate: 300,
+      }
     });
 
     if (!res.ok) {
