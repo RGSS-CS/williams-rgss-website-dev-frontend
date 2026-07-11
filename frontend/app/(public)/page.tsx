@@ -8,7 +8,6 @@ import { headers } from "next/headers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata, ResolvingMetadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
-import { Suspense } from "react";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
