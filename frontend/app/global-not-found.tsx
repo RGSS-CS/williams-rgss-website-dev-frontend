@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } from "next/font/google";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
