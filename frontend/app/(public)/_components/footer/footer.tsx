@@ -47,22 +47,22 @@ export default function Footer({ management }: ManagementProps) {
       <div className={styles.footer_inner}>
         <div className={styles.footer_col}>
           <h4>School Info</h4>
-          <span className={styles.no_pointer}><p>{regionLine}</p></span>
-          <p>
+          <p>{regionLine}</p>
+          <div className={styles.link}>
             <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
             {mapsUrl ? (
-              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
-                {displayAddress}
-              </a>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">{displayAddress}</a>
             ) : (
-              <span>Address unavailable</span>
+              <a>Address unavailable</a>
             )}
-          </p>
-          <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-          <button onClick={() => handleCopy("(905) 727-3131")}>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
-            {copyStatus === 'error' && <p>Failed to copy.</p>}
-          </button>
+          </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faPhone} className={styles.fas} />
+            <button onClick={() => handleCopy("(905) 727-3131")}>
+              {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
+              {copyStatus === 'error' && <p>Failed to copy.</p>}
+            </button>
+          </div>
         </div>
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
