@@ -110,9 +110,6 @@ export async function getManagement(): Promise<Management[]> {
       headers: {
         "Content-Type": "application/json",
       },
-      next: {
-        revalidate: 300,
-      }
     });
 
     if (!res.ok) {
