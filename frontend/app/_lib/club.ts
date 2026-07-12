@@ -1,3 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
+
 export type ClubApiRecord = {
   id: number;
   name: string;
@@ -61,8 +63,11 @@ function normalizeClub(record: ClubApiRecord): Club {
 }
 
 export async function getClubs(): Promise<Club[]> {
-  const url = getClubsApiUrl();
+  'use cache';
+  cacheLife('minutes');
+  cacheTag('clubs');
 
+  const url = getClubsApiUrl();
   if (!url) {
     return [];
   }
