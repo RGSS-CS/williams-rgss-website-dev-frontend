@@ -8,6 +8,7 @@ import styles from "./footer.module.css"
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 type ManagementProps = {
   management: Management;
@@ -55,6 +56,10 @@ export default function Footer({ management }: ManagementProps) {
             ) : (
               <a>Address unavailable</a>
             )}
+          </div>          
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
+            <a href={`mailto:${management.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management.schoolEmail}</a>
           </div>
           <div className={styles.link}>
             <FontAwesomeIcon icon={faPhone} className={styles.fas} />
