@@ -84,7 +84,6 @@ export default async function RootLayout({
     return (
         <html
             lang="en"
-            data-scroll-behavior="smooth"
             className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
         >
             <head>
