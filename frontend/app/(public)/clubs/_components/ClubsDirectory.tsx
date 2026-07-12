@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { JSX, useDeferredValue, useState } from "react";
 import type { Club } from "@/app/_lib/club";
 import type { Management } from "@/app/_lib/management";
@@ -88,7 +87,7 @@ function matchesQuery(club: Club, query: string) {
 
 function ClubCard({ club }: { club: Club }) {
   return (
-    <Link href={`/clubs/${club.id}`} className={styles.clubCardLink}>
+    <a href={`/clubs/${club.id}`} className={styles.clubCardLink}>
       <article className={styles.club_card}>
         <div className={styles.club_card_name}>
           <h3>{club.name}</h3>
@@ -116,7 +115,7 @@ function ClubCard({ club }: { club: Club }) {
           </span>
         </div>
       </article>
-    </Link>
+    </a>
   );
 }
 
