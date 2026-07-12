@@ -1,6 +1,5 @@
 "use client";
 import { JSX, useDeferredValue, useState } from "react";
-import Link from "next/link";
 import type { Club } from "@/app/_lib/club";
 import type { Management } from "@/app/_lib/management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
