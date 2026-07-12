@@ -53,8 +53,9 @@
   height: fit-content;
 }
 
-.link:hover,
-.link a:hover {
+.link:hover .fas,
+.link:hover a,
+.link:hover button {
   color: var(--school-tertiary) !important;
 }
 
@@ -95,4 +96,32 @@
 
 .fas {
   margin-right: 6px;
+}
+
+.desktop_only {
+  display: inline;
+}
+
+.mobile_only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .footer_inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .desktop_only {
+    display: none;
+  }
+
+  .mobile_only {
+    display: inline;
+  }
+
+  .footer_bottom {
+    flex-direction: column;
+    text-align: center;
+  }
 }
