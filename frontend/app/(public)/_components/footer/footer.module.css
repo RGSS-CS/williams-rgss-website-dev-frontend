@@ -23,25 +23,36 @@
   margin-bottom: 1rem;
 }
 
-.footer_col p,
-.footer_col a,
-.footer_col button {
+
+.link a,
+.link button {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--school-secondary);
+}
+
+.footer_col p {
   font-size: 0.9rem;
   line-height: 1.8;
   text-decoration: none;
   color: var(--school-secondary);
   background: none;
   border: none;
-  cursor: pointer;
   padding: 0;
 }
 
-.footer_col .no_pointer {
-  pointer-events: initial;
+.link {
+  margin-bottom: 14px;
+  width:fit-content;
+  margin-left: -5px;
 }
 
-.footer_col a:hover,
-.footer_col button:hover {
+.link:hover {
   color: var(--school-tertiary);
 }
 

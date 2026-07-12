@@ -1,3 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
+
 export type SchoolLocationApiRecord = {
   location: string;
   location_lat: number;
@@ -93,6 +95,9 @@ function normalizeManagement(record: ManagementApiRecord): Management {
 }
 
 export async function getManagement(): Promise<Management[]> {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag('management');
   const url = getManagementApiUrl();
 
   if (!url) {

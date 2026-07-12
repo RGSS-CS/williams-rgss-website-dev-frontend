@@ -4,7 +4,8 @@ import { getClubById } from "@/app/_lib/club";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
-
+import { Metadata } from "next";
+import { getSiteMetadata } from "@/app/_lib/metadata";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
@@ -15,10 +16,19 @@ type ClubPageProps = {
   }>;
 };
 
+export async function generateMetadata({ params }: ClubPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const clubId = Number(id);
+  const club = await getClubById(clubId);
+  return getSiteMetadata(club?.name);
+};
+
+
+
 function formatTime(time: string | null) {
   if (!time) {
     return "Time TBA";
-  }
+  };
 
   const [hour, minute] = time.split(":");
   const parsedHour = Number(hour);
@@ -26,31 +36,31 @@ function formatTime(time: string | null) {
 
   if (Number.isNaN(parsedHour) || Number.isNaN(parsedMinute)) {
     return time;
-  }
+  };
 
   return new Intl.DateTimeFormat("en-CA", {
     hour: "numeric",
     minute: "2-digit",
   }).format(new Date(2000, 0, 1, parsedHour, parsedMinute));
-}
+};
 
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting day TBA";
-  }
+  };
 
   const normalized = day.toLowerCase();
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-}
+};
 
 function sentenceCase(value: string | null, fallback: string) {
   if (!value) {
     return fallback;
-  }
+  };
 
   const normalized = value.toLowerCase();
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-}
+};
 
 export default async function ClubDetailPage({ params }: ClubPageProps) {
   const { id } = await params;
@@ -58,13 +68,13 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
   if (Number.isNaN(clubId)) {
     notFound();
-  }
+  };
 
   const club = await getClubById(clubId);
 
   if (!club) {
     notFound();
-  }
+  };
   
   const primaryCategory = club.categories[0] ?? "Student Club";
   const meetingDay = formatDay(club.dayOfMeeting);
@@ -252,4 +262,4 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
       </section>
     </main>
   );
-}
+};

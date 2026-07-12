@@ -8,6 +8,7 @@ import styles from "./footer.module.css"
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 type ManagementProps = {
   management: Management;
@@ -47,22 +48,26 @@ export default function Footer({ management }: ManagementProps) {
       <div className={styles.footer_inner}>
         <div className={styles.footer_col}>
           <h4>School Info</h4>
-          <span className={styles.no_pointer}><p>{regionLine}</p></span>
-          <p>
+          <p>{regionLine}</p>
+          <div className={styles.link}>
             <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
             {mapsUrl ? (
-              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
-                {displayAddress}
-              </a>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">{displayAddress}</a>
             ) : (
-              <span>Address unavailable</span>
+              <a>Address unavailable</a>
             )}
-          </p>
-          <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-          <button onClick={() => handleCopy("(905) 727-3131")}>
-            {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
-            {copyStatus === 'error' && <p>Failed to copy.</p>}
-          </button>
+          </div>          
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
+            <a href={`mailto:${management.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management.schoolEmail}</a>
+          </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faPhone} className={styles.fas} />
+            <button onClick={() => handleCopy("(905) 727-3131")}>
+              {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
+              {copyStatus === 'error' && <p>Failed to copy.</p>}
+            </button>
+          </div>
         </div>
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
