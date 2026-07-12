@@ -7,7 +7,8 @@ import type { Management } from "@/app/_lib/management"
 import styles from "./footer.module.css";
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 type FooterProps = {
   management: Management;
@@ -38,17 +39,25 @@ export default function MobileFooter({ management }: FooterProps) {
       <div className={styles.footer_inner}>
         <div className={styles.footer_col}>
           <h4>School Info</h4> {/*Change to school info pulled from backend API */}
-          <span className={styles.no_pointer}><p>{regionLine}</p></span>
-          <p>
+          <p>{regionLine}</p>
+          <div className={styles.link}>
             <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
             {mapsUrl ? (
               <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
                 Open In Google Maps
               </a>
             ) : (
-              <span>Address unavailable</span>
+              <a>Address unavailable</a>
             )}
-          </p>
+          </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
+            <a href={`mailto:${management.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management.schoolEmail}</a>
+          </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faPhone} className={styles.fas} />
+            <a href="tel:(905) 727-3131">(905) 727-3131</a>
+          </div>
         </div>
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
