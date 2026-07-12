@@ -96,11 +96,11 @@ function ClubCard({ club }: { club: Club }) {
 
           <div className={styles.club_meta_row}>
             <FontAwesomeIcon icon={faMapMarkerAlt} />
-            <h4>Room: {club.roomNumber}</h4>
+            <h4><b>Room:</b> {club.roomNumber}</h4>
           </div>
           <div className={styles.club_meta_row}>
             <FontAwesomeIcon icon={faCalendarAlt} />
-            <h4>{club.repetition}: {club.dayOfMeeting} @ {club.time}</h4>
+            <h4><b>{club.repetition}:</b> {club.dayOfMeeting} @ {club.time}</h4>
           </div>
         </div>
         <p className={styles.club_card_description}>
