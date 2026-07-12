@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
   const { id } = await params;
   const clubId = Number(id);
   const club = await getClubById(clubId);
-  return getSiteMetadata(`${club.name}`);
+  return getSiteMetadata(club.name);
 };
 
 
