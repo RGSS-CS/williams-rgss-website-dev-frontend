@@ -23,9 +23,10 @@
   margin-bottom: 1rem;
 }
 
+
 .link a,
 .link button {
-  font-size: clamp(0.9rem);
+  font-size: 0.9rem;
   line-height: 1.8;
   text-decoration: none;
   background: none;
