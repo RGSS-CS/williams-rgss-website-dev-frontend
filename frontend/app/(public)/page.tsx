@@ -1,10 +1,6 @@
 import Image from "next/image";
 import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
-import Footer from "@/app/(public)/_components/footer/footer";
-import { isMobile } from "@/app/_utils/isMobile";
-import MobileFooter from "@/app/(public)/_components/footer/mobileFooter";
-import { headers } from "next/headers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Metadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
@@ -15,21 +11,6 @@ import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata();
 }
-
-export async function FooterWrapper() {
-  const headersList = await headers();
-  const userAgent = headersList.get("user-agent") || "";
-  const isMobileDevice = isMobile(userAgent);
-  const management = await getManagementSettings();
-
-  if (!management) return null;
-
-  return isMobileDevice ? (
-    <MobileFooter management={management}/>
-  ) : (
-    <Footer management={management}/>
-  )
-};
 
 export default async function Page() {
   const management = await getManagementSettings();

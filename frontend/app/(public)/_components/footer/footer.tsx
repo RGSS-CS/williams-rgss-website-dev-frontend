@@ -10,6 +10,9 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
+const SCHOOL_PHONE = "(905) 727-3131";
+const SCHOOL_PHONE_TEL = "9057273131";
+
 type ManagementProps = {
   management: Management;
 };
@@ -49,26 +52,53 @@ export default function Footer({ management }: ManagementProps) {
         <div className={styles.footer_col}>
           <h4>School Info</h4>
           <p>{regionLine}</p>
+
           <div className={styles.link}>
             <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
             {mapsUrl ? (
-              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">{displayAddress}</a>
+              <>
+                <a
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.desktop_only}
+                >
+                  {displayAddress}
+                </a>
+                <a
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mobile_only}
+                >
+                  Open In Google Maps
+                </a>
+              </>
             ) : (
               <a>Address unavailable</a>
             )}
-          </div>          
+          </div>
+
           <div className={styles.link}>
             <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
             <a href={`mailto:${management.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management.schoolEmail}</a>
           </div>
+
           <div className={styles.link}>
             <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-            <a onClick={() => handleCopy("(905) 727-3131")}>
-              {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
+            <a
+              className={styles.desktop_only}
+              onClick={() => handleCopy(SCHOOL_PHONE)}
+            >
+              {copyStatus === 'success' ? `Copied: ${copiedText}` : SCHOOL_PHONE}
               {copyStatus === 'error' && <p>Failed to copy.</p>}
+            </a>
+            <a className={styles.mobile_only} href={`tel:${SCHOOL_PHONE_TEL}`}>
+              {SCHOOL_PHONE}
             </a>
           </div>
         </div>
+
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
           <p>Stay connected with {management.councilName || 'student council'}</p>
