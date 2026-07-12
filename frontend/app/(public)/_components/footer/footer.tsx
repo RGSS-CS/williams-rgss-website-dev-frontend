@@ -63,10 +63,10 @@ export default function Footer({ management }: ManagementProps) {
           </div>
           <div className={styles.link}>
             <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-            <button onClick={() => handleCopy("(905) 727-3131")}>
+            <a onClick={() => handleCopy("(905) 727-3131")}>
               {copyStatus === 'success' ? `Copied: ${copiedText}` : '(905) 727-3131'}
               {copyStatus === 'error' && <p>Failed to copy.</p>}
-            </button>
+            </a>
           </div>
         </div>
         <div className={styles.footer_col}>

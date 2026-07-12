@@ -50,10 +50,12 @@
   margin-bottom: 14px;
   width:fit-content;
   margin-left: -5px;
+  height: fit-content;
 }
 
-.link:hover {
-  color: var(--school-tertiary);
+.link:hover,
+.link a:hover {
+  color: var(--school-tertiary) !important;
 }
 
 .social_row {
