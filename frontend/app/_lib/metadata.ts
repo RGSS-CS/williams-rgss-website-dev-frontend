@@ -1,16 +1,13 @@
 import { cacheLife } from "next/cache";
 import { getManagementSettings } from "./management";
 
-const DEFAULT_SCHOOL_NAME = "School";
-const DEFAULT_COUNCIL_NAME = "STUCO";
-
 export async function getSiteMetadata(pageTitle?: string) {
   "use cache";
   cacheLife("hours");
 
   const management = await getManagementSettings();
-  const schoolName = management?.schoolName || DEFAULT_SCHOOL_NAME;
-  const councilName = management?.councilName || DEFAULT_COUNCIL_NAME;
+  const schoolName = management?.schoolName;
+  const councilName = management?.councilName;
 
   const siteTitle = `${schoolName} ${councilName}`.trim();
 
