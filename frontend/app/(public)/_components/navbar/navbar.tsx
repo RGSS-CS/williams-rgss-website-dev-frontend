@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -54,7 +55,7 @@ export default function Navbar({ management }: NavbarProps) {
               >
                 <FontAwesomeIcon icon={faBars} />
               </button>
-              <a href="/" className={styles.brand_link}>
+              <Link href="/" className={styles.brand_link} prefetch={false}>
                 <div className={styles.logo}>
                   <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
                 </div>
@@ -62,20 +63,21 @@ export default function Navbar({ management }: NavbarProps) {
                   <span className={styles.school_title}>{management.schoolName}</span>
                   <span className={styles.school_subtitle}>Student Council</span>
                 </div>
-              </a>
+              </Link>
             </div>
 
             <div className={styles.nav_links}>
               {links.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   className={isActivePath(pathname, link.href) ? styles.active : ""}
                   onClick={() => setSidebarOpen(false)}
+                  prefetch={false}
                 >
                   {link.icon}
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -93,15 +95,16 @@ export default function Navbar({ management }: NavbarProps) {
         </button>
         <div className={styles.sidebar_links}>
           {links.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className={isActivePath(pathname, link.href) ? styles.active : ""}
               onClick={() => setSidebarOpen(false)}
+              prefetch={false}
             >
               {link.icon}
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
