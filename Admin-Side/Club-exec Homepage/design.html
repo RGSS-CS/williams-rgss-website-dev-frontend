@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Execs · Dashboard</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0b1c3a;
+      --navy-deep: #07111f;
+      --navy-mid: #162d52;
+      --gold: #f6ae2d;
+      --gold-dark: #c88a1a;
+      --gold-light: #fff3d0;
+      --white: #ffffff;
+      --off-white: #f5f7fa;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
+
+      --sidebar-w: 260px;
+      --topbar-h: 64px;
+      --font-head: 'Montserrat', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-disp: 'Bebas Neue', sans-serif;
+    }
+
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--ink);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ----- SIDEBAR (inspired by PNG) ----- */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy-deep);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s ease;
+      padding: 1.2rem 0 0 0;
+    }
+
+    .sidebar-brand {
+      padding: 0 1.5rem 1.2rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--gold);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--navy);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      line-height: 1.2;
+    }
+    .brand-text .school {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: white;
+      display: block;
+    }
+    .brand-text .sub {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+
+    .exec-mini {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 8px 12px;
+    }
+    .exec-mini img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: cover;
+    }
+    .exec-mini .info {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .exec-mini .info span {
+      display: block;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* navigation */
+    .nav-section {
+      margin-top: 1.6rem;
+      padding: 0 1rem;
+    }
+    .nav-section .label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      padding: 0 0.5rem 0.6rem 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.65rem 1rem;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      border-radius: 10px;
+      transition: all 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 2px 0;
+      border-left: 3px solid transparent;
+    }
+    .nav-item i {
+      width: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .nav-item:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-item.active {
+      color: var(--gold);
+      background: rgba(246,174,45,0.08);
+      border-left-color: var(--gold);
+    }
+    .nav-item .badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 1.2rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .school-foot {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.65rem;
+      line-height: 1.5;
+    }
+    .school-foot strong {
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .social-icons a {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.9rem;
+      transition: 0.15s;
+    }
+    .social-icons a:hover { color: var(--gold); }
+
+    /* ----- MAIN AREA ----- */
+    .main-area {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      height: var(--topbar-h);
+      background: white;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      flex-wrap: wrap;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .topbar-left .sep { color: var(--line); }
+    .topbar-left .current { color: var(--navy); font-weight: 700; }
+    .topbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-btn {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: none;
+      background: var(--off-white);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .topbar-btn:hover { background: var(--line); }
+    .topbar-btn.gold {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold-dark);
+      box-shadow: 0 2px 0 var(--gold-dark);
+    }
+    .topbar-btn.gold:hover { background: #ffc947; transform: translateY(1px); box-shadow: 0 1px 0 var(--gold-dark); }
+
+    /* PAGE CONTENT */
+    .page-content {
+      padding: 1.8rem 2rem 3rem;
+      max-width: 1200px;
+      flex: 1;
+    }
+
+    /* WELCOME / HEADER */
+    .welcome-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.8rem;
+    }
+    .welcome-header h1 {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--navy);
+    }
+    .welcome-header h1 small {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: var(--font-body);
+      margin-left: 8px;
+    }
+    .club-code-badge {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      padding: 6px 16px 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--navy);
+    }
+    .club-code-badge i { color: var(--gold); }
+
+    /* CLUB CARDS (inspired by PNG list) */
+    .club-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 1.8rem 0 2rem;
+    }
+
+    .club-card {
+      background: white;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 2rem;
+      transition: box-shadow 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .club-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
+
+    .club-info {
+      flex: 2;
+      min-width: 200px;
+    }
+    .club-info .name {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .club-info .name .role {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.7rem;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+    .club-info .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .club-info .meta i { width: 16px; color: var(--gold); }
+    .club-info .meta .teacher {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .club-members {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--off-white);
+      padding: 6px 14px 6px 10px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+      border: 1px solid var(--line);
+    }
+    .club-members i { color: var(--gold); }
+
+    .add-club-area {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .add-club-area input {
+      font-family: var(--font-body);
+      padding: 10px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: 40px;
+      font-size: 0.85rem;
+      min-width: 200px;
+      flex: 1;
+      outline: none;
+      transition: 0.15s;
+    }
+    .add-club-area input:focus { border-color: var(--gold); }
+    .add-club-area button {
+      background: var(--navy);
+      color: white;
+      border: none;
+      font-family: var(--font-head);
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+    .add-club-area button:hover { background: var(--navy-mid); }
+
+    /* SCHOOL INFO FOOTER (map etc) */
+    .school-footer-card {
+      background: white;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      margin-top: 1.5rem;
+      align-items: center;
+    }
+    .school-footer-card .address {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .school-footer-card .address strong {
+      font-family: var(--font-head);
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .school-footer-card .address .map-link {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-bottom: 1px dashed var(--line);
+      cursor: pointer;
+    }
+    .school-footer-card .address .map-link i { margin-right: 4px; color: var(--gold); }
+    .school-footer-card .phone {
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .school-footer-card .social {
+      margin-left: auto;
+      display: flex;
+      gap: 14px;
+    }
+    .school-footer-card .social a {
+      color: var(--muted);
+      font-size: 1.2rem;
+      transition: 0.15s;
+    }
+    .school-footer-card .social a:hover { color: var(--gold); }
+
+    /* responsive */
+    @media (max-width: 820px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-area { margin-left: 0; }
+      .club-card { flex-direction: column; align-items: flex-start; }
+      .school-footer-card .social { margin-left: 0; }
+    }
+
+    /* helper */
+    .text-muted { color: var(--muted); }
+    .mt-1 { margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR (matching PNG + V1 style) ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-top">
+      <div class="brand-icon"><i class="fas fa-paw"></i></div>
+      <div class="brand-text">
+        <span class="school">Dr. G.W. Williams S.S.</span>
+        <span class="sub">Exec Dashboard</span>
+      </div>
+    </div>
+    <div class="exec-mini">
+      <img src="https://i.pravatar.cc/80?img=47" alt="Maya Chen" />
+      <div class="info">
+        Maya Chen <span>Grade 11 · 2026-2027</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="label">Main</div>
+    <a href="#" class="nav-item active"><i class="fas fa-house"></i> Home</a>
+    <a href="#" class="nav-item"><i class="fas fa-users"></i> Clubs</a>
+    <a href="#" class="nav-item"><i class="fas fa-screwdriver-wrench"></i> Manage Clubs</a>
+    <a href="#" class="nav-item"><i class="fas fa-images"></i> Gallery</a>
+    <a href="#" class="nav-item"><i class="fas fa-circle-info"></i> About</a>
+    <a href="#" class="nav-item"><i class="fas fa-user"></i> Account</a>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="school-foot">
+      <div><strong>Aurora · Ontario · Canada</strong></div>
+      <div>11 Spring Farm Road · L4G 7W2</div>
+      <div>(905) 727-3131</div>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN AREA ===== -->
+<div class="main-area">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <i class="fas fa-grip-lines" style="color:var(--muted);"></i>
+      <span class="current">Dashboard</span>
+      <span class="sep">/</span>
+      <span>Clubs</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-btn" onclick="alert('📋 Attendance view (mock)')"><i class="fas fa-clipboard-check"></i> Attendance</span>
+      <span class="topbar-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</span>
+      <span class="topbar-btn gold" onclick="alert('✅ Session saved (mock)')"><i class="fas fa-floppy-disk"></i> Save</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+
+    <!-- WELCOME + CLUB CODE -->
+    <div class="welcome-header">
+      <h1>
+        Club Execs <small>· overview</small>
+      </h1>
+      <div class="club-code-badge">
+        <i class="fas fa-qrcode"></i> Add Club via Code
+        <i class="fas fa-chevron-right" style="font-size:0.6rem; opacity:0.5;"></i>
+      </div>
+    </div>
+
+    <!-- CLUB LIST (inspired by PNG) -->
+    <div class="club-list">
+
+      <!-- Chess Club -->
+      <div class="club-card">
+        <div class="club-info">
+          <div class="name">
+            Chess Club
+            <span class="role">President</span>
+          </div>
+          <div class="meta">
+            <span><i class="fas fa-door-open"></i> Room 110</span>
+            <span><i class="fas fa-calendar-week"></i> WEEKLY: MONDAY 15:05-16:00</span>
+            <span class="teacher"><i class="fas fa-chalkboard-user"></i> Mr. G. Advisor</span>
+            <span><i class="fas fa-google"></i> code: chess24</span>
+          </div>
+        </div>
+        <div class="club-members">
+          <i class="fas fa-user-group"></i> 28 members
+        </div>
+      </div>
+
+      <!-- Business Council -->
+      <div class="club-card">
+        <div class="club-info">
+          <div class="name">
+            Business Council
+            <span class="role">Communications Coordinator</span>
+          </div>
+          <div class="meta">
+            <span><i class="fas fa-door-open"></i> Library</span>
+            <span><i class="fas fa-calendar-week"></i> WEEKLY: TUESDAY 15:05-16:00</span>
+            <span class="teacher"><i class="fas fa-chalkboard-user"></i> Ms. L. Advisor</span>
+            <span><i class="fas fa-google"></i> code: biz2026</span>
+          </div>
+        </div>
+        <div class="club-members">
+          <i class="fas fa-user-group"></i> 40 members
+        </div>
+      </div>
+
+      <!-- Science & Discovery (from V1) -->
+      <div class="club-card">
+        <div class="club-info">
+          <div class="name">
+            Science & Discovery Club
+            <span class="role">Co-President</span>
+          </div>
+          <div class="meta">
+            <span><i class="fas fa-door-open"></i> Room 204</span>
+            <span><i class="fas fa-calendar-week"></i> WEEKLY: WEDNESDAY 15:05-16:00</span>
+            <span class="teacher"><i class="fas fa-chalkboard-user"></i> Dr. R. Advisor</span>
+            <span><i class="fas fa-google"></i> code: sci-discovery</span>
+          </div>
+        </div>
+        <div class="club-members">
+          <i class="fas fa-user-group"></i> 34 members
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD CLUB via CODE (inline) -->
+    <div class="add-club-area">
+      <input type="text" placeholder="Enter club code to join …" />
+      <button><i class="fas fa-plus-circle"></i> Add Club</button>
+      <span style="font-size:0.75rem; color:var(--muted);"><i class="fas fa-info-circle"></i> club codes are provided by advisors</span>
+    </div>
+
+    <!-- SCHOOL INFO CARD (map, address, social) -->
+    <div class="school-footer-card">
+      <div class="address">
+        <strong>Dr. G.W. Williams S.S.</strong>
+        <span>Aurora · Ontario · Canada</span>
+        <span>11 Spring Farm Road · L4G 7W2</span>
+        <a href="#" class="map-link" onclick="alert('📍 Google Maps (mock) – 11 Spring Farm Rd, Aurora, ON')">
+          <i class="fas fa-map-pin"></i> View on map
+        </a>
+      </div>
+      <div class="phone">
+        <i class="fas fa-phone" style="color:var(--gold);"></i> (905) 727-3131
+      </div>
+      <div class="social">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- tiny extra: "list in weekday order" note from PNG -->
+    <div style="margin-top: 1.2rem; font-size:0.75rem; color:var(--muted); display:flex; gap:12px; align-items:center; border-top:1px solid var(--line); padding-top:1rem;">
+      <i class="fas fa-arrow-up-wide-short"></i> clubs listed in weekday order · Mon · Tue · Wed
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /main-area -->
+
+<!-- ===== JS ===== -->
+<script>
+  (function() {
+    // simple sidebar toggle for mobile (optional)
+    const sidebar = document.getElementById('sidebar');
+    // you can add a hamburger if needed, but we keep it static
+    // small effect: click on brand toggles (for demo)
+    document.querySelector('.brand-top')?.addEventListener('click', function(e) {
+      if (window.innerWidth < 820) {
+        sidebar.classList.toggle('open');
+      }
+    });
+    // close when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth < 820) {
+        const isSidebar = sidebar.contains(e.target);
+        if (!isSidebar && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+  })();
+</script>
+</body>
+</html>
