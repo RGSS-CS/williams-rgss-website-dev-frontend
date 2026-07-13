@@ -14,7 +14,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const management = await getManagementSettings();
-  if (!management) return null;
   //const clubs = await getDjangoAPI();
   return (
     <main>
@@ -23,11 +22,11 @@ export default async function Page() {
         <div className="hero_inner">
           <div className="hero_left">
             <div className={styles.heroTag}>
-              <p>{management.councilName} {getSchoolYear()}</p>
+              <p>{management?.councilName} {getSchoolYear()}</p>
             </div>
             <div className="hero_title">
-              <h1>{management.schoolName}</h1>
-              <h2>{management.councilName}</h2>
+              <h1>{management?.schoolName}</h1>
+              <h2>{management?.councilName}</h2>
             </div>
             <div className="hero_subtitle">
               <p>Representing Student Voice.</p>

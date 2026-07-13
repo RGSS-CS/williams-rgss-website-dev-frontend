@@ -95,7 +95,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
 }
 
 export async function getManagement(): Promise<Management[]> {
-  'use cache';
+  'use cache: remote';
   cacheLife('minutes');
   cacheTag('management');
   const url = getManagementApiUrl();

@@ -11,7 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ClubsPage() {
     const clubs = await getClubs();
     const management = await getManagementSettings();
-    if (!management) return null;
 
     return <ClubsDirectory clubs={clubs} management={management} />;
 }
