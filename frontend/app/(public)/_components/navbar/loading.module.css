@@ -1,0 +1,38 @@
+.skeletonBlock {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--school-secondary) 25%,
+    var(--school-primary-light) 50%,
+    var(--school-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.line {
+  width: 140px;
+  height: 14px;
+}
+
+.linkPill {
+  width: 64px;
+  height: 16px;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock {
+    animation: none;
+  }
+}
