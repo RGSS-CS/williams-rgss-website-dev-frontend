@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SigninForm() {
   const management = await getManagementSettings();
-  if (!management) return null;
+  if (!management) throw new Error("Unable to load site settings.");
   return (
     <main>
       <div className={styles.body}>

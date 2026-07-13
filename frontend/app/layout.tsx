@@ -21,7 +21,12 @@ function safeHex(value: string | null | undefined, fallback: string): string {
 }
 
 async function getThemeStyle(): Promise<string> {
-  const management = await getManagementSettings();
+  let management: Awaited<ReturnType<typeof getManagementSettings>> = null;
+  try {
+    management = await getManagementSettings();
+  } catch {
+    management = null;
+  }
 
   const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
   const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
