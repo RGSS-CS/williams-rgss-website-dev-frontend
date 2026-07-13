@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //ICONS
 import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons'
+import { isBuildPhase } from "@/app/_utils/isBuildPhase";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Authentication");
@@ -16,7 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SigninForm() {
   const management = await getManagementSettings();
-  if (!management) throw new Error("Unable to load site settings.");
+  if (!management) {
+    if (isBuildPhase()) return null;
+    throw new Error("Unable to load site settings.");
+  }
   return (
     <main>
       <div className={styles.body}>

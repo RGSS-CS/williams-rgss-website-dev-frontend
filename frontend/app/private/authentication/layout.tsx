@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import Navbar from "@/app/(public)/_components/navbar/navbar";
 import { getManagementSettings } from "@/app/_lib/management";
+import { isBuildPhase } from "@/app/_utils/isBuildPhase";
 
 export const metadata: Metadata = {
     title: "Authentication",
@@ -13,13 +14,19 @@ export const metadata: Metadata = {
 
 async function NavbarSlot() {
     const management = await getManagementSettings();
-    if (!management) throw new Error("Unable to load site settings.");
+    if (!management) {
+      if (isBuildPhase()) return null;
+      throw new Error("Unable to load site settings.");
+    }
     return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
     const management = await getManagementSettings();
-    if (!management) throw new Error("Unable to load site settings.");
+    if (!management) {
+      if (isBuildPhase()) return null;
+      throw new Error("Unable to load site settings.");
+    }
     return <Footer management={management} />;
 }
 
