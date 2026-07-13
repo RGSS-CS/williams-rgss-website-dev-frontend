@@ -60,13 +60,19 @@
   color: white;
 }
 
-.filter_chip_active {
+.filter_chip_active,
+.filter_chip.filter_chip_active,
+.filter_chip_active:hover,
+.filter_chip.filter_chip_active:hover {
   background: var(--school-primary);
   border-color: var(--school-primary);
   color: white;
 }
 
-.filter_chip_active_gold {
+.filter_chip_active_gold,
+.filter_chip.filter_chip_active_gold,
+.filter_chip_active_gold:hover,
+.filter_chip.filter_chip_active_gold:hover {
   background: var(--school-tertiary);
   border-color: var(--school-tertiary);
   color: var(--school-primary);
