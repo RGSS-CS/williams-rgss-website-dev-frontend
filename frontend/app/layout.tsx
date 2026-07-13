@@ -20,13 +20,23 @@ function safeHex(value: string | null | undefined, fallback: string): string {
   return value && HEX_PATTERN.test(value) ? value : fallback;
 }
 
+const THEME_FETCH_TIMEOUT_MS = 1500;
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => resolve(null), ms);
+    promise.then((value) => {
+      clearTimeout(timer);
+      resolve(value);
+    }).catch(() => {
+      clearTimeout(timer);
+      resolve(null);
+    });
+  });
+}
+
 async function getThemeStyle(): Promise<string> {
-  let management: Awaited<ReturnType<typeof getManagementSettings>> = null;
-  try {
-    management = await getManagementSettings();
-  } catch {
-    management = null;
-  }
+  const management = await withTimeout(getManagementSettings(), THEME_FETCH_TIMEOUT_MS);
 
   const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
   const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);

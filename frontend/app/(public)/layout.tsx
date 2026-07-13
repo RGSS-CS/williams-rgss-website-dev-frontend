@@ -2,6 +2,8 @@
 import '@/app/(public)/styles.css';
 import Footer from '@/app/(public)/_components/footer/footer';
 import Navbar from '@/app/(public)/_components/navbar/navbar';
+import NavbarLoading from '@/app/(public)/_components/navbar/loading';
+import FooterLoading from '@/app/(public)/_components/footer/loading';
 import { Suspense } from 'react';
 
 import { getManagementSettings } from '@/app/_lib/management';
@@ -32,11 +34,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense fallback={<NavbarLoading />}>
         <NavbarSlot />
       </Suspense>
       {children}
-      <Suspense fallback={null}>
+      <Suspense fallback={<FooterLoading />}>
         <FooterSlot />
       </Suspense>
     </>
