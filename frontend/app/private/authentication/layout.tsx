@@ -14,19 +14,13 @@ export const metadata: Metadata = {
 
 async function NavbarSlot() {
     const management = await getManagementSettings();
-    if (!management) {
-      if (isBuildPhase()) return null;
-      throw new Error("Unable to load site settings.");
-    }
+    if (!management) return null;
     return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
     const management = await getManagementSettings();
-    if (!management) {
-      if (isBuildPhase()) return null;
-      throw new Error("Unable to load site settings.");
-    }
+    if (!management) return null;
     return <Footer management={management} />;
 }
 

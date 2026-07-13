@@ -36,7 +36,7 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
 }
 
 async function getThemeStyle(): Promise<string> {
-  const management = await withTimeout(getManagementSettings(), THEME_FETCH_TIMEOUT_MS);
+  const management = await getManagementSettings();
 
   const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
   const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
