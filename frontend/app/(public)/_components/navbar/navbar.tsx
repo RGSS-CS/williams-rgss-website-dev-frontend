@@ -12,7 +12,7 @@ import styles from "./navigation.module.css";
 import "@/app/(public)/styles.css";
 
 type NavbarProps = {
-  management: Management;
+  management: Management | null;
 }
 
 
@@ -59,7 +59,7 @@ export default function Navbar({ management }: NavbarProps) {
                   <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
                 </div>
                 <div className={styles.brand_copy}>
-                  <span className={styles.school_title}>{management.schoolName}</span>
+                  <span className={styles.school_title}>{management?.schoolName}</span>
                   <span className={styles.school_subtitle}>Student Council</span>
                 </div>
               </a>
