@@ -23,11 +23,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense>
         <NavbarSlot />
       </Suspense>
       {children}
-      <Suspense fallback={null}>
+      <Suspense>
         <FooterSlot />
       </Suspense>
     </>
