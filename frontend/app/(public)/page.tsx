@@ -7,6 +7,7 @@ import { getManagementSettings } from "@/app/_lib/management";
 import { getSiteMetadata } from "@/app/_lib/metadata";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { isBuildPhase } from "@/app/_utils/isBuildPhase";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata();
@@ -14,7 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const management = await getManagementSettings();
-  if (!management) throw new Error("Unable to load site settings.");
+  if (!management) {
+    if (isBuildPhase()) return null;
+    throw new Error("Unable to load site settings.");
+  }
   //const clubs = await getDjangoAPI();
   return (
     <main>
