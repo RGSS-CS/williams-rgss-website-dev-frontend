@@ -38,9 +38,18 @@ export default function ResponsiveFilterPanel({
         </button>
       </div>
 
-      {open && <div className="filter_sidebar_overlay" onClick={() => setOpen(false)} />}
+      {open && (
+        <div
+          className={sidebarStyles.filter_sidebar_overlay}
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-      <div className={`${sidebarStyles.filter_sidebar} ${open ? "open" : ""}`}>
+      <div
+        className={`${sidebarStyles.filter_sidebar} ${
+          open ? sidebarStyles.open : ""
+        }`}
+      >
         <div className={sidebarStyles.filter_sidebar_header}>
           <span className={sidebarStyles.filter_sidebar_title}>
             <FontAwesomeIcon icon={faFilter} />
