@@ -29,7 +29,7 @@ export default function ResponsiveFilterPanel({
     <>
       <div className={filterStyles.filter_bar_container}>
         <button
-          className={filterStyles.filter_toggle_btn}
+          className={sidebarStyles.filter_toggle_btn}
           onClick={() => setOpen(true)}
           aria-label="Open filters"
         >
@@ -66,7 +66,9 @@ export default function ResponsiveFilterPanel({
         <div className={sidebarStyles.filter_sidebar_body}>{children}</div>
       </div>
 
-      <div className={`${filterStyles.filter_bar_container} filter_bar_container_desktop`}>
+      <div
+        className={`${filterStyles.filter_bar_container} ${sidebarStyles.filter_bar_container_desktop}`}
+      >
         <div className={filterStyles.filter_bar}>{children}</div>
       </div>
     </>
