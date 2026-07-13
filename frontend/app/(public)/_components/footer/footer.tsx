@@ -14,7 +14,7 @@ const SCHOOL_PHONE = "(905) 727-3131";
 const SCHOOL_PHONE_TEL = "9057273131";
 
 type ManagementProps = {
-  management: Management;
+  management: Management | null;
 };
 
 export default function Footer({ management }: ManagementProps) {
@@ -22,7 +22,7 @@ export default function Footer({ management }: ManagementProps) {
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-  const address = management.schoolLocation?.[0]?.location;
+  const address = management?.schoolLocation?.[0]?.location;
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null;
@@ -81,7 +81,7 @@ export default function Footer({ management }: ManagementProps) {
 
           <div className={styles.link}>
             <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
-            <a href={`mailto:${management.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management.schoolEmail}</a>
+            <a href={`mailto:${management?.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management?.schoolEmail}</a>
           </div>
 
           <div className={styles.link}>
@@ -101,7 +101,7 @@ export default function Footer({ management }: ManagementProps) {
 
         <div className={styles.footer_col}>
           <h4>Follow Us</h4>
-          <p>Stay connected with {management.councilName || 'student council'}</p>
+          <p>Stay connected with {management?.councilName || 'student council'}</p>
           <div className={styles.social_row}>
             <a href="https://www.instagram.com/drgwwilliams" target="_blank" rel="noopener noreferrer" className={styles.social_link} title="Instagram" aria-label="Instagram">
               <FontAwesomeIcon icon={faInstagram} />
@@ -113,8 +113,8 @@ export default function Footer({ management }: ManagementProps) {
         </div>
       </div>
       <div className={styles.footer_bottom}>
-        <span>{management.schoolName} {management.councilName} {schoolYear ?? ''}</span>
-        <span>&copy; {schoolYear ?? ''} {management.schoolName} {management.councilName}. All rights reserved.</span>
+        <span>{management?.schoolName} {management?.councilName} {schoolYear ?? ''}</span>
+        <span>&copy; {schoolYear ?? ''} {management?.schoolName} {management?.councilName}. All rights reserved.</span>
       </div>
     </footer>
   );

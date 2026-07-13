@@ -8,13 +8,11 @@ import { getManagementSettings } from '@/app/_lib/management';
 
 async function NavbarSlot() {
   const management = await getManagementSettings();
-  if (!management) return null;
   return <Navbar management={management} />;
 }
  
 async function FooterSlot() {
   const management = await getManagementSettings();
-  if (!management) return null;
   return <Footer management={management} />;
 }
  
