@@ -15,10 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const management = await getManagementSettings();
-  if (!management) {
-    if (isBuildPhase()) return null;
-    throw new Error("Unable to load site settings.");
-  }
+  if (!management) return null;
   //const clubs = await getDjangoAPI();
   return (
     <main>
