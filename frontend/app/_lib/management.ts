@@ -104,19 +104,26 @@ export async function getManagement(): Promise<Management[]> {
     throw new Error("Management API URL could not be constructed.");
   }
 
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Management API responded with ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`Management API responded with ${res.status}`);
+    }
+
+    const management = (await res.json()) as ManagementApiRecord[];
+    return management.map(normalizeManagement);
+  } catch (err) {
+    if (process.env.NEXT_PHASE === "phase-production-build") {
+      return [];
+    }
+    throw err;
   }
-
-  const management = (await res.json()) as ManagementApiRecord[];
-  return management.map(normalizeManagement);
 }
 
 export async function getManagementSettings(): Promise<Management | null> {

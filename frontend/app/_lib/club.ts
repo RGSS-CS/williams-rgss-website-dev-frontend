@@ -69,7 +69,7 @@ export async function getClubs(): Promise<Club[]> {
 
   const url = getClubsApiUrl();
   if (!url) {
-    return [];
+    throw new Error("Clubs API URL could not be constructed.");
   }
 
   try {
@@ -81,13 +81,16 @@ export async function getClubs(): Promise<Club[]> {
     });
 
     if (!res.ok) {
-      return [];
+      throw new Error(`Clubs API responded with ${res.status}`);
     }
 
     const clubs = (await res.json()) as ClubApiRecord[];
     return clubs.map(normalizeClub);
-  } catch {
-    return [];
+  } catch (err) {
+    if (process.env.NEXT_PHASE === "phase-production-build") {
+      return [];
+    }
+    throw err;
   }
 }
 
