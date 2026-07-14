@@ -1,4 +1,4 @@
-import styles from '@/app/private/authentication/authentication.module.css'
+import styles from '@/app/private/authentication/authentication.module.css';
 
 export default function SignupForm() {
   return (
@@ -10,5 +10,5 @@ export default function SignupForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }

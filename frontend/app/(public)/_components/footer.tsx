@@ -2,12 +2,12 @@
 import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
 import { getSchoolYear } from "@/app/(public)/_utils/getYear";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Management } from "@/app/_lib/management";
-import styles from "@/app/(public)/_styles/base/footer.module.css"
+import styles from "@/app/(public)/_styles/base/footer.module.css";
 //ICONS
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 const SCHOOL_PHONE = "(905) 727-3131";

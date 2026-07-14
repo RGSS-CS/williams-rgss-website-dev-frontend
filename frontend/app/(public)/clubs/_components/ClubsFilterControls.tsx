@@ -1,10 +1,10 @@
 "use client";
 
 import { JSX } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from "@/app/(public)/_styles/sections/filters.module.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from "@/app/(public)/_styles/sections/filters.module.css";
 //ICONS
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 export type CategoryFilter = {
   value: string;

@@ -6,9 +6,9 @@ import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
 import { Metadata } from "next";
 import { getSiteMetadata } from "@/app/_lib/metadata";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS
-import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 type ClubPageProps = {
   params: Promise<{

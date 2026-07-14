@@ -7,11 +7,11 @@ import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import ClubSearchInput from "./ClubSearchInput";
 import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";
 import ResetFiltersButton from "./ResetFiltersButton";
-import catStyles from "@/app/(public)/_styles/sections/categories.module.css"
+import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS
-import { faLayerGroup, faBook, faPalette, faHandsHelping, faRunning, faFlask, faMicrochip, faMusic, faBriefcase, faSearch, faArrowRight, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faLayerGroup, faBook, faPalette, faHandsHelping, faRunning, faFlask, faMicrochip, faMusic, faBriefcase, faSearch, faArrowRight, faCalendarAlt, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
 
