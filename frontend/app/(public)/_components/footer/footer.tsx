@@ -4,7 +4,7 @@ import { getSchoolYear } from "@/app/(public)/_utils/getYear";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { Management } from "@/app/_lib/management";
-import styles from "./footer.module.css"
+import styles from "@/app/(public)/_styles/base/footer.module.css"
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
