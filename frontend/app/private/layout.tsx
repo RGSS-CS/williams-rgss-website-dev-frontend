@@ -7,5 +7,5 @@ export default function PrivateLayout({
         <main>
             {children}
         </main>
-    )
+    );
 }

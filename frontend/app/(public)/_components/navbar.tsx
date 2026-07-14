@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TickerBar from "@/app/(public)/_components/TickerBar";
 import type { Management } from "@/app/_lib/management";
 //ICONS

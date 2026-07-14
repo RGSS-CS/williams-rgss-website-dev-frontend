@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
 import styles from "./home.module.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Metadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
 import { getSiteMetadata } from "@/app/_lib/metadata";
 //ICONS
-import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata();

@@ -42,5 +42,5 @@ export default function RootLayout({
                 </Suspense>
             </div>
         </main>
-    )
+    );
 }
