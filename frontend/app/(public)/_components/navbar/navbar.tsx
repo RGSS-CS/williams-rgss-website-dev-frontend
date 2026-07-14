@@ -8,7 +8,7 @@ import type { Management } from "@/app/_lib/management";
 //ICONS
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
-import styles from "./navigation.module.css";
+import styles from "@/app/(public)/_styles/base/navigation.module.css";
 import "@/app/(public)/styles.css";
 
 type NavbarProps = {
