@@ -1,14 +1,13 @@
 // These styles apply to every route in the application
-import '@/app/(public)/styles.css';
 import Footer from '@/app/(public)/_components/footer';
-import Navbar from '@/app/(public)/_components/navbar';
+import ExecSidebar from './_components/Sidebar';
 import { Suspense } from 'react';
 
 import { getManagementSettings } from '@/app/_lib/management';
 
 async function NavbarSlot() {
   const management = await getManagementSettings();
-  return <Navbar management={management} />;
+  return <ExecSidebar management={management} />;
 }
  
 async function FooterSlot() {
