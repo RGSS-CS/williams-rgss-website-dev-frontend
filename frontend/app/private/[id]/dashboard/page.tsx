@@ -3,5 +3,5 @@ export default function ExecDashboard() {
         <main>
             
         </main>
-    )
+    );
 }

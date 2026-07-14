@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filterStyles from "@/app/(public)/_styles/sections/filters.module.css";
 import sidebarStyles from "@/app/(public)/_styles/sections/filter-sidebar.module.css";
 //ICONS
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type ResponsiveFilterPanelProps = {
   children: React.ReactNode;

@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import styles from "@/app/private/authentication/authentication.module.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function LoginBackButton() {
   const router = useRouter();

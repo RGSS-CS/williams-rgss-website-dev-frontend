@@ -6,9 +6,9 @@ import LoginBackButton from "../_components/LoginBackButton";
 import { getManagementSettings } from "@/app/_lib/management";
 import { getSiteMetadata } from "@/app/_lib/metadata";
 import { Metadata } from "next";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS
-import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Authentication");
