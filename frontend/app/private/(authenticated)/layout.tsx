@@ -1,5 +1,5 @@
 // These styles apply to every route in the application
-import Footer from '@/app/(public)/_components/footer';
+import ExecFooter from './_components/Footer';
 import ExecSidebar from './_components/Sidebar';
 import { Suspense } from 'react';
 
@@ -12,7 +12,7 @@ async function NavbarSlot() {
  
 async function FooterSlot() {
   const management = await getManagementSettings();
-  return <Footer management={management} />;
+  return <ExecFooter management={management} />;
 }
  
 export default function RootLayout({
