@@ -1,6 +1,6 @@
 "use client";
 import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
-import { getSchoolYear } from "@/app/(public)/_utils/getYear";
+import { getSchoolYear } from "@/app/_utils/getYear";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Management } from "@/app/_lib/management";

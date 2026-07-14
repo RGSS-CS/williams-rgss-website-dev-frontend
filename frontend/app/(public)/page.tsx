@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getSchoolYear } from "@/app/(public)/_utils/SchoolYear";
+import { getSchoolYear } from "@/app/_utils/SchoolYear";
 import styles from "./home.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Metadata } from 'next';

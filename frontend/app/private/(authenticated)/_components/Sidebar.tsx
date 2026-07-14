@@ -1,4 +1,4 @@
-import styles from "@/app/private/_styles/base/sidebar.module.css";
+import styles from "@/app/private/(authenticated)/_styles/base/sidebar.module.css";
 import type { Management } from "@/app/_lib/management";
 
 type NavbarProps = {
