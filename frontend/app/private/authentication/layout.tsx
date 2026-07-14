@@ -1,9 +1,9 @@
 import "@/app/(public)/styles.css";
 import styles from "./authentication.module.css"; 
-import Footer from "@/app/(public)/_components/footer/footer";
+import Footer from "@/app/(public)/_components/footer";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import Navbar from "@/app/(public)/_components/navbar/navbar";
+import Navbar from "@/app/(public)/_components/navbar";
 import { getManagementSettings } from "@/app/_lib/management";
 
 export const metadata: Metadata = {
