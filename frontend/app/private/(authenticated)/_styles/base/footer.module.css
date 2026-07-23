@@ -1,0 +1,21 @@
+.container {
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    margin-top: 1.5rem;
+    align-items: center;
+    color: var(--school-primary)
+}
+
+.location {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.phone {
+    font-weight: 600;
+}
