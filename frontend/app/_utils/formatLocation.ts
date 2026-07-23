@@ -1,4 +1,10 @@
-export default function SchoolLocation({management}){   
+import type { Management } from "@/app/_lib/management";
+
+type LocaProps = {
+    management: Management | null;
+}
+
+export default function SchoolLocation({ management }: LocaProps){   
    
    const address = management?.schoolLocation?.[0]?.location;
     const mapsUrl = address

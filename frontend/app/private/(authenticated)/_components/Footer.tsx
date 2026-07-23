@@ -17,7 +17,6 @@ type FooterProps = {
 
 export default function ExecFooter({ management }: FooterProps) {
     const [schoolYear, setSchoolYear] = useState<string | null>(null);
-
     const [mapsUrl, displayAddress, regionLine] = SchoolLocation({management});
 
     useEffect(() => {
