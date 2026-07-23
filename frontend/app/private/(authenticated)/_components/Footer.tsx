@@ -4,6 +4,12 @@ import styles from "@/app/private/(authenticated)/_styles/base/footer.module.css
 import type { Management } from "@/app/_lib/management";
 import { useState, useEffect } from "react";
 import { getSchoolYear } from "@/app/_utils/getYear";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SchoolLocation from "@/app/_utils/formatLocation";
+
+//ICONS
+import { faPhone } from "@fortawesome/free-solid-svg-icons"
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons"
 
 type FooterProps = {
     management: Management | null;
@@ -12,21 +18,7 @@ type FooterProps = {
 export default function ExecFooter({ management }: FooterProps) {
     const [schoolYear, setSchoolYear] = useState<string | null>(null);
 
-    const address = management?.schoolLocation?.[0]?.location;
-    const mapsUrl = address
-        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-        : null;
-    const { displayAddress, regionLine } = address
-        ? (() => {
-            const parts = address.split(",").map(s => s.trim());
-            const [name, houseNumber, street, city, region, , province, , country] = parts;
-            const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
-                .filter(Boolean)
-                .join(", ");
-            const regionLine = [city, region, province, country].filter(Boolean).join(", ");
-            return { displayAddress, regionLine };
-        })()
-        : { displayAddress: null, regionLine: null };
+    const [mapsUrl, displayAddress, regionLine] = SchoolLocation({management});
 
     useEffect(() => {
         setSchoolYear(getSchoolYear());
@@ -61,8 +53,12 @@ export default function ExecFooter({ management }: FooterProps) {
                 )}
             </div>
             <div className={styles.phone}>
-                <i></i>
-                {management?.schoolPhone}
+                <FontAwesomeIcon icon={faPhone} />
+                <p>{management?.schoolPhone}</p>
+            </div>
+            <div className={styles.email}>
+                <FontAwesomeIcon icon={faEnvelope} />
+                <p>{management?.schoolEmail}</p>
             </div>
         </div>
     );
