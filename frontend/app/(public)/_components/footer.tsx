@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Management } from "@/app/_lib/management";
 import styles from "@/app/(public)/_styles/base/footer.module.css";
+import SchoolLocation from "@/app/_utils/formatLocation";
 //ICONS
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -21,22 +22,7 @@ export default function Footer({ management }: ManagementProps) {
 
   const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
   const [schoolYear, setSchoolYear] = useState<string | null>(null);
-
-  const address = management?.schoolLocation?.[0]?.location;
-  const mapsUrl = address
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-    : null;
-  const { displayAddress, regionLine } = address
-    ? (() => {
-      const parts = address.split(",").map(s => s.trim());
-      const [name, houseNumber, street, city, region, , province, , country] = parts;
-      const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
-        .filter(Boolean)
-        .join(", ");
-      const regionLine = [city, region, province, country].filter(Boolean).join(", ");
-      return { displayAddress, regionLine };
-    })()
-    : { displayAddress: null, regionLine: null };
+  const [mapsUrl, displayAddress, regionLine] = SchoolLocation({management});
 
   useEffect(() => {
     setSchoolYear(getSchoolYear());
