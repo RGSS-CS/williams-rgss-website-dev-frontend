@@ -1,6 +1,7 @@
 // These styles apply to every route in the application
 import ExecFooter from './_components/Footer';
 import ExecSidebar from './_components/Sidebar';
+import "./styles.css"
 import { Suspense } from 'react';
 
 import { getManagementSettings } from '@/app/_lib/management';
