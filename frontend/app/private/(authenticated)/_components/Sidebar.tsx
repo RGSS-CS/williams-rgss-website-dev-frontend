@@ -66,7 +66,7 @@ export default function ExecSidebar({ management }: NavbarProps) {
                     </div>
                     <div className={styles.email}>
                         <FontAwesomeIcon icon={faEnvelope} />
-                        <a href={`mailto:${management?.schoolEmail}`}>{management?.schoolEmail}</a>
+                        <a href={`mailto:${management?.schoolEmail}`} target="_blank" rel="noopener noreferrer">{management?.schoolEmail}</a>
                     </div>
                 </div>
             </div>
