@@ -28,8 +28,8 @@ export default function ExecSidebar({ management }: NavbarProps) {
             <div className={styles.nav_container}>
                 <h5>Executive Settings</h5>
                 <a className={styles.navLink}><FontAwesomeIcon icon={faHouse} className={styles.navI} /> Home</a>
-                <a className={styles.navLink}><FontAwesomeIcon icon={faUsers} className={styles.navI} /> Clubs</a>
-                <a className={styles.navLink}><FontAwesomeIcon icon={faImages} className={styles.navI} /> Gallery</a>
+                <a className={styles.navLink}><FontAwesomeIcon icon={faUsers} className={styles.navI} /> Your Clubs</a>
+                <a className={styles.navLink}><FontAwesomeIcon icon={faImages} className={styles.navI} /> Your Gallery</a>
                 <a className={styles.navLink}><FontAwesomeIcon icon={faUser} className={styles.navI} /> Account</a>
             </div>
 
