@@ -3,7 +3,7 @@ import type { Management } from "@/app/_lib/management";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SchoolLocation from "@/app/_utils/formatLocation";
 //ICONS
-import { faHouse, faUsers, faImages, faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { faHouse, faUsers, faImages, faUser, faPhone, faEnvelope, faMap } from "@fortawesome/free-solid-svg-icons"
 
 type NavbarProps = {
     management: Management | null;
@@ -41,6 +41,7 @@ export default function ExecSidebar({ management }: NavbarProps) {
             <div className={styles.schoolInfo}>
                 <div className={styles.footerContainer}>
                     <div className={styles.location}>
+                        <FontAwesomeIcon icon={faMap} />
                         {mapsUrl ? (
                             <>
                                 <a
@@ -70,7 +71,7 @@ export default function ExecSidebar({ management }: NavbarProps) {
                     </div>
                     <div className={styles.email}>
                         <FontAwesomeIcon icon={faEnvelope} />
-                        <p>{management?.schoolEmail}</p>
+                        <a href={`mailto:${management?.schoolEmail}`}>{management?.schoolEmail}</a>
                     </div>
                 </div>
             </div>

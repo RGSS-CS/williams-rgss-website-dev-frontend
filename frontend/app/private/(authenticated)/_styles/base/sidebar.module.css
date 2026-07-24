@@ -1,5 +1,4 @@
 .container {
-    width: 20%;
     background: var(--school-primary);
     display: flex;
     flex-direction: column;
@@ -142,13 +141,49 @@
     margin-top: auto;
     padding: 1.2rem 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--school-secondary);
+}
+
+.school {
+    display: block;
+}
+
+.location a,
+.email a,
+.phone a {
+    color: inherit;
+}
+
+.phone,
+.email,
+.location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .footerContainer {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    color: rgba(255, 255, 255, 0.3);
     font-size: 0.65rem;
     line-height: 1.5;
+}
+
+.desktop_only {
+    display: inline;
+}
+
+.mobile_only {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .desktop_only {
+        display: none;
+    }
+
+    .mobile_only {
+        display: inline;
+    }
 }
