@@ -4,7 +4,7 @@ import styles from "./home.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Metadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/management";
-import { getSiteMetadata } from "@/app/_lib/metadata";
+import { getSiteMetadata } from "@/app/_utils/metadata";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 

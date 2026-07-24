@@ -5,7 +5,7 @@ import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 import { Metadata } from 'next';
 import GalleryFilterContent from "./_components/GalleryFilterControls";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getSiteMetadata } from "@/app/_lib/metadata";
+import { getSiteMetadata } from "@/app/_utils/metadata";
 
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
