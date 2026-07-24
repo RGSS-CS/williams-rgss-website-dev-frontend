@@ -87,8 +87,6 @@ export default async function RootLayout({
             className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
         >
             <head>
-                <meta charSet="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <style id="school-theme" dangerouslySetInnerHTML={{ __html: themeStyle }} />
             </head>
             <body>
