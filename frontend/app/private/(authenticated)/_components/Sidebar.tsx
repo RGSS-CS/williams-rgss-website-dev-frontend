@@ -2,6 +2,7 @@ import styles from "@/app/private/(authenticated)/_styles/base/sidebar.module.cs
 import type { Management } from "@/app/_lib/management";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SchoolLocation from "@/app/_utils/formatLocation";
+import { getSchoolYear } from "@/app/_utils/SchoolYear";
 //ICONS
 import { faHouse, faUsers, faImages, faUser, faPhone, faEnvelope, faMap } from "@fortawesome/free-solid-svg-icons"
 
@@ -11,6 +12,7 @@ type NavbarProps = {
 
 export default function ExecSidebar({ management }: NavbarProps) {
     const [mapsUrl, displayAddress, regionLine] = SchoolLocation({ management });
+    const schoolYear = getSchoolYear()
     return (
         <aside className={styles.container}>
             <div className={styles.schoolID}>
@@ -21,7 +23,7 @@ export default function ExecSidebar({ management }: NavbarProps) {
                 <div className={styles.exec}>
                     <img src="https://i.pravatar.cc/80?img=47" alt="Maya Chen" />
                     <div className={styles.ID_info}>
-                        <p>Random Dude <span>Grade 11 - 2027-2028</span></p>
+                        <p>Random Dude <span>Grade 11 - {schoolYear}</span></p>
                     </div>
                 </div>
             </div>
