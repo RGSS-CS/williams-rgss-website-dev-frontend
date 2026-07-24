@@ -1,7 +1,7 @@
 import styles from './about.module.css';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { getSiteMetadata } from '@/app/_lib/metadata';
+import { getSiteMetadata } from '@/app/_utils/metadata';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("About");

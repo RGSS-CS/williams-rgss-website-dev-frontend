@@ -1,5 +1,4 @@
 .container {
-    width: var(--exec-sidebar-width);
     box-sizing: border-box;
     background: var(--school-primary);
     display: flex;
@@ -84,7 +83,7 @@
 .ID_info span {
     display: block;
     font-weight: 400;
-    color: var(--grey);
+    color: var(--s);
     font-size: 0.6rem;
     letter-spacing: 0.04em;
 }

@@ -5,7 +5,7 @@ import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/AnchorLink";
 import { Metadata } from "next";
-import { getSiteMetadata } from "@/app/_lib/metadata";
+import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
