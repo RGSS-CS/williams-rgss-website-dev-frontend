@@ -1,9 +1,10 @@
-import ExecFooter from "./_components/Footer";
+import { getManagementSettings } from "@/app/_lib/management";
 
-export default function ExecDashboard() {
+export default async function ExecDashboard() {
+    const management = await getManagementSettings();
+
     return (
         <main>
-            <ExecFooter />
         </main>
     );
 }
