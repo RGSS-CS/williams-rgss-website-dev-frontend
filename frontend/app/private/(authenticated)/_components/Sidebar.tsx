@@ -16,10 +16,10 @@ export default function ExecSidebar({ management }: NavbarProps) {
     return (
         <aside className={styles.container}>
             <div className={styles.schoolID}>
-                    <div className={styles.school_text}>
-                        <span className={styles.school}>{management?.schoolName}</span>
-                        <span className={styles.rank}>Exec Dashboard</span> {/*Replace exec dashboard with rank of member*/}
-                    </div>
+                <div className={styles.school_text}>
+                    <span className={styles.school}>{management?.schoolName}</span>
+                    <span className={styles.rank}>Exec Dashboard</span> {/*Replace exec dashboard with rank of member*/}
+                </div>
                 <div className={styles.exec}>
                     <img src="https://i.pravatar.cc/80?img=47" alt="Maya Chen" />
                     <div className={styles.ID_info}>
