@@ -30,6 +30,12 @@
     justify-content: center;
 }
 
+.loading_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .loading_block {
     display: block;
     background: linear-gradient(
