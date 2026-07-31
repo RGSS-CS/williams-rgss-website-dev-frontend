@@ -89,7 +89,6 @@
 }
 
 .copy h1 {
-    font-family: var(--font-head);
     font-weight: 800;
     font-size: 1.25rem;
     color: white;

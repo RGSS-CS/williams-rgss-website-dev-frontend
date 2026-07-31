@@ -64,24 +64,31 @@ section "Project Installer"
 # Source: https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins (exec)
 
 request_admin() {
-    if [[ "$OSTYPE" == linux* || "$OSTYPE" == darwin* ]]; then
-        if [[ "$EUID" -ne 0 ]]; then
-            info "Elevated privileges required. Re-launching with sudo..."
-            exec sudo -E bash "$0" "$@"
-        else
-            ok "Running as root. Privilege check passed."
-        fi
+    case "$OSTYPE" in
+        linux*)
+            if [[ "$EUID" -ne 0 ]]; then
+                info "Elevated privileges required. Re-launching with sudo..."
+                exec sudo -E bash "$0" "$@"
+            else
+                ok "Running as root. Privilege check passed."
+            fi
+            ;;
 
-    elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-        if ! net session > /dev/null 2>&1; then
-            warn "Not running as Administrator."
-            info "Triggering UAC prompt to re-launch with elevated privileges..."
-            powershell -Command "Start-Process bash -ArgumentList '$0' -Verb RunAs -Wait"
-            exit 0
-        else
-            ok "Running as Administrator. Privilege check passed."
-        fi
-    fi
+        darwin*)
+            # Unlike Linux, this script must NOT run as root on macOS.
+            # Homebrew (used below to install Docker Desktop) explicitly
+            # refuses to run as root, and Docker Desktop itself runs as the
+            # logged-in user, not root.
+            # Source: https://docs.brew.sh/FAQ#why-does-homebrew-say-sudo-is-bad-or-i-dont-want-this-program-installed-in-my-home-directory
+            if [[ "$EUID" -eq 0 ]]; then
+                error "Do not run this script with sudo on macOS."
+                echo "      Homebrew and Docker Desktop must be installed/run as your"
+                echo "      normal user. Re-run as: ./install.sh   (without sudo)"
+                exit 1
+            fi
+            ok "Running as standard user (required on macOS)."
+            ;;
+    esac
 }
 
 request_admin "$@"
@@ -92,11 +99,21 @@ request_admin "$@"
 # reviewed afterwards.
 # Source: https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution
 
-if [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-    LOG_FILE="$(dirname "$(realpath "$0")")/install.log"
-else
-    LOG_FILE="/var/log/install.log"
-fi
+case "$OSTYPE" in
+    linux*)
+        # Script runs as root on Linux (see request_admin) — /var/log is writable.
+        LOG_FILE="/var/log/install.log"
+        ;;
+    darwin*)
+        # Script intentionally runs as the normal user on macOS (see
+        # request_admin), so /var/log is NOT writable. ~/Library/Logs is
+        # Apple's standard per-user location for application log files.
+        # Source: https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
+        LOG_FILE="$HOME/Library/Logs/install.log"
+        mkdir -p "$(dirname "$LOG_FILE")"
+        ;;
+
+esac
 
 exec > >(tee -a "$LOG_FILE") 2>&1
 info "Logging this run to: $LOG_FILE"
@@ -116,12 +133,9 @@ get_os() {
         darwin*)
             ostype="osx"
             ;;
-        msys*|cygwin*)
-            ostype="windows"
-            ;;
         *)
             echo "  [!] Unsupported OS type: $OSTYPE"
-            echo "      Supported: Linux, Windows, macOS"
+            echo "      Supported: Linux, macOS"
             ostype="undefined"
             ;;
     esac
@@ -232,7 +246,15 @@ install_docker_mac() {
     if ! command -v brew &>/dev/null; then
         info "Homebrew not found. Installing Homebrew first..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+        # Homebrew installs to /opt/homebrew on Apple Silicon and /usr/local
+        # on Intel Macs — load whichever one exists.
+        # Source: https://docs.brew.sh/Installation
+        if [[ -f /opt/homebrew/bin/brew ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [[ -f /usr/local/bin/brew ]]; then
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
     else
         info "Homebrew already installed: $(brew --version | head -1)"
     fi
@@ -244,28 +266,40 @@ install_docker_mac() {
     brew install --cask docker
 
     ok "Docker Desktop installed."
-    warn "Launch /Applications/Docker.app to complete setup, then re-run this script."
+
+    # Docker Desktop must be launched at least once before `docker` commands
+    # work, and the user may need to approve its privileged helper tool.
+    # `open -a` launches a macOS app bundle by name.
+    # Source: https://ss64.com/mac/open.html
+    info "Launching Docker Desktop..."
+    open -a Docker
+
+    if wait_for_docker 120; then
+        ok "Docker Desktop is running."
+    else
+        warn "Docker Desktop did not finish starting within 2 minutes."
+        warn "Approve any setup dialogs in the Docker app, then re-run this script."
+    fi
 }
 
-install_docker_windows() {
-    section "Installing Docker Desktop for Windows..."
 
-    if command -v winget &>/dev/null; then
-        winget install --id Docker.DockerDesktop --exact --accept-source-agreements --accept-package-agreements
-        winget install --id Git.Git --exact --accept-source-agreements --accept-package-agreements
-    elif command -v choco &>/dev/null; then
-        choco install docker-desktop git -y
-    else
-        error "Neither winget nor Chocolatey found."
-        echo "      Download manually:"
-        echo "        Docker: https://www.docker.com/products/docker-desktop/"
-        echo "        Git:    https://git-scm.com/download/win"
-        return 1
-    fi
+# Polls `docker info` until the daemon responds or the timeout elapses.
+# Useful right after installing/launching Docker Desktop on macOS,
+# which can take anywhere from a few seconds to a couple of minutes to start
+# its VM/backend before the `docker` CLI can talk to it.
+wait_for_docker() {
+    local timeout="${1:-90}"
+    local waited=0
 
-    ok "Docker Desktop and Git installation triggered."
-    warn "A restart may be required to complete WSL2/Hyper-V setup."
-    info "Restart Windows manually if prompted, then re-run this script once Docker Desktop is running."
+    info "Waiting for the Docker daemon to come online (up to ${timeout}s)..."
+    while ! docker info &>/dev/null; do
+        sleep 3
+        waited=$((waited + 3))
+        if (( waited >= timeout )); then
+            return 1
+        fi
+    done
+    return 0
 }
 
 # ── Docker Verification ───────────────────────────────────────────────────────
@@ -280,8 +314,16 @@ verify_docker() {
         ok "Docker is working correctly (hello-world ran successfully)."
     else
         error "Docker verification failed."
-        echo "      - Check that the Docker daemon is running: systemctl status docker"
-        echo "      - Ensure your user is in the docker group and you have re-logged in."
+        case "$ostype" in
+            linux)
+                echo "      - Check that the Docker daemon is running: systemctl status docker"
+                echo "      - Ensure your user is in the docker group and you have re-logged in."
+                ;;
+            osx)
+                echo "      - Make sure Docker Desktop is running (check the menu bar icon)."
+                echo "      - Open Docker.app and wait for it to say 'Docker Desktop is running'."
+                ;;
+        esac
         echo "      - Run manually: docker run hello-world"
         exit 1
     fi
@@ -307,7 +349,14 @@ install_portainer() {
     # --restart=unless-stopped: restarts on crash/daemon-restart but respects
     # a manual 'docker stop portainer'.
     # Source: https://docs.docker.com/config/containers/start-containers-automatically/
-    docker run -d \
+    # MSYS_NO_PATHCONV=1 prevents Git Bash/MSYS on Windows from rewriting the
+    # /var/run/docker.sock and /data arguments below into Windows-style paths
+    # (e.g. C:/Program Files/Git/var/run/docker.sock), which would break the
+    # bind mount inside the Linux VM that Docker Desktop runs. It's a no-op
+    # (unused env var) on Linux/macOS.
+    # Source: https://github.com/borekb/docker-path-workaround
+    #         https://www.pascallandau.com/blog/setting-up-git-bash-mingw-msys2-on-windows/
+    MSYS_NO_PATHCONV=1 docker run -d \
         --name portainer \
         --restart=unless-stopped \
         -p 9000:9000 \
@@ -537,14 +586,12 @@ else
     case "$ostype" in
         linux)   install_docker_linux ;;
         osx)     install_docker_mac ;;
-        windows) install_docker_windows ;;
     esac
 
     if ! check_docker; then
         echo ""
         echo "[!] Docker does not appear to be running after installation."
-        echo "    - On Linux/macOS: ensure the Docker daemon is running and re-run this script."
-        echo "    - On Windows: start Docker Desktop and re-run this script."
+        echo "    - Ensure the Docker daemon is running and re-run this script."
         exit 1
     fi
 fi
@@ -622,9 +669,16 @@ echo "    Portainer → https://localhost:9443"
 echo "================================================================"
 echo ""
 echo "  Docker is running. Rebooting the computer in 5 seconds..."
-if [[ "$ostype" == "windows" ]]; then
-    shutdown /r /t 5
-else
-    sleep 5
-    reboot
-fi
+case "$ostype" in
+    osx)
+        # The script runs as a normal user on macOS (see request_admin), so
+        # 'reboot' needs a one-off sudo prompt here.
+        sleep 5
+        sudo reboot
+        ;;
+    linux)
+        # Already running as root (see request_admin).
+        sleep 5
+        reboot
+        ;;
+esac

@@ -1,6 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import styles from "@/app/private/authentication/authentication.module.css";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//ICONS
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function LoginBackButton() {
   const router = useRouter();
@@ -17,11 +22,12 @@ export default function LoginBackButton() {
   return (
     <button
       type="button"
-      className="nav-hamburger nav-back-button"
+      className={styles.back_button}
       onClick={handleBack}
       aria-label="Go back"
     >
-      <i className="fas fa-arrow-left"></i>
+      <FontAwesomeIcon icon={faArrowLeft} className={styles.fas} />
+      Go Back
     </button>
   );
 }
