@@ -2,14 +2,14 @@ import Link from "next/link";
 import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
 import LoginBackButton from "../_components/LoginBackButton";
+import PasswordField from "../_components/PasswordField";
 import { getManagementSettings } from "@/app/_lib/management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PasswordInput from "./_components/passwordBar";
 
 //ICONS
-import { faEnvelope, faKey, faArrowRightToBracket, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Authentication");
@@ -42,9 +42,7 @@ export default async function SigninForm() {
               </div>
             </div>
 
-            <div className={styles.form_group}>
-              <PasswordInput />
-            </div>
+            <PasswordField />
 
             <button className={styles.btn_login} type="submit" id="loginBtn">
               <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
