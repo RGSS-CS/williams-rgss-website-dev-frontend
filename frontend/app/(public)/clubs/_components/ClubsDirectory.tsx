@@ -1,5 +1,6 @@
 "use client";
-import { JSX, useDeferredValue, useState } from "react";
+import { JSX, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { Club } from "@/app/_lib/club";
 import type { Management } from "@/app/_lib/management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
@@ -120,57 +121,129 @@ function ClubCard({ club }: { club: Club }) {
 }
 
 export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProps) {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeDay, setActiveDay] = useState("All Days");
+
+  useEffect(() => {
+    setQuery(searchParams.get("q")?.trim() ?? "");
+    setActiveCategory(searchParams.get("category") ?? "all");
+    setActiveDay(searchParams.get("day") ?? "All Days");
+  }, [searchParams]);
+
   const deferredQuery = useDeferredValue(query);
 
-  const categories = Array.from(
-    new Set(clubs.flatMap((club) => club.categories).filter(Boolean)),
-  ).sort((left, right) => left.localeCompare(right));
+  const categories = useMemo(
+    () =>
+      Array.from(
+        new Set(clubs.flatMap((club) => club.categories).filter(Boolean)),
+      ).sort((left, right) => left.localeCompare(right)),
+    [clubs],
+  );
 
-  const categoryFilters: CategoryFilter[] = [
-    { value: "all", label: "All Clubs" },
-    ...categories.map((category) => ({
-      value: slugifyCategory(category),
-      label: category,
-      icon: getCategoryIcon(category),
-    })),
-  ];
+  const categoryFilters: CategoryFilter[] = useMemo(
+    () => [
+      { value: "all", label: "All Clubs" },
+      ...categories.map((category) => ({
+        value: slugifyCategory(category),
+        label: category,
+        icon: getCategoryIcon(category),
+      })),
+    ],
+    [categories],
+  );
 
-  const filteredClubs = clubs.filter((club) => {
-    const clubCategorySlugs = club.categories.map(slugifyCategory);
-    const matchesCategory =
-      activeCategory === "all" || clubCategorySlugs.includes(activeCategory);
-    const matchesDayFilter =
-      activeDay === "All Days" || formatDayChip(club.dayOfMeeting) === activeDay;
+  const updateSearch = (partial: {
+    q?: string | null;
+    category?: string | null;
+    day?: string | null;
+  }) => {
+    const params = new URLSearchParams(searchParams.toString());
 
-    return (
-      matchesCategory &&
-      matchesDayFilter &&
-      matchesQuery(club, deferredQuery.trim())
-    );
-  });
-
-  const visibleCategories = categories
-    .filter((category) => {
-      if (activeCategory === "all") {
-        return true;
+    if (partial.q !== undefined) {
+      if (partial.q) {
+        params.set("q", partial.q);
+      } else {
+        params.delete("q");
       }
+    }
 
-      return slugifyCategory(category) === activeCategory;
-    })
-    .map((category) => ({
-      name: category,
-      slug: slugifyCategory(category),
-      clubs: filteredClubs.filter((club) => club.categories.includes(category)),
-    }))
-    .filter((section) => section.clubs.length > 0);
+    if (partial.category !== undefined) {
+      if (partial.category && partial.category !== "all") {
+        params.set("category", partial.category);
+      } else {
+        params.delete("category");
+      }
+    }
+
+    if (partial.day !== undefined) {
+      if (partial.day && partial.day !== "All Days") {
+        params.set("day", partial.day);
+      } else {
+        params.delete("day");
+      }
+    }
+
+    const queryString = params.toString();
+    const url = queryString ? `/clubs?${queryString}` : "/clubs";
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", url);
+    }
+
+    if (partial.q !== undefined) {
+      setQuery(partial.q ?? "");
+    }
+
+    if (partial.category !== undefined) {
+      setActiveCategory(partial.category ?? "all");
+    }
+
+    if (partial.day !== undefined) {
+      setActiveDay(partial.day ?? "All Days");
+    }
+  };
+
+  const filteredClubs = useMemo(
+    () =>
+      clubs.filter((club) => {
+        const clubCategorySlugs = club.categories.map(slugifyCategory);
+        const matchesCategory =
+          activeCategory === "all" || clubCategorySlugs.includes(activeCategory);
+        const matchesDayFilter =
+          activeDay === "All Days" || formatDayChip(club.dayOfMeeting) === activeDay;
+
+        return (
+          matchesCategory &&
+          matchesDayFilter &&
+          matchesQuery(club, deferredQuery.trim())
+        );
+      }),
+    [clubs, activeCategory, activeDay, deferredQuery],
+  );
+
+  const visibleCategories = useMemo(
+    () =>
+      categories
+        .filter((category) => {
+          if (activeCategory === "all") {
+            return true;
+          }
+
+          return slugifyCategory(category) === activeCategory;
+        })
+        .map((category) => ({
+          name: category,
+          slug: slugifyCategory(category),
+          clubs: filteredClubs.filter((club) => club.categories.includes(category)),
+        }))
+        .filter((section) => section.clubs.length > 0),
+    [categories, activeCategory, filteredClubs],
+  );
 
   const handleReset = () => {
-    setQuery("");
-    setActiveCategory("all");
-    setActiveDay("All Days");
+    updateSearch({ q: "", category: "all", day: "All Days" });
   };
 
   return (
@@ -190,7 +263,7 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
               </div>
               <div className="search_container">
                 <FontAwesomeIcon icon={faSearch} className="search_container_icon" />
-                <ClubSearchInput value={query} onChange={setQuery} />
+                <ClubSearchInput value={query} onChange={(value) => updateSearch({ q: value })} />
               </div>
               <div className={styles.heroStats}>
                 <div className={styles.heroStat}>
@@ -212,8 +285,8 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
               categories={categoryFilters}
               activeCategory={activeCategory}
               activeDay={activeDay}
-              onCategoryChange={setActiveCategory}
-              onDayChange={setActiveDay}
+              onCategoryChange={(category) => updateSearch({ category })}
+              onDayChange={(day) => updateSearch({ day })}
             />
             <span className={`results-count ${styles.resultsCount}`}>
               Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
