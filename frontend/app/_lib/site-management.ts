@@ -52,7 +52,7 @@ export type Management = {
   schoolTertiaryColor: string | null;
 };
 
-function getManagementApiUrl() {
+function getSiteManagementApiUrl() {
   const apiBaseUrl =
     process.env.API_URL ||
     "http://backend:8000";
@@ -61,8 +61,8 @@ function getManagementApiUrl() {
     return new URL("/management/site-settings/?format=json", apiBaseUrl).toString();
   } catch {
     return null;
-  }
-}
+  };
+};
 
 function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocation {
   return {
@@ -72,7 +72,7 @@ function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocatio
     contentType: record.content_type,
     objectId: record.object_id,
   };
-}
+};
 
 function normalizeManagement(record: ManagementApiRecord): Management {
   return {
@@ -92,17 +92,17 @@ function normalizeManagement(record: ManagementApiRecord): Management {
     schoolSecondaryColor: record.school_secondary_color ?? null,
     schoolTertiaryColor: record.school_tertiary_color ?? null,
   };
-}
+};
 
 export async function getManagement(): Promise<Management[]> {
   'use cache: remote';
   cacheLife('minutes');
   cacheTag('management');
-  const url = getManagementApiUrl();
+  const url = getSiteManagementApiUrl();
 
   if (!url) {
     return [];
-  }
+  };
 
   try {
     const res = await fetch(url, {
@@ -120,10 +120,10 @@ export async function getManagement(): Promise<Management[]> {
     return management.map(normalizeManagement);
   } catch {
     return [];
-  }
-}
+  };
+};
 
 export async function getManagementSettings(): Promise<Management | null> {
   const management = await getManagement();
   return management[0] ?? null;
-}
+};
