@@ -58,7 +58,7 @@ function getManagementApiUrl() {
     "http://backend:8000";
 
   try {
-    return new URL("/management/?format=json", apiBaseUrl).toString();
+    return new URL("/management/site-settings/?format=json", apiBaseUrl).toString();
   } catch {
     return null;
   }
