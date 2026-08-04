@@ -3,7 +3,7 @@ import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
 import { getSchoolYear } from "@/app/_utils/getYear";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
 import styles from "@/app/(public)/_styles/base/footer.module.css";
 import SchoolLocation from "@/app/_utils/formatLocation";
 //ICONS

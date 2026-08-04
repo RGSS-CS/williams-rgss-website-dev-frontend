@@ -1,4 +1,4 @@
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
 
 type LocaProps = {
     management: Management | null;

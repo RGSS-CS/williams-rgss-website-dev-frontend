@@ -3,7 +3,7 @@ import Link from "next/link";
 import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/authentication.module.css";
 import LoginBackButton from "../_components/LoginBackButton";
-import { getManagementSettings } from "@/app/_lib/management";
+import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

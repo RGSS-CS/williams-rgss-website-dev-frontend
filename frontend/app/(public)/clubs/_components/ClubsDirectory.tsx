@@ -1,7 +1,7 @@
 "use client";
 import { JSX, useDeferredValue, useState } from "react";
 import type { Club } from "@/app/_lib/club";
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
 import ClubSearchInput from "./ClubSearchInput";

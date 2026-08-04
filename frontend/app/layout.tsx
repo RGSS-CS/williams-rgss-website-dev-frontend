@@ -2,7 +2,7 @@ import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } fr
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@/app/global.css";
-import { getManagementSettings } from "@/app/_lib/management";
+import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
