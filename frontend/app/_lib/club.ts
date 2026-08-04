@@ -1,3 +1,5 @@
+"use server";
+
 export type ClubApiRecord = {
   id: number;
   name: string;
