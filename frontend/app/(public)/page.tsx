@@ -17,7 +17,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const management = await getManagementSettings();
   const pageManagement = await getPageManagementSettings("HM");
-  //const clubs = await getDjangoAPI();
   return (
     <main>
       <div className="hero">
