@@ -4,9 +4,9 @@ import type { Club } from "@/app/_lib/club";
 import type { Management } from "@/app/_lib/site-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
-import ClubSearchInput from "./ClubSearchInput";
-import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";
-import ResetFiltersButton from "./ResetFiltersButton";
+import ClubSearchInput from "./_components/ClubSearchInput";
+import ClubsFilterControls, { type CategoryFilter } from "./_components/ClubsFilterControls";
+import ResetFiltersButton from "./_components/ResetFiltersButton";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,7 +1,7 @@
 import { getClubs } from "@/app/_lib/club";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
-import ClubsDirectory from "./_components/ClubsDirectory";
+import ClubsDirectory from "./_ClubsDirectory";
 import { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
