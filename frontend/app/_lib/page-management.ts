@@ -22,11 +22,11 @@ function getPageManagementApiUrl() {
     process.env.API_URL ||
     "http://backend:8000";
 
-    try {
-        return new URL("/management/page-settings/?format=json", apiBaseUrl).toString();
-    } catch {
-        return null;
-    };
+  try {
+    return new URL("/management/page-settings/?format=json", apiBaseUrl).toString();
+  } catch {
+    return null;
+  };
 };
 
 function normalizePageManagement(record: PageManagementApiRecord): PageManagement {
@@ -48,26 +48,30 @@ export async function getPageManagement(): Promise<PageManagement[]> {
     return [];
   };
 
-    try {
-        const res = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-        if (!res.ok) {
-            return [];
-        }
+    if (!res.ok) {
+      return [];
+    }
 
-        const management = (await res.json()) as SitesApiResponse;
-        return management.map(normalizePageManagement);
-    } catch {
-        return [];
-    };
+    const management = (await res.json()) as SitesApiResponse;
+    return management.map(normalizePageManagement);
+  } catch {
+    return [];
+  };
 };
 
-export async function getPageManagementSettings(): Promise<PageManagement | null> {
+export async function getPageManagementSettings(
+  internalSiteName: string
+): Promise<PageManagement | null> {
   const management = await getPageManagement();
-  return management[0] ?? null;
+  return (
+    management.find((page) => page.internalSiteName === internalSiteName) ?? null
+  );
 };
