@@ -4,7 +4,7 @@ import Footer from '@/app/(public)/_components/footer';
 import Navbar from '@/app/(public)/_components/navbar';
 import { Suspense } from 'react';
 
-import { getManagementSettings } from '@/app/_lib/management';
+import { getManagementSettings } from '@/app/_lib/site-management';
 
 async function NavbarSlot() {
   const management = await getManagementSettings();

@@ -4,7 +4,7 @@ import Footer from "@/app/(public)/_components/footer";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import Navbar from "@/app/(public)/_components/navbar";
-import { getManagementSettings } from "@/app/_lib/management";
+import { getManagementSettings } from "@/app/_lib/site-management";
 
 export const metadata: Metadata = {
     title: "Authentication",

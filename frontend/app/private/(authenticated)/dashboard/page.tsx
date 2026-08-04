@@ -1,4 +1,4 @@
-import { getManagementSettings } from "@/app/_lib/management";
+import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import styles from "./dashboard.module.css";
