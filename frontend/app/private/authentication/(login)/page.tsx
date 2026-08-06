@@ -6,6 +6,7 @@ import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PasswordField from "@/app/private/authentication/_components/PasswordField";
 
 //ICONS
 import { faEnvelope, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
