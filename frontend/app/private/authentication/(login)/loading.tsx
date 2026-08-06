@@ -3,14 +3,6 @@ import styles from "@/app/private/authentication/styles.module.css";
 export default function Loading() {
   return (
     <main aria-busy="true" aria-label="Loading sign in">
-      <div className={styles.navbar_skeleton} aria-hidden="true">
-        <span className={`${styles.loading_block} ${styles.loading_nav_logo}`}></span>
-        <div className={styles.loading_nav_links}>
-          <span className={`${styles.loading_block} ${styles.loading_nav_link}`}></span>
-          <span className={`${styles.loading_block} ${styles.loading_nav_link}`}></span>
-          <span className={`${styles.loading_block} ${styles.loading_nav_link}`}></span>
-        </div>
-      </div>
       <div className={styles.body}>
         <div className={styles.loading_wrap}>
           <div className={styles.login_card}>
