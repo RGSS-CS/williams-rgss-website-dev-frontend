@@ -1,10 +1,17 @@
 "use client";
 
+import { useState } from 'react';
 import styles from '@/app/private/authentication/styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default function PasswordField() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible((current) => !current);
+  };
+
   return (
     <div className={styles.form_group}>
       <div>
@@ -14,9 +21,19 @@ export default function PasswordField() {
           <input
             id="password"
             name="password"
+            type={isVisible ? 'text' : 'password'}
             placeholder="Password"
             autoComplete="current-password"
           />
+          <button
+            className={styles.toggle_pw}
+            type="button"
+            onClick={toggleVisibility}
+            aria-label={isVisible ? 'Hide password' : 'Show password'}
+            aria-pressed={isVisible}
+          >
+            <FontAwesomeIcon icon={isVisible ? faEyeSlash : faEye} className={styles.fas} />
+          </button>
         </div>
       </div>
     </div>
