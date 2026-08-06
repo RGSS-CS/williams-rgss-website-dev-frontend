@@ -25,25 +25,6 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
 
 
 
-function formatTime(time: string | null) {
-  if (!time) {
-    return "Time TBA";
-  };
-
-  const [hour, minute] = time.split(":");
-  const parsedHour = Number(hour);
-  const parsedMinute = Number(minute);
-
-  if (Number.isNaN(parsedHour) || Number.isNaN(parsedMinute)) {
-    return time;
-  };
-
-  return new Intl.DateTimeFormat("en-CA", {
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(2000, 0, 1, parsedHour, parsedMinute));
-};
-
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting day TBA";
@@ -78,7 +59,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   
   const primaryCategory = club.categories[0] ?? "Student Club";
   const meetingDay = formatDay(club.dayOfMeeting);
-  const meetingTime = formatTime(club.time);
+  const meetingTime = club.time ?? "Time TBA";
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
   const classcode = club.classroomCode ?? "Not provided";
