@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   output: 'standalone',
   cacheComponents: true,
+  agentRules: false,
 };
 
 export default nextConfig;

@@ -76,13 +76,40 @@ function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocatio
   };
 };
 
+function formatPhoneNumber(phone: string | null | undefined): string | null {
+  if (!phone) {
+    return null;
+  }
+
+  const trimmedPhone = phone.trim();
+  if (!trimmedPhone) {
+    return null;
+  }
+
+  const digits = trimmedPhone.replace(/\D/g, "");
+
+  if (digits.length === 10) {
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  }
+
+  if (digits.length === 11 && digits.startsWith("1")) {
+    return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
+  }
+
+  if (digits.length === 7) {
+    return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  }
+
+  return trimmedPhone;
+}
+
 function normalizeManagement(record: ManagementApiRecord): Management {
   return {
     maintainanceMode: record.maintainance_mode,
     schoolName: record.school_name ?? null,
     councilName: record.council_name ?? null,
     schoolEmail: record.school_email ?? null,
-    schoolPhone: record.school_phone ?? null,
+    schoolPhone: formatPhoneNumber(record.school_phone),
     socialMedia: record.social_media ?? null,
     favicon: record.favicon ?? null,
     stucoImage: record.stuco_image ?? null,

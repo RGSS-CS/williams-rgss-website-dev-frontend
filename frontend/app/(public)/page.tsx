@@ -99,7 +99,7 @@ export default async function Page() {
             <div className="card_row">{/*Add section for school council*/}</div>
           </div>
         </div>
-      </div>     
+      </div>
     </main >
   );
 }
