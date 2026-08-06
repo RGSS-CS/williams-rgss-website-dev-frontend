@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { signin } from "@/app/private/authentication/_methods/auth";
-import styles from "@/app/private/authentication/authentication.module.css";
+import styles from "@/app/private/authentication/styles.module.css";
 import LoginBackButton from "./_components/LoginBackButton";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
@@ -8,6 +7,9 @@ import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PasswordField from "@/app/private/authentication/(login)/_components/PasswordField";
 import StudentNumberField from "@/app/private/authentication/(login)/_components/StudentNumberField";
+import Footer from "@/app/(public)/_components/footer";
+import Navbar from "@/app/(public)/_components/navbar";
+import { Suspense } from "react";
 
 //ICONS
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
@@ -19,10 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SigninForm() {
   const management = await getManagementSettings();
   if (!management) return null;
-  return (
-    <main>
-      <div className={styles.body}>
 
+  return (
+    <>
+      <Suspense>
+        <Navbar management={management} />
+      </Suspense>
+      <div className={styles.body}>
         <form action={signin}>
           <div className={styles.login_card}>
             <LoginBackButton />
@@ -49,6 +54,11 @@ export default async function SigninForm() {
           </div>
         </form>
       </div>
-    </main>
+      <div className={styles.footerWrap}>
+        <Suspense>
+          <Footer management={management} />
+        </Suspense>
+      </div>
+    </>
   );
 }

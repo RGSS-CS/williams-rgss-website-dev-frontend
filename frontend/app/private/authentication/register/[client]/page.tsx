@@ -1,15 +1,18 @@
-import styles from '@/app/private/authentication/authentication.module.css';
+import styles from '@/app/private/authentication/styles.module.css';
+import bodyStyles from './register.module.css';
 import { signup } from "@/app/private/authentication/_methods/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import StudentNumberField from './_components/StudentNumberField';
+import NameField from './_components/NameField';
 import PasswordField from './_components/PasswordField';
 import ConfirmPasswordField from './_components/ConfirmPasswordField';
 
 export default function SignupForm() {
   return (
     <main>
-      <div className={styles.body}>
+      
+      <div className={bodyStyles.body}>
         <form action={signup}>
           <div className={styles.login_card}>
             <div className={styles.card_header}>
@@ -17,6 +20,7 @@ export default function SignupForm() {
               <p>Sign up for easy access to all features</p>
             </div>
 
+            <NameField />
             <StudentNumberField />
             <PasswordField />
             <ConfirmPasswordField />

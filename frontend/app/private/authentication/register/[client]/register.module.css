@@ -1,0 +1,12 @@
+.body {
+    flex: 1;
+    padding: 100px 0;
+    display: flex;
+    background: var(--school-primary);
+}
+
+.body form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

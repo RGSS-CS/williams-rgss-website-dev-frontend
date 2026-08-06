@@ -1,6 +1,6 @@
 "use client";
 
-import styles from '@/app/private/authentication/authentication.module.css';
+import styles from '@/app/private/authentication/styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 

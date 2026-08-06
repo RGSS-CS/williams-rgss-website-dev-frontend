@@ -258,3 +258,23 @@
     color: var(--school-primary-light);
     margin-top: 5px;
 }
+
+.passwordLabel {
+    display: block;
+}
+
+.passwordLabel label {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--school-primary);
+    margin-bottom: 0px;
+}
+
+.passwordLabel h4{
+    color: red;
+    font-size: 0.75rem;
+    margin-bottom: 10px;
+}
