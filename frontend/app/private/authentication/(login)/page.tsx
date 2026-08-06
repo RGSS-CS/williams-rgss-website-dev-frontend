@@ -51,7 +51,7 @@ export default async function SigninForm() {
             <div className={styles.signUp}>
               <p>
                 Don&apos;t have an account yet?{" "}
-                <Link href="/private/authentication/register">Register Now!</Link>
+                Sign up during the registration period. Contact the {management.councilName} for more information.
               </p>
             </div>
           </div>
