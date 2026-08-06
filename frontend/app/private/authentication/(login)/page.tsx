@@ -7,9 +7,6 @@ import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PasswordField from "@/app/private/authentication/(login)/_components/PasswordField";
 import StudentNumberField from "@/app/private/authentication/(login)/_components/StudentNumberField";
-import Footer from "@/app/(public)/_components/footer";
-import Navbar from "@/app/(public)/_components/navbar";
-import { Suspense } from "react";
 
 //ICONS
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
@@ -24,9 +21,6 @@ export default async function SigninForm() {
 
   return (
     <>
-      <Suspense>
-        <Navbar management={management} />
-      </Suspense>
       <div className={styles.body}>
         <form action={signin}>
           <div className={styles.login_card}>
@@ -53,11 +47,6 @@ export default async function SigninForm() {
             </div>
           </div>
         </form>
-      </div>
-      <div className={styles.footerWrap}>
-        <Suspense>
-          <Footer management={management} />
-        </Suspense>
       </div>
     </>
   );
