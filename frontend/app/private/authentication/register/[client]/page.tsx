@@ -7,12 +7,26 @@ import StudentNumberField from './_components/StudentNumberField';
 import NameField from './_components/NameField';
 import PasswordField from './_components/PasswordField';
 import ConfirmPasswordField from './_components/ConfirmPasswordField';
+import Image from 'next/image';
+import { getManagementSettings } from '@/app/_lib/site-management';
 
-export default function SignupForm() {
+export default async function SignupForm() {
+  const management = await getManagementSettings();
+
   return (
-    <main>
-      
+    <main className={bodyStyles.page}>
       <div className={bodyStyles.body}>
+        <div className={bodyStyles.register_brand_wrap}>
+          <a href="/" className={bodyStyles.register_brand}>
+            <div className={bodyStyles.register_logo}>
+              <Image src="/images/logo/logo.png" alt="School logo" width={48} height={36} priority />
+            </div>
+            <div className={bodyStyles.register_brand_text}>
+              <span>{management?.schoolName ?? 'Student Council'}</span>
+              <small>{management?.councilName ?? 'Student Council'}</small>
+            </div>
+          </a>
+        </div>
         <form action={signup}>
           <div className={styles.login_card}>
             <div className={styles.card_header}>
