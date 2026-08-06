@@ -11,9 +11,6 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
-const SCHOOL_PHONE = "(905) 727-3131";
-const SCHOOL_PHONE_TEL = "9057273131";
-
 type ManagementProps = {
   management: Management | null;
 };
@@ -74,13 +71,13 @@ export default function Footer({ management }: ManagementProps) {
             <FontAwesomeIcon icon={faPhone} className={styles.fas} />
             <a
               className={styles.desktop_only}
-              onClick={() => handleCopy(SCHOOL_PHONE)}
+              onClick={() => handleCopy(management?.schoolPhone || '')}
             >
-              {copyStatus === 'success' ? `Copied: ${copiedText}` : SCHOOL_PHONE}
+              {copyStatus === 'success' ? `Copied: ${copiedText}` : management?.schoolPhone}
               {copyStatus === 'error' && <p>Failed to copy.</p>}
             </a>
-            <a className={styles.mobile_only} href={`tel:${SCHOOL_PHONE_TEL}`}>
-              {SCHOOL_PHONE}
+            <a className={styles.mobile_only} href={`tel:${management?.schoolPhone?.replace(/\D/g, '')}`}>
+              {management?.schoolPhone}
             </a>
           </div>
         </div>
