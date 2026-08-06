@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
@@ -25,25 +25,6 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
 
 
 
-function formatTime(time: string | null) {
-  if (!time) {
-    return "Time TBA";
-  };
-
-  const [hour, minute] = time.split(":");
-  const parsedHour = Number(hour);
-  const parsedMinute = Number(minute);
-
-  if (Number.isNaN(parsedHour) || Number.isNaN(parsedMinute)) {
-    return time;
-  };
-
-  return new Intl.DateTimeFormat("en-CA", {
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(2000, 0, 1, parsedHour, parsedMinute));
-};
-
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting day TBA";
@@ -67,18 +48,18 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
   const clubId = Number(id);
 
   if (Number.isNaN(clubId)) {
-    notFound();
+    redirect("/clubs");
   };
 
   const club = await getClubById(clubId);
 
   if (!club) {
-    notFound();
+    redirect("/clubs");
   };
   
   const primaryCategory = club.categories[0] ?? "Student Club";
   const meetingDay = formatDay(club.dayOfMeeting);
-  const meetingTime = formatTime(club.time);
+  const meetingTime = club.time ?? "Time TBA";
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
   const classcode = club.classroomCode ?? "Not provided";
@@ -136,7 +117,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           <div className={styles_modules.aboutGrid}>
             <div>
               <span className={styles_modules.sectionEyebrow}>About Us</span>
-              <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2> {/*replace with club tagline */}
+              <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
               <div className={styles_modules.sectionBody}>{club.preview_description}</div>
 
               <div className={styles_modules.badgeRow}>

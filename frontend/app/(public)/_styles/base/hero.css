@@ -73,6 +73,7 @@
   line-height: 1.6;
   margin-top: 0;
   margin-bottom: 0;
+  white-space: pre-line;
 }
 
 .search_container {

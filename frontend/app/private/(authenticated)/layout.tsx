@@ -3,7 +3,7 @@ import ExecSidebar from './_components/Sidebar';
 import "./styles.css"
 import { Suspense } from 'react';
 
-import { getManagementSettings } from '@/app/_lib/management';
+import { getManagementSettings } from '@/app/_lib/site-management';
 
 async function NavbarSlot() {
   const management = await getManagementSettings();

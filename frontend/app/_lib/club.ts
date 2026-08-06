@@ -1,3 +1,5 @@
+"use server";
+
 export type ClubApiRecord = {
   id: number;
   name: string;
@@ -42,6 +44,34 @@ function getClubsApiUrl() {
   }
 }
 
+function formatTimeTo12Hour(time: string | null | undefined): string | null {
+  if (!time) {
+    return null;
+  }
+
+  const trimmedTime = time.trim();
+  if (!trimmedTime) {
+    return null;
+  }
+
+  if (/am|pm/i.test(trimmedTime)) {
+    return trimmedTime;
+  }
+
+  const match = trimmedTime.match(/^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?$/);
+  if (!match) {
+    return trimmedTime;
+  }
+
+  const hours = Number(match[1]);
+  const minutes = match[2] ? Number(match[2]) : 0;
+  const suffix = hours >= 12 ? "PM" : "AM";
+  const normalizedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const minuteString = minutes.toString().padStart(2, "0");
+
+  return `${normalizedHours}:${minuteString} ${suffix}`;
+}
+
 function normalizeClub(record: ClubApiRecord): Club {
   return {
     id: record.id,
@@ -51,7 +81,7 @@ function normalizeClub(record: ClubApiRecord): Club {
     tagline: record.tagline,
     categories: record.category ?? [],
     dayOfMeeting: record.day_of_meeting,
-    time: record.time,
+    time: formatTimeTo12Hour(record.time),
     repetition: record.repetition,
     roomNumber: record.room_number === null ? null : String(record.room_number),
     classroomCode: record.classroom_code,

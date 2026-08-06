@@ -1,5 +1,5 @@
 import styles from "@/app/private/(authenticated)/_styles/base/sidebar.module.css";
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SchoolLocation from "@/app/_utils/formatLocation";
 import { getSchoolYear } from "@/app/_utils/SchoolYear";
