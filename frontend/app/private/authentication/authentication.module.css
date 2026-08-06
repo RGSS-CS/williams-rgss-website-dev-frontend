@@ -253,3 +253,7 @@
     color: var(--school-primary-light);
     text-align: center;
 }
+
+.signup h5{
+margin: 3px;
+}

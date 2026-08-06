@@ -30,14 +30,14 @@ export default function RootLayout({
 }) {
     return (
         <main className={styles.page}>
-            <Suspense fallback={null}>
+            <Suspense>
                 <NavbarSlot />
             </Suspense>
             <div className={styles.content}>
                 {children}
             </div>
             <div className={styles.footerWrap}>
-                <Suspense fallback={null}>
+                <Suspense>
                     <FooterSlot />
                 </Suspense>
             </div>
