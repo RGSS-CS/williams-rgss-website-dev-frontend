@@ -50,9 +50,11 @@ export default async function SigninForm() {
             </button>
             <div className={styles.signUp}>
               <p>
-                Don&apos;t have an account yet?{" "}
-                Sign up during the registration period. Contact the {management.councilName} for more information.
+                <b>Don&apos;t have an account yet?{" "}</b>
               </p>
+              <h5>
+                Sign up during the registration period. Contact the {management.councilName} for more information.
+              </h5>
             </div>
           </div>
         </form>
