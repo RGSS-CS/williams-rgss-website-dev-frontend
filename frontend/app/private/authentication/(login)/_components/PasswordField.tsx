@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from "@/app/private/authentication/authentication.module.css";
+import styles from "@/app/private/authentication/styles.module.css";
 
 export default function PasswordField() {
   const [isVisible, setIsVisible] = useState(false);

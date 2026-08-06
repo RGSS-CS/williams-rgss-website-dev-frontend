@@ -1,4 +1,4 @@
-import styles from "@/app/private/authentication/authentication.module.css";
+import styles from "@/app/private/authentication/styles.module.css";
 
 export default function Loading() {
   return (
