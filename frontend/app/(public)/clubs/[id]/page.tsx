@@ -23,8 +23,6 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
   return getSiteMetadata(club?.name);
 };
 
-
-
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting day TBA";
