@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
+import RegisterSW from "@/app/_components/RegisterSW";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false;
@@ -90,6 +91,7 @@ export default async function RootLayout({
                 <style id="school-theme" dangerouslySetInnerHTML={{ __html: themeStyle }} />
             </head>
             <body>
+                <RegisterSW />
                 {children}
             </body>
         </html>
