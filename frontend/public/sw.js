@@ -2,6 +2,10 @@ const CACHE = "v1";
 
 const OFFLINE_URL = "/offline.html";
 
+const ASSETS = [
+    OFFLINE_URL,
+];
+
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE).then(cache => cache.addAll(ASSETS))
