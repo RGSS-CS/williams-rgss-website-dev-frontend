@@ -57,13 +57,18 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
     redirect("/clubs");
   };
   
-  const primaryCategory = club.categories[0] ?? "Student Club";
+  const categories = (club.categories ?? []).filter((category) => category?.trim());
+  const hasCategories = categories.length > 0;
+  const primaryCategory = hasCategories ? categories[0] : null;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
-  const classcode = club.classroomCode ?? "Not provided";
-  const ClassroomInviteUrl = club.applicationFormLink;
+  const classcode = club.classroomCode?.trim() || null;
+  const showClassroomCode = Boolean(classcode);
+  const showJoinSection = club.acceptingApplicants !== "Applications closed";
+  const classroomInviteUrl = club.applicationFormLink?.trim() || null;
+  const showClassroomInvite = Boolean(classroomInviteUrl);
 
   return (
     <main>
@@ -85,9 +90,11 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               <p>{club.preview_description}</p>
             </div>
             <div className={styles_modules.heroActions}>
-              <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
-                Apply Now
-              </AnchorLink>
+              {showJoinSection && (
+                <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
+                  Apply Now
+                </AnchorLink>
+              )}
               <p><FontAwesomeIcon icon={faChevronDown} />Scroll to explore</p>
             </div>
             <div className={styles.heroStats}>
@@ -129,17 +136,19 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
                   <FontAwesomeIcon icon={faDoorOpen} />
                   {roomLabel}
                 </div>
-                <div className={styles_modules.badge}>
-                  <FontAwesomeIcon icon={faLayerGroup} />
-                  {club.categories.join(" · ")}
-                </div>
+                {hasCategories && (
+                  <div className={styles_modules.badge}>
+                    <FontAwesomeIcon icon={faLayerGroup} />
+                    {categories.join(" · ")}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className={styles_modules.aboutVisual}>
               <div className={styles_modules.aboutVisualCaption}>
                 <strong>{club.name}</strong>
-                <div>{primaryCategory}</div>
+                {primaryCategory && <div>{primaryCategory}</div>}
               </div>
             </div>
           </div>
@@ -154,11 +163,13 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
 
           <div className={styles_modules.infoGrid}>
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
-              <h3>Category</h3>
-              <p>{club.categories.join(", ") || "Not provided"}</p>
-            </article>
+            {hasCategories && (
+              <article className={styles_modules.infoTile}>
+                <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
+                <h3>Category</h3>
+                <p>{categories.join(", ")}</p>
+              </article>
+            )}
             <article className={styles_modules.infoTile}>
               <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
               <h3>Meeting Day</h3>
@@ -188,59 +199,65 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         </section>
       </div>
 
-      <section
-        className={styles_modules.applySection}
-        id="join-club"
-        aria-labelledby="join-club-heading"
-      >
-        <div className={styles_modules.applySectionShell}>
-          <div className={styles_modules.applySectionCopy}>
-            <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
-            <h2 id="join-club-heading">Join the Club</h2>
-            <p>
-              Grab the meeting details, then hop into Google Classroom to follow updates and announcements.
-            </p>
-          </div>
+      {showJoinSection && (
+        <section
+          className={styles_modules.applySection}
+          id="join-club"
+          aria-labelledby="join-club-heading"
+        >
+          <div className={styles_modules.applySectionShell}>
+            <div className={styles_modules.applySectionCopy}>
+              <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
+              <h2 id="join-club-heading">Join the Club</h2>
+              <p>
+                {club.joinInstructions}
+              </p>
+            </div>
 
-          <div className={styles_modules.applyPanel}>
-            <div className={styles_modules.applyPanelInner}>
-              <div className={styles_modules.applyInfoCard}>
-                <div className={styles_modules.applyInfoRow}>
-                  <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
-                  <p>
-                    <strong>Meetings</strong>
-                    {meetingDay} at {meetingTime}
-                  </p>
+            <div className={styles_modules.applyPanel}>
+              <div className={styles_modules.applyPanelInner}>
+                <div className={styles_modules.applyInfoCard}>
+                  <div className={styles_modules.applyInfoRow}>
+                    <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
+                    <p>
+                      <strong>Meetings</strong>
+                      {meetingDay} at {meetingTime}
+                    </p>
+                  </div>
+                  <div className={styles_modules.applyInfoRow}>
+                    <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
+                    <p>
+                      <strong>Location</strong>
+                      {roomLabel}
+                    </p>
+                  </div>
                 </div>
-                <div className={styles_modules.applyInfoRow}>
-                  <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
-                  <p>
-                    <strong>Location</strong>
-                    {roomLabel}
-                  </p>
-                </div>
+
+                {showClassroomCode && (
+                  <div className={styles_modules.applyCodeCard}>
+                    <span>Google Classroom Code</span>
+                    <div className={styles_modules.applyCodeRow}>
+                      <span className={styles_modules.applyCodeBadge}>{classcode}</span>
+                    </div>
+                  </div>
+                )}
+
+                {showClassroomInvite && (
+                  <a
+                    className={styles_modules.applyInviteLink}
+                    href={classroomInviteUrl ?? undefined}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open Classroom Invite
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                  </a>
+                )}
               </div>
-
-              <div className={styles_modules.applyCodeCard}>
-                <span>Google Classroom Code</span>
-                <div className={styles_modules.applyCodeRow}>
-                  <span className={styles_modules.applyCodeBadge}>{classcode}</span>
-                </div>
-              </div>
-
-              <a
-                className={styles_modules.applyInviteLink}
-                href={ClassroomInviteUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open Classroom Invite
-                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </main>
   );
 };

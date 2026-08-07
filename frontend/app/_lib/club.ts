@@ -15,6 +15,7 @@ export type ClubApiRecord = {
   teacher_advisor: string | null;
   application_form_link: string;
   accepting_applicants: string;
+  join_instructions: string | null;
 };
 
 export type Club = {
@@ -32,6 +33,7 @@ export type Club = {
   teacherAdvisor: string | null;
   applicationFormLink: string;
   acceptingApplicants: string;
+  joinInstructions: string | null;
 };
 
 function getClubsApiUrl() {
@@ -99,6 +101,7 @@ function normalizeClub(record: ClubApiRecord): Club {
     teacherAdvisor: record.teacher_advisor,
     applicationFormLink: record.application_form_link,
     acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
+    joinInstructions: record.join_instructions,
   };
 };
 
