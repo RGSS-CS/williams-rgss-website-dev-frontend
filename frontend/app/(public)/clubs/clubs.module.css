@@ -198,14 +198,19 @@
 }
 
 .club_tag {
-  width: 0.75rem;
-  height: 0.75rem;
   border-radius: 999px;
-  background: rgba(246, 174, 45, 0.3);
+  background: var(--school-tertiary);
+  height: 1.6rem;
+  padding: 0.3rem 1rem;
+  display: flex;
+  align-items: center;
 }
 
-.open {
-  background: var(--school-tertiary);
+.club_tag h6 {
+  font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+  font-weight: 700;
+  color: var(--school-primary);
+  margin: 0;
 }
 
 .ctaBanner {

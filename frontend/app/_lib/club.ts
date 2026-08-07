@@ -14,6 +14,7 @@ export type ClubApiRecord = {
   classroom_code: string | null;
   teacher_advisor: string | null;
   application_form_link: string;
+  accepting_applicants: string;
 };
 
 export type Club = {
@@ -30,6 +31,7 @@ export type Club = {
   classroomCode: string | null;
   teacherAdvisor: string | null;
   applicationFormLink: string;
+  acceptingApplicants: string;
 };
 
 function getClubsApiUrl() {
@@ -41,27 +43,27 @@ function getClubsApiUrl() {
     return new URL("/club/?format=json", apiBaseUrl).toString();
   } catch {
     return null;
-  }
-}
+  };
+};
 
 function formatTimeTo12Hour(time: string | null | undefined): string | null {
   if (!time) {
     return null;
-  }
+  };
 
   const trimmedTime = time.trim();
   if (!trimmedTime) {
     return null;
-  }
+  };
 
   if (/am|pm/i.test(trimmedTime)) {
     return trimmedTime;
-  }
+  };
 
   const match = trimmedTime.match(/^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?$/);
   if (!match) {
     return trimmedTime;
-  }
+  };
 
   const hours = Number(match[1]);
   const minutes = match[2] ? Number(match[2]) : 0;
@@ -70,7 +72,16 @@ function formatTimeTo12Hour(time: string | null | undefined): string | null {
   const minuteString = minutes.toString().padStart(2, "0");
 
   return `${normalizedHours}:${minuteString} ${suffix}`;
-}
+};
+
+function formatAcceptingApplicants(acceptingApplicants: string): string {
+  if (acceptingApplicants === "AC") {
+    return "Apply Now";
+  } else if (acceptingApplicants === "WA") {
+    return "Applications closed";
+  }
+  return "Open to all";
+};
 
 function normalizeClub(record: ClubApiRecord): Club {
   return {
@@ -87,15 +98,16 @@ function normalizeClub(record: ClubApiRecord): Club {
     classroomCode: record.classroom_code,
     teacherAdvisor: record.teacher_advisor,
     applicationFormLink: record.application_form_link,
+    acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
   };
-}
+};
 
 export async function getClubs(): Promise<Club[]> {
   'use cache: private';
   const url = getClubsApiUrl();
   if (!url) {
     return [];
-  }
+  };
 
   try {
     const res = await fetch(url, {
@@ -107,16 +119,16 @@ export async function getClubs(): Promise<Club[]> {
 
     if (!res.ok) {
       return [];
-    }
+    };
 
     const clubs = (await res.json()) as ClubApiRecord[];
     return clubs.map(normalizeClub);
   } catch {
     return [];
-  }
-}
+  };
+};
 
 export async function getClubById(id: number): Promise<Club | null> {
   const clubs = await getClubs();
   return clubs.find((club) => club.id === id) ?? null;
-}
+};

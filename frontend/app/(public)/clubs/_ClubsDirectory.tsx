@@ -113,7 +113,7 @@ function ClubCard({ club }: { club: Club }) {
           <span className={styles.open_club_btn}>
             View Details
             <FontAwesomeIcon icon={faArrowRight} />
-            <span className={`${styles.club_tag} ${styles.open}`}></span>
+            <span className={styles.club_tag}><h6>{club.acceptingApplicants}</h6></span>
           </span>
         </div>
       </article>
