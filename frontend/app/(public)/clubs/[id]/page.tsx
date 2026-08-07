@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
