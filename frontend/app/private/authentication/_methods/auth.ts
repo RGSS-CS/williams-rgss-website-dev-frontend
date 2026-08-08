@@ -1,11 +1,11 @@
 export async function signup(formData: FormData) {
-  "use server";
+    "use server";
 
-  void formData;
+    void formData;
 }
 
 export async function signin(formData: FormData) {
-  "use server";
+    "use server";
 
-  void formData;
+    void formData;
 }

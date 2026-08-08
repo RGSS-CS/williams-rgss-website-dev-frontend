@@ -11,98 +11,98 @@ import styles from "@/app/(public)/_styles/base/navigation.module.css";
 import "@/app/(public)/styles.css";
 
 type NavbarProps = {
-  management: Management | null;
+    management: Management | null;
 }
 
 
 const links = [
-  { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
-  { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
-  { href: "/gallery", icon: <FontAwesomeIcon icon={faImages} />, label: "Gallery" },
-  { href: "/about", icon: <FontAwesomeIcon icon={faInfoCircle} />, label: "About" },
-  {
-    href: "/private/authentication",
-    icon: <FontAwesomeIcon icon={faArrowRightToBracket} />,
-    label: "Login",
-  },
+    { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
+    { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
+    { href: "/gallery", icon: <FontAwesomeIcon icon={faImages} />, label: "Gallery" },
+    { href: "/about", icon: <FontAwesomeIcon icon={faInfoCircle} />, label: "About" },
+    {
+        href: "/private/authentication",
+        icon: <FontAwesomeIcon icon={faArrowRightToBracket} />,
+        label: "Login",
+    },
 ];
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/") {
-    return pathname === href;
-  }
+    if (href === "/") {
+        return pathname === href;
+    }
 
-  return pathname === href || pathname.startsWith(`${href}/`);
+    return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function Navbar({ management }: NavbarProps) {
-  const navRef = useRef<HTMLElement>(null);
-  const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navRef = useRef<HTMLElement>(null);
+    const pathname = usePathname();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  return (
-    <>
-      <div className={styles.navbar_container}>
-        <nav ref={navRef} className={styles.navbar}>
-          <div className={styles.header_container}>
-            <div className={styles.title_container}>
-              <button
-                className={styles.nav_hamburger}
-                onClick={() => setSidebarOpen(true)}
-                aria-label="Open menu"
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </button>
-              <a href="/" className={styles.brand_link}>
-                <div className={styles.logo}>
-                  <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
-                </div>
-                <div className={styles.brand_copy}>
-                  <span className={styles.school_title}>{management?.schoolName}</span>
-                  <span className={styles.school_subtitle}>Student Council</span>
-                </div>
-              </a>
+    return (
+        <>
+            <div className={styles.navbar_container}>
+                <nav ref={navRef} className={styles.navbar}>
+                    <div className={styles.header_container}>
+                        <div className={styles.title_container}>
+                            <button
+                                className={styles.nav_hamburger}
+                                onClick={() => setSidebarOpen(true)}
+                                aria-label="Open menu"
+                            >
+                                <FontAwesomeIcon icon={faBars} />
+                            </button>
+                            <a href="/" className={styles.brand_link}>
+                                <div className={styles.logo}>
+                                    <Image src="/images/logo/logo.png" alt="School Logo" width={80} height={60} />
+                                </div>
+                                <div className={styles.brand_copy}>
+                                    <span className={styles.school_title}>{management?.schoolName}</span>
+                                    <span className={styles.school_subtitle}>Student Council</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div className={styles.nav_links}>
+                            {links.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    className={isActivePath(pathname, link.href) ? styles.active : ""}
+                                    onClick={() => setSidebarOpen(false)}
+                                >
+                                    {link.icon}
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </nav>
             </div>
-
-            <div className={styles.nav_links}>
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={isActivePath(pathname, link.href) ? styles.active : ""}
-                  onClick={() => setSidebarOpen(false)}
+            {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
+            <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>
+                <button
+                    className={styles.sidebar_close}
+                    onClick={() => setSidebarOpen(false)}
+                    aria-label="Close menu"
                 >
-                  {link.icon}
-                  {link.label}
-                </a>
-              ))}
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
+                <div className={styles.sidebar_links}>
+                    {links.map((link) => (
+                        <a
+                            key={link.href}
+                            href={link.href}
+                            className={isActivePath(pathname, link.href) ? styles.active : ""}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            {link.icon}
+                            {link.label}
+                        </a>
+                    ))}
+                </div>
             </div>
-          </div>
-        </nav>
-      </div>
-      {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
-      <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>
-        <button
-          className={styles.sidebar_close}
-          onClick={() => setSidebarOpen(false)}
-          aria-label="Close menu"
-        >
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
-        <div className={styles.sidebar_links}>
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={isActivePath(pathname, link.href) ? styles.active : ""}
-              onClick={() => setSidebarOpen(false)}
-            >
-              {link.icon}
-              {link.label}
-            </a>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
