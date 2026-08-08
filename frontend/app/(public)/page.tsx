@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
+import TickerBar from "@/app/(public)/_components/TickerBar";
 
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
@@ -19,10 +20,21 @@ export default async function Page() {
   const pageManagement = await getPageManagementSettings("HM");
   return (
     <main>
+      
       <div className="hero">
+        <TickerBar />
+        <div className={styles.heroBadgeImage}>
+          <Image
+            src="/images/logo/wildcat-icon.png"
+            alt="Wildcat Icon"
+            width={260}
+            height={230}
+          />
+        </div>
+        
         <div className="hero_shape"></div>
         <div className="hero_inner">
-          <div className="hero_left">
+          <div className={`hero_left ${styles.hero_left}`}>
             <div className={styles.heroTag}>
               <p>{management?.councilName} {getSchoolYear()}</p>
             </div>
@@ -52,17 +64,6 @@ export default async function Page() {
               </a>
             </div>
           </div>
-          <div className={styles.heroBadgeImage}>
-            <Image
-              src="/images/logo/wildcat-icon.png"
-              alt="Wildcat Icon"
-              width={230}
-              height={200}
-            />
-          </div>
-        </div>
-        <div className={styles.heroPhotoStrip}>
-          {/* Add photos here after database is set up */}
         </div>
       </div>
       <div className={styles.sectionWrap}>

@@ -5,6 +5,11 @@
   overflow: hidden;
   border-bottom: 3px solid var(--school-tertiary);
   height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
 }
 
 .tickerHeader {
@@ -100,31 +105,17 @@
 }
 
 .heroBadgeImage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 6px;
-  color: var(--school-tertiary);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-align: center;
-  padding: 16px;
-  margin-top: 40px;
-  margin-right: 40px;
-}
-
-.heroPhotoStrip {
-  margin-top: 3rem;
-  border-radius: 14px;
-  overflow: hidden;
-  height: 230px;
   background: var(--school-secondary);
-  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  border-radius: 0 0 0 90px;
+  z-index: 100;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--school-primary);
-  border-bottom: none;
+  display: flex;
 }
 
 .sectionWrap {
