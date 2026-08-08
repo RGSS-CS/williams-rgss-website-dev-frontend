@@ -67,8 +67,8 @@ export async function getPageManagement(): Promise<PageManagement[]> {
     };
 };
 
-export async function getPageManagementSettings( 
-    internalSiteName: string 
+export async function getPageManagementSettings(
+    internalSiteName: string
 ): Promise<PageManagement | null> {
     const management = await getPageManagement();
     return (
