@@ -4,7 +4,6 @@
     border-radius: 12px;
     overflow: hidden;
     z-index: 0;
-    cursor: pointer !important;
 }
 
 @media (min-width: 768px) {

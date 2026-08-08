@@ -114,9 +114,9 @@ export default async function Page() {
                             Find Us
                         </h2>
                     </div>
-                    <a href={mapsUrl ? mapsUrl : "#"} target="_blank" rel="noopener noreferrer">
-                        <SchoolMap locations={management?.schoolLocation ?? null} />
-                        <p>View on Google Maps</p>
+                    <SchoolMap locations={management?.schoolLocation ?? null} />
+                    <a href={mapsUrl ? mapsUrl : "#"} target="_blank" rel="noopener noreferrer"> 
+                        View on Google Maps
                     </a>
                 </div>
             </div>
