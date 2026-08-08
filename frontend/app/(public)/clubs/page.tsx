@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import { getPageManagementSettings } from "@/app/_lib/page-management";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getSiteMetadata("Clubs");
+    return getSiteMetadata("Clubs");
 };
 
 export default async function ClubsPage() {

@@ -11,251 +11,251 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 type ClubPageProps = {
-  params: Promise<{
-    id: string;
-  }>;
+    params: Promise<{
+        id: string;
+    }>;
 };
 
 export async function generateMetadata({ params }: ClubPageProps): Promise<Metadata> {
-  const { id } = await params;
-  const clubId = Number(id);
-  const club = await getClubById(clubId);
-  return getSiteMetadata(club?.name);
+    const { id } = await params;
+    const clubId = Number(id);
+    const club = await getClubById(clubId);
+    return getSiteMetadata(club?.name);
 };
 
 function formatDay(day: string | null) {
-  if (!day) {
-    return "Meeting day TBA";
-  };
+    if (!day) {
+        return "Meeting day TBA";
+    };
 
-  const normalized = day.toLowerCase();
-  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    const normalized = day.toLowerCase();
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 };
 
 function sentenceCase(value: string | null, fallback: string) {
-  if (!value) {
-    return fallback;
-  };
+    if (!value) {
+        return fallback;
+    };
 
-  const normalized = value.toLowerCase();
-  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    const normalized = value.toLowerCase();
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 };
 
 export default async function ClubDetailPage({ params }: ClubPageProps) {
-  const { id } = await params;
-  const clubId = Number(id);
+    const { id } = await params;
+    const clubId = Number(id);
 
-  if (Number.isNaN(clubId)) {
-    redirect("/clubs");
-  };
+    if (Number.isNaN(clubId)) {
+        redirect("/clubs");
+    };
 
-  const club = await getClubById(clubId);
+    const club = await getClubById(clubId);
 
-  if (!club) {
-    redirect("/clubs");
-  };
-  
-  const categories = (club.categories ?? []).filter((category) => category?.trim());
-  const hasCategories = categories.length > 0;
-  const primaryCategory = hasCategories ? categories[0] : null;
-  const meetingDay = formatDay(club.dayOfMeeting);
-  const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
-  const cadence = sentenceCase(club.repetition, "Schedule to be announced");
-  const classcode = club.classroomCode?.trim() || null;
-  const showClassroomCode = Boolean(classcode);
-  const showJoinSection = club.acceptingApplicants !== "Applications closed";
-  const classroomInviteUrl = club.applicationFormLink?.trim() || null;
-  const showClassroomInvite = Boolean(classroomInviteUrl);
+    if (!club) {
+        redirect("/clubs");
+    };
 
-  return (
-    <main>
-      <section className="hero">
-        <div className="hero_shape"></div>
-        <div className="heroInner">
-          <div className="hero_left">
-            <div className={styles_modules.breadcrumbs}>
-              <Link href="/">Home</Link>
-              <span>/</span>
-              <Link href="/clubs">Clubs</Link>
-              <span>/</span>
-              <span>{club.name}</span>
-            </div>
-            <div className={`hero_title ${styles_modules.hero_title}`}>
-              <h1>{club.name}</h1>
-            </div>
-            <div className="hero_subtitle">
-              <p>{club.preview_description}</p>
-            </div>
-            <div className={styles_modules.heroActions}>
-              {showJoinSection && (
-                <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
-                  Apply Now
-                </AnchorLink>
-              )}
-              <p><FontAwesomeIcon icon={faChevronDown} />Scroll to explore</p>
-            </div>
-            <div className={styles.heroStats}>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{club.categories.length || 1}</span>
-                <span className="stat-label">Categories</span>
-              </div>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{meetingDay.split(" ")[0]}</span>
-                <span className="stat-label">Meeting Day</span>
-              </div>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{club.roomNumber ?? "TBA"}</span>
-                <span className="stat-label">Room</span>
-              </div>
-              <div className={styles.heroStat}>
-                <span className="stat-num">{cadence}</span>
-                <span className="stat-label">Schedule</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    const categories = (club.categories ?? []).filter((category) => category?.trim());
+    const hasCategories = categories.length > 0;
+    const primaryCategory = hasCategories ? categories[0] : null;
+    const meetingDay = formatDay(club.dayOfMeeting);
+    const meetingTime = club.time ?? "Time TBA";
+    const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+    const cadence = sentenceCase(club.repetition, "Schedule to be announced");
+    const classcode = club.classroomCode?.trim() || null;
+    const showClassroomCode = Boolean(classcode);
+    const showJoinSection = club.acceptingApplicants !== "Applications closed";
+    const classroomInviteUrl = club.applicationFormLink?.trim() || null;
+    const showClassroomInvite = Boolean(classroomInviteUrl);
 
-      <div className={styles_modules.aboutWrap}>
-        <section className={styles_modules.section}>
-          <div className={styles_modules.aboutGrid}>
-            <div>
-              <span className={styles_modules.sectionEyebrow}>About Us</span>
-              <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
-              <div className={styles_modules.sectionBody}>{club.preview_description}</div>
-
-              <div className={styles_modules.badgeRow}>
-                <div className={styles_modules.badge}>
-                  <FontAwesomeIcon icon={faCalendarCheck} />
-                  {meetingDay} · {meetingTime}
-                </div>
-                <div className={styles_modules.badge}>
-                  <FontAwesomeIcon icon={faDoorOpen} />
-                  {roomLabel}
-                </div>
-                {hasCategories && (
-                  <div className={styles_modules.badge}>
-                    <FontAwesomeIcon icon={faLayerGroup} />
-                    {categories.join(" · ")}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles_modules.aboutVisual}>
-              <div className={styles_modules.aboutVisualCaption}>
-                <strong>{club.name}</strong>
-                {primaryCategory && <div>{primaryCategory}</div>}
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      <div className={`${styles_modules.divider} category_divider`}></div>
-      <div className={styles_modules.infoWrap}>
-        <section className={styles_modules.section}>
-          <div className={styles_modules.headlineRow}>
-            <FontAwesomeIcon icon={faInfoCircle} className={styles_modules.fas} />
-            <span>Club Information</span>
-          </div>
-
-          <div className={styles_modules.infoGrid}>
-            {hasCategories && (
-              <article className={styles_modules.infoTile}>
-                <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
-                <h3>Category</h3>
-                <p>{categories.join(", ")}</p>
-              </article>
-            )}
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
-              <h3>Meeting Day</h3>
-              <p>{meetingDay}</p>
-            </article>
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faClock} className={styles_modules.fas} />
-              <h3>Meeting Time</h3>
-              <p>{meetingTime}</p>
-            </article>
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faRepeat} className={styles_modules.fas}/>
-              <h3>Repetition</h3>
-              <p>{cadence}</p>
-            </article>
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas}/>
-              <h3>Room</h3>
-              <p>{roomLabel}</p>
-            </article>
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas}/>
-              <h3>Teacher Advisor</h3>
-              <p>{club.teacherAdvisor ?? "Not provided"}</p>
-            </article>
-          </div>
-        </section>
-      </div>
-
-      {showJoinSection && (
-        <section
-          className={styles_modules.applySection}
-          id="join-club"
-          aria-labelledby="join-club-heading"
-        >
-          <div className={styles_modules.applySectionShell}>
-            <div className={styles_modules.applySectionCopy}>
-              <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
-              <h2 id="join-club-heading">Join the Club</h2>
-              <p>
-                {club.joinInstructions}
-              </p>
-            </div>
-
-            <div className={styles_modules.applyPanel}>
-              <div className={styles_modules.applyPanelInner}>
-                <div className={styles_modules.applyInfoCard}>
-                  <div className={styles_modules.applyInfoRow}>
-                    <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
-                    <p>
-                      <strong>Meetings</strong>
-                      {meetingDay} at {meetingTime}
-                    </p>
-                  </div>
-                  <div className={styles_modules.applyInfoRow}>
-                    <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
-                    <p>
-                      <strong>Location</strong>
-                      {roomLabel}
-                    </p>
-                  </div>
-                </div>
-
-                {showClassroomCode && (
-                  <div className={styles_modules.applyCodeCard}>
-                    <span>Google Classroom Code</span>
-                    <div className={styles_modules.applyCodeRow}>
-                      <span className={styles_modules.applyCodeBadge}>{classcode}</span>
+    return (
+        <main>
+            <section className="hero">
+                <div className="hero_shape"></div>
+                <div className="heroInner">
+                    <div className="hero_left">
+                        <div className={styles_modules.breadcrumbs}>
+                            <Link href="/">Home</Link>
+                            <span>/</span>
+                            <Link href="/clubs">Clubs</Link>
+                            <span>/</span>
+                            <span>{club.name}</span>
+                        </div>
+                        <div className={`hero_title ${styles_modules.hero_title}`}>
+                            <h1>{club.name}</h1>
+                        </div>
+                        <div className="hero_subtitle">
+                            <p>{club.preview_description}</p>
+                        </div>
+                        <div className={styles_modules.heroActions}>
+                            {showJoinSection && (
+                                <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
+                                    Apply Now
+                                </AnchorLink>
+                            )}
+                            <p><FontAwesomeIcon icon={faChevronDown} />Scroll to explore</p>
+                        </div>
+                        <div className={styles.heroStats}>
+                            <div className={styles.heroStat}>
+                                <span className="stat-num">{club.categories.length || 1}</span>
+                                <span className="stat-label">Categories</span>
+                            </div>
+                            <div className={styles.heroStat}>
+                                <span className="stat-num">{meetingDay.split(" ")[0]}</span>
+                                <span className="stat-label">Meeting Day</span>
+                            </div>
+                            <div className={styles.heroStat}>
+                                <span className="stat-num">{club.roomNumber ?? "TBA"}</span>
+                                <span className="stat-label">Room</span>
+                            </div>
+                            <div className={styles.heroStat}>
+                                <span className="stat-num">{cadence}</span>
+                                <span className="stat-label">Schedule</span>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                )}
+                </div>
+            </section>
 
-                {showClassroomInvite && (
-                  <a
-                    className={styles_modules.applyInviteLink}
-                    href={classroomInviteUrl ?? undefined}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open Classroom Invite
-                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                  </a>
-                )}
-              </div>
+            <div className={styles_modules.aboutWrap}>
+                <section className={styles_modules.section}>
+                    <div className={styles_modules.aboutGrid}>
+                        <div>
+                            <span className={styles_modules.sectionEyebrow}>About Us</span>
+                            <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
+                            <div className={styles_modules.sectionBody}>{club.preview_description}</div>
+
+                            <div className={styles_modules.badgeRow}>
+                                <div className={styles_modules.badge}>
+                                    <FontAwesomeIcon icon={faCalendarCheck} />
+                                    {meetingDay} · {meetingTime}
+                                </div>
+                                <div className={styles_modules.badge}>
+                                    <FontAwesomeIcon icon={faDoorOpen} />
+                                    {roomLabel}
+                                </div>
+                                {hasCategories && (
+                                    <div className={styles_modules.badge}>
+                                        <FontAwesomeIcon icon={faLayerGroup} />
+                                        {categories.join(" · ")}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={styles_modules.aboutVisual}>
+                            <div className={styles_modules.aboutVisualCaption}>
+                                <strong>{club.name}</strong>
+                                {primaryCategory && <div>{primaryCategory}</div>}
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-          </div>
-        </section>
-      )}
-    </main>
-  );
+            <div className={`${styles_modules.divider} category_divider`}></div>
+            <div className={styles_modules.infoWrap}>
+                <section className={styles_modules.section}>
+                    <div className={styles_modules.headlineRow}>
+                        <FontAwesomeIcon icon={faInfoCircle} className={styles_modules.fas} />
+                        <span>Club Information</span>
+                    </div>
+
+                    <div className={styles_modules.infoGrid}>
+                        {hasCategories && (
+                            <article className={styles_modules.infoTile}>
+                                <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
+                                <h3>Category</h3>
+                                <p>{categories.join(", ")}</p>
+                            </article>
+                        )}
+                        <article className={styles_modules.infoTile}>
+                            <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
+                            <h3>Meeting Day</h3>
+                            <p>{meetingDay}</p>
+                        </article>
+                        <article className={styles_modules.infoTile}>
+                            <FontAwesomeIcon icon={faClock} className={styles_modules.fas} />
+                            <h3>Meeting Time</h3>
+                            <p>{meetingTime}</p>
+                        </article>
+                        <article className={styles_modules.infoTile}>
+                            <FontAwesomeIcon icon={faRepeat} className={styles_modules.fas} />
+                            <h3>Repetition</h3>
+                            <p>{cadence}</p>
+                        </article>
+                        <article className={styles_modules.infoTile}>
+                            <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
+                            <h3>Room</h3>
+                            <p>{roomLabel}</p>
+                        </article>
+                        <article className={styles_modules.infoTile}>
+                            <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas} />
+                            <h3>Teacher Advisor</h3>
+                            <p>{club.teacherAdvisor ?? "Not provided"}</p>
+                        </article>
+                    </div>
+                </section>
+            </div>
+
+            {showJoinSection && (
+                <section
+                    className={styles_modules.applySection}
+                    id="join-club"
+                    aria-labelledby="join-club-heading"
+                >
+                    <div className={styles_modules.applySectionShell}>
+                        <div className={styles_modules.applySectionCopy}>
+                            <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
+                            <h2 id="join-club-heading">Join the Club</h2>
+                            <p>
+                                {club.joinInstructions}
+                            </p>
+                        </div>
+
+                        <div className={styles_modules.applyPanel}>
+                            <div className={styles_modules.applyPanelInner}>
+                                <div className={styles_modules.applyInfoCard}>
+                                    <div className={styles_modules.applyInfoRow}>
+                                        <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
+                                        <p>
+                                            <strong>Meetings</strong>
+                                            {meetingDay} at {meetingTime}
+                                        </p>
+                                    </div>
+                                    <div className={styles_modules.applyInfoRow}>
+                                        <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
+                                        <p>
+                                            <strong>Location</strong>
+                                            {roomLabel}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {showClassroomCode && (
+                                    <div className={styles_modules.applyCodeCard}>
+                                        <span>Google Classroom Code</span>
+                                        <div className={styles_modules.applyCodeRow}>
+                                            <span className={styles_modules.applyCodeBadge}>{classcode}</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {showClassroomInvite && (
+                                    <a
+                                        className={styles_modules.applyInviteLink}
+                                        href={classroomInviteUrl ?? undefined}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        Open Classroom Invite
+                                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+        </main>
+    );
 };
