@@ -20,11 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const management = await getManagementSettings();
   const pageManagement = await getPageManagementSettings("HM");
-  const [mapsUrl] = SchoolLocation({management});
+  const [mapsUrl] = SchoolLocation({ management });
 
   return (
     <main>
-      
+
       <div className="hero">
         <TickerBar />
         <div className={styles.heroBadgeImage}>
@@ -35,7 +35,7 @@ export default async function Page() {
             height={230}
           />
         </div>
-        
+
         <div className={`hero_shape ${styles.hero_shape}`}></div>
         <div className="hero_inner">
           <div className="hero_left">
@@ -107,7 +107,7 @@ export default async function Page() {
       </div>
       <div className={styles.sectionWrap}>
         <div className={styles.map_section}>
-        <div className="section-divider"></div>
+          <div className="section-divider"></div>
           <div className={styles.sectionTitleRow}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.sectionTitleAccent}></span>
