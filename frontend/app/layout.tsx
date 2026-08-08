@@ -10,27 +10,27 @@ import RegisterSW from "@/app/_components/RegisterSW";
 config.autoAddCss = false;
 
 const FALLBACK_COLORS = {
-  primary: "#0b1c3a",
-  secondary: "#9ad9ea",
-  tertiary: "#db9820",
+    primary: "#0b1c3a",
+    secondary: "#9ad9ea",
+    tertiary: "#db9820",
 };
 
 const HEX_PATTERN = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
 
 function safeHex(value: string | null | undefined, fallback: string): string {
-  return value && HEX_PATTERN.test(value) ? value : fallback;
+    return value && HEX_PATTERN.test(value) ? value : fallback;
 }
 
 async function getThemeStyle(): Promise<string> {
-  const management = await getManagementSettings();
+    const management = await getManagementSettings();
 
-  const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
-  const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
-  const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
-  const primaryLight = darkenHex(primary, -20);
-  const tertiaryDark = darkenHex(tertiary, 20);
+    const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
+    const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
+    const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
+    const primaryLight = darkenHex(primary, -20);
+    const tertiaryDark = darkenHex(tertiary, 20);
 
-  return `:root {
+    return `:root {
     --school-primary: ${primary};
     --school-primary-light: ${primaryLight};
     --school-secondary: ${secondary};
@@ -68,18 +68,16 @@ const ibmPlexSans = IBM_Plex_Sans({
     variable: "--font-ibm-plex-sans",
     weight: ["400", "500", "600", "700"],
 });
-    
+
 const quicksand = Quicksand({
     subsets: ["latin"],
     variable: "--font-quicksand",
     weight: ["400", "500", "600", "700"],
 });
 
-export default async function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default async function RootLayout(
+    { children }: { children: React.ReactNode; }
+) {
     const themeStyle = await getThemeStyle();
 
     return (
