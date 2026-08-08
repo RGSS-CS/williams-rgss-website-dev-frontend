@@ -32,9 +32,9 @@ export default async function Page() {
           />
         </div>
         
-        <div className="hero_shape"></div>
+        <div className={`hero_shape ${styles.hero_shape}`}></div>
         <div className="hero_inner">
-          <div className={`hero_left ${styles.hero_left}`}>
+          <div className="hero_left">
             <div className={styles.heroTag}>
               <p>{management?.councilName} {getSchoolYear()}</p>
             </div>

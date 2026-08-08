@@ -58,7 +58,6 @@
 .heroBtnPrimary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   background: var(--school-tertiary);
   font-weight: 750;
   font-size: 1rem;
@@ -155,6 +154,26 @@
 @media (max-width: 768px) {
   .heroBadgeImage {
     display: none !important;
+  }
+  .hero_shape {
+    display: none !important;
+  }
+
+  .sectionWrap {
+    padding: 3rem 1.5rem 0;
+  }
+
+  .sectionTitleRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+  }
+
+  .heroBtnPrimary {
+    margin-bottom: 0.8rem;
   }
 }
 
