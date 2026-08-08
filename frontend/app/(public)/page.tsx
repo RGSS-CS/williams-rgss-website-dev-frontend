@@ -7,6 +7,8 @@ import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
 import TickerBar from "@/app/(public)/_components/TickerBar";
+import SchoolMap from "@/app/(public)/_components/SchoolMap";
+import SchoolLocation from "@/app/_utils/formatLocation";
 
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const management = await getManagementSettings();
   const pageManagement = await getPageManagementSettings("HM");
+  const [mapsUrl] = SchoolLocation({management});
+
   return (
     <main>
       
@@ -99,6 +103,20 @@ export default async function Page() {
           <div className={styles.cardContainer}>
             <div className="card_row">{/*Add section for school council*/}</div>
           </div>
+        </div>
+      </div>
+      <div className={styles.sectionWrap}>
+        <div className={styles.map_section}>
+        <div className="section-divider"></div>
+          <div className={styles.sectionTitleRow}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionTitleAccent}></span>
+              Find Us
+            </h2>
+          </div>
+          <a href={mapsUrl ? mapsUrl : "#"} target="_blank" rel="noopener noreferrer">
+            <SchoolMap locations={management?.schoolLocation ?? null} />
+          </a>
         </div>
       </div>
     </main >
