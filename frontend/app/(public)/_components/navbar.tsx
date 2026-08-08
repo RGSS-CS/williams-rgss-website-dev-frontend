@@ -3,8 +3,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TickerBar from "@/app/(public)/_components/TickerBar";
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
 //ICONS
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
@@ -80,7 +79,6 @@ export default function Navbar({ management }: NavbarProps) {
             </div>
           </div>
         </nav>
-        {pathname === "/" && <TickerBar />}
       </div>
       {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
       <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>

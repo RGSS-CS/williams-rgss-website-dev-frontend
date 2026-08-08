@@ -3,8 +3,11 @@ import { getSchoolYear } from "@/app/_utils/SchoolYear";
 import styles from "./home.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Metadata } from 'next';
-import { getManagementSettings } from "@/app/_lib/management";
+import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
+import { getPageManagementSettings } from "@/app/_lib/page-management";
+import TickerBar from "@/app/(public)/_components/TickerBar";
+
 //ICONS
 import { faCalendarAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,23 +17,33 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const management = await getManagementSettings();
-  //const clubs = await getDjangoAPI();
+  const pageManagement = await getPageManagementSettings("HM");
   return (
     <main>
+      
       <div className="hero">
-        <div className="hero_shape"></div>
+        <TickerBar />
+        <div className={styles.heroBadgeImage}>
+          <Image
+            src="/images/logo/wildcat-icon.png"
+            alt="Wildcat Icon"
+            width={260}
+            height={230}
+          />
+        </div>
+        
+        <div className={`hero_shape ${styles.hero_shape}`}></div>
         <div className="hero_inner">
           <div className="hero_left">
             <div className={styles.heroTag}>
               <p>{management?.councilName} {getSchoolYear()}</p>
             </div>
             <div className="hero_title">
-              <h1>{management?.schoolName}</h1>
-              <h2>{management?.councilName}</h2>
+              <h1>{pageManagement?.title}</h1>
+              <h2>{pageManagement?.subtitle}</h2>
             </div>
             <div className="hero_subtitle">
-              <p>Representing Student Voice.</p>
-              <p>Building Wildcat Spirit.</p>
+              <p>{pageManagement?.tagline}</p>
             </div>
 
             <div className={styles.heroButtons}>
@@ -51,17 +64,6 @@ export default async function Page() {
               </a>
             </div>
           </div>
-          <div className={styles.heroBadgeImage}>
-            <Image
-              src="/images/logo/wildcat-icon.png"
-              alt="Wildcat Icon"
-              width={230}
-              height={200}
-            />
-          </div>
-        </div>
-        <div className={styles.heroPhotoStrip}>
-          {/* Add photos here after database is set up */}
         </div>
       </div>
       <div className={styles.sectionWrap}>
@@ -98,7 +100,7 @@ export default async function Page() {
             <div className="card_row">{/*Add section for school council*/}</div>
           </div>
         </div>
-      </div>     
+      </div>
     </main >
   );
 }

@@ -1,5 +1,5 @@
 import { cacheLife } from "next/cache";
-import { getManagementSettings } from "../_lib/management";
+import { getManagementSettings } from "../_lib/site-management";
 
 export async function getSiteMetadata(pageTitle?: string) {
   "use cache";

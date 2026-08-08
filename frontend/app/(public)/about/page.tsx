@@ -2,30 +2,30 @@ import styles from './about.module.css';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { getSiteMetadata } from '@/app/_utils/metadata';
+import { getPageManagementSettings } from '@/app/_lib/page-management';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("About");
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+    const pageManagement = await getPageManagementSettings("AB");
     return (
         <main>
-            <section className="hero">
+            <div className="hero">
                 <div className="hero_shape"></div>
                 <div className="hero_inner">
                     <div className="hero_left">
                         <div className="hero_title">
-                            <h1>About</h1>
-                            <h2>STUCO</h2>
+                            <h1>{pageManagement?.title}</h1>
+                            <h2>{pageManagement?.subtitle}</h2>
                         </div>
                         <div className="hero_subtitle">
-                            <p>
-                                Learn more about the School Student Council.
-                            </p>
+                            <p>{pageManagement?.tagline}</p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
             <section className={styles.sectionWrap}>
                 <div className={styles.sectionContent}>

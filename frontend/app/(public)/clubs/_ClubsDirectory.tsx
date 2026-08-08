@@ -2,12 +2,13 @@
 import { JSX, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import type { Club } from "@/app/_lib/club";
-import type { Management } from "@/app/_lib/management";
+import type { Management } from "@/app/_lib/site-management";
+import type { PageManagement } from "@/app/_lib/page-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
-import ClubSearchInput from "./ClubSearchInput";
-import ClubsFilterControls, { type CategoryFilter } from "./ClubsFilterControls";
-import ResetFiltersButton from "./ResetFiltersButton";
+import ClubSearchInput from "./_components/ClubSearchInput";
+import ClubsFilterControls, { type CategoryFilter } from "./_components/ClubsFilterControls";
+import ResetFiltersButton from "./_components/ResetFiltersButton";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,7 @@ const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
 type ClubsDirectoryProps = {
   clubs: Club[];
   management: Management | null;
+  pageManagement: PageManagement | null;
 };
 
 function slugifyCategory(category: string) {
@@ -112,7 +114,7 @@ function ClubCard({ club }: { club: Club }) {
           <span className={styles.open_club_btn}>
             View Details
             <FontAwesomeIcon icon={faArrowRight} />
-            <span className={`${styles.club_tag} ${styles.open}`}></span>
+            <span className={styles.club_tag}><h6>{club.acceptingApplicants}</h6></span>
           </span>
         </div>
       </article>
@@ -120,7 +122,7 @@ function ClubCard({ club }: { club: Club }) {
   );
 }
 
-export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProps) {
+export default function ClubsDirectory({ clubs, management, pageManagement }: ClubsDirectoryProps) {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -254,12 +256,11 @@ export default function ClubsDirectory({ clubs, management }: ClubsDirectoryProp
           <div className="hero_inner">
             <div className="hero_left">
               <div className="hero_title">
-                <h1>Find your</h1>
-                <h2>club</h2>
+                <h1>{pageManagement?.title}</h1>
+                <h2>{pageManagement?.subtitle}</h2>
               </div>
               <div className="hero_subtitle">
-                <p>Explore every club, team, and organization at Dr. GW. Williams S.S.</p>
-                <p>Find where you belong</p>
+                <p>{pageManagement?.tagline}</p>
               </div>
               <div className="search_container">
                 <FontAwesomeIcon icon={faSearch} className="search_container_icon" />

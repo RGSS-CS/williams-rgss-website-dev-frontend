@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./(public)/_components/navbar";
 import Footer from "./(public)/_components/footer";
-import { getManagementSettings } from "./_lib/management";
+import { getManagementSettings } from "./_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import "@/app/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

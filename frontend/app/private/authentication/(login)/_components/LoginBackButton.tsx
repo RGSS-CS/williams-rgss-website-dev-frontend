@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "@/app/private/authentication/authentication.module.css";
+import styles from "@/app/private/authentication/styles.module.css";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //ICONS

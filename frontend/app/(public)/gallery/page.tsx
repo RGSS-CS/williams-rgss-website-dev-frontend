@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import GalleryFilterContent from "./_components/GalleryFilterControls";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getSiteMetadata } from "@/app/_utils/metadata";
+import { getPageManagementSettings } from "@/app/_lib/page-management";
 
 //ICONS
 import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faImages, faSearch, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Gallery");
 }
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+    const pageManagement = await getPageManagementSettings("GL");
     return (
         <main>
             <div className="hero">
@@ -22,11 +24,11 @@ export default function GalleryPage() {
                 <div className="hero_inner">
                     <div className="hero_left">
                         <div className="hero_title">
-                            <h1>Gallery</h1>
+                            <h1>{pageManagement?.title}</h1>
+                            <h2>{pageManagement?.subtitle}</h2>
                         </div>
                         <div className="hero_subtitle">
-                            <p>Where photos tell our story.</p>
-                            <p>Events, clubs, competitions, and everyday school moments.</p>
+                            <p>{pageManagement?.tagline}</p>
                         </div>
                         <div className="search_container">
                             <FontAwesomeIcon icon={faSearch} className="search_container_icon"/>
