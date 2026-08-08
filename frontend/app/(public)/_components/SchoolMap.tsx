@@ -162,9 +162,6 @@ export default function SchoolMap({
             : "Map showing the school location"
         }
       />
-      {validLocations.length === 1 && primaryAddress && (
-        <p className={styles.schoolMapAddress}>{primaryAddress}</p>
-      )}
       {validLocations.length > 1 && (
         <ul className={styles.schoolMapAddressList}>
           {validLocations.map((loc, i) => (
