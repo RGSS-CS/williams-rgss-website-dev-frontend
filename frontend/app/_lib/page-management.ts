@@ -22,11 +22,11 @@ export type SitesResponse = PageManagement[];
 function getPageManagementApiUrl() {
     const apiBaseUrl = process.env.API_URL || "http://backend:8000";
 
-    try {
-        return new URL("/management/page-settings/?format=json", apiBaseUrl).toString();
-    } catch {
-        return null;
-    };
+  try {
+    return new URL("/api/management/page-settings/?format=json", apiBaseUrl).toString();
+  } catch {
+    return null;
+  };
 };
 
 function normalizePageManagement(record: PageManagementApiRecord): PageManagement {

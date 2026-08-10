@@ -42,7 +42,7 @@ function getClubsApiUrl() {
     "http://backend:8000";
 
   try {
-    return new URL("/club/?format=json", apiBaseUrl).toString();
+    return new URL("/api/club/?format=json", apiBaseUrl).toString();
   } catch {
     return null;
   };

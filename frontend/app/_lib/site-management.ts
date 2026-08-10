@@ -59,11 +59,11 @@ function getSiteManagementApiUrl() {
         process.env.API_URL ||
         "http://backend:8000";
 
-    try {
-        return new URL("/management/site-settings/?format=json", apiBaseUrl).toString();
-    } catch {
-        return null;
-    };
+  try {
+    return new URL("/api/management/site-settings/?format=json", apiBaseUrl).toString();
+  } catch {
+    return null;
+  };
 };
 
 function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocation {
