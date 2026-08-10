@@ -42,7 +42,7 @@ export default async function SigninForm() {
                                 <b>Don&apos;t have an account yet?{" "}</b>
                             </p>
                             <h5>
-                                Sign up during the registration period. Contact the {management.councilName} for more information.
+                                Sign up during the registration period. See announcements for more details.
                             </h5>
                         </div>
                     </div>
