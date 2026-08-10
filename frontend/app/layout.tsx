@@ -5,6 +5,7 @@ import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import RegisterSW from "@/app/_components/RegisterSW";
+import { cacheTag } from "next/cache";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false;
@@ -22,6 +23,8 @@ function safeHex(value: string | null | undefined, fallback: string): string {
 }
 
 async function getThemeStyle(): Promise<string> {
+    'use cache';
+    cacheTag('management');
     const management = await getManagementSettings();
 
     const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
