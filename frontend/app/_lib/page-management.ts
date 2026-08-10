@@ -25,7 +25,7 @@ function getPageManagementApiUrl() {
     "http://backend:8000";
 
   try {
-    return new URL("/management/page-settings/?format=json", apiBaseUrl).toString();
+    return new URL("/api/management/page-settings/?format=json", apiBaseUrl).toString();
   } catch {
     return null;
   };
