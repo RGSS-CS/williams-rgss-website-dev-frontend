@@ -40,7 +40,7 @@ function getClubsApiUrl() {
   const apiBaseUrl =
     process.env.API_URL ||
     "http://backend:8000";
-    
+
   try {
     return new URL("/api/club/?format=json", apiBaseUrl).toString();
   } catch {

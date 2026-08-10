@@ -7,11 +7,9 @@ export const metadata: Metadata = {
     description: "Login or register to access your account.",
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout(
+    { children }: { children: React.ReactNode; }
+) {
     return (
         <main className={styles.page}>
             <div className={styles.content}>{children}</div>

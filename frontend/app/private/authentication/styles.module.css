@@ -8,7 +8,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 .footerWrap {
@@ -92,12 +92,10 @@
 
 .loading_block {
     display: block;
-    background: linear-gradient(
-        90deg,
-        var(--school-secondary, #eee) 25%,
-        var(--school-primary-light, #f5f5f5) 50%,
-        var(--school-secondary, #eee) 75%
-    );
+    background: linear-gradient(90deg,
+            var(--school-secondary, #eee) 25%,
+            var(--school-primary-light, #f5f5f5) 50%,
+            var(--school-secondary, #eee) 75%);
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
     border-radius: 8px;
@@ -107,6 +105,7 @@
     0% {
         background-position: 200% 0;
     }
+
     100% {
         background-position: -200% 0;
     }
@@ -221,7 +220,7 @@
     position: relative;
 }
 
-.input_wrap > .fas {
+.input_wrap>.fas {
     position: absolute;
     left: 13px;
     top: 50%;
@@ -249,9 +248,7 @@
 
 .input_wrap input:focus {
     border-color: var(--school-primary);
-    box-shadow: 0 0 0 3px rgba(111,28,58,0.08)
-
-
+    box-shadow: 0 0 0 3px rgba(111, 28, 58, 0.08)
 }
 
 .input_wrap .toggle_pw {
@@ -327,7 +324,7 @@
     margin-bottom: 0px;
 }
 
-.passwordLabel h4{
+.passwordLabel h4 {
     color: red;
     font-size: 0.75rem;
     margin-bottom: 10px;
