@@ -11,37 +11,27 @@ import type { Metadata } from "next";
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false;
 
-const FALLBACK_COLORS = {
-    primary: "#0b1c3a",
-    secondary: "#9ad9ea",
-    tertiary: "#db9820",
-};
-
-const HEX_PATTERN = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
-
-function safeHex(value: string | null | undefined, fallback: string): string {
-    return value && HEX_PATTERN.test(value) ? value : fallback;
-}
-
-async function getThemeStyle(): Promise<string> {
+async function getThemeVariables(): Promise<React.CSSProperties> {
     'use cache';
     cacheLife('minutes');
     cacheTag('management');
+
     const management = await getManagementSettings();
 
-    const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
-    const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
-    const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
+    const primary = management?.schoolPrimaryColor ?? "#000000";
+    const secondary = management?.schoolSecondaryColor ?? "#000000";
+    const tertiary = management?.schoolTertiaryColor ?? "#000000";
+
     const primaryLight = darkenHex(primary, -20);
     const tertiaryDark = darkenHex(tertiary, 20);
 
-    return `:root {
-    --school-primary: ${primary};
-    --school-primary-light: ${primaryLight};
-    --school-secondary: ${secondary};
-    --school-tertiary: ${tertiary};
-    --school-tertiary-dark: ${tertiaryDark};
-  }`;
+    return {
+        "--school-primary": primary,
+        "--school-primary-light": primaryLight,
+        "--school-secondary": secondary,
+        "--school-tertiary": tertiary,
+        "--school-tertiary-dark": tertiaryDark,
+    } as React.CSSProperties;
 };
 
 const montserrat = Montserrat({
@@ -96,15 +86,14 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout(
     { children }: { children: React.ReactNode; }
 ) {
-    const themeStyle = await getThemeStyle();
+    const themeStyle = await getThemeVariables();
 
     return (
         <html
             lang="en"
             className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
-        >
+            style={themeStyle}>
             <head>
-                <style id="school-theme" dangerouslySetInnerHTML={{ __html: themeStyle }} />
             </head>
             <body>
                 <RegisterSW />
