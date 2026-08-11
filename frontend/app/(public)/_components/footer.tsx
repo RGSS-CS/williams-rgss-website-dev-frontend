@@ -57,7 +57,7 @@ export default function Footer({ management }: ManagementProps) {
                                 </a>
                             </>
                         ) : (
-                            <a>Address unavailable</a>
+                            <></>
                         )}
                     </div>
 
