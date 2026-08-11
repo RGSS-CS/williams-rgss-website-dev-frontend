@@ -6,6 +6,7 @@ import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import RegisterSW from "@/app/_components/RegisterSW";
 import { cacheTag } from "next/cache";
+import type { Metadata } from "next";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false;
@@ -77,6 +78,18 @@ const quicksand = Quicksand({
     variable: "--font-quicksand",
     weight: ["400", "500", "600", "700"],
 });
+
+export async function generateMetadata(): Promise<Metadata> {
+    'use cache';
+    cacheTag('management');
+    const management = await getManagementSettings();
+ 
+    return {
+        icons: management?.croppedFavicon
+            ? { icon: management.croppedFavicon }
+            : undefined,
+    };
+}
 
 export default async function RootLayout(
     { children }: { children: React.ReactNode; }
