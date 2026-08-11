@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    revalidateTag(tag);
+    revalidateTag(tag, {expire: 0});
 
     return NextResponse.json({ revalidated: true, tag, now: Date.now() });
 }
