@@ -5,7 +5,7 @@ import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import RegisterSW from "@/app/_components/RegisterSW";
-import { cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 import type { Metadata } from "next";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
@@ -25,6 +25,7 @@ function safeHex(value: string | null | undefined, fallback: string): string {
 
 async function getThemeStyle(): Promise<string> {
     'use cache';
+    cacheLife('minutes');
     cacheTag('management');
     const management = await getManagementSettings();
 
@@ -80,7 +81,8 @@ const quicksand = Quicksand({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-    'use cache';
+    'use cache: remote';
+    cacheLife('minutes');
     cacheTag('management');
     const management = await getManagementSettings();
  

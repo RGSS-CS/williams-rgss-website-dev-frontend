@@ -1,9 +1,10 @@
-import { cacheLife } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 import { getManagementSettings } from "../_lib/site-management";
 
 export async function getSiteMetadata(pageTitle?: string) {
     "use cache";
-    cacheLife("hours");
+    cacheLife("minutes");
+    cacheTag('management');
 
     const management = await getManagementSettings();
     const schoolName = management?.schoolName;
