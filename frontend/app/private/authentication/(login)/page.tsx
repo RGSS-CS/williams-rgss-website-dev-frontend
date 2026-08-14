@@ -2,6 +2,7 @@ import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/styles.module.css";
 import LoginBackButton from "./_components/LoginBackButton";
 import { getManagementSettings } from "@/app/_lib/site-management";
+import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +32,7 @@ export default async function SigninForm() {
                     <StudentNumberField />
 
                     <PasswordField />
-                    <Capcha/>
+                    {isCaptchaEnabledFor(management, "LOGIN") && <Capcha />}
 
                     <button className={styles.btn_login} type="submit" id="loginBtn">
                         <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />

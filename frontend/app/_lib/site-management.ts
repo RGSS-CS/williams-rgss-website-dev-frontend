@@ -18,6 +18,8 @@ export type SchoolLocation = {
     objectId: number;
 };
 
+export type CaptchaSurface = "LOGIN" | "REGISTER" | "ENTERING";
+
 export type ManagementApiRecord = {
     maintainance_mode: boolean;
     school_name: string;
@@ -34,6 +36,7 @@ export type ManagementApiRecord = {
     school_primary_color: string;
     school_secondary_color: string;
     school_tertiary_color: string;
+    captcha: CaptchaSurface[];
 };
 
 export type Management = {
@@ -52,6 +55,7 @@ export type Management = {
     schoolPrimaryColor: string | null;
     schoolSecondaryColor: string | null;
     schoolTertiaryColor: string | null;
+    captcha: CaptchaSurface[];
 };
 
 function getSiteManagementApiUrl() {
@@ -120,6 +124,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolPrimaryColor: record.school_primary_color ?? null,
         schoolSecondaryColor: record.school_secondary_color ?? null,
         schoolTertiaryColor: record.school_tertiary_color ?? null,
+        captcha: record.captcha ?? [],
     };
 };
 

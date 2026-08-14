@@ -9,6 +9,8 @@ import PasswordField from './_components/PasswordField';
 import ConfirmPasswordField from './_components/ConfirmPasswordField';
 import Image from 'next/image';
 import { getManagementSettings } from '@/app/_lib/site-management';
+import { isCaptchaEnabledFor } from '@/app/_utils/checkCaptchaEnabled';
+import Capcha from '@/app/_components/captcha';
 
 export default async function SignupForm() {
     const management = await getManagementSettings();
@@ -38,6 +40,7 @@ export default async function SignupForm() {
                         <StudentNumberField />
                         <PasswordField />
                         <ConfirmPasswordField />
+                        {isCaptchaEnabledFor(management, "REGISTER") && <Capcha />}
 
                         <button className={styles.btn_login} type="submit" id="loginBtn">
                             <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
