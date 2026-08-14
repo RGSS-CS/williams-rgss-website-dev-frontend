@@ -28,6 +28,7 @@ export type ManagementApiRecord = {
     school_phone: string;
     social_media: unknown[];
     cropped_favicon: string;
+    cropped_site_image: string;
     stuco_image: string;
     about_stuco: string;
     about_school: string;
@@ -47,6 +48,7 @@ export type Management = {
     schoolPhone: string | null;
     socialMedia: unknown[] | null;
     croppedFavicon: string | null;
+    croppedSiteImage: string | null;
     stucoImage: string | null;
     aboutStuco: string | null;
     aboutSchool: string | null;
@@ -116,6 +118,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolPhone: formatPhoneNumber(record.school_phone),
         socialMedia: record.social_media ?? null,
         croppedFavicon: record.cropped_favicon ?? null,
+        croppedSiteImage: record.cropped_site_image ?? null,
         stucoImage: record.stuco_image ?? null,
         aboutStuco: record.about_stuco ?? null,
         aboutSchool: record.about_school ?? null,
