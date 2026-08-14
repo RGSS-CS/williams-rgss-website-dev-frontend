@@ -2,12 +2,13 @@ import { signin } from "@/app/private/authentication/_methods/auth";
 import styles from "@/app/private/authentication/styles.module.css";
 import LoginBackButton from "./_components/LoginBackButton";
 import { getManagementSettings } from "@/app/_lib/site-management";
+import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PasswordField from "@/app/private/authentication/(login)/_components/PasswordField";
 import StudentNumberField from "@/app/private/authentication/(login)/_components/StudentNumberField";
-
+import Capcha from "../../../_components/captcha";
 //ICONS
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,34 +21,33 @@ export default async function SigninForm() {
     if (!management) return null;
 
     return (
-        <>
-            <div className={styles.body}>
-                <form action={signin}>
-                    <div className={styles.login_card}>
-                        <LoginBackButton />
-                        <div className={styles.card_header}>
-                            <h1>Welcome {management.schoolMascot}</h1>
-                            <p>Sign in to access the {management.councilName} Dashboard</p>
-                        </div>
-                        <StudentNumberField />
-
-                        <PasswordField />
-
-                        <button className={styles.btn_login} type="submit" id="loginBtn">
-                            <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
-                            Continue
-                        </button>
-                        <div className={styles.signUp}>
-                            <p>
-                                <b>Don&apos;t have an account yet?{" "}</b>
-                            </p>
-                            <h5>
-                                Sign up during the registration period. See announcements for more details.
-                            </h5>
-                        </div>
+        <div className={styles.body}>
+            <form action={signin}>
+                <div className={styles.login_card}>
+                    <LoginBackButton />
+                    <div className={styles.card_header}>
+                        <h1>Welcome {management.schoolMascot}</h1>
+                        <p>Sign in to access the {management.councilName} Dashboard</p>
                     </div>
-                </form>
-            </div>
-        </>
+                    <StudentNumberField />
+
+                    <PasswordField />
+                    {isCaptchaEnabledFor(management, "LOGIN") && <Capcha />}
+
+                    <button className={styles.btn_login} type="submit" id="loginBtn">
+                        <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
+                        Continue
+                    </button>
+                    <div className={styles.signUp}>
+                        <p>
+                            <b>Don&apos;t have an account yet?{" "}</b>
+                        </p>
+                        <h5>
+                            Sign up during the registration period. See announcements for more details.
+                        </h5>
+                    </div>
+                </div>
+            </form>
+        </div>
     );
 }

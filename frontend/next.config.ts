@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
     output: 'standalone',
     cacheComponents: true,
     agentRules: false,
+    images: {
+        remotePatterns: [new URL('http://localhost:8000/media/**')],
+        dangerouslyAllowLocalIP: true //TODO: REMOVE LATER
+    },
 };
 
 export default nextConfig;

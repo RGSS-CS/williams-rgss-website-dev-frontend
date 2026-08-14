@@ -18,6 +18,8 @@ export type SchoolLocation = {
     objectId: number;
 };
 
+export type CaptchaSurface = "LOGIN" | "REGISTER" | "ENTERING";
+
 export type ManagementApiRecord = {
     maintainance_mode: boolean;
     school_name: string;
@@ -26,6 +28,7 @@ export type ManagementApiRecord = {
     school_phone: string;
     social_media: unknown[];
     cropped_favicon: string;
+    cropped_site_image: string;
     stuco_image: string;
     about_stuco: string;
     about_school: string;
@@ -34,6 +37,7 @@ export type ManagementApiRecord = {
     school_primary_color: string;
     school_secondary_color: string;
     school_tertiary_color: string;
+    captcha: CaptchaSurface[];
 };
 
 export type Management = {
@@ -44,6 +48,7 @@ export type Management = {
     schoolPhone: string | null;
     socialMedia: unknown[] | null;
     croppedFavicon: string | null;
+    croppedSiteImage: string | null;
     stucoImage: string | null;
     aboutStuco: string | null;
     aboutSchool: string | null;
@@ -52,6 +57,7 @@ export type Management = {
     schoolPrimaryColor: string | null;
     schoolSecondaryColor: string | null;
     schoolTertiaryColor: string | null;
+    captcha: CaptchaSurface[];
 };
 
 function getSiteManagementApiUrl() {
@@ -112,6 +118,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolPhone: formatPhoneNumber(record.school_phone),
         socialMedia: record.social_media ?? null,
         croppedFavicon: record.cropped_favicon ?? null,
+        croppedSiteImage: record.cropped_site_image ?? null,
         stucoImage: record.stuco_image ?? null,
         aboutStuco: record.about_stuco ?? null,
         aboutSchool: record.about_school ?? null,
@@ -120,6 +127,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolPrimaryColor: record.school_primary_color ?? null,
         schoolSecondaryColor: record.school_secondary_color ?? null,
         schoolTertiaryColor: record.school_tertiary_color ?? null,
+        captcha: record.captcha ?? [],
     };
 };
 
