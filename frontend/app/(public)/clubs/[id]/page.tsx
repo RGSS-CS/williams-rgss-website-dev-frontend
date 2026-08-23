@@ -7,6 +7,7 @@ import AnchorLink from "@/app/(public)/_components/AnchorLink";
 import { Metadata } from "next";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ClubSlideshow from "./_components/ImageSlideShow";
 //ICONS
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -143,12 +144,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               </div>
             </div>
 
-            <div className={styles_modules.aboutVisual}>
-              <div className={styles_modules.aboutVisualCaption}>
-                <strong>{club.name}</strong>
-                {primaryCategory && <div>{primaryCategory}</div>}
-              </div>
-            </div>
+            <ClubSlideshow gallery={club.gallery} />
           </div>
         </section>
       </div>

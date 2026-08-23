@@ -1,5 +1,21 @@
 "use server";
 
+export type Photo = {
+  id: number;
+  title: string;
+  image: string;
+  caption: string;
+  date_added: string;
+};
+
+export type Gallery = {
+  id: number;
+  title: string;
+  description: string;
+  date_added: string;
+  photos: Photo[];
+};
+
 export type ClubApiRecord = {
   id: number;
   name: string;
@@ -16,6 +32,7 @@ export type ClubApiRecord = {
   application_form_link: string;
   accepting_applicants: string;
   join_instructions: string | null;
+  gallery: Gallery;
 };
 
 export type Club = {
@@ -34,6 +51,7 @@ export type Club = {
   applicationFormLink: string;
   acceptingApplicants: string;
   joinInstructions: string | null;
+  gallery: Gallery;
 };
 
 function getClubsApiUrl() {
@@ -102,6 +120,7 @@ function normalizeClub(record: ClubApiRecord): Club {
     applicationFormLink: record.application_form_link,
     acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
     joinInstructions: record.join_instructions,
+    gallery: record.gallery,
   };
 };
 
