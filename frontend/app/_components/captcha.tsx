@@ -4,10 +4,9 @@ import { CAPTCHAURL } from "../_lib/captcha";
 
 export default function Capcha() {
   return (
-    <div suppressHydrationWarning>
+    <div>
       <cap-widget
         data-cap-api-endpoint={CAPTCHAURL}
-        suppressHydrationWarning
       />
     </div>
   );
