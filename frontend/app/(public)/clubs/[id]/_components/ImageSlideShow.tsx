@@ -39,31 +39,31 @@ export default function ClubSlideshow({
     return (
         <div className={styles.IMG_Container}>
             <div className={styles.IMG_Container_Main}>
-            <Image
-                key={photo.id}
-                src={photo.image}
-                alt={photo.caption || photo.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 800px"
-                className={styles.IMG}
-                priority={current === 0}
-            />
+                <Image
+                    key={photo.id}
+                    src={photo.image}
+                    alt={photo.caption || photo.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className={styles.IMG}
+                    priority={current === 0}
+                />
 
-            {photos.length > 1 && (
-                <>
-                    <button onClick={previous} aria-label="Previous Image" className={`${styles.arrow} ${styles.arrowLeft}`}>
-                        <FontAwesomeIcon icon={faArrowLeftLong}  />
-                    </button>
+                {photos.length > 1 && (
+                    <>
+                        <button onClick={previous} aria-label="Previous Image" className={`${styles.arrow} ${styles.arrowLeft}`}>
+                            <FontAwesomeIcon icon={faArrowLeftLong} />
+                        </button>
 
-                    <button onClick={next} aria-label="Next Image"className={`${styles.arrow} ${styles.arrowRight}`}>
-                        <FontAwesomeIcon icon={faArrowRightLong} />
-                    </button>
-                </>
-            )}
+                        <button onClick={next} aria-label="Next Image" className={`${styles.arrow} ${styles.arrowRight}`}>
+                            <FontAwesomeIcon icon={faArrowRightLong} />
+                        </button>
+                    </>
+                )}
 
-            <div className={styles.counter}>
-                {current + 1} / {photos.length}
-            </div>
+                <div className={styles.counter}>
+                    {current + 1} / {photos.length}
+                </div>
             </div>
 
             {photos.length > 1 && (
@@ -73,8 +73,8 @@ export default function ClubSlideshow({
                             key={photo.id}
                             type="button"
                             className={`${styles.dot}${index === current
-                                    ? `${styles.dots_active}`
-                                    : ""
+                                ? `${styles.dots_active}`
+                                : ""
                                 }`}
                             onClick={() => setCurrent(index)}
                             aria-label={`Show image ${index + 1}`}
