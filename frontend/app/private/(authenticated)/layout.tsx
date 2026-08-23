@@ -6,21 +6,21 @@ import { Suspense } from 'react';
 import { getManagementSettings } from '@/app/_lib/site-management';
 
 async function NavbarSlot() {
-  const management = await getManagementSettings();
-  return <ExecSidebar management={management} />;
+    const management = await getManagementSettings();
+    return <ExecSidebar management={management} />;
 }
- 
+
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode
 }) {
-  return (
-    <>
-      <Suspense>
-        <NavbarSlot />
-      </Suspense>
-      {children}
-    </>
-  );
+    return (
+        <>
+            <Suspense>
+                <NavbarSlot />
+            </Suspense>
+            {children}
+        </>
+    );
 }
