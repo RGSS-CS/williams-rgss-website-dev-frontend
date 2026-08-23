@@ -134,7 +134,7 @@
     font-weight: 800;
 }
 
-.IMG_Container{
+.IMG_Container {
     width: 100%;
     padding: 20px;
     background: var(--school-primary);
@@ -211,24 +211,24 @@
 }
 
 .dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 14px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--school-tertiary);
-  cursor: pointer;
-  transition:
-    width 0.2s ease,
-    background 0.2s ease;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--school-tertiary);
+    cursor: pointer;
+    transition:
+        width 0.2s ease,
+        background 0.2s ease;
 }
 
 .dot:hover {
@@ -236,11 +236,11 @@
 }
 
 .caption {
-  margin: 12px 0 0;
-  color: var(--white);
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
+    margin: 12px 0 0;
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .headlineRow {
@@ -750,5 +750,28 @@
         justify-content: center;
     }
 
+    .IMG_Container_Main {
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+    }
 
+    .arrow {
+        width: 36px;
+        height: 36px;
+
+        font-size: 28px;
+    }
+
+    .arrowLeft {
+        left: 10px;
+    }
+
+    .arrowRuight {
+        right: 10px;
+    }
+
+    .counter {
+        right: 10px;
+        bottom: 10px;
+    }
 }
