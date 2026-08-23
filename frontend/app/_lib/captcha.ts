@@ -1,3 +1,1 @@
-"use server";
-
-export const CAPTCHA_URL: string | undefined = process.env.NEXT_PUBLIC_CAPTCHA_URL;
+export const CAPTCHAURL = process.env.NEXT_PUBLIC_CAPTCHA_URL;
