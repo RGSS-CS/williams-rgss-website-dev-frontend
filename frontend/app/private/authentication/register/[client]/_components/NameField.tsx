@@ -4,7 +4,14 @@ import styles from '@/app/private/authentication/styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-export default function NameField() {
+type NameFieldProps = {
+    firstName: string;
+    lastName: string;
+    onFirstNameChange: (value: string) => void;
+    onLastNameChange: (value: string) => void;
+};
+
+export default function NameField({ firstName, lastName, onFirstNameChange, onLastNameChange }: NameFieldProps) {
     return (
         <>
             <div className={styles.form_group}>
@@ -17,6 +24,8 @@ export default function NameField() {
                         type="text"
                         placeholder="First Name"
                         autoComplete="given-name"
+                        value={firstName}
+                        onChange={(event) => onFirstNameChange(event.currentTarget.value)}
                     />
                 </div>
             </div>
@@ -29,6 +38,8 @@ export default function NameField() {
                         type="text"
                         placeholder="Last Name"
                         autoComplete="family-name"
+                        value={lastName}
+                        onChange={(event) => onLastNameChange(event.currentTarget.value)}
                     />
                 </div>
             </div>

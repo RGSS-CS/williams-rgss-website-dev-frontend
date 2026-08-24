@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import styles from "@/app/private/authentication/styles.module.css";
 import { signup, SignupState } from "@/app/private/authentication/_methods/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +20,15 @@ type SignupFormClientProps = {
 export default function SignupFormClient({ showCaptcha }: SignupFormClientProps) {
     const [state, formAction, isPending] = useActionState(signup, initialState);
 
+    // Kept in component state (rather than left as uncontrolled inputs) so
+    // that submitted values survive a validation error round-trip instead
+    // of being wiped when the form re-renders with the returned error.
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [studentNumber, setStudentNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
     return (
         <form action={formAction}>
             <div className={styles.login_card}>
@@ -34,10 +43,15 @@ export default function SignupFormClient({ showCaptcha }: SignupFormClientProps)
                     </div>
                 )}
 
-                <NameField />
-                <StudentNumberField />
-                <PasswordField />
-                <ConfirmPasswordField />
+                <NameField
+                    firstName={firstName}
+                    lastName={lastName}
+                    onFirstNameChange={setFirstName}
+                    onLastNameChange={setLastName}
+                />
+                <StudentNumberField value={studentNumber} onValueChange={setStudentNumber} />
+                <PasswordField value={password} onValueChange={setPassword} />
+                <ConfirmPasswordField value={confirmPassword} onValueChange={setConfirmPassword} />
                 {showCaptcha && <Capcha />}
 
                 <button
