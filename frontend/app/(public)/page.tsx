@@ -28,6 +28,7 @@ export default async function Page() {
             <div className="hero">
                 <TickerBar />
                 <div className={styles.heroBadgeImage}>
+                    {management?.croppedSiteImage &&(
                     <Image
                         src={management?.croppedSiteImage}
                         alt="Wildcat Icon"
@@ -35,6 +36,7 @@ export default async function Page() {
                         height={230}
                         loading="eager"
                     />
+                    )}
                 </div>
 
                 <div className={`hero_shape ${styles.hero_shape}`}></div>
