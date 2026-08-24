@@ -4,7 +4,12 @@ import styles from '@/app/private/authentication/styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-export default function StudentNumberField() {
+type StudentNumberFieldProps = {
+    value: string;
+    onValueChange: (value: string) => void;
+};
+
+export default function StudentNumberField({ value, onValueChange }: StudentNumberFieldProps) {
     return (
         <div className={styles.form_group}>
             <label htmlFor="student_number">Student Number</label>
@@ -17,10 +22,8 @@ export default function StudentNumberField() {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     placeholder="Student Number"
-                    onInput={(event) => {
-                        const input = event.currentTarget;
-                        input.value = input.value.replace(/\D/g, '');
-                    }}
+                    value={value}
+                    onChange={(event) => onValueChange(event.currentTarget.value.replace(/\D/g, ''))}
                 />
             </div>
         </div>

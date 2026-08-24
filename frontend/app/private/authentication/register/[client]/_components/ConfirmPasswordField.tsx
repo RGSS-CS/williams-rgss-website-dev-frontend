@@ -5,7 +5,12 @@ import styles from '@/app/private/authentication/styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-export default function ConfirmPasswordField() {
+type ConfirmPasswordFieldProps = {
+    value: string;
+    onValueChange: (value: string) => void;
+};
+
+export default function ConfirmPasswordField({ value, onValueChange }: ConfirmPasswordFieldProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
@@ -24,6 +29,8 @@ export default function ConfirmPasswordField() {
                         type={isVisible ? 'text' : 'password'}
                         placeholder="Confirm Password"
                         autoComplete="current-password"
+                        value={value}
+                        onChange={(event) => onValueChange(event.currentTarget.value)}
                     />
                     <button
                         className={styles.toggle_pw}
