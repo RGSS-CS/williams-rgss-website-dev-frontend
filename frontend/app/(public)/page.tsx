@@ -29,10 +29,11 @@ export default async function Page() {
                 <TickerBar />
                 <div className={styles.heroBadgeImage}>
                     <Image
-                        src="/images/logo/wildcat-icon.png"
+                        src={management?.croppedSiteImage}
                         alt="Wildcat Icon"
                         width={260}
                         height={230}
+                        loading="eager"
                     />
                 </div>
 
