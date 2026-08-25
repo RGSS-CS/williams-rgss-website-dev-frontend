@@ -39,15 +39,21 @@ export default function ClubSlideshow({
     return (
         <div className={styles.IMG_Container}>
             <div className={styles.IMG_Container_Main}>
-                <Image
-                    key={photo.id}
-                    src={photo.image}
-                    alt={photo.caption || photo.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 800px"
-                    className={styles.IMG}
-                    priority={current === 0}
-                />
+                {photos.map((p, index) => (
+                    <Image
+                        key={p.id}
+                        src={p.image}
+                        alt={p.caption || p.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 800px"
+                        className={styles.IMG}
+                        style={{
+                            opacity: index === current ? 1 : 0,
+                            pointerEvents: index === current ? "auto" : "none",
+                        }}
+                        priority
+                    />
+                ))}
 
                 {photos.length > 1 && (
                     <>
