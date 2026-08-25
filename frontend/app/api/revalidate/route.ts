@@ -3,8 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Tags the Django backend is allowed to invalidate. Keep this in sync with
 // every cacheTag(...) call in app/_lib/*.ts and app/_utils/*.ts.
-// Currently only "management" is used anywhere in the app.
-const VALID_TAGS = new Set(["management"]); 
+const VALID_TAGS = new Set(["management", "clubs"]); 
 
 export async function POST(request: NextRequest) {
     const secret = request.headers.get("x-revalidate-secret");

@@ -1,5 +1,7 @@
 "use server";
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export type Photo = {
   id: number;
   title: string;
@@ -125,7 +127,9 @@ function normalizeClub(record: ClubApiRecord): Club {
 };
 
 export async function getClubs(): Promise<Club[]> {
-  'use cache: private';
+  'use cache: remote';
+  cacheLife('minutes');
+  cacheTag('clubs');
   const url = getClubsApiUrl();
   if (!url) {
     return [];
