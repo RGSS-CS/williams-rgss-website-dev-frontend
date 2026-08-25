@@ -28,12 +28,15 @@ export default async function Page() {
             <div className="hero">
                 <TickerBar />
                 <div className={styles.heroBadgeImage}>
+                    {management?.croppedSiteImage &&(
                     <Image
-                        src="/images/logo/wildcat-icon.png"
+                        src={management?.croppedSiteImage}
                         alt="Wildcat Icon"
                         width={260}
                         height={230}
+                        loading="eager"
                     />
+                    )}
                 </div>
 
                 <div className={`hero_shape ${styles.hero_shape}`}></div>

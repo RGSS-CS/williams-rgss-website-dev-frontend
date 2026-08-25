@@ -55,7 +55,7 @@ export default function Navbar({ management }: NavbarProps) {
                             </button>
                             <a href="/" className={styles.brand_link}>
                                 <div className={styles.logo}>
-                                    {management?.croppedSiteImage && (<Image src={management.croppedSiteImage} alt="School Logo" width={80} height={80} loading="eager" priority="high"/>)}
+                                    {management?.croppedSiteImage && (<Image src={management.croppedSiteImage} alt="School Logo" width={80} height={80} loading="eager" priority={true}/>)}
                                 </div>
                                 <div className={styles.brand_copy}>
                                     <span className={styles.school_title}>{management?.schoolName}</span>

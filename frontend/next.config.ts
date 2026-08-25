@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     agentRules: false,
     images: {
-        remotePatterns: [new URL('http://localhost:8000/media/**')],
+        remotePatterns: [new URL('http://localhost:8000/media/**')], //Add env for backend 
         dangerouslyAllowLocalIP: true //TODO: REMOVE LATER
     },
 };
