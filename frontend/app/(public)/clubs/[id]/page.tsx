@@ -193,7 +193,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
         </section>
       </div>
 
-      {showJoinSection && (
+      {showJoinSection && club.joinInstructions ? (
         <section
           className={styles_modules.applySection}
           id="join-club"
@@ -251,6 +251,8 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
             </div>
           </div>
         </section>
+      ) : (
+        <span className={styles_modules.loginWarn}><h3><strong>You must be logged in to view the club's joining information</strong></h3></span>
       )}
     </main>
   );
