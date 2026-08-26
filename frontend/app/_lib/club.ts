@@ -50,8 +50,8 @@ export type Club = {
   roomNumber: string | null;
   classroomCode: string | null;
   teacherAdvisor: string | null;
-  applicationFormLink: string;
-  acceptingApplicants: string;
+  applicationFormLink: string | null;
+  acceptingApplicants: string | null;
   joinInstructions: string | null;
   gallery: Gallery;
 };

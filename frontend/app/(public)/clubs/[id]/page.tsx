@@ -144,7 +144,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               </div>
             </div>
 
-            <ClubSlideshow gallery={club.gallery} />
+            <ClubSlideshow gallery={club.gallery ?? []} />
           </div>
         </section>
       </div>
