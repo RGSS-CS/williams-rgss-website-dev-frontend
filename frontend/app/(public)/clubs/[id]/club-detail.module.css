@@ -498,6 +498,9 @@
 .loginWarn {
     text-align: center;
     font-size: 20px;
+    background: var(--school-primary);
+    height: 40%;
+    align-content: center;
 }
 
 .loginWarn h3 {
@@ -505,6 +508,7 @@
     border-left: none;
     border-right: none;
     padding: 10px;
+    color: var(--school-tertiary);
 }
 
 .loadingBreadcrumbs {
