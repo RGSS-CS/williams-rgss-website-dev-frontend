@@ -501,6 +501,7 @@
     background: var(--school-primary);
     height: 40%;
     align-content: center;
+    cursor: pointer;
 }
 
 .loginWarn h3 {
