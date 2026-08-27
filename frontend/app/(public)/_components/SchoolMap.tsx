@@ -18,11 +18,7 @@ type SchoolMapProps = {
 
 const DEFAULT_ZOOM = 16;
 
-export default function SchoolMap({
-  locations,
-  zoom = DEFAULT_ZOOM,
-  className,
-}: SchoolMapProps) {
+export default function SchoolMap({ locations, zoom = DEFAULT_ZOOM, className }: SchoolMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const markersRef = useRef<LeafletMarker[]>([]);
@@ -87,14 +83,11 @@ export default function SchoolMap({
       markersRef.current = [];
 
       // Street layer: standard OpenStreetMap tiles.
-      const streetLayer = L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19,
-        }
-      );
+      const streetLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      });
 
       // Satellite layer: Esri World Imagery. Leaflet has no built-in tile
       // source of its own — this is a separate free provider that doesn't
@@ -111,11 +104,10 @@ export default function SchoolMap({
       if (!layersControlRef.current) {
         satelliteLayer.addTo(map);
         layersControlRef.current = L.control
-          .layers(
-            { Street: streetLayer, Satellite: satelliteLayer },
-            undefined,
-            { position: "topright", collapsed: true }
-          )
+          .layers({ Street: streetLayer, Satellite: satelliteLayer }, undefined, {
+            position: "topright",
+            collapsed: true,
+          })
           .addTo(map);
       }
 
@@ -184,7 +176,7 @@ export default function SchoolMap({
       <div
         ref={containerRef}
         className={className ?? styles.schoolMap}
-        role="img"
+        role='img'
         aria-label={
           primaryAddress
             ? `Map showing the school location at ${primaryAddress}`
@@ -194,9 +186,7 @@ export default function SchoolMap({
       {validLocations.length > 1 && (
         <ul className={styles.schoolMapAddressList}>
           {validLocations.map((loc, i) => (
-            <li key={`${loc.locationLat}-${loc.locationLon}-${i}`}>
-              {loc.location}
-            </li>
+            <li key={`${loc.locationLat}-${loc.locationLon}-${i}`}>{loc.location}</li>
           ))}
         </ul>
       )}
