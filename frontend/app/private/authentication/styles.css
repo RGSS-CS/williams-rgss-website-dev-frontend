@@ -81,6 +81,10 @@
   color: var(--school-primary-light);
 }
 
+.authSubmitIcon {
+  color: var(--school-secondary);
+}
+
 .authInputWrap > .authIcon {
   position: absolute;
   top: 50%;
@@ -88,6 +92,11 @@
   transform: translateY(-50%);
   font-size: 0.82rem;
   pointer-events: none;
+}
+
+.warning {
+  color: red;
+  font-size: 12px;
 }
 
 .authInputWrap input {
