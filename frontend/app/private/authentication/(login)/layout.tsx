@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Footer from "@/app/(public)/_components/Footer";
+import Footer from "@/app/(public)/_components/footer";
 import Navbar from "@/app/(public)/_components/Nvbar";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import styles from "@/app/private/authentication/styles.module.css";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ResponsiveFilterPanel from "@/app/(public)/_components/MobileFilterPanel";
+import ResponsiveFilterPanel from "@/app/(public)/_components/mobileFilterPanel";
 import styles from "./gallery.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 import { Metadata } from "next";

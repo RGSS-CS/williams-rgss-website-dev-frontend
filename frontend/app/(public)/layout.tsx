@@ -1,6 +1,6 @@
 // These styles apply to every route in the application
 import "@/app/(public)/styles.css";
-import Footer from "@/app/(public)/_components/Footer";
+import Footer from "@/app/(public)/_components/footer";
 import Navbar from "@/app/(public)/_components/Nvbar";
 import { Suspense } from "react";
 

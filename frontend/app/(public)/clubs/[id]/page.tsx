@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
-import AnchorLink from "@/app/(public)/_components/AnchorLink";
+import AnchorLink from "@/app/(public)/_components/anchorLink";
 import { Metadata } from "next";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ClubSlideshow from "./_components/ImageSlideShow";
+import ClubSlideshow from "./_components/imageSlideShow";
 //ICONS
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 

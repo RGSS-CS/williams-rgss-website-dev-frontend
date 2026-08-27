@@ -4,7 +4,7 @@ import loadingStyles from '@/app/private/authentication/styles.module.css';
 import Image from 'next/image';
 import { getManagementSettings } from '@/app/_lib/site-management';
 import { isCaptchaEnabledFor } from '@/app/_utils/checkCaptchaEnabled';
-import RegisterGate from './_components/RegisterGate';
+import RegisterGate from './_components/registerGate';
 
 type SignupFormProps = {
     params: Promise<{ client: string }>;
