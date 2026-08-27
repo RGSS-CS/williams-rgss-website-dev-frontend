@@ -13,7 +13,7 @@ export default async function SignupForm({ params }: SignupFormProps) {
   return (
     <main className='registrationPage'>
       <div className='registrationShell'>
-        <Suspense fallback={null}>
+        <Suspense fallback={<div></div>}>
           <RegisterGate params={params} showCaptcha={isCaptchaEnabledFor(management, "REGISTER")} />
         </Suspense>
       </div>

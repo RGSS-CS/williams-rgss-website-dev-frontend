@@ -1,0 +1,227 @@
+.navbarContainer {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+.navbar {
+    background: var(--school-primary);
+    color: var(--white);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: 12px;
+}
+
+.headerContainer {
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    padding: 10px 2.5rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.brandLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.brandCopy {
+    min-width: 0;
+}
+
+.logo {
+    margin-top: 10px;
+    flex: 0 0 auto;
+}
+
+.logoSkeleton {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.18);
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.schoolTitleSkeleton {
+    width: clamp(130px, 12vw, 220px);
+    height: 1.45rem;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.18);
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.schoolSubtitleSkeleton {
+    width: 105px;
+    height: 0.85rem;
+    margin-top: 0.45rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.13);
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.navLinks {
+    display: flex;
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.navLinkSkeleton {
+    width: 80px;
+    height: 38px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.navLinkSkeleton:nth-child(2) {
+    width: 78px;
+}
+
+.navLinkSkeleton:nth-child(3) {
+    width: 90px;
+}
+
+.navLinkSkeleton:nth-child(4) {
+    width: 75px;
+}
+
+.navLinkSkeleton:nth-child(5) {
+    width: 125px;
+}
+
+.navHamburger {
+    display: none;
+}
+
+/* Skeleton animation */
+@keyframes skeletonPulse {
+    0%,
+    100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 0.25;
+    }
+}
+
+@media (max-width: 1100px) {
+    .headerContainer {
+        padding-inline: 1.5rem;
+        gap: 14px;
+    }
+
+    .schoolTitleSkeleton {
+        width: 170px;
+        height: 1.2rem;
+    }
+
+    .schoolSubtitleSkeleton {
+        width: 95px;
+    }
+
+    .navLinkSkeleton {
+        height: 34px;
+        width: 70px;
+    }
+
+    .navLinkSkeleton:nth-child(5) {
+        width: 110px;
+    }
+}
+
+@media (max-width: 900px) {
+    .headerContainer {
+        padding-inline: 1rem;
+    }
+
+    .schoolTitleSkeleton {
+        width: 145px;
+        height: 1.05rem;
+    }
+
+    .schoolSubtitleSkeleton {
+        width: 90px;
+        height: 0.8rem;
+    }
+
+    .navLinkSkeleton {
+        width: 58px;
+        height: 32px;
+    }
+
+    .navLinkSkeleton:nth-child(2) {
+        width: 55px;
+    }
+
+    .navLinkSkeleton:nth-child(3) {
+        width: 65px;
+    }
+
+    .navLinkSkeleton:nth-child(4) {
+        width: 55px;
+    }
+
+    .navLinkSkeleton:nth-child(5) {
+        width: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navLinks {
+        display: none !important;
+    }
+
+    .navHamburger {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        width: 32px;
+        height: 32px;
+        background: var(--school-tertiary);
+        border-radius: 8px;
+    }
+
+    .navHamburger span {
+        display: block;
+        width: 15px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--school-primary);
+    }
+
+    .logoSkeleton {
+        width: 60px;
+        height: 60px;
+    }
+
+    .schoolTitleSkeleton {
+        width: 125px;
+        height: 1rem;
+    }
+
+    .schoolSubtitleSkeleton {
+        width: 85px;
+        height: 0.75rem;
+    }
+}

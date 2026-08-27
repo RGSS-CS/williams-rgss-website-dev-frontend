@@ -4,11 +4,12 @@ import Navbar from "@/app/_components/navbar";
 import { Suspense } from "react";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
+import NavbarSkeleton from "../_components/skeletons/navbarSkeleton";
 
 async function NavbarSlot() {
   const management = await getManagementSettings();
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<NavbarSkeleton/>}>
       <Navbar management={management} />
     </Suspense>
   );
