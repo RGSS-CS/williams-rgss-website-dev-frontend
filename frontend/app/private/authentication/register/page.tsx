@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { verifyJoinCode } from '@/app/private/authentication/_utils/verifyJoinCode';
+import { verifyCode } from '@/app/private/authentication/register/_utils/verifyCode';
 export const instant = false;
 
 type RegisterEntryProps = {
@@ -14,7 +14,7 @@ export default async function RegisterRedirectClient({ searchParams }: RegisterE
         redirect('/private/authentication?error=missing_code');
     }
 
-    const isValid = await verifyJoinCode(code);
+    const isValid = await verifyCode(code);
     if (!isValid) {
         redirect('/private/authentication?error=invalid_code');
     }
