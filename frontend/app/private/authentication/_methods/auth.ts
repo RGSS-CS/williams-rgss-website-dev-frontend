@@ -173,7 +173,7 @@ export async function signin(
 
     let response: Response;
     try {
-        response = await fetch(new URL("/api/token", getApiBaseUrl()), {
+        response = await fetch(new URL("/api/token/", getApiBaseUrl()), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export async function signin(
         return { error: "Unable to reach the server. Check your connection and try again." };
     }
 
-    let body: { access?: string; refresh?: string; detail?: string } = {};
+    let body: { access?: string; refresh?: string; groups?: string[]; detail?: string } = {};
     try {
         body = await response.json();
     } catch {
@@ -194,7 +194,7 @@ export async function signin(
 
     if (!response.ok || !body.access || !body.refresh) {
         return {
-            error: body.detail ?? "Invalid email or password. Please try again.",
+            error: body.detail ?? `Sign in failed (status ${response.status}). Please try again.`,
         };
     }
 
@@ -207,6 +207,12 @@ export async function signin(
         path: "/",
     });
     cookieStore.set("refresh_token", body.refresh, {
+        httpOnly: true,
+        secure,
+        sameSite: "lax",
+        path: "/",
+    });
+    cookieStore.set("user_groups", JSON.stringify(body.groups ?? []), {
         httpOnly: true,
         secure,
         sameSite: "lax",

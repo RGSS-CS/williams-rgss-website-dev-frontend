@@ -149,7 +149,6 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
                 <span className={styles_modules.loginWarn}><h3>You must be signed in to view this media</h3></span>
             )}
             
-
           </div>
         </section>
       </div>

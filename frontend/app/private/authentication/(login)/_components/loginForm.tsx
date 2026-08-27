@@ -42,7 +42,7 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
             <label htmlFor="email">School Email</label>
             <div className="authInputWrap">
               <FontAwesomeIcon icon={faEnvelope} className="authIcon" />
-              <input id="email" name="email" type="email" placeholder="Student Number/Teacher Email" autoComplete="email" required />
+              <input id="email" name="email" type="email" placeholder="Student Email/Teacher Email" autoComplete="email" required />
             </div>
           </div>
           <div className="authFieldGroup">
