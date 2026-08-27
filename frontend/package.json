@@ -17,7 +17,7 @@
         "@fortawesome/react-fontawesome": "^3.5.0",
         "cap-widget": "^0.1.56",
         "leaflet": "^1.9.4",
-        "next": "^16.3.2",
+        "next": "^16.3.3",
         "react": "^19.2.8",
         "react-dom": "^19.2.8",
         "sharp": "^0.35.3"
@@ -28,7 +28,7 @@
         "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.4",
         "eslint": "^9.39.5",
-        "eslint-config-next": "^16.3.2",
+        "eslint-config-next": "^16.3.3",
         "typescript": "^5.9.3"
     },
     "overrides": {
