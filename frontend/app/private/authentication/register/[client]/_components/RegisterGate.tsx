@@ -13,7 +13,7 @@ export default async function RegisterGate({ params, showCaptcha }: RegisterGate
 
     const isValid = await verifyJoinCode(code);
     if (!isValid) {
-        //redirect('/private/authentication?error=invalid_code');
+        redirect('/private/authentication?error=invalid_code');
     }
 
     return <SignupFormClient showCaptcha={showCaptcha} code={code} />;
