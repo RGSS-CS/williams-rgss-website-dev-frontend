@@ -18,6 +18,7 @@ import "@/app/global.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Icons
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { getSchoolYear } from "./_utils/schoolYear";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -93,6 +94,7 @@ async function getThemeStyle(): Promise<string> {
 export default async function NotFound() {
   const management = await getManagementSettings();
   if (!management) return null;
+  const schoolYear = await getSchoolYear();
   const themeStyle = await getThemeStyle();
   return (
     <html
@@ -133,7 +135,7 @@ export default async function NotFound() {
             </Link>
           </div>
         </div>
-        <Footer management={management} />
+        <Footer management={management} schoolYear={schoolYear} />
       </body>
     </html>
   );

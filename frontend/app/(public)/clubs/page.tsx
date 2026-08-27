@@ -4,7 +4,7 @@ import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
-import ClubsFilterClient from "./ClubsFilterClient";
+import ClubsFilterClient from "./clubsFilterClient";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
