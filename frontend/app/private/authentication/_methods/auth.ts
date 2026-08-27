@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { findProfaneField } from "@/app/private/authentication/_utils/profanityCheck";
 
 export type SignupState = {
@@ -155,6 +156,62 @@ export async function signup(
     redirect("/private/authentication?registered=1");
 }
 
-export async function signin(formData: FormData) {
-    void formData;
+export type SigninState = {
+    error: string | null;
+};
+
+export async function signin(
+    _prevState: SigninState,
+    formData: FormData
+): Promise<SigninState> {
+    const email = formData.get("email")?.toString().trim() ?? "";
+    const password = formData.get("password")?.toString() ?? "";
+
+    if (!email || !password) {
+        return { error: "Email and password are required." };
+    }
+
+    let response: Response;
+    try {
+        response = await fetch(new URL("/api/token", getApiBaseUrl()), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+            cache: "no-store",
+        });
+    } catch {
+        return { error: "Unable to reach the server. Check your connection and try again." };
+    }
+
+    let body: { access?: string; refresh?: string; detail?: string } = {};
+    try {
+        body = await response.json();
+    } catch {
+    }
+
+    if (!response.ok || !body.access || !body.refresh) {
+        return {
+            error: body.detail ?? "Invalid email or password. Please try again.",
+        };
+    }
+
+    const cookieStore = await cookies();
+    const secure = process.env.NODE_ENV === "production";
+    cookieStore.set("access_token", body.access, {
+        httpOnly: true,
+        secure,
+        sameSite: "lax",
+        path: "/",
+    });
+    cookieStore.set("refresh_token", body.refresh, {
+        httpOnly: true,
+        secure,
+        sameSite: "lax",
+        path: "/",
+    });
+
+    redirect("/private/dashboard");
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey } from "@fortawesome/free-solid-svg-icons";
 import { signin } from "@/app/private/authentication/_methods/auth";
@@ -16,6 +16,7 @@ type LoginFormProps = {
 export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const [state, formAction, isPending] = useActionState(signin, { error: null });
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -27,7 +28,7 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
 
   return (
     <div className="authBody">
-      <form action={signin}>
+      <form action={formAction}>
         <div className="authCard">
           <button type="button" className="authBackButton" onClick={handleBack} aria-label="Go back">
             <FontAwesomeIcon icon={faArrowLeft} className="authIcon" />
@@ -38,10 +39,10 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
             <p>Sign in to access the {management.councilName} Dashboard</p>
           </div>
           <div className="authFieldGroup">
-            <label htmlFor="student_number">School Email</label>
+            <label htmlFor="email">School Email</label>
             <div className="authInputWrap">
               <FontAwesomeIcon icon={faEnvelope} className="authIcon" />
-              <input id="student_number" name="student_number" type="email" placeholder="Student Number/Teacher Email" />
+              <input id="email" name="email" type="email" placeholder="Student Number/Teacher Email" autoComplete="email" required />
             </div>
           </div>
           <div className="authFieldGroup">
@@ -49,17 +50,18 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
               <label htmlFor="password">Password</label>
               <div className="authInputWrap">
                 <FontAwesomeIcon icon={faKey} className="authIcon" />
-                <input id="password" name="password" type={isVisible ? "text" : "password"} placeholder="Password" autoComplete="current-password" />
+                <input id="password" name="password" type={isVisible ? "text" : "password"} placeholder="Password" autoComplete="current-password" required />
                 <button type="button" className="authPasswordToggle" onClick={() => setIsVisible((current) => !current)} aria-label={isVisible ? "Hide password" : "Show password"} aria-pressed={isVisible}>
                   <FontAwesomeIcon icon={isVisible ? faEyeSlash : faEye} className="authIcon" />
                 </button>
               </div>
             </div>
           </div>
+          {state.error && <div className="authFormError" role="alert">{state.error}</div>}
           {showCaptcha && <Capcha />}
-          <button className="authSubmitButton" type="submit" id="loginBtn">
+          <button className="authSubmitButton" type="submit" id="loginBtn" disabled={isPending}>
             <FontAwesomeIcon icon={faArrowRightToBracket} className="authSubmitIcon" />
-            Continue
+            {isPending ? "Signing in..." : "Continue"}
           </button>
           <div className="authSignupNote">
             <p><b>Don&apos;t have an account yet? </b></p>

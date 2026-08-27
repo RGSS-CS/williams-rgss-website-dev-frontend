@@ -3,7 +3,7 @@ import ResponsiveFilterPanel from "@/app/(public)/_components/mobileFilterPanel"
 import styles from "./gallery.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 import { Metadata } from "next";
-import GalleryFilterContent from "./_components/GalleryFilterControls";
+import GalleryFilterContent from "./_components/galleryFilterControls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getPageManagementSettings } from "@/app/_lib/page-management";

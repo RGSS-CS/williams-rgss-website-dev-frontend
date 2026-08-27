@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
-import RegisterSW from "@/app/_components/RegisterSW";
+import RegisterSW from "@/app/_components/registerSW";
 import { cacheLife, cacheTag } from "next/cache";
 import type { Metadata } from "next";
 

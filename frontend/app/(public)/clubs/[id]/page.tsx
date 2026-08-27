@@ -144,7 +144,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
               </div>
             </div>
             { club.joinInstructions ? (
-              <ClubSlideshow gallery={club.gallery ?? []} />
+              <ClubSlideshow gallery={club.gallery ?? null} />
             ): (
                 <span className={styles_modules.loginWarn}><h3>You must be signed in to view this media</h3></span>
             )}
