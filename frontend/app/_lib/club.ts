@@ -1,6 +1,6 @@
 "use server";
 
-import { cacheLife, cacheTag } from "next/cache";
+import { cookies } from "next/headers";
 
 export type Photo = {
   id: number;
@@ -127,20 +127,20 @@ function normalizeClub(record: ClubApiRecord): Club {
 };
 
 export async function getClubs(): Promise<Club[]> {
-  'use cache: remote';
-  cacheLife('minutes');
-  cacheTag('clubs');
   const url = getClubsApiUrl();
   if (!url) {
     return [];
   };
 
   try {
+    const accessToken = (await cookies()).get("access_token")?.value;
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       },
+      cache: "no-store",
     });
 
     if (!res.ok) {
