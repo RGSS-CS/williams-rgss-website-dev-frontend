@@ -44,6 +44,11 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+async function handleSignout(formData: FormData) {
+  const redirectPath = await signout(formData);
+  window.location.assign(redirectPath);
+}
+
 function AuthNavItem({
   authUser,
   currentPath,
@@ -70,11 +75,10 @@ function AuthNavItem({
       </a>
     );
   }
-
   return (
     <div className={variant === "sidebar" ? styles.sidebarAccount : styles.navAccount}>
       <span className={styles.accountUsername}>{authUser.username}</span>
-      <form action={signout}>
+      <form action={handleSignout}>
         <input type='hidden' name='currentPath' value={currentPath} />
         <button
           type='submit'
