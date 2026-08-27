@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import StudentNumberField from "./StudentNumberField";
 import NameField from "./NameField";
+import EmailField from "./emailField";
 import PasswordField from "./PasswordField";
 import ConfirmPasswordField from "./ConfirmPasswordField";
 import Capcha from "@/app/_components/captcha";
@@ -15,17 +16,15 @@ const initialState: SignupState = { error: null };
 
 type SignupFormClientProps = {
     showCaptcha: boolean;
+    code: string;
 };
 
-export default function SignupFormClient({ showCaptcha }: SignupFormClientProps) {
+export default function SignupFormClient({ showCaptcha, code }: SignupFormClientProps) {
     const [state, formAction, isPending] = useActionState(signup, initialState);
-
-    // Kept in component state (rather than left as uncontrolled inputs) so
-    // that submitted values survive a validation error round-trip instead
-    // of being wiped when the form re-renders with the returned error.
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [studentNumber, setStudentNumber] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -43,6 +42,8 @@ export default function SignupFormClient({ showCaptcha }: SignupFormClientProps)
                     </div>
                 )}
 
+                <input type="hidden" name="code" value={code} />
+
                 <NameField
                     firstName={firstName}
                     lastName={lastName}
@@ -50,6 +51,7 @@ export default function SignupFormClient({ showCaptcha }: SignupFormClientProps)
                     onLastNameChange={setLastName}
                 />
                 <StudentNumberField value={studentNumber} onValueChange={setStudentNumber} />
+                <EmailField value={email} onValueChange={setEmail} />
                 <PasswordField value={password} onValueChange={setPassword} />
                 <ConfirmPasswordField value={confirmPassword} onValueChange={setConfirmPassword} />
                 {showCaptcha && <Capcha />}

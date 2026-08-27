@@ -126,6 +126,7 @@
 .loading_subtitle {
     width: 90%;
     height: 14px;
+    margin-bottom: 20px;
 }
 
 .loading_field {
