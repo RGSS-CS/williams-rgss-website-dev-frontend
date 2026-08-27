@@ -237,5 +237,5 @@ export async function signout(formData: FormData) {
   const redirectPath =
     currentPath.startsWith("/") && !currentPath.startsWith("//") ? currentPath : "/";
 
-  redirect(redirectPath.startsWith("/private") ? "/private/authentication" : redirectPath);
+  return redirectPath.startsWith("/private") ? "/private/authentication" : redirectPath;
 }
