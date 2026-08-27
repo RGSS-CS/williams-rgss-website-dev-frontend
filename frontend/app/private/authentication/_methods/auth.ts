@@ -22,10 +22,6 @@ const REQUIRED_FIELDS: { name: string; label: string }[] = [
     { name: "code", label: "Registration code" },
 ];
 
-// Mirrors Django's default UnicodeUsernameValidator, which the backend
-// `username` field (feat/add-user-model, users/models.py -> AbstractUser)
-// enforces server-side. Student numbers are digits-only already, but this
-// keeps the client check aligned with whatever gets typed into the field.
 const USERNAME_PATTERN = /^[\w.@+-]+$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -44,11 +40,6 @@ function getApiBaseUrl(): string {
     return process.env.API_URL || "http://backend:8000";
 }
 
-/**
- * Backend registration payload, matching `RegisterSerializer.Meta.fields`
- * in williams-rgss-website-dev-backend@feat/add-user-model
- * (backend/users/serializers.py).
- */
 type RegisterPayload = {
     username: string;
     email: string;
@@ -152,7 +143,6 @@ export async function signup(
         try {
             body = await response.json();
         } catch {
-            // No/invalid JSON body.
         }
 
         return {
