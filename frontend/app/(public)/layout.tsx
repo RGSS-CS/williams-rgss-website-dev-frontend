@@ -1,7 +1,6 @@
 import "@/app/(public)/styles.css";
 import Footer from "@/app/(public)/_components/footer";
 import Navbar from "@/app/(public)/_components/navbar";
-import { Suspense } from "react";
 
 import { getManagementSettings } from "@/app/_lib/site-management";
 
@@ -18,13 +17,9 @@ async function FooterSlot() {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Suspense>
-        <NavbarSlot />
-      </Suspense>
+      <NavbarSlot />
       {children}
-      <Suspense>
-        <FooterSlot />
-      </Suspense>
+      <FooterSlot />
     </>
   );
 }

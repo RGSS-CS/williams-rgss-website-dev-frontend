@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey } from "@fortawesome/free-solid-svg-icons";
 import { signin } from "@/app/private/authentication/_methods/auth";
 import Capcha from "@/app/_components/captcha";
-import styles from "@/app/private/authentication/styles.module.css";
 import type { Management } from "@/app/_lib/site-management";
 
 type LoginFormProps = {
@@ -27,42 +26,42 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
   };
 
   return (
-    <div className={styles.body}>
+    <div className="authBody">
       <form action={signin}>
-        <div className={styles.login_card}>
-          <button type="button" className={styles.back_button} onClick={handleBack} aria-label="Go back">
-            <FontAwesomeIcon icon={faArrowLeft} className={styles.fas} />
+        <div className="authCard">
+          <button type="button" className="authBackButton" onClick={handleBack} aria-label="Go back">
+            <FontAwesomeIcon icon={faArrowLeft} className="authIcon" />
             Go Back
           </button>
-          <div className={styles.card_header}>
+          <div className="authCardHeader">
             <h1>Welcome {management.schoolMascot}</h1>
             <p>Sign in to access the {management.councilName} Dashboard</p>
           </div>
-          <div className={styles.form_group}>
+          <div className="authFieldGroup">
             <label htmlFor="student_number">YRDSB Email</label>
-            <div className={styles.input_wrap}>
-              <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
+            <div className="authInputWrap">
+              <FontAwesomeIcon icon={faEnvelope} className="authIcon" />
               <input id="student_number" name="student_number" type="email" placeholder="Student Number/Teacher Email" />
             </div>
           </div>
-          <div className={styles.form_group}>
+          <div className="authFieldGroup">
             <div>
               <label htmlFor="password">Password</label>
-              <div className={styles.input_wrap}>
-                <FontAwesomeIcon icon={faKey} className={styles.fas} />
+              <div className="authInputWrap">
+                <FontAwesomeIcon icon={faKey} className="authIcon" />
                 <input id="password" name="password" type={isVisible ? "text" : "password"} placeholder="Password" autoComplete="current-password" />
-                <button type="button" className={styles.toggle_pw} onClick={() => setIsVisible((current) => !current)} aria-label={isVisible ? "Hide password" : "Show password"} aria-pressed={isVisible}>
-                  <FontAwesomeIcon icon={isVisible ? faEyeSlash : faEye} className={styles.fas} />
+                <button type="button" className="authPasswordToggle" onClick={() => setIsVisible((current) => !current)} aria-label={isVisible ? "Hide password" : "Show password"} aria-pressed={isVisible}>
+                  <FontAwesomeIcon icon={isVisible ? faEyeSlash : faEye} className="authIcon" />
                 </button>
               </div>
             </div>
           </div>
           {showCaptcha && <Capcha />}
-          <button className={styles.btn_login} type="submit" id="loginBtn">
-            <FontAwesomeIcon icon={faArrowRightToBracket} className={styles.fas} />
+          <button className="authSubmitButton" type="submit" id="loginBtn">
+            <FontAwesomeIcon icon={faArrowRightToBracket} className="authIcon" />
             Continue
           </button>
-          <div className={styles.signUp}>
+          <div className="authSignupNote">
             <p><b>Don&apos;t have an account yet? </b></p>
             <h5>Sign up during the registration period. See announcements for more details.</h5>
           </div>
