@@ -1,5 +1,4 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "https://api.rgsscs.org";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://backend:8000";
 
 const REGISTER_ENDPOINT = `${API_BASE_URL}/api/auth/register/`;
 
