@@ -92,15 +92,15 @@
 }
 
 .navLinkSkeleton:nth-child(2) {
-    width: 78px;
-}
-
-.navLinkSkeleton:nth-child(3) {
     width: 90px;
 }
 
+.navLinkSkeleton:nth-child(3) {
+    width: 100px;
+}
+
 .navLinkSkeleton:nth-child(4) {
-    width: 75px;
+    width: 100px;
 }
 
 .navLinkSkeleton:nth-child(5) {
