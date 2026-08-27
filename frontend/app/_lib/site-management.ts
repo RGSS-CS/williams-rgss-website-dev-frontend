@@ -42,21 +42,21 @@ export type ManagementApiRecord = {
 
 export type Management = {
     maintainanceMode: boolean;
-    schoolName: string | null;
-    councilName: string | null;
-    schoolEmail: string | null;
-    schoolPhone: string | null;
-    socialMedia: unknown[] | null;
-    croppedFavicon: string | null;
-    croppedSiteImage: string | null;
-    stucoImage: string | null;
-    aboutStuco: string | null;
-    aboutSchool: string | null;
-    schoolLocation: SchoolLocation[] | null;
-    schoolMascot: string | null;
-    schoolPrimaryColor: string | null;
-    schoolSecondaryColor: string | null;
-    schoolTertiaryColor: string | null;
+    schoolName: string;
+    councilName: string;
+    schoolEmail: string;
+    schoolPhone: string;
+    socialMedia: unknown[];
+    croppedFavicon: string;
+    croppedSiteImage: string;
+    stucoImage: string;
+    aboutStuco: string;
+    aboutSchool: string;
+    schoolLocation: SchoolLocation[];
+    schoolMascot: string;
+    schoolPrimaryColor: string;
+    schoolSecondaryColor: string;
+    schoolTertiaryColor: string;
     captcha: CaptchaSurface[];
 };
 
@@ -82,15 +82,8 @@ function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocatio
     };
 };
 
-function formatPhoneNumber(phone: string | null | undefined): string | null {
-    if (!phone) {
-        return null;
-    }
-
+function formatPhoneNumber(phone: string): string {
     const trimmedPhone = phone.trim();
-    if (!trimmedPhone) {
-        return null;
-    }
 
     const digits = trimmedPhone.replace(/\D/g, "");
 
@@ -112,22 +105,22 @@ function formatPhoneNumber(phone: string | null | undefined): string | null {
 function normalizeManagement(record: ManagementApiRecord): Management {
     return {
         maintainanceMode: record.maintainance_mode,
-        schoolName: record.school_name ?? null,
-        councilName: record.council_name ?? null,
-        schoolEmail: record.school_email ?? null,
+        schoolName: record.school_name,
+        councilName: record.council_name,
+        schoolEmail: record.school_email,
         schoolPhone: formatPhoneNumber(record.school_phone),
-        socialMedia: record.social_media ?? null,
-        croppedFavicon: record.cropped_favicon ?? null,
-        croppedSiteImage: record.cropped_site_image ?? null,
-        stucoImage: record.stuco_image ?? null,
-        aboutStuco: record.about_stuco ?? null,
-        aboutSchool: record.about_school ?? null,
-        schoolLocation: record.school_location ? record.school_location.map(normalizeSchoolLocation) : null,
-        schoolMascot: record.school_mascot ?? null,
-        schoolPrimaryColor: record.school_primary_color ?? null,
-        schoolSecondaryColor: record.school_secondary_color ?? null,
-        schoolTertiaryColor: record.school_tertiary_color ?? null,
-        captcha: record.captcha ?? [],
+        socialMedia: record.social_media,
+        croppedFavicon: record.cropped_favicon,
+        croppedSiteImage: record.cropped_site_image,
+        stucoImage: record.stuco_image,
+        aboutStuco: record.about_stuco,
+        aboutSchool: record.about_school,
+        schoolLocation: record.school_location.map(normalizeSchoolLocation),
+        schoolMascot: record.school_mascot,
+        schoolPrimaryColor: record.school_primary_color,
+        schoolSecondaryColor: record.school_secondary_color,
+        schoolTertiaryColor: record.school_tertiary_color,
+        captcha: record.captcha,
     };
 };
 
