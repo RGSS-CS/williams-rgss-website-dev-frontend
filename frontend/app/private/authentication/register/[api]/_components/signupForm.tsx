@@ -78,7 +78,7 @@ export default function SignupFormClient({ showCaptcha, code }: SignupFormClient
         <TextField id="first_name" label="Name" placeholder="First Name" autoComplete="given-name" value={firstName} onChange={setFirstName} icon={faUser} />
         <TextField id="last_name" label="" placeholder="Last Name" autoComplete="family-name" value={lastName} onChange={setLastName} icon={faUser} />
         <TextField id="student_number" label="Student Number" placeholder="Student Number" autoComplete="off" value={studentNumber} onChange={(value) => setStudentNumber(value.replace(/\D/g, ""))} icon={faEnvelope} />
-        <TextField id="email" label="Email" type="email" placeholder="Email" autoComplete="email" value={email} onChange={setEmail} icon={faEnvelope} />
+        <TextField id="email" label="Email (Student)" type="email" placeholder="Email" autoComplete="email" value={email} onChange={setEmail} icon={faEnvelope} />
         <PasswordField id="password" label="Password" value={password} onChange={setPassword} />
         <PasswordField id="confirm_password" label="Confirm Password" value={confirmPassword} onChange={setConfirmPassword} />
         {showCaptcha && <Capcha />}
