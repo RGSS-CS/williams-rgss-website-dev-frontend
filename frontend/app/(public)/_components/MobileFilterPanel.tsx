@@ -27,9 +27,9 @@ export default function MobileFilterPanel(
 
     return (
         <>
-            <div className={filterStyles.filter_bar_container}>
+            <div className={filterStyles.filterBarContainer}>
                 <button
-                    className={sidebarStyles.filter_toggle_btn}
+                    className={sidebarStyles.filterToggleBtn}
                     onClick={() => setOpen(true)}
                     aria-label="Open filters"
                 >
@@ -40,35 +40,36 @@ export default function MobileFilterPanel(
 
             {open && (
                 <div
-                    className={sidebarStyles.filter_sidebar_overlay}
+                    className={sidebarStyles.filterSidebarOverlay}
                     onClick={() => setOpen(false)}
                 />
             )}
 
             <div
-                className={`${sidebarStyles.filter_sidebar} ${open ? sidebarStyles.open : ""
-                    }`}
+                className={sidebarStyles.filterSidebar}
+                data-open={open}
             >
-                <div className={sidebarStyles.filter_sidebar_header}>
-                    <span className={sidebarStyles.filter_sidebar_title}>
+                <div className={sidebarStyles.filterSidebarHeader}>
+                    <span className={sidebarStyles.filterSidebarTitle}>
                         <FontAwesomeIcon icon={faFilter} />
                         Filters
                     </span>
                     <button
-                        className={sidebarStyles.filter_sidebar_close}
+                        className={sidebarStyles.filterSidebarClose}
                         onClick={() => setOpen(false)}
                         aria-label="Close filters"
                     >
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </div>
-                <div className={sidebarStyles.filter_sidebar_body}>{children}</div>
+                <div className={sidebarStyles.filterSidebarBody}>{children}</div>
             </div>
 
             <div
-                className={`${filterStyles.filter_bar_container} ${sidebarStyles.filter_bar_container_desktop}`}
+                className={filterStyles.filterBarContainer}
+                data-variant="desktop"
             >
-                <div className={filterStyles.filter_bar}>{children}</div>
+                <div className={filterStyles.filterBar}>{children}</div>
             </div>
         </>
     );

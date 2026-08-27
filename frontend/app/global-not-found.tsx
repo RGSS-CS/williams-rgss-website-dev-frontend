@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   Montserrat,
   Jost,
@@ -126,10 +127,10 @@ export default async function NotFound() {
           </div>
 
           <div className={styles.actions}>
-            <a href='/' className={styles.btn_home}>
+            <Link href='/' className={styles.btn_home}>
               <FontAwesomeIcon icon={faHouse} />
               Go to Home
-            </a>
+            </Link>
           </div>
         </div>
         <Footer management={management} />

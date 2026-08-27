@@ -1,7 +1,6 @@
 "use client";
 import { useCopyToClipboard } from "@/app/(public)/_utils/useCopyToClipboard";
 import { getSchoolYear } from "@/app/_utils/getYear";
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Management } from "@/app/_lib/site-management";
 import styles from "@/app/(public)/_styles/base/footer.module.css";
@@ -17,12 +16,8 @@ type ManagementProps = {
 
 export default function Footer({ management }: ManagementProps) {
     const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-    const [schoolYear, setSchoolYear] = useState<string | null>(null);
+    const schoolYear = getSchoolYear();
     const [mapsUrl, displayAddress, regionLine] = SchoolLocation({ management });
-
-    useEffect(() => {
-        setSchoolYear(getSchoolYear());
-    }, []);
 
     const handleCopy = async (text: string) => {
         await copyToClipboard(text);

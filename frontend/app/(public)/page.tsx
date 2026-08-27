@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
 import styles from "./home.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,7 +39,7 @@ export default async function Page() {
           )}
         </div>
 
-        <div className={`hero_shape ${styles.hero_shape}`}></div>
+        <div className={styles.heroShape}></div>
         <div className='hero_inner'>
           <div className='hero_left'>
             <div className={styles.heroTag}>
@@ -55,27 +56,21 @@ export default async function Page() {
             </div>
 
             <div className={styles.heroButtons}>
-              <a href='/clubs'>
-                <div className={styles.heroBtnPrimary}>
-                  <p className={styles.heroBtnText}>
-                    <FontAwesomeIcon icon={faPaperPlane} /> Our Clubs
-                  </p>
-                </div>
-              </a>
+              <Link href='/clubs' className={styles.heroBtnPrimary}>
+                <FontAwesomeIcon icon={faPaperPlane} />
+                <span>Our Clubs</span>
+              </Link>
 
-              <a href='/events'>
-                <div className={styles.heroBtnSecondary}>
-                  <p className={styles.heroBtnTextAlt}>
-                    <FontAwesomeIcon icon={faCalendarAlt} /> Upcoming Events
-                  </p>
-                </div>
-              </a>
+              <Link href='/events' className={styles.heroBtnSecondary}>
+                <FontAwesomeIcon icon={faCalendarAlt} />
+                <span>Upcoming Events</span>
+              </Link>
             </div>
           </div>
         </div>
       </div>
       <div className={styles.sectionWrap}>
-        <div className='section_content'>
+        <div className={styles.sectionContent}>
           <div className={styles.sectionTitleRow}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.sectionTitleAccent}></span>
@@ -83,21 +78,23 @@ export default async function Page() {
             </h2>
           </div>
           <div className={styles.cardContainer}>
-            <div className='card_row'>
+            <div className={styles.cardRow}>
               {/* Put Announcement cards here after database is set up */}
             </div>
           </div>
         </div>
       </div>
       <div className={styles.sectionWrap} id='events'>
-        <div className={styles.sectionTitle}>
-          <span className={styles.sectionTitleAccent}></span>
-          <h2 className={styles.sectionTitle}>Events</h2>
+        <div className={styles.sectionTitleRow}>
+          <h2 className={styles.sectionTitle}>
+            <span className={styles.sectionTitleAccent}></span>
+            Events
+          </h2>
         </div>
         {/*Add calendar page*/}
       </div>
       <div className={styles.sectionWrap}>
-        <div className='section_content'>
+        <div className={styles.sectionContent}>
           <div className={styles.sectionTitleRow}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.sectionTitleAccent}></span>
@@ -105,13 +102,13 @@ export default async function Page() {
             </h2>
           </div>
           <div className={styles.cardContainer}>
-            <div className='card_row'>{/*Add section for school council*/}</div>
+            <div className={styles.cardRow}>{/*Add section for school council*/}</div>
           </div>
         </div>
       </div>
       <div className={styles.sectionWrap}>
-        <div className={styles.map_section}>
-          <div className='section-divider'></div>
+        <div className={styles.mapSection}>
+          <div className={styles.sectionDivider}></div>
           <div className={styles.sectionTitleRow}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.sectionTitleAccent}></span>
@@ -119,7 +116,12 @@ export default async function Page() {
             </h2>
           </div>
           <SchoolMap locations={management?.schoolLocation ?? null} />
-          <a href={mapsUrl ? mapsUrl : "#"} target='_blank' rel='noopener noreferrer'>
+          <a
+            href={mapsUrl ? mapsUrl : "#"}
+            className={styles.mapLink}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             View on Google Maps
           </a>
         </div>

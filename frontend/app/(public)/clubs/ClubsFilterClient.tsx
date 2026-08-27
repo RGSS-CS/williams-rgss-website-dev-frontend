@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { JSX, useDeferredValue, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import type { Club } from "@/app/_lib/club";
@@ -106,13 +106,11 @@ function matchesQuery(club: Club, query: string) {
 function ClubCard({ club }: { club: Club }) {
   return (
     <a href={`/clubs/${club.id}`} className={styles.clubCardLink}>
-      <article className={styles.club_card}>
-        <div className={styles.club_card_name}>
-          <h3>{club.name}</h3>
-        </div>
+      <article className={styles.clubCard}>
+        <h3 className={styles.clubCardName}>{club.name}</h3>
 
-        <div className={styles.club_card_meta}>
-          <div className={styles.club_meta_row}>
+        <div className={styles.clubCardMeta}>
+          <div className={styles.clubMetaRow}>
             <FontAwesomeIcon icon={faMapMarkerAlt} />
 
             <h4>
@@ -120,7 +118,7 @@ function ClubCard({ club }: { club: Club }) {
             </h4>
           </div>
 
-          <div className={styles.club_meta_row}>
+          <div className={styles.clubMetaRow}>
             <FontAwesomeIcon icon={faCalendarAlt} />
 
             <h4>
@@ -129,15 +127,15 @@ function ClubCard({ club }: { club: Club }) {
           </div>
         </div>
 
-        <p className={styles.club_card_description}>{club.preview_description}</p>
+        <p className={styles.clubCardDescription}>{club.preview_description}</p>
 
-        <div className={styles.club_card_divider}></div>
+        <div className={styles.clubCardDivider}></div>
 
-        <div className={styles.club_card_footer}>
-          <span className={styles.open_club_btn}>
+        <div className={styles.clubCardFooter}>
+          <span className={styles.openClubBtn}>
             View Details
             <FontAwesomeIcon icon={faArrowRight} />
-            <span className={styles.club_tag}>
+            <span className={styles.clubTag}>
               <h6>{club.acceptingApplicants}</h6>
             </span>
           </span>
@@ -150,17 +148,9 @@ function ClubCard({ club }: { club: Club }) {
 export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFilterClientProps) {
   const searchParams = useSearchParams();
 
-  const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [activeDay, setActiveDay] = useState("All Days");
-
-  useEffect(() => {
-    setQuery(searchParams.get("q")?.trim() ?? "");
-
-    setActiveCategory(searchParams.get("category") ?? "all");
-
-    setActiveDay(searchParams.get("day") ?? "All Days");
-  }, [searchParams]);
+  const [query, setQuery] = useState(() => searchParams.get("q")?.trim() ?? "");
+  const [activeCategory, setActiveCategory] = useState(() => searchParams.get("category") ?? "all");
+  const [activeDay, setActiveDay] = useState(() => searchParams.get("day") ?? "All Days");
 
   const deferredQuery = useDeferredValue(query);
 
@@ -238,14 +228,6 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     }
   };
 
-  /*
-   * This instance is only used for the search box
-   * inside the server-rendered hero.
-   */
-  if (searchOnly) {
-    return <ClubSearchInput value={query} onChange={(value) => updateSearch({ q: value })} />;
-  }
-
   const filteredClubs = useMemo(
     () =>
       clubs.filter((club) => {
@@ -289,6 +271,14 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     });
   };
 
+  /*
+   * This instance is only used for the search box
+   * inside the server-rendered hero.
+   */
+  if (searchOnly) {
+    return <ClubSearchInput value={query} onChange={(value) => updateSearch({ q: value })} />;
+  }
+
   return (
     <div className='sticky-wrapper'>
       <MobileFilterPanel>
@@ -308,47 +298,45 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
           }
         />
 
-        <span className={`results-count ${styles.resultsCount}`}>
+        <span className={styles.resultsCount}>
           Showing {filteredClubs.length} club
           {filteredClubs.length === 1 ? "" : "s"}
         </span>
       </MobileFilterPanel>
 
       <div className={styles.mobileResultsBar}>
-        <span
-          className={`results-count results-count-mobile ${styles.resultsCount} ${styles.resultsCountMobile}`}
-        >
+        <span className={styles.resultsCount}>
           Showing {filteredClubs.length} club
           {filteredClubs.length === 1 ? "" : "s"}
         </span>
       </div>
 
-      <div className={catStyles.category_container}>
+      <div className={catStyles.categoryContainer}>
         {visibleCategories.map((section) => (
           <div
-            className={catStyles.category_section}
+            className={catStyles.categorySection}
             data-category={section.slug}
             id={`cat-${section.slug}`}
             key={section.slug}
           >
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
 
-              <span className={catStyles.category_title}>
-                <span className={catStyles.category_icon}>{getCategoryIcon(section.name)}</span>
+              <span className={catStyles.categoryTitle}>
+                <span className={catStyles.categoryIcon}>{getCategoryIcon(section.name)}</span>
 
                 {section.name}
               </span>
 
-              <div className={catStyles.category_divider}></div>
+              <div className={catStyles.categoryDivider}></div>
 
-              <span className={catStyles.category_count}>
+              <span className={catStyles.categoryCount}>
                 {section.clubs.length} club
                 {section.clubs.length === 1 ? "" : "s"}
               </span>
             </div>
 
-            <div className={`${catStyles.cards_grid} ${styles.clubCardsGrid}`}>
+            <div className={catStyles.cardsGrid}>
               {section.clubs.map((club) => (
                 <ClubCard club={club} key={`${section.slug}-${club.id}`} />
               ))}

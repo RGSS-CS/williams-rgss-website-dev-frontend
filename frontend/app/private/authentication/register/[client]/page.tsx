@@ -2,9 +2,10 @@ import { Suspense } from 'react';
 import styles from './register.module.css';
 import loadingStyles from '@/app/private/authentication/styles.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getManagementSettings } from '@/app/_lib/site-management';
 import { isCaptchaEnabledFor } from '@/app/_utils/checkCaptchaEnabled';
-import RegisterGate from './_components/registerGate';
+import RegisterGate from '@/app/private/authentication/_utils/registerGate';
 
 type SignupFormProps = {
     params: Promise<{ client: string }>;
@@ -30,7 +31,7 @@ export default async function SignupForm({ params }: SignupFormProps) {
         <main>
             <div className={styles.container}>
                 <div className={styles.register_brand_wrap}>
-                    <a href="/" className={styles.register_brand}>
+                    <Link href="/" className={styles.register_brand}>
                         <div className={styles.register_logo}>
                             <Image src="/images/logo/logo.png" alt="School logo" width={48} height={36} priority />
                         </div>
@@ -38,7 +39,7 @@ export default async function SignupForm({ params }: SignupFormProps) {
                             <span>{management?.schoolName ?? 'Student Council'}</span>
                             <small>{management?.councilName ?? 'Student Council'}</small>
                         </div>
-                    </a>
+                    </Link>
                 </div>
                 <Suspense fallback={<SignupFormFallback />}>
                     <RegisterGate params={params} showCaptcha={isCaptchaEnabledFor(management, "REGISTER")} />

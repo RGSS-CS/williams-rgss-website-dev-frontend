@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +9,6 @@ import type { Management } from "@/app/_lib/site-management";
 import { faBars, faTimes, faHome, faInfoCircle, faArrowRightToBracket, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 
 import styles from "@/app/(public)/_styles/base/navigation.module.css";
-import "@/app/(public)/styles.css";
 
 type NavbarProps = {
     management: Management | null;
@@ -42,34 +42,35 @@ export default function Navbar({ management }: NavbarProps) {
 
     return (
         <>
-            <div className={styles.navbar_container}>
+            <div className={styles.navbarContainer}>
                 <nav ref={navRef} className={styles.navbar}>
-                    <div className={styles.header_container}>
-                        <div className={styles.title_container}>
+                    <div className={styles.headerContainer}>
+                        <div className={styles.titleContainer}>
                             <button
-                                className={styles.nav_hamburger}
+                                className={styles.navHamburger}
                                 onClick={() => setSidebarOpen(true)}
                                 aria-label="Open menu"
                             >
                                 <FontAwesomeIcon icon={faBars} />
                             </button>
-                            <a href="/" className={styles.brand_link}>
+                            <Link href="/" className={styles.brandLink}>
                                 <div className={styles.logo}>
                                     {management?.croppedSiteImage && (<Image src={management.croppedSiteImage} alt="School Logo" width={80} height={80} loading="eager" priority={true}/>)}
                                 </div>
-                                <div className={styles.brand_copy}>
-                                    <span className={styles.school_title}>{management?.schoolName}</span>
-                                    <span className={styles.school_subtitle}>Student Council</span>
+                                <div className={styles.brandCopy}>
+                                    <span className={styles.schoolTitle}>{management?.schoolName}</span>
+                                    <span className={styles.schoolSubtitle}>Student Council</span>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
 
-                        <div className={styles.nav_links}>
+                        <div className={styles.navLinks}>
                             {links.map((link) => (
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className={isActivePath(pathname, link.href) ? styles.active : ""}
+                                    className={styles.navLink}
+                                    data-active={isActivePath(pathname, link.href)}
                                     onClick={() => setSidebarOpen(false)}
                                 >
                                     {link.icon}
@@ -80,21 +81,22 @@ export default function Navbar({ management }: NavbarProps) {
                     </div>
                 </nav>
             </div>
-            {sidebarOpen && <div className={styles.sidebar_overlay} onClick={() => setSidebarOpen(false)} />}
-            <div className={`${styles.nav_sidebar} ${sidebarOpen ? styles.open : ""}`}>
+            {sidebarOpen && <div className={styles.sidebarOverlay} onClick={() => setSidebarOpen(false)} />}
+            <div className={styles.navSidebar} data-open={sidebarOpen}>
                 <button
-                    className={styles.sidebar_close}
+                    className={styles.sidebarClose}
                     onClick={() => setSidebarOpen(false)}
                     aria-label="Close menu"
                 >
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
-                <div className={styles.sidebar_links}>
+                <div className={styles.sidebarLinks}>
                     {links.map((link) => (
                         <a
                             key={link.href}
                             href={link.href}
-                            className={isActivePath(pathname, link.href) ? styles.active : ""}
+                            className={styles.sidebarLink}
+                            data-active={isActivePath(pathname, link.href)}
                             onClick={() => setSidebarOpen(false)}
                         >
                             {link.icon}

@@ -1,4 +1,6 @@
 import styles from "./gallery.module.css";
+import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
+import filterStyles from "@/app/(public)/_styles/sections/filters.module.css";
 
 const FILTER_CHIP_COUNT = 6;
 const THUMBNAIL_COUNT = 8;
@@ -26,8 +28,8 @@ export default function Loading() {
             </section>
 
             <div className="sticky-wrapper">
-                <div className="filter_bar_container">
-                    <div className="filter_bar">
+                <div className={filterStyles.filterBarContainer}>
+                    <div className={filterStyles.filterBar}>
                         <span className={`${styles.skeletonBlock} ${styles.loadingFilterLabel}`}></span>
                         {Array.from({ length: FILTER_CHIP_COUNT }).map((_, index) => (
                             <span
@@ -39,15 +41,15 @@ export default function Loading() {
                     </div>
                 </div>
 
-                <div className="category_container">
-                    <div className="category_section">
-                        <div className="category_header">
-                            <div className="category_accent"></div>
+                <div className={catStyles.categoryContainer}>
+                    <div className={catStyles.categorySection}>
+                        <div className={catStyles.categoryHeader}>
+                            <div className={catStyles.categoryAccent}></div>
                             <span className={`${styles.skeletonBlock} ${styles.loadingCategoryTitle}`}></span>
-                            <div className="category_divider"></div>
+                            <div className={catStyles.categoryDivider}></div>
                             <span className={`${styles.skeletonBlock} ${styles.loadingCategoryCount}`}></span>
                         </div>
-                        <div className={`cards_grid ${styles.loadingGalleryGrid}`}>
+                        <div className={catStyles.cardsGrid}>
                             {Array.from({ length: THUMBNAIL_COUNT }).map((_, index) => (
                                 <div className={styles.loadingGalleryThumb} key={index}></div>
                             ))}

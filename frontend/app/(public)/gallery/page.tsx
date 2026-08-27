@@ -56,63 +56,63 @@ export default async function GalleryPage() {
         <ResponsiveFilterPanel>
           <GalleryFilterContent />
         </ResponsiveFilterPanel>
-        <div className={catStyles.category_container}>
-          <div className={catStyles.category_section} data-section='academic'>
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
-              <span className={catStyles.category_title}>
+        <div className={catStyles.categoryContainer}>
+          <div className={catStyles.categorySection} data-section='academic'>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
+              <span className={catStyles.categoryTitle}>
                 <FontAwesomeIcon icon={faBook} /> Academic
               </span>
-              <div className={catStyles.category_divider}></div>
-              <span className={catStyles.category_count}>
+              <div className={catStyles.categoryDivider}></div>
+              <span className={catStyles.categoryCount}>
                 <FontAwesomeIcon icon={faImages} />0 photos
               </span>
             </div>
           </div>
-          <div className={catStyles.category_section} data-section='arts'>
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
-              <span className={catStyles.category_title}>
+          <div className={catStyles.categorySection} data-section='arts'>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
+              <span className={catStyles.categoryTitle}>
                 <FontAwesomeIcon icon={faPalette} /> Arts
               </span>
-              <div className={catStyles.category_divider}></div>
-              <span className={catStyles.category_count}>
+              <div className={catStyles.categoryDivider}></div>
+              <span className={catStyles.categoryCount}>
                 <FontAwesomeIcon icon={faImages} />0 photos
               </span>
             </div>
           </div>
-          <div className={catStyles.category_section} data-section='community'>
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
-              <span className={catStyles.category_title}>
+          <div className={catStyles.categorySection} data-section='community'>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
+              <span className={catStyles.categoryTitle}>
                 <FontAwesomeIcon icon={faHandsHelping} /> Community
               </span>
-              <div className={catStyles.category_divider}></div>
-              <span className={catStyles.category_count}>
+              <div className={catStyles.categoryDivider}></div>
+              <span className={catStyles.categoryCount}>
                 <FontAwesomeIcon icon={faImages} />0 photos
               </span>
             </div>
           </div>
-          <div className={catStyles.category_section} data-section='sports'>
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
-              <span className={catStyles.category_title}>
+          <div className={catStyles.categorySection} data-section='sports'>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
+              <span className={catStyles.categoryTitle}>
                 <FontAwesomeIcon icon={faRunning} /> Sports &amp; Recreation
               </span>
-              <div className={catStyles.category_divider}></div>
-              <span className={catStyles.category_count}>
+              <div className={catStyles.categoryDivider}></div>
+              <span className={catStyles.categoryCount}>
                 <FontAwesomeIcon icon={faImages} />0 photos
               </span>
             </div>
           </div>
-          <div className={catStyles.category_section} data-section='events'>
-            <div className={catStyles.category_header}>
-              <div className={catStyles.category_accent}></div>
-              <span className={catStyles.category_title}>
+          <div className={catStyles.categorySection} data-section='events'>
+            <div className={catStyles.categoryHeader}>
+              <div className={catStyles.categoryAccent}></div>
+              <span className={catStyles.categoryTitle}>
                 <FontAwesomeIcon icon={faCalendarCheck} /> Events
               </span>
-              <div className={catStyles.category_divider}></div>
-              <span className={catStyles.category_count}>
+              <div className={catStyles.categoryDivider}></div>
+              <span className={catStyles.categoryCount}>
                 <FontAwesomeIcon icon={faImages} />0 photos
               </span>
             </div>
