@@ -160,6 +160,10 @@ export type SigninState = {
     error: string | null;
 };
 
+function getDisplayUsername(email: string) {
+    return email.split("@")[0] || email;
+}
+
 export async function signin(
     _prevState: SigninState,
     formData: FormData
@@ -218,6 +222,28 @@ export async function signin(
         sameSite: "lax",
         path: "/",
     });
+    cookieStore.set("account_username", getDisplayUsername(email), {
+        httpOnly: true,
+        secure,
+        sameSite: "lax",
+        path: "/",
+    });
 
     redirect("/private/dashboard");
+}
+
+export async function signout(formData: FormData) {
+    const cookieStore = await cookies();
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
+    cookieStore.delete("user_groups");
+    cookieStore.delete("account_username");
+
+    const currentPath = formData.get("currentPath")?.toString() ?? "/";
+    const redirectPath =
+        currentPath.startsWith("/") && !currentPath.startsWith("//")
+            ? currentPath
+            : "/";
+
+    redirect(redirectPath.startsWith("/private") ? "/private/authentication" : redirectPath);
 }

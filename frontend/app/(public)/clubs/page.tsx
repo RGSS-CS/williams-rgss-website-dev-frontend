@@ -13,6 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Clubs");
 }
 
+export const instant = false;
+
 export default async function ClubsPage() {
   const clubs = await getClubs();
   const management = await getManagementSettings();

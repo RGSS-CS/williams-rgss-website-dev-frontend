@@ -7,6 +7,8 @@ import { getManagementSettings } from '@/app/_lib/site-management';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const instant = false;
+
 async function NavbarSlot() {
     const management = await getManagementSettings();
     return <Sidebar management={management} />;
