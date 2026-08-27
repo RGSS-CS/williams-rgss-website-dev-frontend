@@ -10,6 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
     return getSiteMetadata("Exec Dashboard");
 }
 
+export const instant = false;
+
 export default async function ExecDashboard() {
     return (
         <main>

@@ -17,6 +17,8 @@ type ClubPageProps = {
   }>;
 };
 
+export const instant = false;
+
 export async function generateMetadata({ params }: ClubPageProps): Promise<Metadata> {
   const { id } = await params;
   const clubId = Number(id);
@@ -58,7 +60,6 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
   const categories = (club.categories ?? []).filter((category) => category?.trim());
   const hasCategories = categories.length > 0;
-  const primaryCategory = hasCategories ? categories[0] : null;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
