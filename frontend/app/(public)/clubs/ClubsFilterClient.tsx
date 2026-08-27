@@ -8,10 +8,10 @@ import type { Club } from "@/app/_lib/club";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 
-import ResponsiveFilterPanel from "@/app/(public)/_components/FilterPanel";
-import ClubSearchInput from "./_components/ClubSearchInput";
-import ClubsFilterControls, { type CategoryFilter } from "./_components/ClubsFilterControls";
-import ResetFiltersButton from "./_components/ResetFiltersButton";
+import MobileFilterPanel from "@/app/(public)/_components/MobileFilterPanel";
+import ClubSearchInput from "./_components/SearchInput";
+import ClubsFilterControls, { type CategoryFilter } from "./_components/Filterbar";
+import ResetFiltersButton from "./_components/ResetFilterButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -291,7 +291,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
 
   return (
     <div className='sticky-wrapper'>
-      <ResponsiveFilterPanel>
+      <MobileFilterPanel>
         <ClubsFilterControls
           categories={categoryFilters}
           activeCategory={activeCategory}
@@ -312,7 +312,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
           Showing {filteredClubs.length} club
           {filteredClubs.length === 1 ? "" : "s"}
         </span>
-      </ResponsiveFilterPanel>
+      </MobileFilterPanel>
 
       <div className={styles.mobileResultsBar}>
         <span

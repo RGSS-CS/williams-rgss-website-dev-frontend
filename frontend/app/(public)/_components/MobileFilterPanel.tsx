@@ -8,12 +8,12 @@ import sidebarStyles from "@/app/(public)/_styles/sections/filter-sidebar.module
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-type ResponsiveFilterPanelProps = {
+type MobileFilterPanelProps = {
     children: React.ReactNode;
 };
 
-export default function ResponsiveFilterPanel(
-    { children }: ResponsiveFilterPanelProps
+export default function MobileFilterPanel(
+    { children }: MobileFilterPanelProps
 ) {
     const [open, setOpen] = useState(false);
 
