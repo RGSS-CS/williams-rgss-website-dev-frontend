@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const management = await getManagementSettings();
   const pageManagement = await getPageManagementSettings("HM");
+  const schoolYear = await getSchoolYear();
   const [mapsUrl] = SchoolLocation({ management });
 
   return (
@@ -44,7 +45,7 @@ export default async function Page() {
           <div className='hero_left'>
             <div className={styles.heroTag}>
               <p>
-                {management?.councilName} {getSchoolYear()}
+                {management?.councilName} {schoolYear}
               </p>
             </div>
             <div className='hero_title'>

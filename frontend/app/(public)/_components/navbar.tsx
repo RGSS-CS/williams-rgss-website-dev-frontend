@@ -23,7 +23,7 @@ const links = [
     {
         href: "/private/authentication",
         icon: <FontAwesomeIcon icon={faArrowRightToBracket} />,
-        label: "Login",
+        label: "Login/Register",
     },
 ];
 
