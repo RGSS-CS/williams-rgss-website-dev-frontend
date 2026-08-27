@@ -8,10 +8,10 @@ import type { Club } from "@/app/_lib/club";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
 
-import MobileFilterPanel from "@/app/(public)/_components/MobileFilterPanel";
-import ClubSearchInput from "./_components/SearchInput";
-import ClubsFilterControls, { type CategoryFilter } from "./_components/Filterbar";
-import ResetFiltersButton from "./_components/ResetFilterButton";
+import MobileFilterPanel from "@/app/(public)/_components/mobileFilterPanel";
+import ClubSearchInput from "./_components/searchInput";
+import ClubsFilterControls, { type CategoryFilter } from "./_components/filterbar";
+import ResetFiltersButton from "./_components/resetFilterButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

@@ -5,11 +5,11 @@ import styles from "@/app/private/authentication/styles.module.css";
 import { signup, SignupState } from "@/app/private/authentication/_methods/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import StudentNumberField from "./StudentNumberField";
-import NameField from "./NameField";
+import StudentNumberField from "./studentNumberField";
+import NameField from "./nameField";
 import EmailField from "./emailField";
-import PasswordField from "./PasswordField";
-import ConfirmPasswordField from "./ConfirmPasswordField";
+import PasswordField from "./passwordField";
+import ConfirmPasswordField from "./confirmPasswordField";
 import Capcha from "@/app/_components/captcha";
 
 const initialState: SignupState = { error: null };
