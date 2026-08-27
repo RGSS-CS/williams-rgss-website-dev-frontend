@@ -257,7 +257,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
           </div>
         </section>
       ) : (
-        <span className={styles_modules.loginWarn}><h3><strong>You must be logged in to view the club's joining information</strong></h3></span>
+        <span className={styles_modules.loginWarn}><h3><strong>You must be logged in to view the club&apos;s joining information</strong></h3></span>
       )}
     </main>
   );

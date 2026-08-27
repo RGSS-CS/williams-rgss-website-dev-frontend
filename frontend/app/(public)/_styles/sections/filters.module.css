@@ -1,6 +1,6 @@
 /* Shared filter bars */
 
-.filter_bar_container {
+.filterBarContainer {
     background: var(--white);
     border-bottom: 5px solid var(--school-tertiary);
     top: var(--navbar-height);
@@ -9,7 +9,7 @@
     z-index: 80;
 }
 
-.filter_bar {
+.filterBar {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0.85rem 2.5rem;
@@ -19,7 +19,7 @@
     flex-wrap: wrap;
 }
 
-.filter_label {
+.filterLabel {
     font-weight: 700;
     font-size: 0.75rem;
     letter-spacing: 0.1em;
@@ -29,11 +29,11 @@
     white-space: nowrap;
 }
 
-.filter_label i {
+.filterLabel i {
     margin-right: 4px;
 }
 
-.filter_chip {
+.filterChip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -49,42 +49,30 @@
     letter-spacing: 0.02em;
 }
 
-.filter_chip:hover {
+.filterChip:hover {
     border-color: var(--school-tertiary);
     color: var(--school-primary-dark);
 }
 
-.filter_chip.active {
+.filterChip[data-active="true"] {
     background: var(--school-primary);
     border-color: var(--school-primary);
     color: white;
 }
 
-.filter_chip_active,
-.filter_chip.filter_chip_active,
-.filter_chip_active:hover,
-.filter_chip.filter_chip_active:hover {
-    background: var(--school-primary);
-    border-color: var(--school-primary);
-    color: white;
-}
-
-.filter_chip_active_gold,
-.filter_chip.filter_chip_active_gold,
-.filter_chip_active_gold:hover,
-.filter_chip.filter_chip_active_gold:hover {
+.filterChip[data-active="true"][data-variant="gold"] {
     background: var(--school-tertiary);
     border-color: var(--school-tertiary);
     color: var(--school-primary);
 }
 
-.filter_divider {
+.filterDivider {
     width: 1px;
     height: 22px;
     background: var(--school-primary-light);
     margin: 0 4px;
 }
 
-.filter_toggle_btn {
+.filterToggleBtn {
     display: none;
 }

@@ -1,0 +1,56 @@
+.dashboard {
+  min-height: 100vh;
+  margin-left: 17rem;
+  background: var(--white);
+}
+
+.topbar {
+  min-height: 4rem;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.pageLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pageLink h4 { margin: 0; }
+
+.description,
+.welcome {
+  color: var(--black);
+  font-size: 0.85rem;
+}
+
+.content { padding: 2rem; }
+
+.headerContent h2 {
+  margin: 0;
+  color: var(--school-primary);
+}
+
+.addClub,
+.clubsPanel {
+  min-height: 10rem;
+  margin-top: 1.5rem;
+  border: 1px dashed var(--line);
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    margin-left: 0;
+    padding-top: var(--exec-topbar-height);
+  }
+
+  .topbar,
+  .content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

@@ -14,12 +14,12 @@ const categorySections = [
 export default function GalleryFilterContent() {
     return (
         <>
-            <span className={styles.filter_label}>
+            <span className={styles.filterLabel}>
                 <FontAwesomeIcon icon={faFilter} />
                 Filter
             </span>
             {categorySections.map((section) => (
-                <button key={section.key} className={styles.filter_chip} type="button">
+                <button key={section.key} className={styles.filterChip} type="button">
                     {section.icon}
                     {section.label}
                 </button>

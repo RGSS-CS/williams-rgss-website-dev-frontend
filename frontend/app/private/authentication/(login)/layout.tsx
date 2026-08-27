@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Footer from "@/app/(public)/_components/footer";
-import Navbar from "@/app/(public)/_components/Nvbar";
+import Navbar from "@/app/(public)/_components/navbar";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import styles from "@/app/private/authentication/styles.module.css";
 
@@ -13,9 +13,7 @@ export default async function LoginLayout({ children }: { children: React.ReactN
 
   return (
     <>
-      <Suspense>
-        <Navbar management={management} />
-      </Suspense>
+      <Navbar management={management} />
       {children}
       <div className={styles.footerWrap}>
         <Suspense>

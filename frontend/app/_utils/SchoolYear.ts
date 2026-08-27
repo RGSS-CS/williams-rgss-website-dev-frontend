@@ -3,11 +3,7 @@ export async function getSchoolYear() {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
-    if (month >= 8) {
-        var school_year = `${year}-${year + 1}`;
-    } else {
-        var school_year = `${year - 1}-${year}`;
-    }
+    const schoolYear = month >= 8 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
 
-    return (school_year);
+    return schoolYear;
 }

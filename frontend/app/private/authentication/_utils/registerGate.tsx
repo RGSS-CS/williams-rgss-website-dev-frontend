@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { verifyJoinCode } from '@/app/private/authentication/_utils/verifyJoinCode';
-import SignupFormClient from './signupForm';
+import SignupFormClient from '@/app/private/authentication/register/[client]/_components/signupForm';
 
 type RegisterGateProps = {
     params: Promise<{ client: string }>;

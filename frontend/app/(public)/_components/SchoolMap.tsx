@@ -183,7 +183,7 @@ export default function SchoolMap({
     <div className={styles.schoolMapWrap}>
       <div
         ref={containerRef}
-        className={`${styles.schoolMap} ${className ?? ""}`}
+        className={className ?? styles.schoolMap}
         role="img"
         aria-label={
           primaryAddress

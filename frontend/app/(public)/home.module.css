@@ -58,25 +58,23 @@
 .heroBtnPrimary {
     display: inline-flex;
     align-items: center;
+    gap: 0.6rem;
     background: var(--school-tertiary);
     font-weight: 750;
     font-size: 1rem;
-    padding: 0.1rem 2rem;
+    padding: 0.7rem 2rem;
     border-radius: 60px;
     box-shadow: 0 6px 0 var(--school-tertiary-dark), 0 4px 20px rgba(0, 0, 0, 0.25);
     transition: 0.1s ease;
     border: none;
     cursor: pointer;
+    color: var(--school-primary);
+    text-decoration: none;
 }
 
 .heroBtnPrimary:hover {
     transform: translateY(3px);
     box-shadow: 0 3px 0 var(--school-tertiary-dark), 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.heroBtnText {
-    color: var(--school-primary);
-    text-decoration: none;
 }
 
 .heroBtnSecondary {
@@ -87,20 +85,17 @@
     border: 1.5px solid rgba(255, 255, 255, 0.35);
     font-weight: 600;
     font-size: 0.95rem;
-    padding: 0.3rem 2rem;
+    padding: 0.7rem 2rem;
     border-radius: 60px;
     transition: all 0.18s;
     cursor: pointer;
+    color: var(--white);
+    text-decoration: none;
 }
 
 .heroBtnSecondary:hover {
     border-color: var(--school-tertiary);
     color: var(--school-tertiary);
-}
-
-.heroBtnTextAlt {
-    color: var(--white);
-    text-decoration: none;
 }
 
 .heroBadgeImage {
@@ -117,8 +112,24 @@
     display: flex;
 }
 
+.heroShape {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 38%;
+    height: 100%;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--school-secondary) 35%, transparent) 0%, transparent 70%);
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+}
+
 .sectionWrap {
     padding: 3rem 4.5rem 0;
+}
+
+.sectionContent {
+    max-width: 1500px;
+    margin: 0 auto;
 }
 
 .sectionTitleRow {
@@ -151,12 +162,34 @@
     overflow: hidden;
 }
 
-.map_section {
+.cardRow {
+    min-height: 1px;
+}
+
+.mapSection {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
     z-index: 0;
     margin-bottom: 1.8rem;
+}
+
+.sectionDivider {
+    height: 1px;
+    background: var(--line);
+    margin-bottom: 1.6rem;
+}
+
+.mapLink {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: var(--school-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.mapLink:hover {
+    text-decoration: underline;
 }
 
 
@@ -165,7 +198,7 @@
         display: none !important;
     }
 
-    .hero_shape {
+    .heroShape {
         display: none !important;
     }
 
@@ -182,7 +215,7 @@
         font-size: clamp(1.2rem, 3vw, 1.8rem);
     }
 
-    .heroBtnPrimary {
+    .heroButtons {
         margin-bottom: 0.8rem;
     }
 }
