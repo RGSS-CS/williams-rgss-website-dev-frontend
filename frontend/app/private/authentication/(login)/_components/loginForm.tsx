@@ -38,7 +38,7 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
             <p>Sign in to access the {management.councilName} Dashboard</p>
           </div>
           <div className="authFieldGroup">
-            <label htmlFor="student_number">YRDSB Email</label>
+            <label htmlFor="student_number">School Email</label>
             <div className="authInputWrap">
               <FontAwesomeIcon icon={faEnvelope} className="authIcon" />
               <input id="student_number" name="student_number" type="email" placeholder="Student Number/Teacher Email" />
@@ -58,7 +58,7 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
           </div>
           {showCaptcha && <Capcha />}
           <button className="authSubmitButton" type="submit" id="loginBtn">
-            <FontAwesomeIcon icon={faArrowRightToBracket} className="authIcon" />
+            <FontAwesomeIcon icon={faArrowRightToBracket} className="authSubmitIcon" />
             Continue
           </button>
           <div className="authSignupNote">
