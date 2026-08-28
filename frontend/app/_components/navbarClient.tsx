@@ -17,8 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import type { Management } from "@/app/_lib/site-management";
 import { signout } from "@/app/private/authentication/_methods/auth";
-
-import styles from "@/app/(public)/_styles/base/navigation.module.css";
+import styles from "./navbar.module.css";
 
 type AuthUser = {
   username: string;
