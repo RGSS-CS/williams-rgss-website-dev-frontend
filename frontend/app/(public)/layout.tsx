@@ -4,15 +4,12 @@ import Navbar from "@/app/_components/navbar";
 import { Suspense } from "react";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
-import NavbarSkeleton from "../_components/skeletons/navbarSkeleton";
+
+export const instant = false;
 
 async function NavbarSlot() {
   const management = await getManagementSettings();
-  return (
-    <Suspense fallback={<NavbarSkeleton/>}>
-      <Navbar management={management} />
-    </Suspense>
-  );
+  return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
@@ -26,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <>
       <NavbarSlot />
       {children}
-      <FooterSlot />
+      <Suspense fallback={null}>
+        <FooterSlot />
+      </Suspense>
     </>
   );
 }

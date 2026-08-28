@@ -5,8 +5,8 @@ import Footer from "@/app/_components/footer";
 import Navbar from "@/app/_components/navbar";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
-import { Suspense } from "react";
-import NavbarSkeleton from "@/app/_components/skeletons/navbarSkeleton";
+
+export const instant = false;
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -15,11 +15,7 @@ export const metadata: Metadata = {
 
 async function NavbarSlot() {
   const management = await getManagementSettings();
-  return (
-    <Suspense fallback={<NavbarSkeleton/>}>
-      <Navbar management={management} />
-    </Suspense>
-  );
+  return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
@@ -28,9 +24,7 @@ async function FooterSlot() {
   return <Footer management={management} schoolYear={schoolYear} />;
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const management = await getManagementSettings();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className='authContent'>
       <NavbarSlot />
