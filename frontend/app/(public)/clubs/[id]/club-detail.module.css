@@ -641,6 +641,7 @@
     text-align: center;
     border-radius: 10px;
     border: var(--line) 3px solid;
+    border-top: var(--school-tertiary) solid 10px;
 }
 
 .whyJoinCopy {
