@@ -14,7 +14,7 @@ function getApiBaseUrl(): string {
 
 export async function verifyCode(code: string): Promise<boolean> {
   "use cache";
-  cacheLife("minutes");
+  cacheLife("hours");
 
   if (!code.trim()) {
     return false;

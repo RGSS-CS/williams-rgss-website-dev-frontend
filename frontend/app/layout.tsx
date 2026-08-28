@@ -1,6 +1,13 @@
-import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } from "next/font/google";
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import {
+  Montserrat,
+  Jost,
+  Space_Grotesk,
+  Figtree,
+  IBM_Plex_Sans,
+  Quicksand,
+} from "next/font/google";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
@@ -12,93 +19,97 @@ import type { Metadata } from "next";
 config.autoAddCss = false;
 
 async function getThemeVariables(): Promise<React.CSSProperties> {
-    'use cache';
-    cacheLife('minutes');
-    cacheTag('management');
+  "use cache";
+  cacheLife("hours");
+  cacheTag("management");
 
-    const management = await getManagementSettings();
+  const management = await getManagementSettings();
 
-    const primary = management?.schoolPrimaryColor ?? "#000000";
-    const secondary = management?.schoolSecondaryColor ?? "#000000";
-    const tertiary = management?.schoolTertiaryColor ?? "#000000";
+  const primary = management?.schoolPrimaryColor ?? "#000000";
+  const secondary = management?.schoolSecondaryColor ?? "#000000";
+  const tertiary = management?.schoolTertiaryColor ?? "#000000";
 
-    const primaryLight = darkenHex(primary, -20);
-    const tertiaryDark = darkenHex(tertiary, 20);
+  const primaryLight = darkenHex(primary, -20);
+  const tertiaryDark = darkenHex(tertiary, 20);
 
-    return {
-        "--school-primary": primary,
-        "--school-primary-light": primaryLight,
-        "--school-secondary": secondary,
-        "--school-tertiary": tertiary,
-        "--school-tertiary-dark": tertiaryDark,
-    } as React.CSSProperties;
-};
+  return {
+    "--school-primary": primary,
+    "--school-primary-light": primaryLight,
+    "--school-secondary": secondary,
+    "--school-tertiary": tertiary,
+    "--school-tertiary-dark": tertiaryDark,
+  } as React.CSSProperties;
+}
 
 const montserrat = Montserrat({
-    subsets: ["latin"],
-    variable: "--font-montserrat",
-    weight: ["400", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["400", "600", "700", "800"],
 });
 
 const jost = Jost({
-    subsets: ["latin"],
-    variable: "--font-jost",
-    weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-jost",
+  weight: ["400", "600", "700"],
 });
 
 const spaceGrotesk = Space_Grotesk({
-    subsets: ["latin"],
-    variable: "--font-space-grotesk",
-    weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600", "700"],
 });
 
 const figtree = Figtree({
-    subsets: ["latin"],
-    variable: "--font-figtree",
-    weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  weight: ["400", "500", "600", "700"],
 });
 
 const ibmPlexSans = IBM_Plex_Sans({
-    subsets: ["latin"],
-    variable: "--font-ibm-plex-sans",
-    weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
 const quicksand = Quicksand({
-    subsets: ["latin"],
-    variable: "--font-quicksand",
-    weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+  weight: ["400", "500", "600", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-    'use cache: remote';
-    cacheLife('minutes');
-    cacheTag('management');
-    const management = await getManagementSettings();
- 
-    return {
-        icons: management?.croppedFavicon
-            ? { icon: management.croppedFavicon }
-            : undefined,
-    };
+  "use cache: remote";
+  cacheLife("hours");
+  cacheTag("management");
+  const management = await getManagementSettings();
+
+  return {
+    icons: management?.croppedFavicon ? { icon: management.croppedFavicon } : undefined,
+  };
 }
 
-export default async function RootLayout(
-    { children }: { children: React.ReactNode; }
-) {
-    const themeStyle = await getThemeVariables();
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const themeStyle = await getThemeVariables();
 
-    return (
-        <html
-            lang="en"
-            className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
-            style={themeStyle}>
-            <head>
-            </head>
-            <body>
-                <RegisterSW />
-                {children}
-            </body>
-        </html>
-    );
-};
+  return (
+    <html
+      lang='en'
+      className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+      style={themeStyle}
+    >
+      <head></head>
+      <body>
+        <RegisterSW />
+        <div className='notOfficalContainer'>
+          <div className='notOffcial'>
+            <h1>
+              This website is currently not officially assosiated with Dr. GW Williams S.S or
+              Richmond Green S.S
+            </h1>
+          </div>
+        </div>
+        {children}
+      </body>
+    </html>
+  );
+}

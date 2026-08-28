@@ -56,3 +56,19 @@ h5 {
 p {
 	font-family: "Acumin variable", sans-serif;
 }
+
+.notOffcial {
+	color: red;
+	width:70%;
+	text-align: center;
+	margin: 0 auto;
+	background: black;
+	font-size: 14px;
+}
+
+.notOfficalContainer {
+	position: fixed;
+	bottom:0;
+	width: 100%;
+	z-index: 10000;
+}

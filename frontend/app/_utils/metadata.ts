@@ -3,7 +3,7 @@ import { getManagementSettings } from "../_lib/site-management";
 
 export async function getSiteMetadata(pageTitle?: string) {
     "use cache";
-    cacheLife("minutes");
+    cacheLife("hours");
     cacheTag('management');
 
     const management = await getManagementSettings();
