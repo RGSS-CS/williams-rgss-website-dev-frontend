@@ -263,15 +263,6 @@
   margin-top: 0.75rem;
 }
 
-.loadingApplyEyebrow,
-.loadingApplyTitle,
-.loadingApplyText,
-.loadingApplyRow,
-.loadingApplyCode,
-.loadingApplyButton {
-  background: rgba(255, 255, 255, 0.18);
-}
-
 .loadingApplyEyebrow {
   width: 7rem;
   height: 0.75rem;
