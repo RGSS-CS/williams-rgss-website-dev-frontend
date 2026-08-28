@@ -18,6 +18,18 @@ export type Gallery = {
   photos: Photo[];
 };
 
+export type WhyJoinReasonApiRecord = {
+  title: string;
+  description: string;
+  index: number;
+};
+
+export type WhyJoinReason = {
+  title: string;
+  description: string;
+  index: number;
+};
+
 export type ClubApiRecord = {
   id: number;
   name: string;
@@ -34,6 +46,7 @@ export type ClubApiRecord = {
   application_form_link: string | null;
   accepting_applicants: string;
   join_instructions: string;
+  why_join: WhyJoinReasonApiRecord[] | null;
   gallery: Gallery | null;
 };
 
@@ -53,6 +66,7 @@ export type Club = {
   applicationFormLink: string;
   acceptingApplicants: string;
   joinInstructions: string;
+  whyJoin: WhyJoinReason[];
   gallery: Gallery | null;
 };
 
@@ -105,6 +119,21 @@ function formatAcceptingApplicants(acceptingApplicants: string): string {
   return "Open to all";
 };
 
+function normalizeWhyJoin(whyJoin: WhyJoinReasonApiRecord[] | null | undefined): WhyJoinReason[] {
+  if (!whyJoin) {
+    return [];
+  };
+
+  return [...whyJoin]
+    .filter((reason) => reason?.title?.trim())
+    .sort((a, b) => a.index - b.index)
+    .map((reason) => ({
+      title: reason.title,
+      description: reason.description,
+      index: reason.index,
+    }));
+};
+
 function normalizeClub(record: ClubApiRecord): Club {
   return {
     id: record.id,
@@ -122,6 +151,7 @@ function normalizeClub(record: ClubApiRecord): Club {
     applicationFormLink: record.application_form_link ?? '',
     acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
     joinInstructions: record.join_instructions,
+    whyJoin: normalizeWhyJoin(record.why_join),
     gallery: record.gallery,
   };
 };
