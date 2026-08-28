@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import {
   Montserrat,
   Jost,
@@ -11,6 +12,7 @@ import {
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./_components/navbar";
+import NavbarSkeleton from "./_components/skeletons/navbarSkeleton";
 import Footer from "./_components/footer";
 import { getManagementSettings } from "./_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
@@ -91,6 +93,10 @@ async function getThemeStyle(): Promise<string> {
   }`;
 }
 
+async function NavbarSlot({ management }: { management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>> }) {
+  return <Navbar management={management} />;
+}
+
 export default async function NotFound() {
   const management = await getManagementSettings();
   if (!management) return null;
@@ -107,7 +113,9 @@ export default async function NotFound() {
         <style id='school-theme' dangerouslySetInnerHTML={{ __html: themeStyle }} />
       </head>
       <body>
-        <Navbar management={management} />
+        <Suspense fallback={<NavbarSkeleton />}>
+          <NavbarSlot management={management} />
+        </Suspense>
         <div className={styles.content}>
           <div className={styles.gif_stage}>
             <div className={styles.overlay_404}>
