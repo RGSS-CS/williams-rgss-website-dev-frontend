@@ -589,3 +589,116 @@
         bottom: 10px;
     }
 }
+
+.whyJoinWrap {
+    background: var(--white);
+}
+
+.whyJoinWrap .section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(3.5rem, 6vw, 5rem) clamp(1rem, 4vw, 4rem);
+}
+
+.whyJoinHeading {
+    margin-bottom: clamp(2.25rem, 5vw, 3.5rem);
+    text-align: center;
+}
+
+.whyJoinHeading h2 {
+    margin: 0;
+    color: var(--black);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+}
+
+.whyJoinList {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    height: fit-content;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.whyJoinList[data-count="1"] {
+    grid-template-columns: minmax(0, 560px);
+}
+
+.whyJoinList[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 820px;
+    margin-inline: auto;
+}
+
+.whyJoinItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    height: auto;
+    padding: 2.5rem 1.25rem 1rem;
+    text-align: center;
+    border-radius: 10px;
+    border: var(--line) 3px solid;
+}
+
+.whyJoinCopy {
+    min-width: 0;
+}
+
+.whyJoinIcon {
+    display: block;
+    min-height: 3rem;
+    margin-bottom: 1.15rem;
+    font-size: 2.75rem;
+    line-height: 1;
+}
+
+.whyJoinCopy h3 {
+    margin: 0;
+    color: var(--school-primary);
+    font-size: 1.8rem;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.whyJoinCopy p {
+    margin-top: 0.5rem;
+    color: var(--school-primary);
+    line-height: 1.7;
+    white-space: pre-line;
+    opacity: 0.7;
+    font-size: 1.3rem;
+}
+
+@media (max-width: 900px) {
+    .whyJoinList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .whyJoinList[data-count="1"] {
+        grid-template-columns: minmax(0, 560px);
+    }
+}
+
+@media (max-width: 720px) {
+    .whyJoinWrap .section {
+        padding: 2.5rem 1rem;
+    }
+
+    .whyJoinList {
+        grid-template-columns: 1fr;
+        max-width: none;
+    }
+
+    .whyJoinList[data-count="1"],
+    .whyJoinList[data-count="2"] {
+        grid-template-columns: 1fr;
+        max-width: none;
+    }
+
+    .whyJoinItem {
+        gap: 0.75rem;
+    }
+}

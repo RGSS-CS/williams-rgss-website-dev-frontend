@@ -216,6 +216,36 @@ async function ClubInfo({ clubId }: { clubId: number }) {
   );
 }
 
+async function ClubWhyJoin({ clubId }: { clubId: number }) {
+  const club = await getClubForPage(clubId);
+  const reasons = club.whyJoin ?? [];
+
+  if (reasons.length === 0) {
+    return null;
+  };
+
+  return (
+    <div className={styles_modules.whyJoinWrap}>
+      <section className={styles_modules.section}>
+        <div className={styles_modules.whyJoinHeading}>
+          <h2>Why Join?</h2>
+        </div>
+
+        <div className={styles_modules.whyJoinList} data-count={reasons.length}>
+          {reasons.map((reason) => (
+            <article className={styles_modules.whyJoinItem} key={`${reason.index}-${reason.title}`}>
+              <div className={styles_modules.whyJoinCopy}>
+                <h3>{reason.title}</h3>
+                <p>{reason.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
 async function ClubApply({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
   const meetingDay = formatDay(club.dayOfMeeting);
@@ -313,6 +343,9 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
       </Suspense>
 
       <div className={`${styles_modules.divider} category_divider`}></div>
+      <Suspense fallback={null}>
+        <ClubWhyJoin clubId={clubId} />
+      </Suspense>
 
       <Suspense fallback={null}>
         <ClubInfo clubId={clubId} />
