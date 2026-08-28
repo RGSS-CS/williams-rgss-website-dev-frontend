@@ -3,7 +3,7 @@ import { useActionState, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey, faUser } from "@fortawesome/free-solid-svg-icons";
 import { signup, SignupState } from "@/app/private/authentication/_methods/auth";
-import Capcha from "@/app/_components/captcha";
+import Captcha from "@/app/_components/captcha";
 
 const initialState: SignupState = { error: null };
 
@@ -80,7 +80,7 @@ export default function SignupFormClient({ showCaptcha, code }: SignupFormClient
         <span className="warning"><h4><strong>DO NOT USE YOUR SCHOOL PASSWORD</strong></h4></span>
         <PasswordField id="password" label="Password" value={password} onChange={setPassword} />
         <PasswordField id="confirm_password" label="Confirm Password" value={confirmPassword} onChange={setConfirmPassword} />
-        {showCaptcha && <Capcha />}
+        {showCaptcha && <Captcha />}
 
         <button className="authSubmitButton" type="submit" id="loginBtn" disabled={isPending}>
           <FontAwesomeIcon icon={faArrowRightToBracket} className="authSubmitIcon" />

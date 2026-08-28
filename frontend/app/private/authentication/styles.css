@@ -183,6 +183,30 @@
   font-weight: 600;
 }
 
+.authCaptcha {
+  margin-bottom: 1rem;
+}
+
+.authCaptcha cap-widget {
+  --cap-widget-width: 100%;
+  --cap-border-radius: 0.5625rem;
+  --cap-focus-ring: var(--school-primary);
+  --cap-color: var(--school-primary);
+
+  display: block;
+  width: 100%;
+  min-height: 58px;
+}
+
+.authCaptchaLoading {
+  width: 100%;
+  height: 58px;
+  box-sizing: border-box;
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: 0.5625rem;
+}
+
 @media (max-width: 600px) {
   .authBody,
   .registrationPage {

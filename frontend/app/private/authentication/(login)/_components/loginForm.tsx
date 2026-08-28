@@ -5,7 +5,7 @@ import { useActionState, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey } from "@fortawesome/free-solid-svg-icons";
 import { signin } from "@/app/private/authentication/_methods/auth";
-import Capcha from "@/app/_components/captcha";
+import Captcha from "@/app/_components/captcha";
 import type { Management } from "@/app/_lib/site-management";
 
 type LoginFormProps = {
@@ -58,7 +58,7 @@ export default function LoginForm({ management, showCaptcha }: LoginFormProps) {
             </div>
           </div>
           {state.error && <div className="authFormError" role="alert">{state.error}</div>}
-          {showCaptcha && <Capcha />}
+          {showCaptcha && <Captcha />}
           <button className="authSubmitButton" type="submit" id="loginBtn" disabled={isPending}>
             <FontAwesomeIcon icon={faArrowRightToBracket} className="authSubmitIcon" />
             {isPending ? "Signing in..." : "Continue"}
