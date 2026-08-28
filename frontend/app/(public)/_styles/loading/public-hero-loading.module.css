@@ -1,0 +1,216 @@
+.skeletonBlock {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.skeletonBlock::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  animation: skeletonShimmer 1.35s ease-in-out infinite;
+}
+
+.tickerBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--school-primary-light);
+  overflow: hidden;
+  border-bottom: 3px solid var(--school-tertiary);
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.tickerHeader {
+  background: var(--school-tertiary);
+  width: 120px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.tickerLine {
+  width: min(70vw, 520px);
+  height: 0.85rem;
+  margin-left: 1rem;
+}
+
+.heroBadgeImage {
+  background: var(--school-secondary);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  border-radius: 0 0 0 90px;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.badgeImage {
+  width: 260px;
+  height: 230px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.homeHeroShape {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--school-secondary) 35%, transparent) 0%,
+    transparent 70%
+  );
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.loadingHeroTag {
+  width: 220px;
+  height: 24px;
+  margin-bottom: 1.2rem;
+  background: rgba(219, 152, 32, 0.35);
+}
+
+.loadingHeroTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 520px;
+  margin-top: 10px;
+}
+
+.loadingHeroTitle .skeletonBlock {
+  width: min(68vw, 450px);
+  height: clamp(2.8rem, 6vw, 5rem);
+}
+
+.loadingHeroTitle .skeletonBlock:last-child {
+  width: min(42vw, 280px);
+  background: rgba(219, 152, 32, 0.65);
+}
+
+.loadingHeroSubtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(680px, 100%);
+  margin: 1.5rem 0 2rem;
+  padding-left: 1.2rem;
+  border-left: 5px solid var(--school-tertiary);
+}
+
+.loadingHeroSubtitle .skeletonBlock {
+  height: 1.2rem;
+}
+
+.loadingHeroSubtitle .skeletonBlock:first-child {
+  width: min(100%, 600px);
+}
+
+.loadingHeroSubtitle .skeletonBlock:last-child {
+  width: min(70%, 390px);
+}
+
+.loadingSearch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  max-width: 680px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.9rem 1.2rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.loadingSearch .skeletonBlock {
+  flex: 1;
+  height: 0.95rem;
+}
+
+.loadingSearchIcon {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.loadingHeroButtons {
+  width: min(100%, 320px);
+  height: 44px;
+}
+
+.heroStats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2.5rem;
+  margin-top: 2.8rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.loadingStatNumber {
+  width: 3.4rem;
+  height: 2rem;
+  margin-bottom: 0.55rem;
+  background: rgba(219, 152, 32, 0.62);
+}
+
+.loadingStatLabel {
+  width: 6rem;
+  height: 0.75rem;
+}
+
+@keyframes skeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroBadgeImage,
+  .homeHeroShape {
+    display: none !important;
+  }
+
+  .loadingHeroTitle .skeletonBlock,
+  .loadingHeroTitle .skeletonBlock:last-child {
+    width: 100%;
+  }
+
+  .heroStats {
+    gap: 1.5rem;
+  }
+}

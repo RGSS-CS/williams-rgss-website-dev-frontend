@@ -7,6 +7,8 @@ import GalleryFilterContent from "./_components/galleryFilterControls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
+import { Suspense } from "react";
+import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 
 //ICONS
 import {
@@ -25,33 +27,42 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Gallery");
 }
 
-export default async function GalleryPage() {
+async function GalleryHero() {
   const pageManagement = await getPageManagementSettings("GL");
+
   return (
-    <main>
-      <div className='hero'>
-        <div className='hero_shape'></div>
-        <div className='hero_inner'>
-          <div className='hero_left'>
-            <div className='hero_title'>
-              <h1>{pageManagement?.title}</h1>
-              <h2>{pageManagement?.subtitle}</h2>
-            </div>
-            <div className='hero_subtitle'>
-              <p>{pageManagement?.tagline}</p>
-            </div>
-            <div className='search_container'>
-              <FontAwesomeIcon icon={faSearch} className='search_container_icon' />
-              <input
-                className='search_input'
-                id='gallery_search'
-                type='text'
-                placeholder='Search by club name, event, people...'
-              ></input>
-            </div>
+    <div className='hero'>
+      <div className='hero_shape'></div>
+      <div className='hero_inner'>
+        <div className='hero_left'>
+          <div className='hero_title'>
+            <h1>{pageManagement?.title}</h1>
+            <h2>{pageManagement?.subtitle}</h2>
+          </div>
+          <div className='hero_subtitle'>
+            <p>{pageManagement?.tagline}</p>
+          </div>
+          <div className='search_container'>
+            <FontAwesomeIcon icon={faSearch} className='search_container_icon' />
+            <input
+              className='search_input'
+              id='gallery_search'
+              type='text'
+              placeholder='Search by club name, event, people...'
+            ></input>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function GalleryPage() {
+  return (
+    <main>
+      <Suspense fallback={<PublicHeroLoading search titleLines={1} />}>
+        <GalleryHero />
+      </Suspense>
       <div className='sticky-wrapper'>
         <ResponsiveFilterPanel>
           <GalleryFilterContent />

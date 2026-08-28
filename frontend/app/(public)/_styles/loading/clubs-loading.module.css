@@ -1,0 +1,140 @@
+.skeletonBlock {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.skeletonBlock::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  animation: skeletonShimmer 1.35s ease-in-out infinite;
+}
+
+.loadingFilterLabel,
+.loadingFilterChip,
+.loadingResultsCount,
+.loadingCategoryTitle,
+.loadingCategoryCount,
+.loadingClubCard .skeletonBlock,
+.loadingCtaTitle,
+.loadingCtaText {
+  background: #e7edf4;
+}
+
+.loadingFilterLabel {
+  width: 5.8rem;
+  height: 0.9rem;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.loadingFilterChip {
+  width: 5.6rem;
+  height: 2rem;
+  border-radius: 40px;
+}
+
+.loadingFilterChip:nth-of-type(3n) {
+  width: 7rem;
+}
+
+.loadingResultsCount {
+  width: 7.5rem;
+  height: 0.9rem;
+  margin-left: auto;
+  border-radius: 4px;
+}
+
+.loadingCategoryTitle {
+  width: min(42vw, 220px);
+  height: 1.55rem;
+}
+
+.loadingCategoryCount {
+  width: 5rem;
+  height: 1.4rem;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.loadingClubCard {
+  min-height: 286px;
+  cursor: default;
+}
+
+.loadingClubCard:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--line);
+}
+
+.loadingClubCard:hover::before {
+  transform: scaleX(0);
+}
+
+.loadingClubName {
+  width: 72%;
+  height: 1.55rem;
+  margin-bottom: 1.2rem;
+}
+
+.loadingMetaRow {
+  width: 82%;
+  height: 0.9rem;
+}
+
+.loadingMetaRow:last-child {
+  width: 92%;
+}
+
+.loadingDescription {
+  width: 100%;
+  height: 5.7rem;
+  margin-bottom: 1.3rem;
+  border-radius: 12px;
+}
+
+.loadingCardAction {
+  width: 8rem;
+  height: 1.1rem;
+}
+
+.loadingCtaTitle {
+  width: min(100%, 520px);
+  height: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0.25rem auto 0.8rem;
+}
+
+.loadingCtaText {
+  width: min(100%, 470px);
+  height: 1rem;
+  margin: 0 auto 0.7rem;
+}
+
+@keyframes skeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .loadingResultsCount {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .loadingFilterChip:nth-of-type(n + 6) {
+    display: none;
+  }
+}

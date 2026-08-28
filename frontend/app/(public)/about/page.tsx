@@ -3,29 +3,40 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { getSiteMetadata } from '@/app/_utils/metadata';
 import { getPageManagementSettings } from '@/app/_lib/page-management';
+import { Suspense } from 'react';
+import PublicHeroLoading from '@/app/(public)/_components/publicHeroLoading';
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("About");
 }
 
-export default async function AboutPage() {
+async function AboutHero() {
     const pageManagement = await getPageManagementSettings("AB");
+
     return (
-        <main>
-            <div className="hero">
-                <div className="hero_shape"></div>
-                <div className="hero_inner">
-                    <div className="hero_left">
-                        <div className="hero_title">
-                            <h1>{pageManagement?.title}</h1>
-                            <h2>{pageManagement?.subtitle}</h2>
-                        </div>
-                        <div className="hero_subtitle">
-                            <p>{pageManagement?.tagline}</p>
-                        </div>
+        <div className="hero">
+            <div className="hero_shape"></div>
+            <div className="hero_inner">
+                <div className="hero_left">
+                    <div className="hero_title">
+                        <h1>{pageManagement?.title}</h1>
+                        <h2>{pageManagement?.subtitle}</h2>
+                    </div>
+                    <div className="hero_subtitle">
+                        <p>{pageManagement?.tagline}</p>
                     </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+export default function AboutPage() {
+    return (
+        <main>
+            <Suspense fallback={<PublicHeroLoading />}>
+                <AboutHero />
+            </Suspense>
 
             <section className={styles.sectionWrap}>
                 <div className={styles.sectionContent}>

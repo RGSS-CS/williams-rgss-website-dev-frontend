@@ -10,6 +10,8 @@ import { getPageManagementSettings } from "@/app/_lib/page-management";
 import TickerBar from "@/app/(public)/_components/tickerBar";
 import SchoolMap from "@/app/(public)/_components/schoolMap";
 import SchoolLocation from "@/app/_utils/formatLocation";
+import { Suspense } from "react";
+import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 
 //ICONS
 import { faCalendarAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -18,58 +20,95 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata();
 }
 
-export default async function Page() {
-  const management = await getManagementSettings();
-  const pageManagement = await getPageManagementSettings("HM");
-  const schoolYear = await getSchoolYear();
-  const [mapsUrl] = SchoolLocation({ management });
+async function HomeHero() {
+  const [management, pageManagement, schoolYear] = await Promise.all([
+    getManagementSettings(),
+    getPageManagementSettings("HM"),
+    getSchoolYear(),
+  ]);
 
   return (
-    <main>
-      <div className='hero'>
-        <TickerBar />
-        <div className={styles.heroBadgeImage}>
-          {management?.croppedSiteImage && (
-            <Image
-              src={management?.croppedSiteImage}
-              alt='Wildcat Icon'
-              width={260}
-              height={230}
-              loading='eager'
-            />
-          )}
-        </div>
+    <div className='hero'>
+      <TickerBar />
+      <div className={styles.heroBadgeImage}>
+        {management?.croppedSiteImage && (
+          <Image
+            src={management?.croppedSiteImage}
+            alt='Wildcat Icon'
+            width={260}
+            height={230}
+            loading='eager'
+          />
+        )}
+      </div>
 
-        <div className={styles.heroShape}></div>
-        <div className='hero_inner'>
-          <div className='hero_left'>
-            <div className={styles.heroTag}>
-              <p>
-                {management?.councilName} {schoolYear}
-              </p>
-            </div>
-            <div className='hero_title'>
-              <h1>{pageManagement?.title}</h1>
-              <h2>{pageManagement?.subtitle}</h2>
-            </div>
-            <div className='hero_subtitle'>
-              <p>{pageManagement?.tagline}</p>
-            </div>
+      <div className={styles.heroShape}></div>
+      <div className='hero_inner'>
+        <div className='hero_left'>
+          <div className={styles.heroTag}>
+            <p>
+              {management?.councilName} {schoolYear}
+            </p>
+          </div>
+          <div className='hero_title'>
+            <h1>{pageManagement?.title}</h1>
+            <h2>{pageManagement?.subtitle}</h2>
+          </div>
+          <div className='hero_subtitle'>
+            <p>{pageManagement?.tagline}</p>
+          </div>
 
-            <div className={styles.heroButtons}>
-              <Link href='/clubs' className={styles.heroBtnPrimary}>
-                <FontAwesomeIcon icon={faPaperPlane} />
-                <span>Our Clubs</span>
-              </Link>
+          <div className={styles.heroButtons}>
+            <Link href='/clubs' className={styles.heroBtnPrimary}>
+              <FontAwesomeIcon icon={faPaperPlane} />
+              <span>Our Clubs</span>
+            </Link>
 
-              <Link href='/events' className={styles.heroBtnSecondary}>
-                <FontAwesomeIcon icon={faCalendarAlt} />
-                <span>Upcoming Events</span>
-              </Link>
-            </div>
+            <Link href='/events' className={styles.heroBtnSecondary}>
+              <FontAwesomeIcon icon={faCalendarAlt} />
+              <span>Upcoming Events</span>
+            </Link>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+async function FindUsSection() {
+  const management = await getManagementSettings();
+  const [mapsUrl] = SchoolLocation({ management });
+
+  return (
+    <div className={styles.sectionWrap}>
+      <div className={styles.mapSection}>
+        <div className={styles.sectionDivider}></div>
+        <div className={styles.sectionTitleRow}>
+          <h2 className={styles.sectionTitle}>
+            <span className={styles.sectionTitleAccent}></span>
+            Find Us
+          </h2>
+        </div>
+        <SchoolMap locations={management?.schoolLocation ?? null} />
+        <a
+          href={mapsUrl ? mapsUrl : "#"}
+          className={styles.mapLink}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          View on Google Maps
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <main>
+      <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
+        <HomeHero />
+      </Suspense>
       <div className={styles.sectionWrap}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionTitleRow}>
@@ -107,26 +146,9 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <div className={styles.sectionWrap}>
-        <div className={styles.mapSection}>
-          <div className={styles.sectionDivider}></div>
-          <div className={styles.sectionTitleRow}>
-            <h2 className={styles.sectionTitle}>
-              <span className={styles.sectionTitleAccent}></span>
-              Find Us
-            </h2>
-          </div>
-          <SchoolMap locations={management?.schoolLocation ?? null} />
-          <a
-            href={mapsUrl ? mapsUrl : "#"}
-            className={styles.mapLink}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            View on Google Maps
-          </a>
-        </div>
-      </div>
+      <Suspense fallback={null}>
+        <FindUsSection />
+      </Suspense>
     </main>
   );
 }
