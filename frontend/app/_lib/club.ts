@@ -1,6 +1,6 @@
 "use server";
 
-import { cacheLife, cacheTag } from "next/cache";
+import { cookies } from "next/headers";
 
 export type Photo = {
   id: number;
@@ -25,16 +25,16 @@ export type ClubApiRecord = {
   description: string;
   tagline: string | null;
   category: string[];
-  day_of_meeting: string | null;
-  time: string | null;
-  repetition: string | null;
-  room_number: number | string | null;
+  day_of_meeting: string;
+  time: string;
+  repetition: string;
+  room_number: number;
   classroom_code: string | null;
-  teacher_advisor: string | null;
-  application_form_link: string;
+  teacher_advisor: string;
+  application_form_link: string | null;
   accepting_applicants: string;
-  join_instructions: string | null;
-  gallery: Gallery;
+  join_instructions: string;
+  gallery: Gallery | null;
 };
 
 export type Club = {
@@ -42,18 +42,18 @@ export type Club = {
   name: string;
   preview_description: string;
   description: string;
-  tagline: string | null;
+  tagline: string;
   categories: string[];
-  dayOfMeeting: string | null;
-  time: string | null;
-  repetition: string | null;
-  roomNumber: string | null;
-  classroomCode: string | null;
-  teacherAdvisor: string | null;
+  dayOfMeeting: string;
+  time: string;
+  repetition: string;
+  roomNumber: string;
+  classroomCode: string;
+  teacherAdvisor: string;
   applicationFormLink: string;
   acceptingApplicants: string;
-  joinInstructions: string | null;
-  gallery: Gallery;
+  joinInstructions: string;
+  gallery: Gallery | null;
 };
 
 function getClubsApiUrl() {
@@ -111,15 +111,15 @@ function normalizeClub(record: ClubApiRecord): Club {
     name: record.name,
     preview_description: record.preview_description,
     description: record.description,
-    tagline: record.tagline,
+    tagline: record.tagline ?? '',
     categories: record.category ?? [],
     dayOfMeeting: record.day_of_meeting,
-    time: formatTimeTo12Hour(record.time),
+    time: formatTimeTo12Hour(record.time) ?? '',
     repetition: record.repetition,
-    roomNumber: record.room_number === null ? null : String(record.room_number),
-    classroomCode: record.classroom_code,
+    roomNumber: String(record.room_number),
+    classroomCode: record.classroom_code ?? '',
     teacherAdvisor: record.teacher_advisor,
-    applicationFormLink: record.application_form_link,
+    applicationFormLink: record.application_form_link ?? '',
     acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
     joinInstructions: record.join_instructions,
     gallery: record.gallery,
@@ -127,20 +127,20 @@ function normalizeClub(record: ClubApiRecord): Club {
 };
 
 export async function getClubs(): Promise<Club[]> {
-  'use cache: remote';
-  cacheLife('minutes');
-  cacheTag('clubs');
   const url = getClubsApiUrl();
   if (!url) {
     return [];
   };
 
   try {
+    const accessToken = (await cookies()).get("access_token")?.value;
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       },
+      cache: "no-store",
     });
 
     if (!res.ok) {

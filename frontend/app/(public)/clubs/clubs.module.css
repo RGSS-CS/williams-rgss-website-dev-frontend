@@ -83,7 +83,7 @@
     text-decoration: none;
 }
 
-.club_card {
+.clubCard {
     background: var(--white);
     border-radius: 14px;
     border: 1.5px solid var(--line);
@@ -97,7 +97,7 @@
     overflow: hidden;
 }
 
-.club_card::before {
+.clubCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -110,17 +110,17 @@
     transition: transform 0.22s ease;
 }
 
-.club_card:hover {
+.clubCard:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
     border-color: var(--school-tertiary);
 }
 
-.club_card:hover::before {
+.clubCard:hover::before {
     transform: scaleX(1);
 }
 
-.club_card_name {
+.clubCardName {
     font-size: 1.3rem;
     font-weight: 800;
     color: var(--school-primary);
@@ -129,14 +129,14 @@
     text-decoration: underline;
 }
 
-.club_card_meta {
+.clubCardMeta {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-bottom: 1.1rem;
 }
 
-.club_meta_row {
+.clubMetaRow {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -144,7 +144,7 @@
     color: var(--school-primary-light);
 }
 
-.club_meta_row .fas {
+.clubMetaRow .fas {
     flex-shrink: 0;
     font-size: 0.78rem;
     color: var(--school-primary);
@@ -154,7 +154,7 @@
     margin-right: 0;
 }
 
-.club_meta_row h4 {
+.clubMetaRow h4 {
     margin: 0;
     padding: 0;
     font-size: 0.84rem;
@@ -163,7 +163,7 @@
     line-height: 1.4;
 }
 
-.club_card_description {
+.clubCardDescription {
     font-size: 0.84rem;
     color: var(--school-primary);
     border: solid 4px var(--school-tertiary);
@@ -174,21 +174,21 @@
     flex: 1;
 }
 
-.club_card_divider {
+.clubCardDivider {
     width: 100%;
     height: 1px;
     margin: 0.4rem 0 1rem;
     background: rgba(15, 33, 60, 0.08);
 }
 
-.club_card_footer {
+.clubCardFooter {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
 }
 
-.open_club_btn {
+.openClubBtn {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -197,7 +197,7 @@
     text-decoration: none;
 }
 
-.club_tag {
+.clubTag {
     border-radius: 999px;
     background: var(--school-tertiary);
     height: 1.6rem;
@@ -206,7 +206,7 @@
     align-items: center;
 }
 
-.club_tag h6 {
+.clubTag h6 {
     font-size: clamp(0.7rem, 1.2vw, 0.8rem);
     font-weight: 700;
     color: var(--school-primary);
@@ -266,219 +266,6 @@
     box-shadow: 0 3px 0 var(--school-tertiary-dark), 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.skeletonBlock {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.18);
-}
-
-.skeletonBlock::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translateX(-100%);
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.32),
-            transparent);
-    animation: skeletonShimmer 1.35s ease-in-out infinite;
-}
-
-.loadingHeroTitle {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    max-width: 520px;
-    margin-top: 10px;
-}
-
-.loadingHeroTitle .skeletonBlock:first-child {
-    width: min(68vw, 450px);
-    height: clamp(2.8rem, 6vw, 5rem);
-}
-
-.loadingHeroTitle .skeletonBlock:last-child {
-    width: min(42vw, 280px);
-    height: clamp(2.8rem, 6vw, 5rem);
-    background: rgba(219, 152, 32, 0.65);
-}
-
-.loadingHeroSubtitle {
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    width: min(680px, 100%);
-    margin: 1.5rem 0 2rem;
-    padding-left: 1.2rem;
-    border-left: 5px solid var(--school-tertiary);
-}
-
-.loadingHeroSubtitle .skeletonBlock {
-    height: 1.2rem;
-}
-
-.loadingHeroSubtitle .skeletonBlock:first-child {
-    width: min(100%, 600px);
-}
-
-.loadingHeroSubtitle .skeletonBlock:last-child {
-    width: min(70%, 390px);
-}
-
-.loadingSearch {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-sizing: border-box;
-    max-width: 680px;
-    width: 100%;
-    min-height: 52px;
-    padding: 0.9rem 1.2rem;
-    border-radius: 50px;
-    border: 2px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.loadingSearch .skeletonBlock {
-    flex: 1;
-    height: 0.95rem;
-}
-
-.loadingSearchIcon {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.35);
-    flex-shrink: 0;
-}
-
-.loadingStatNumber {
-    width: 3.4rem;
-    height: 2rem;
-    margin-bottom: 0.55rem;
-    background: rgba(219, 152, 32, 0.62);
-}
-
-.loadingStatLabel {
-    width: 6rem;
-    height: 0.75rem;
-}
-
-.loadingFilterLabel,
-.loadingFilterChip,
-.loadingResultsCount,
-.loadingCategoryTitle,
-.loadingCategoryCount,
-.loadingClubCard .skeletonBlock,
-.loadingCtaTitle,
-.loadingCtaText {
-    background: #e7edf4;
-}
-
-.loadingFilterLabel {
-    width: 5.8rem;
-    height: 0.9rem;
-    border-radius: 4px;
-    margin-right: 4px;
-}
-
-.loadingFilterChip {
-    width: 5.6rem;
-    height: 2rem;
-    border-radius: 40px;
-}
-
-.loadingFilterChip:nth-of-type(3n) {
-    width: 7rem;
-}
-
-.loadingResultsCount {
-    width: 7.5rem;
-    height: 0.9rem;
-    margin-left: auto;
-    border-radius: 4px;
-}
-
-.loadingCategoryTitle {
-    width: min(42vw, 220px);
-    height: 1.55rem;
-}
-
-.loadingCategoryCount {
-    width: 5rem;
-    height: 1.4rem;
-    border-radius: 20px;
-    flex-shrink: 0;
-}
-
-.loadingClubCard {
-    min-height: 286px;
-    cursor: default;
-}
-
-.loadingClubCard:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: var(--line);
-}
-
-.loadingClubCard:hover::before {
-    transform: scaleX(0);
-}
-
-.loadingClubName {
-    width: 72%;
-    height: 1.55rem;
-    margin-bottom: 1.2rem;
-}
-
-.loadingMetaRow {
-    width: 82%;
-    height: 0.9rem;
-}
-
-.loadingMetaRow:last-child {
-    width: 92%;
-}
-
-.loadingDescription {
-    width: 100%;
-    height: 5.7rem;
-    margin-bottom: 1.3rem;
-    border-radius: 12px;
-}
-
-.loadingCardAction {
-    width: 8rem;
-    height: 1.1rem;
-}
-
-.loadingCtaTitle {
-    width: min(100%, 520px);
-    height: clamp(1.6rem, 3vw, 2.4rem);
-    margin: 0.25rem auto 0.8rem;
-}
-
-.loadingCtaText {
-    width: min(100%, 470px);
-    height: 1rem;
-    margin: 0 auto 0.7rem;
-}
-
-@keyframes skeletonShimmer {
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .skeletonBlock::after {
-        animation: none;
-    }
-}
-
 @media (max-width: 768px) {
     .resultsCount {
         display: block;
@@ -512,17 +299,4 @@
         grid-template-columns: 1fr;
     }
 
-    .loadingHeroTitle .skeletonBlock:first-child,
-    .loadingHeroTitle .skeletonBlock:last-child {
-        width: 100%;
-    }
-
-    .loadingResultsCount {
-        flex-basis: 100%;
-        margin-left: 0;
-    }
-
-    .loadingFilterChip:nth-of-type(n + 6) {
-        display: none;
-    }
 }
