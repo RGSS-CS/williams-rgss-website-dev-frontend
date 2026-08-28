@@ -8,11 +8,23 @@ import { Metadata } from "next";
 import { cache, Suspense } from "react";
 import { cookies } from "next/headers";
 import { getSiteMetadata } from "@/app/_utils/metadata";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
 import NotAcceptingApplications from "./_components/notAcceptingApplications";
 //ICONS
-import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faQuestion,
+  faCalendarAlt,
+  faDoorOpen,
+  faLayerGroup,
+  faClock,
+  faRepeat,
+  faUserTie,
+  faChevronDown,
+  faArrowUpRightFromSquare,
+  faCalendarCheck,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 type ClubPageProps = {
   params: Promise<{
@@ -27,36 +39,36 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
   const clubId = Number(id);
   const club = await getClubById(clubId);
   return getSiteMetadata(club?.name);
-};
+}
 
 function formatDay(day: string | null) {
   if (!day) {
     return "Meeting day TBA";
-  };
+  }
 
   const normalized = day.toLowerCase();
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-};
+}
 
 function sentenceCase(value: string | null, fallback: string) {
   if (!value) {
     return fallback;
-  };
+  }
 
   const normalized = value.toLowerCase();
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-};
+}
 
 const getClubForPage = cache(async (clubId: number) => {
   if (Number.isNaN(clubId)) {
     redirect("/clubs");
-  };
+  }
 
   const club = await getClubById(clubId);
 
   if (!club) {
     redirect("/clubs");
-  };
+  }
 
   return club;
 });
@@ -68,47 +80,50 @@ async function ClubHero({ clubId }: { clubId: number }) {
   const showJoinSection = club.acceptingApplicants !== "Applications closed";
 
   return (
-    <section className="hero">
-      <div className="hero_shape"></div>
-      <div className="heroInner">
-        <div className="hero_left">
+    <section className='hero'>
+      <div className='hero_shape'></div>
+      <div className='heroInner'>
+        <div className='hero_left'>
           <div className={styles_modules.breadcrumbs}>
-            <Link href="/">Home</Link>
+            <Link href='/'>Home</Link>
             <span>/</span>
-            <Link href="/clubs">Clubs</Link>
+            <Link href='/clubs'>Clubs</Link>
             <span>/</span>
             <span>{club.name}</span>
           </div>
           <div className={`hero_title ${styles_modules.hero_title}`}>
             <h1>{club.name}</h1>
           </div>
-          <div className="hero_subtitle">
+          <div className='hero_subtitle'>
             <p>{club.preview_description}</p>
           </div>
           <div className={styles_modules.heroActions}>
             {showJoinSection && (
-              <AnchorLink className={styles_modules.heroJoinButton} href="#join-club">
+              <AnchorLink className={styles_modules.heroJoinButton} href='#join-club'>
                 Apply Now
               </AnchorLink>
             )}
-            <p><FontAwesomeIcon icon={faChevronDown} />Scroll to explore</p>
+            <p>
+              <FontAwesomeIcon icon={faChevronDown} />
+              Scroll to explore
+            </p>
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
-              <span className="stat-num">{club.categories.length || 1}</span>
-              <span className="stat-label">Categories</span>
+              <span className='stat-num'>{club.categories.length || 1}</span>
+              <span className='stat-label'>Categories</span>
             </div>
             <div className={styles.heroStat}>
-              <span className="stat-num">{meetingDay.split(" ")[0]}</span>
-              <span className="stat-label">Meeting Day</span>
+              <span className='stat-num'>{meetingDay.split(" ")[0]}</span>
+              <span className='stat-label'>Meeting Day</span>
             </div>
             <div className={styles.heroStat}>
-              <span className="stat-num">{club.roomNumber ?? "TBA"}</span>
-              <span className="stat-label">Room</span>
+              <span className='stat-num'>{club.roomNumber ?? "TBA"}</span>
+              <span className='stat-label'>Room</span>
             </div>
             <div className={styles.heroStat}>
-              <span className="stat-num">{cadence}</span>
-              <span className="stat-label">Schedule</span>
+              <span className='stat-num'>{cadence}</span>
+              <span className='stat-label'>Schedule</span>
             </div>
           </div>
         </div>
@@ -154,7 +169,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
           {club.joinInstructions ? (
             <ClubSlideshow gallery={club.gallery ?? null} />
           ) : (
-            <span className={styles_modules.loginWarn}><h3>You must be signed in to view this media</h3></span>
+            <span className={styles_modules.loginWarn}>
+              <h3>You must be signed in to view this media</h3>
+            </span>
           )}
         </div>
       </section>
@@ -224,27 +241,26 @@ async function ClubWhyJoin({ clubId }: { clubId: number }) {
 
   if (reasons.length === 0) {
     return null;
-  };
+  }
 
   return (
-    <div className={styles_modules.whyJoinWrap}>
-      <section className={styles_modules.section}>
-        <div className={styles_modules.whyJoinHeading}>
-          <h2>Why Join?</h2>
-        </div>
+    <section className={styles_modules.section}>
+      <div className={styles_modules.headlineRow}>
+        <FontAwesomeIcon icon={faQuestion} className={styles_modules.fas} />
+        <span>Why Join?</span>
+      </div>
 
-        <div className={styles_modules.whyJoinList} data-count={reasons.length}>
-          {reasons.map((reason) => (
-            <article className={styles_modules.whyJoinItem} key={`${reason.index}-${reason.title}`}>
-              <div className={styles_modules.whyJoinCopy}>
-                <h3>{reason.title}</h3>
-                <p>{reason.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
+      <div className={styles_modules.whyJoinList} data-count={reasons.length}>
+        {reasons.map((reason) => (
+          <article className={styles_modules.whyJoinItem} key={`${reason.index}-${reason.title}`}>
+            <div className={styles_modules.whyJoinCopy}>
+              <h3>{reason.title}</h3>
+              <p>{reason.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -262,7 +278,9 @@ async function ClubApply({ clubId }: { clubId: number }) {
 
   if (!accessToken) {
     return (
-      <div className={styles_modules.loginWarn}><h3>You must be signed in to view this media</h3></div>
+      <div className={styles_modules.loginWarn}>
+        <h3>You must be signed in to view this media</h3>
+      </div>
     );
   }
 
@@ -273,13 +291,13 @@ async function ClubApply({ clubId }: { clubId: number }) {
   return (
     <section
       className={styles_modules.applySection}
-      id="join-club"
-      aria-labelledby="join-club-heading"
+      id='join-club'
+      aria-labelledby='join-club-heading'
     >
       <div className={styles_modules.applySectionShell}>
         <div className={styles_modules.applySectionCopy}>
           <span className={styles_modules.applyPanelEyebrow}>Ready to join?</span>
-          <h2 id="join-club-heading">Join the Club</h2>
+          <h2 id='join-club-heading'>Join the Club</h2>
           <p>{club.joinInstructions}</p>
         </div>
 
@@ -315,8 +333,8 @@ async function ClubApply({ clubId }: { clubId: number }) {
               <a
                 className={styles_modules.applyInviteLink}
                 href={classroomInviteUrl ?? undefined}
-                target="_blank"
-                rel="noreferrer"
+                target='_blank'
+                rel='noreferrer'
               >
                 Open Classroom Invite
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
@@ -335,7 +353,7 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
   if (Number.isNaN(clubId)) {
     redirect("/clubs");
-  };
+  }
 
   return (
     <main>
@@ -361,4 +379,4 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
       </Suspense>
     </main>
   );
-};
+}
