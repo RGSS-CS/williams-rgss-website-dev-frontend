@@ -176,11 +176,10 @@
   margin-bottom: 1rem;
   padding: 0.625rem 0.875rem;
   color: #b91c1c;
-  background: rgb(220 38 38 / 8%);
   border: 1px solid rgb(220 38 38 / 35%);
-  border-radius: 0.5625rem;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  width: auto;
 }
 
 .authCaptcha {
