@@ -262,22 +262,12 @@ async function ClubApply({ clubId }: { clubId: number }) {
 
   if (!accessToken) {
     return (
-      <span className={styles_modules.loginWarn}>
-        <h3><strong>You must be logged in to view the club&apos;s joining information</strong></h3>
-      </span>
+      <div className={styles_modules.loginWarn}><h3>You must be signed in to view this media</h3></div>
     );
   }
 
   if (!showJoinSection) {
     return <NotAcceptingApplications />;
-  }
-
-  if (!club.joinInstructions) {
-    return (
-      <span className={styles_modules.loginWarn}>
-        <h3><strong>You must be logged in to view the club&apos;s joining information</strong></h3>
-      </span>
-    );
   }
 
   return (
