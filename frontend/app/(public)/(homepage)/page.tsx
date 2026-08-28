@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
-import TickerBar from "@/app/(public)/_components/tickerBar";
+import TickerBar from "./_components/tickerBar";
 import SchoolMap from "@/app/(public)/_components/schoolMap";
 import SchoolLocation from "@/app/_utils/formatLocation";
 import { Suspense } from "react";
