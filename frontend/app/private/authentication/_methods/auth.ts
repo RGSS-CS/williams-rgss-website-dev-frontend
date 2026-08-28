@@ -48,6 +48,7 @@ type RegisterPayload = {
   first_name: string;
   last_name: string;
   code: string;
+  captcha_token?: string;
 };
 
 type RegisterErrorBody = Partial<
@@ -85,6 +86,7 @@ export async function signup(_prevState: SignupState, formData: FormData): Promi
   const password = formData.get("password")?.toString() ?? "";
   const confirmPassword = formData.get("confirm_password")?.toString() ?? "";
   const code = formData.get("code")?.toString().trim() ?? "";
+  const captchaToken = formData.get("captcha_token")?.toString().trim() ?? "";
 
   const profaneField = findProfaneField({
     first_name: firstName,
@@ -122,6 +124,10 @@ export async function signup(_prevState: SignupState, formData: FormData): Promi
     last_name: lastName,
     code,
   };
+
+  if (captchaToken) {
+    payload.captcha_token = captchaToken;
+  }
 
   let response: Response;
   try {
@@ -164,6 +170,7 @@ function getDisplayUsername(email: string) {
 export async function signin(_prevState: SigninState, formData: FormData): Promise<SigninState> {
   const email = formData.get("email")?.toString().trim() ?? "";
   const password = formData.get("password")?.toString() ?? "";
+  const captchaToken = formData.get("captcha_token")?.toString().trim() ?? "";
 
   if (!email || !password) {
     return { error: "Email and password are required." };
@@ -177,7 +184,11 @@ export async function signin(_prevState: SigninState, formData: FormData): Promi
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+        ...(captchaToken && { captcha_token: captchaToken }),
+      }),
       cache: "no-store",
     });
   } catch {
