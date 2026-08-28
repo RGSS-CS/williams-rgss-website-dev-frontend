@@ -512,6 +512,61 @@
     color: var(--school-tertiary);
 }
 
+.applicationsClosedSection {
+    padding: 4rem 2.5rem;
+    background: var(--school-secondary);
+}
+
+.applicationsClosedCard {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(1.4rem, 4vw, 2.5rem);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 32px;
+    background: var(--school-primary);
+    color: var(--white);
+    box-shadow: 0 18px 44px var(--school-primary);
+}
+
+.applicationsClosedIcon {
+    display: grid;
+    flex: 0 0 3.5rem;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--school-tertiary);
+    color: var(--school-primary);
+    font-size: 1.5rem;
+}
+
+.applicationsClosedEyebrow {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--school-secondary);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.applicationsClosedCard h2 {
+    margin: 0;
+    color: var(--white);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 900;
+}
+
+.applicationsClosedCard p {
+    margin: 0.65rem 0 0;
+    color: var(--line);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
 @media (max-width: 1120px) {
 
     .aboutGrid,
@@ -587,6 +642,21 @@
     .counter {
         right: 10px;
         bottom: 10px;
+    }
+
+    .applicationsClosedSection {
+        padding: 2.5rem 1rem;
+    }
+
+    .applicationsClosedCard {
+        align-items: flex-start;
+        border-radius: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .applicationsClosedCard {
+        flex-direction: column;
     }
 }
 
