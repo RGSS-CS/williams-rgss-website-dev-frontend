@@ -6,8 +6,7 @@ import type { Management } from "@/app/_lib/site-management";
 import styles from "./footer.module.css";
 import SchoolLocation from "@/app/_utils/formatLocation";
 //ICONS
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faGlobe, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 type ManagementProps = {
