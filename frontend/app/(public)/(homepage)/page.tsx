@@ -12,6 +12,7 @@ import SchoolMap from "@/app/(public)/_components/schoolMap";
 import SchoolLocation from "@/app/_utils/formatLocation";
 import { Suspense } from "react";
 import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
+import AnchorLink from "@/app/(public)/_components/anchorLink";
 
 //ICONS
 import { faCalendarAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -64,10 +65,10 @@ async function HomeHero() {
               <span>Our Clubs</span>
             </Link>
 
-            <Link href='/events' className={styles.heroBtnSecondary}>
+            <AnchorLink href='#events' className={styles.heroBtnSecondary}>
               <FontAwesomeIcon icon={faCalendarAlt} />
               <span>Upcoming Events</span>
-            </Link>
+            </AnchorLink>
           </div>
         </div>
       </div>

@@ -10,15 +10,16 @@ interface AnchorLinkProps {
 
 export default function AnchorLink({ href, children, className }: AnchorLinkProps) {
     const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-
-        const id = href.replace("#", "");
+        const hashIndex = href.indexOf("#");
+        const hash = hashIndex >= 0 ? href.slice(hashIndex) : "";
+        const id = hash.slice(1);
         const target = document.getElementById(id);
 
-        if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-            window.history.pushState(null, "", href);
-        }
+        if (!hash || !target) return;
+
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.pushState(null, "", hash);
     };
 
     return (

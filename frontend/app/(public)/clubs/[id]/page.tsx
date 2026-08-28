@@ -278,7 +278,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
 
   if (!accessToken) {
     return (
-      <div className={styles_modules.loginWarn}>
+      <div id='join-club' className={styles_modules.loginWarn}>
         <h3>You must be signed in to view this media</h3>
       </div>
     );
