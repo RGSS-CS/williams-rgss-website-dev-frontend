@@ -1,1 +1,2 @@
 export const CAPTCHAURL = process.env.NEXT_PUBLIC_CAPTCHA_URL;
+export const ENTRY_CAPTCHA_COOKIE = "site-entry-captcha-complete";

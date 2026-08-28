@@ -10,9 +10,13 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
+import { ENTRY_CAPTCHA_COOKIE } from "@/app/_lib/captcha";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import RegisterSW from "@/app/_components/registerSW";
+import EntryCaptchaGate from "@/app/_components/entryCaptchaGate";
+import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
 import { cacheLife, cacheTag } from "next/cache";
+import { cookies } from "next/headers";
 import type { Metadata } from "next";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
@@ -89,7 +93,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const themeStyle = await getThemeVariables();
+  const [themeStyle, management] = await Promise.all([
+    getThemeVariables(),
+    getManagementSettings(),
+  ]);
+  const enteringCaptchaEnabled = isCaptchaEnabledFor(management, "ENTERING");
+  const entryCaptchaComplete = enteringCaptchaEnabled
+    ? (await cookies()).get(ENTRY_CAPTCHA_COOKIE)?.value === "true"
+    : false;
 
   return (
     <html
@@ -100,15 +111,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head></head>
       <body>
         <RegisterSW />
-        <div className='notOfficalContainer'>
-          <div className='notOffcial'>
-            <h1>
-              This website is currently not officially assosiated with Dr. GW Williams S.S or
-              Richmond Green S.S
-            </h1>
+        <EntryCaptchaGate
+          enabled={enteringCaptchaEnabled}
+          initialComplete={entryCaptchaComplete}
+          schoolName={management?.schoolName}
+        >
+          <div className='notOfficalContainer'>
+            <div className='notOffcial'>
+              <h1>
+                This website is currently not officially assosiated with Dr. GW Williams S.S or
+                Richmond Green S.S
+              </h1>
+            </div>
           </div>
-        </div>
-        {children}
+          {children}
+        </EntryCaptchaGate>
       </body>
     </html>
   );

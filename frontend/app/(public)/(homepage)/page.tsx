@@ -17,6 +17,8 @@ import AnchorLink from "@/app/(public)/_components/anchorLink";
 //ICONS
 import { faCalendarAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
+export const instant = false;
+
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata();
 }

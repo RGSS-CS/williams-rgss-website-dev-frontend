@@ -1,11 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CapWidget } from "cap-widget";
 import { CAPTCHAURL } from "../_lib/captcha";
 
-export default function Captcha() {
+type CaptchaProps = {
+  className?: string;
+  errorClassName?: string;
+  loadingClassName?: string;
+  onSolve?: (token: string) => void;
+};
+
+export default function Captcha({
+  className = "authCaptcha",
+  errorClassName = "authFormError",
+  loadingClassName = "authCaptchaLoading",
+  onSolve,
+}: CaptchaProps) {
   const [isReady, setIsReady] = useState(false);
   const [hasLoadError, setHasLoadError] = useState(false);
+  const widgetRef = useRef<CapWidget>(null);
   const captchaEndpoint = CAPTCHAURL?.trim();
 
   useEffect(() => {
@@ -28,9 +42,26 @@ export default function Captcha() {
     };
   }, []);
 
+  useEffect(() => {
+    const widget = widgetRef.current;
+    if (!isReady || !widget || !onSolve) {
+      return;
+    }
+
+    const handleSolve = (event: Event) => {
+      const token = (event as CustomEvent<{ token?: string }>).detail?.token;
+      if (token) {
+        onSolve(token);
+      }
+    };
+
+    widget.addEventListener("solve", handleSolve);
+    return () => widget.removeEventListener("solve", handleSolve);
+  }, [isReady, onSolve]);
+
   if (!captchaEndpoint) {
     return (
-      <div className='authFormError' role='alert'>
+      <div className={errorClassName} role='alert'>
         Captcha is not configured. Please contact an administrator.
       </div>
     );
@@ -38,7 +69,7 @@ export default function Captcha() {
 
   if (hasLoadError) {
     return (
-      <div className='authFormError' role='alert'>
+      <div className={errorClassName} role='alert'>
         Captcha failed to load. Please refresh the page and try again.
       </div>
     );
@@ -46,15 +77,16 @@ export default function Captcha() {
 
   if (!isReady) {
     return (
-      <div className='authCaptcha' aria-busy='true'>
-        <div className='authCaptchaLoading' />
+      <div className={className} aria-busy='true'>
+        <div className={loadingClassName} />
       </div>
     );
   }
 
   return (
-    <div className='authCaptcha'>
+    <div className={className}>
       <cap-widget
+        ref={widgetRef}
         data-cap-api-endpoint={captchaEndpoint}
         data-cap-hidden-field-name='captcha_token'
         required
