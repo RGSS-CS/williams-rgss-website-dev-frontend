@@ -6,9 +6,11 @@ import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
 import { Metadata } from "next";
 import { cache, Suspense } from "react";
+import { cookies } from "next/headers";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ClubSlideshow from "./_components/imageSlideShow";
+import NotAcceptingApplications from "./_components/notAcceptingApplications";
 //ICONS
 import { faCalendarAlt, faDoorOpen, faLayerGroup, faClock, faRepeat, faUserTie, faChevronDown, faArrowUpRightFromSquare, faCalendarCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -248,6 +250,7 @@ async function ClubWhyJoin({ clubId }: { clubId: number }) {
 
 async function ClubApply({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
+  const accessToken = (await cookies()).get("access_token")?.value;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
   const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
@@ -257,7 +260,19 @@ async function ClubApply({ clubId }: { clubId: number }) {
   const classroomInviteUrl = club.applicationFormLink?.trim() || null;
   const showClassroomInvite = Boolean(classroomInviteUrl);
 
-  if (!showJoinSection || !club.joinInstructions) {
+  if (!accessToken) {
+    return (
+      <span className={styles_modules.loginWarn}>
+        <h3><strong>You must be logged in to view the club&apos;s joining information</strong></h3>
+      </span>
+    );
+  }
+
+  if (!showJoinSection) {
+    return <NotAcceptingApplications />;
+  }
+
+  if (!club.joinInstructions) {
     return (
       <span className={styles_modules.loginWarn}>
         <h3><strong>You must be logged in to view the club&apos;s joining information</strong></h3>
