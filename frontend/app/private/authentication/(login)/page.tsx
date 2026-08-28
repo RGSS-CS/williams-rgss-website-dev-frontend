@@ -4,6 +4,8 @@ import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import LoginForm from "./_components/loginForm";
 
+export const instant = false;
+
 export async function generateMetadata(): Promise<Metadata> {
   return getSiteMetadata("Authentication");
 }
