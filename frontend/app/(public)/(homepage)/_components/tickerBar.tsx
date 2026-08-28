@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "@/app/(public)/home.module.css";
+import styles from "../home.module.css";
 
 //ICONS
 import { faStar } from '@fortawesome/free-solid-svg-icons';

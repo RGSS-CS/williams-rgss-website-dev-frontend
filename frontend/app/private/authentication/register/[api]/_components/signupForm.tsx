@@ -59,7 +59,6 @@ export default function SignupFormClient({ showCaptcha, code }: SignupFormClient
   const [state, formAction, isPending] = useActionState(signup, initialState);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [studentNumber, setStudentNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -77,7 +76,6 @@ export default function SignupFormClient({ showCaptcha, code }: SignupFormClient
 
         <TextField id="first_name" label="Name" placeholder="First Name" autoComplete="given-name" value={firstName} onChange={setFirstName} icon={faUser} />
         <TextField id="last_name" label="" placeholder="Last Name" autoComplete="family-name" value={lastName} onChange={setLastName} icon={faUser} />
-        <TextField id="student_number" label="Student Number" placeholder="Student Number" autoComplete="off" value={studentNumber} onChange={(value) => setStudentNumber(value.replace(/\D/g, ""))} icon={faEnvelope} />
         <TextField id="email" label="Email (Student)" type="email" placeholder="Email" autoComplete="email" value={email} onChange={setEmail} icon={faEnvelope} />
         <span className="warning"><h4><strong>DO NOT USE YOUR SCHOOL PASSWORD</strong></h4></span>
         <PasswordField id="password" label="Password" value={password} onChange={setPassword} />

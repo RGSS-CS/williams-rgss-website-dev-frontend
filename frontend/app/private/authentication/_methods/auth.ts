@@ -16,7 +16,6 @@ const PROFANITY_FIELD_LABELS: Record<string, string> = {
 const REQUIRED_FIELDS: { name: string; label: string }[] = [
   { name: "first_name", label: "First name" },
   { name: "last_name", label: "Last name" },
-  { name: "student_number", label: "Student number" },
   { name: "email", label: "Email" },
   { name: "password", label: "Password" },
   { name: "confirm_password", label: "Confirm password" },
@@ -82,7 +81,6 @@ export async function signup(_prevState: SignupState, formData: FormData): Promi
 
   const firstName = formData.get("first_name")?.toString().trim() ?? "";
   const lastName = formData.get("last_name")?.toString().trim() ?? "";
-  const username = formData.get("student_number")?.toString().trim() ?? "";
   const email = formData.get("email")?.toString().trim() ?? "";
   const password = formData.get("password")?.toString() ?? "";
   const confirmPassword = formData.get("confirm_password")?.toString() ?? "";
@@ -100,14 +98,15 @@ export async function signup(_prevState: SignupState, formData: FormData): Promi
     };
   }
 
-  if (!USERNAME_PATTERN.test(username)) {
-    return {
-      error: "Student number can only contain letters, numbers, and @/./+/-/_ characters.",
-    };
-  }
-
   if (!EMAIL_PATTERN.test(email)) {
     return { error: "Enter a valid email address." };
+  }
+
+  const username = email.split("@")[0];
+  if (!USERNAME_PATTERN.test(username)) {
+    return {
+      error: "Email username can only contain letters, numbers, and ./+/-/_ characters.",
+    };
   }
 
   if (password !== confirmPassword) {
