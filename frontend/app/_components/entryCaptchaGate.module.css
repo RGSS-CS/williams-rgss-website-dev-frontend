@@ -28,7 +28,6 @@
   text-align: center;
   background: rgb(255 255 255 / 96%);
   border: 1px solid rgb(255 255 255 / 45%);
-  border-radius: 1.5rem;
   box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 22%);
   color: var(--school-primary);
 }
