@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     agentRules: false,
     images: {
+        dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
         remotePatterns: [new URL(process.env.MEDIA_URL || 'http://localhost:8000/media/**')], //Add env for backend 
     }
 }
