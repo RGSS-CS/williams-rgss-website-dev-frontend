@@ -22,11 +22,11 @@ export type SitesResponse = PageManagement[];
 function getPageManagementApiUrl() {
     const apiBaseUrl = process.env.API_URL || "http://backend:8000";
 
-  try {
-    return new URL("/api/management/page-settings/?format=json", apiBaseUrl).toString();
-  } catch {
-    return null;
-  };
+    try {
+        return new URL("/api/management/page-settings/?format=json", apiBaseUrl).toString();
+    } catch {
+        return null;
+    };
 };
 
 function normalizePageManagement(record: PageManagementApiRecord): PageManagement {
@@ -34,7 +34,7 @@ function normalizePageManagement(record: PageManagementApiRecord): PageManagemen
         internalSiteName: record.internal_site_name,
         title: record.title,
         subtitle: record.subtitle,
-        tagline: record.tagline,
+        tagline: record.tagline
     };
 };
 
@@ -44,21 +44,17 @@ export async function getPageManagement(): Promise<PageManagement[]> {
     cacheTag('management');
     const url = getPageManagementApiUrl();
 
-    if (!url) {
-        return [];
-    };
+    if (!url) return [];
 
     try {
         const res = await fetch(url, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-            },
+                "Content-Type": "application/json"
+            }
         });
 
-        if (!res.ok) {
-            return [];
-        }
+        if (!res.ok) return [];
 
         const management = (await res.json()) as SitesApiResponse;
         return management.map(normalizePageManagement);
@@ -67,9 +63,7 @@ export async function getPageManagement(): Promise<PageManagement[]> {
     };
 };
 
-export async function getPageManagementSettings(
-    internalSiteName: string
-): Promise<PageManagement | null> {
+export async function getPageManagementSettings(internalSiteName: string): Promise<PageManagement | null> {
     const management = await getPageManagement();
     return (
         management.find((page) => page.internalSiteName === internalSiteName) ?? null

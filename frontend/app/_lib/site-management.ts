@@ -120,7 +120,7 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolPrimaryColor: record.school_primary_color,
         schoolSecondaryColor: record.school_secondary_color,
         schoolTertiaryColor: record.school_tertiary_color,
-        captcha: record.captcha,
+        captcha: record.captcha
     };
 };
 

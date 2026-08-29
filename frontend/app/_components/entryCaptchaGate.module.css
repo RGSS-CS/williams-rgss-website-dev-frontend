@@ -1,148 +1,148 @@
 .page {
-  min-height: 100vh;
-  box-sizing: border-box;
-  display: grid;
-  place-items: center;
-  padding: 2rem 1.25rem;
-  overflow: hidden;
-  position: relative;
-  isolation: isolate;
-  color: var(--white);
-  background: var(--school-primary);
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.25rem;
+    overflow: hidden;
+    position: relative;
+    isolation: isolate;
+    color: var(--white);
+    background: var(--school-primary);
 }
 
 .page::before {
-  top: -8rem;
-  right: -6rem;
+    top: -8rem;
+    right: -6rem;
 }
 
 .page::after {
-  bottom: -10rem;
-  left: -8rem;
+    bottom: -10rem;
+    left: -8rem;
 }
 
 .card {
-  width: min(100%, 30rem);
-  box-sizing: border-box;
-  padding: clamp(2rem, 7vw, 3.5rem);
-  text-align: center;
-  background: rgb(255 255 255 / 96%);
-  border: 1px solid rgb(255 255 255 / 45%);
-  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 22%);
-  color: var(--school-primary);
+    width: min(100%, 30rem);
+    box-sizing: border-box;
+    padding: clamp(2rem, 7vw, 3.5rem);
+    text-align: center;
+    background: rgb(255 255 255 / 96%);
+    border: 1px solid rgb(255 255 255 / 45%);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 22%);
+    color: var(--school-primary);
 }
 
 .eyebrow {
-  margin: 0 0 0.625rem;
-  color: var(--school-primary-light);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+    margin: 0 0 0.625rem;
+    color: var(--school-primary-light);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .title {
-  margin: 0;
-  color: var(--school-primary);
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(1.65rem, 6vw, 2.15rem);
-  font-weight: 800;
-  line-height: 1.1;
+    margin: 0;
+    color: var(--school-primary);
+    font-family: var(--font-montserrat), sans-serif;
+    font-size: clamp(1.65rem, 6vw, 2.15rem);
+    font-weight: 800;
+    line-height: 1.1;
 }
 
 .description {
-  margin: 1rem auto 1.75rem;
-  max-width: 23rem;
-  color: var(--school-primary-light);
-  font-size: 0.95rem;
-  line-height: 1.6;
+    margin: 1rem auto 1.75rem;
+    max-width: 23rem;
+    color: var(--school-primary-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
 
 .challenge {
-  margin: 0 auto;
-  text-align: left;
+    margin: 0 auto;
+    text-align: left;
 }
 
 .captcha {
-  margin: 0;
+    margin: 0;
 }
 
 .captcha cap-widget {
-  --cap-widget-width: 100%;
-  --cap-border-radius: 0.75rem;
-  --cap-focus-ring: var(--school-primary);
-  --cap-color: var(--school-primary);
+    --cap-widget-width: 100%;
+    --cap-border-radius: 0.75rem;
+    --cap-focus-ring: var(--school-primary);
+    --cap-color: var(--school-primary);
 
-  display: block;
-  width: 100%;
-  min-height: 58px;
+    display: block;
+    width: 100%;
+    min-height: 58px;
 }
 
 .captchaLoading {
-  width: 100%;
-  height: 58px;
-  box-sizing: border-box;
-  background: var(--white);
-  border: 1.5px solid var(--line);
-  border-radius: 0.75rem;
+    width: 100%;
+    height: 58px;
+    box-sizing: border-box;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 0.75rem;
 }
 
 .transitionState {
-  min-height: 58px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  color: var(--school-primary);
-  background: var(--white);
-  border: 1.5px solid var(--line);
-  border-radius: 0.75rem;
-  font-size: 0.9rem;
-  font-weight: 700;
+    min-height: 58px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    color: var(--school-primary);
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .spinner {
-  width: 1rem;
-  height: 1rem;
-  box-sizing: border-box;
-  border: 2px solid var(--line);
-  border-top-color: var(--school-primary);
-  border-radius: 50%;
-  animation: entryCaptchaSpin 0.8s linear infinite;
+    width: 1rem;
+    height: 1rem;
+    box-sizing: border-box;
+    border: 2px solid var(--line);
+    border-top-color: var(--school-primary);
+    border-radius: 50%;
+    animation: entryCaptchaSpin 0.8s linear infinite;
 }
 
 @keyframes entryCaptchaSpin {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .error {
-  margin: 0;
-  padding: 0.75rem 0.875rem;
-  color: #b91c1c;
-  background: #fef2f2;
-  border: 1px solid rgb(220 38 38 / 35%);
-  border-radius: 0.625rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  line-height: 1.4;
+    margin: 0;
+    padding: 0.75rem 0.875rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid rgb(220 38 38 / 35%);
+    border-radius: 0.625rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.4;
 }
 
 .privacyNote {
-  margin: 1.5rem 0 0;
-  color: var(--school-primary-light);
-  font-size: 0.75rem;
-  line-height: 1.5;
+    margin: 1.5rem 0 0;
+    color: var(--school-primary-light);
+    font-size: 0.75rem;
+    line-height: 1.5;
 }
 
 @media (max-width: 30rem) {
-  .page {
-    padding: 1rem;
-  }
+    .page {
+        padding: 1rem;
+    }
 
-  .card {
-    padding: 2rem 1.25rem;
-  }
+    .card {
+        padding: 2rem 1.25rem;
+    }
 }

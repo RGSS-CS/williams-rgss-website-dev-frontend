@@ -8,24 +8,24 @@ import { getSchoolYear } from "@/app/_utils/schoolYear";
 export const instant = false;
 
 async function NavbarSlot() {
-  const management = await getManagementSettings();
-  return <Navbar management={management} />;
+    const management = await getManagementSettings();
+    return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
-  const [management, schoolYear] = await Promise.all([getManagementSettings(), getSchoolYear()]);
+    const [management, schoolYear] = await Promise.all([getManagementSettings(), getSchoolYear()]);
 
-  return <Footer management={management} schoolYear={schoolYear} />;
+    return <Footer management={management} schoolYear={schoolYear} />;
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <NavbarSlot />
-      {children}
-      <Suspense fallback={null}>
-        <FooterSlot />
-      </Suspense>
-    </>
-  );
+    return (
+        <>
+            <NavbarSlot />
+            {children}
+            <Suspense fallback={null}>
+                <FooterSlot />
+            </Suspense>
+        </>
+    );
 }

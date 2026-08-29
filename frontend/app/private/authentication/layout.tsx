@@ -9,27 +9,27 @@ import { getSchoolYear } from "@/app/_utils/schoolYear";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Login or register to access your account.",
+    title: "Authentication",
+    description: "Login or register to access your account.",
 };
 
 async function NavbarSlot() {
-  const management = await getManagementSettings();
-  return <Navbar management={management} />;
+    const management = await getManagementSettings();
+    return <Navbar management={management} />;
 }
 
 async function FooterSlot() {
-  const [management, schoolYear] = await Promise.all([getManagementSettings(), getSchoolYear()]);
+    const [management, schoolYear] = await Promise.all([getManagementSettings(), getSchoolYear()]);
 
-  return <Footer management={management} schoolYear={schoolYear} />;
+    return <Footer management={management} schoolYear={schoolYear} />;
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className='authContent'>
-      <NavbarSlot />
-      {children}
-      <FooterSlot />
-    </div>
-  );
+    return (
+        <div className='authContent'>
+            <NavbarSlot />
+            {children}
+            <FooterSlot />
+        </div>
+    );
 }

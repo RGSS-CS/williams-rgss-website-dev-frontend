@@ -7,29 +7,29 @@ import LoginForm from "./_components/loginForm";
 export const instant = false;
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getSiteMetadata("Authentication");
+    return getSiteMetadata("Authentication");
 }
 
 type SigninPageProps = {
-  searchParams: Promise<{ error?: string }>;
+    searchParams: Promise<{ error?: string }>;
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
-  invalid_code: "Invalid code",
-  missing_code: "Invalid code",
+    invalid_code: "Invalid code",
+    missing_code: "Invalid code",
 };
 
 export default async function SigninPage({ searchParams }: SigninPageProps) {
-  const management = await getManagementSettings();
-  if (!management) return null;
+    const management = await getManagementSettings();
+    if (!management) return null;
 
-  const { error } = await searchParams;
+    const { error } = await searchParams;
 
-  return (
-    <LoginForm
-      management={management}
-      showCaptcha={isCaptchaEnabledFor(management, "LOGIN")}
-      initialError={error ? (ERROR_MESSAGES[error] ?? null) : null}
-    />
-  );
+    return (
+        <LoginForm
+            management={management}
+            showCaptcha={isCaptchaEnabledFor(management, "LOGIN")}
+            initialError={error ? (ERROR_MESSAGES[error] ?? null) : null}
+        />
+    );
 }
