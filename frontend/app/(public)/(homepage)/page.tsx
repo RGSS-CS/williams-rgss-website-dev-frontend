@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
 import styles from "./home.module.css";
@@ -35,7 +34,7 @@ async function HomeHero() {
             <TickerBar />
             <div className={styles.heroBadgeImage}>
                 {management?.croppedSiteImage && (
-                    <Image
+                    <img
                         src={management?.croppedSiteImage}
                         alt='Wildcat Icon'
                         width={260}
