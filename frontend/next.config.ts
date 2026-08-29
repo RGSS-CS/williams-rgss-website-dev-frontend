@@ -12,3 +12,5 @@ const nextConfig: NextConfig = {
         remotePatterns: [new URL('http://localhost:8000/media/**'), new URL("http://dev.rgsscs.org/media/**")], //Add env for backend 
     }
 }
+
+export default nextConfig
