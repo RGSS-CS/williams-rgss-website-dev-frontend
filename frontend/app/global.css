@@ -2,56 +2,73 @@
 /* --------------------------------------------- */
 
 :root {
-  /* Neutral Colors */
-  --white: #ffffff;
-  --black: #000000;
-  --grey: #bbd1f0;
-  --line: #dce3eb;
+	/* Neutral Colors */
+	--white: #ffffff;
+	--black: #000000;
+	--grey: #bbd1f0;
+	--line: #dce3eb;
 }
 
 /*Default page styles*/
 
 html {
-  width: 100%;
-  min-height: 100%;
-  background-color: var(--school-primary);
+	width: 100%;
+	min-height: 100%;
+	background-color: var(--school-primary);
 }
 
 body {
-  background-color: var(--school-primary);
-  margin: 0;
-  font-family: var(--font-ibm-plex-sans), sans-serif;
-  font-weight: 400;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+	background-color: var(--school-primary);
+	margin: 0;
+	font-family: var(--font-ibm-plex-sans), sans-serif;
+	font-weight: 400;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 main {
-  flex: 1;
+	flex: 1;
 }
 
 h1 {
-  font-family: "Montserrat", sans-serif;
+	font-family: "Montserrat", sans-serif;
 }
 
 h2 {
-  font-family: "Futura", sans-serif;
+	font-family: "Futura", sans-serif;
 }
 
 h3 {
-  font-family: "Neue Machina bold", sans-serif;
+	font-family: "Neue Machina bold", sans-serif;
 }
 
 h4 {
-  font-family: "Promima Nova", sans-serif;
+	font-family: "Promima Nova", sans-serif;
 }
 
-h5 { /* SPECIAL FONT */
-  font-family: "quicksand", sans-serif;
+h5 {
+	/* SPECIAL FONT */
+	font-family: "quicksand", sans-serif;
 }
 
 p {
-  font-family: "Acumin variable", sans-serif;
+	font-family: "Acumin variable", sans-serif;
+}
+
+.notOffcial {
+	color: red;
+	width:70%;
+	text-align: center;
+	margin: 0 auto;
+	background: black;
+	font-size: 14px;
+}
+
+.notOfficalContainer {
+	position: fixed;
+	bottom:0;
+	width: 100%;
+	z-index: 10000;
 }

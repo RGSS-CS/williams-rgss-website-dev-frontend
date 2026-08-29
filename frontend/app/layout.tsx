@@ -1,42 +1,49 @@
-import { Montserrat, Jost, Space_Grotesk, Figtree, IBM_Plex_Sans, Quicksand } from "next/font/google";
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import {
+    Montserrat,
+    Jost,
+    Space_Grotesk,
+    Figtree,
+    IBM_Plex_Sans,
+    Quicksand
+} from "next/font/google";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/app/global.css";
 import { getManagementSettings } from "@/app/_lib/site-management";
+import { ENTRY_CAPTCHA_COOKIE } from "@/app/_lib/captcha";
 import darkenHex from "@/app/_utils/colorLightenDarken";
+import RegisterSW from "@/app/_components/registerSW";
+import EntryCaptchaGate from "@/app/_components/entryCaptchaGate";
+import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
+import { cacheLife, cacheTag } from "next/cache";
+import { cookies } from "next/headers";
+import type { Metadata } from "next";
 
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 config.autoAddCss = false;
 
-const FALLBACK_COLORS = {
-  primary: "#0b1c3a",
-  secondary: "#9ad9ea",
-  tertiary: "#db9820",
-};
+async function getThemeVariables(): Promise<React.CSSProperties> {
+    "use cache";
+    cacheLife("hours");
+    cacheTag("management");
 
-const HEX_PATTERN = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
+    const management = await getManagementSettings();
 
-function safeHex(value: string | null | undefined, fallback: string): string {
-  return value && HEX_PATTERN.test(value) ? value : fallback;
+    const primary = management?.schoolPrimaryColor ?? "#000000";
+    const secondary = management?.schoolSecondaryColor ?? "#000000";
+    const tertiary = management?.schoolTertiaryColor ?? "#000000";
+
+    const primaryLight = darkenHex(primary, -20);
+    const tertiaryDark = darkenHex(tertiary, 20);
+
+    return {
+        "--school-primary": primary,
+        "--school-primary-light": primaryLight,
+        "--school-secondary": secondary,
+        "--school-tertiary": tertiary,
+        "--school-tertiary-dark": tertiaryDark,
+    } as React.CSSProperties;
 }
-
-async function getThemeStyle(): Promise<string> {
-  const management = await getManagementSettings();
-
-  const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
-  const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
-  const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
-  const primaryLight = darkenHex(primary, -20);
-  const tertiaryDark = darkenHex(tertiary, 20);
-
-  return `:root {
-    --school-primary: ${primary};
-    --school-primary-light: ${primaryLight};
-    --school-secondary: ${secondary};
-    --school-tertiary: ${tertiary};
-    --school-tertiary-dark: ${tertiaryDark};
-  }`;
-};
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -67,31 +74,59 @@ const ibmPlexSans = IBM_Plex_Sans({
     variable: "--font-ibm-plex-sans",
     weight: ["400", "500", "600", "700"],
 });
-    
+
 const quicksand = Quicksand({
     subsets: ["latin"],
     variable: "--font-quicksand",
     weight: ["400", "500", "600", "700"],
 });
 
-export default async function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    const themeStyle = await getThemeStyle();
+export async function generateMetadata(): Promise<Metadata> {
+    "use cache: remote";
+    cacheLife("hours");
+    cacheTag("management");
+    const management = await getManagementSettings();
+
+    return {
+        icons: management?.croppedFavicon ? { icon: management.croppedFavicon } : undefined,
+    };
+}
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+    const [themeStyle, management] = await Promise.all([
+        getThemeVariables(),
+        getManagementSettings(),
+    ]);
+    const enteringCaptchaEnabled = isCaptchaEnabledFor(management, "ENTERING");
+    const entryCaptchaComplete = enteringCaptchaEnabled
+        ? (await cookies()).get(ENTRY_CAPTCHA_COOKIE)?.value === "true"
+        : false;
 
     return (
         <html
-            lang="en"
+            lang='en'
             className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+            style={themeStyle}
         >
-            <head>
-                <style id="school-theme" dangerouslySetInnerHTML={{ __html: themeStyle }} />
-            </head>
+            <head></head>
             <body>
-                {children}
+                <RegisterSW />
+                <EntryCaptchaGate
+                    enabled={enteringCaptchaEnabled}
+                    initialComplete={entryCaptchaComplete}
+                    schoolName={management?.schoolName}
+                >
+                    <div className='notOfficalContainer'>
+                        <div className='notOffcial'>
+                            <h1>
+                                This website is currently not officially assosiated with Dr. GW Williams S.S or
+                                Richmond Green S.S
+                            </h1>
+                        </div>
+                    </div>
+                    {children}
+                </EntryCaptchaGate>
             </body>
         </html>
     );
-};
+}

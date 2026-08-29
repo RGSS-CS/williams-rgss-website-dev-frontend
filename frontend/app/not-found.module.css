@@ -108,12 +108,15 @@
     margin-top: 24px;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
 }
 
 .btn_home {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    box-sizing: border-box;
+    min-height: 39px;
     padding: 11px 22px;
     background: var(--school-tertiary);
     color: var(--school-primary);
@@ -121,10 +124,16 @@
     border-radius: 10px;
     font-weight: 800;
     font-size: 0.85rem;
+    line-height: 1;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.18s, transform 0.12s;
+}
+
+.btn_home svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+    flex: 0 0 1em;
 }
 
 .btn_home:hover { background: var(--school-tertiary-dark); }
-.btn_home:active { transform: scale(0.97); }
