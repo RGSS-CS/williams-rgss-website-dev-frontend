@@ -94,6 +94,15 @@ jobs:
       packages: write
 
     steps:
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}/frontend
+          tags: |
+            type=raw,value=latest,enable=true
+            type=sha,prefix=sha-,format=short
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
@@ -107,19 +116,23 @@ jobs:
       - name: Create and publish multi-platform manifest
         id: manifest
         env:
-          IMAGE: ghcr.io/${{ github.repository }}/frontend
+          TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          short_sha="${GITHUB_SHA::7}"
-          docker buildx imagetools create \
-            --tag "$IMAGE:latest" \
-            --tag "$IMAGE:sha-$short_sha" \
-            "$IMAGE:latest-amd64" \
-            "$IMAGE:latest-arm64"
-          echo "digest=$(docker buildx imagetools inspect "$IMAGE:sha-$short_sha" --format '{{.Digest}}')" >> "$GITHUB_OUTPUT"
+          mapfile -t tags <<< "$TAGS"
+          image="${tags[0]%:latest}"
+          tag_args=()
+          for tag in "${tags[@]}"; do
+            tag_args+=(--tag "$tag")
+          done
+          docker buildx imagetools create "${tag_args[@]}" \
+            "$image:latest-amd64" \
+            "$image:latest-arm64"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=$(docker buildx imagetools inspect "$image:sha-${GITHUB_SHA::7}" --format '{{.Digest}}')" >> "$GITHUB_OUTPUT"
 
       - name: Export image references
         env:
-          IMAGE: ghcr.io/${{ github.repository }}/frontend
+          IMAGE: ${{ steps.manifest.outputs.image }}
         run: |
           echo "### Frontend image published :package:" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
