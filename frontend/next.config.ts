@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const mediaUrl = process.env.MEDIA_URL;
+
 const nextConfig: NextConfig = {
     experimental: {
         globalNotFound: true,
@@ -9,7 +11,7 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     agentRules: false,
     images: {
-        remotePatterns: [new URL(process.env.MEDIA_URL)], //Add env for backend 
+        remotePatterns: mediaUrl ? [new URL(mediaUrl)] : [],
     }
 }
 
