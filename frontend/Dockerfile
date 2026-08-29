@@ -14,6 +14,8 @@ RUN \
 
 FROM base AS builder
 WORKDIR /app
+ARG MEDIA_URL
+ENV MEDIA_URL=$MEDIA_URL
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1

@@ -84,6 +84,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            MEDIA_URL=${{ vars.MEDIA_URL }}
           cache-from: type=gha,scope=frontend-${{ matrix.architecture }}
           cache-to: type=gha,mode=max,scope=frontend-${{ matrix.architecture }}
 
