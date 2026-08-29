@@ -10,22 +10,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  set-pending-status:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write   # Required to push to GHCR
-      statuses: write   # Required to post commit statuses
+      statuses: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # context.sha on a push to main is the real merge commit SHA — no
-      # ephemeral merge-commit indirection like on pull_request events, so
-      # we can use it directly for all status posts.
       - name: Set status – pending
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             await github.rest.repos.createCommitStatus({
@@ -37,87 +29,130 @@ jobs:
               description: 'Building and publishing frontend image to GHCR…',
             });
 
-      # Extracts metadata (tags, labels) from the repo context.
-      # docker/metadata-action produces two tags automatically:
-      #   • ghcr.io/<owner>/<repo>/frontend:latest  (always on main)
-      #   • ghcr.io/<owner>/<repo>/frontend:sha-<short-sha>  (immutable, for deploys)
-      # Source: https://github.com/docker/metadata-action
+  build-platform-image:
+    needs: set-pending-status
+    name: Build ${{ matrix.platform }} image
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux/amd64
+            architecture: amd64
+            runner: ubuntu-24.04
+          - platform: linux/arm64
+            architecture: arm64
+            runner: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # The platform suffix keeps each native image addressable until the
+      # manifest job combines them into the public multi-platform tags.
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository }}/frontend
           tags: |
             type=raw,value=latest,enable=true
             type=sha,prefix=sha-,format=short
-
-      # QEMU lets the amd64 GitHub-hosted runner build ARM64 layers.
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+          flavor: |
+            suffix=-${{ matrix.architecture }},onlatest=true
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
-      # Log in to GHCR using the GITHUB_TOKEN — no stored PAT needed.
-      # The packages: write permission above grants push access.
-      # Source: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-with-a-personal-access-token-classic
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push frontend image
-        id: build
-        uses: docker/build-push-action@v6
+      # Build on native hardware. Next.js can execute native code while
+      # generating pages, which is not reliable under QEMU emulation.
+      - name: Build and push platform image
+        uses: docker/build-push-action@v7
         with:
           context: ./frontend
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platform }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Re-use layer cache from previous runs to keep build times low
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=frontend-${{ matrix.architecture }}
+          cache-to: type=gha,mode=max,scope=frontend-${{ matrix.architecture }}
 
-      # Expose the image digest and the SHA-pinned tag as outputs so that a
-      # downstream deploy job (e.g. Azure Container Apps) can reference the
-      # exact immutable image that was just published.
-      - name: Export image references
+  publish-manifest:
+    needs: build-platform-image
+    runs-on: ubuntu-24.04
+    permissions:
+      packages: write
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and publish multi-platform manifest
+        id: manifest
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}/frontend
         run: |
-          echo "### Frontend image published :package:" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Field  | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "| ------ | ----- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Digest | \`${{ steps.build.outputs.digest }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| SHA tag | \`ghcr.io/${{ github.repository }}/frontend:sha-$(echo ${{ github.sha }} | cut -c1-7)\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Latest tag | \`ghcr.io/${{ github.repository }}/frontend:latest\` |" >> $GITHUB_STEP_SUMMARY
+          short_sha="${GITHUB_SHA::7}"
+          docker buildx imagetools create \
+            --tag "$IMAGE:latest" \
+            --tag "$IMAGE:sha-$short_sha" \
+            "$IMAGE:latest-amd64" \
+            "$IMAGE:latest-arm64"
+          echo "digest=$(docker buildx imagetools inspect "$IMAGE:sha-$short_sha" --format '{{.Digest}}')" >> "$GITHUB_OUTPUT"
 
-      - name: Set status – success
-        if: success()
-        uses: actions/github-script@v7
+      - name: Export image references
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}/frontend
+        run: |
+          echo "### Frontend image published :package:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field  | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| ------ | ----- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Digest | \`${{ steps.manifest.outputs.digest }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| SHA tag | \`$IMAGE:sha-${GITHUB_SHA::7}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Latest tag | \`$IMAGE:latest\` |" >> "$GITHUB_STEP_SUMMARY"
+
+  report-status:
+    if: always()
+    needs: [build-platform-image, publish-manifest]
+    runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+
+    steps:
+      - name: Set final status
+        uses: actions/github-script@v8
+        env:
+          BUILD_RESULT: ${{ needs.build-platform-image.result }}
+          MANIFEST_RESULT: ${{ needs.publish-manifest.result }}
         with:
           script: |
+            const succeeded = process.env.BUILD_RESULT === 'success' &&
+              process.env.MANIFEST_RESULT === 'success';
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
-              state: 'success',
+              state: succeeded ? 'success' : 'failure',
               context: 'Docker / Frontend Publish',
-              description: 'Frontend image published to GHCR.',
-            });
-
-      - name: Set status – failure
-        if: failure() || cancelled()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'failure',
-              context: 'Docker / Frontend Publish',
-              description: 'Frontend image build or push failed.',
+              description: succeeded
+                ? 'Frontend image published to GHCR.'
+                : 'Frontend image build or push failed.',
             });
