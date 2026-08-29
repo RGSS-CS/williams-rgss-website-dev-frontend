@@ -111,6 +111,9 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
         </div>
         <div className={styles.footerCol}>
           <h4>More</h4>
+          <Link href='/about/credits' className={styles.footerLink} prefetch={false}>
+            Site Credits
+          </Link>
           <Link
             href='https://github.com/RGSS-CS/williams-rgss-website-dev-frontend'
             target='_blank'

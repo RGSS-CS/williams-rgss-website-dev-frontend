@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Suspense } from "react";
 import {
   Montserrat,
@@ -17,10 +16,9 @@ import Footer from "./_components/footer";
 import { getManagementSettings } from "./_lib/site-management";
 import darkenHex from "@/app/_utils/colorLightenDarken";
 import "@/app/global.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//Icons
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { getSchoolYear } from "./_utils/schoolYear";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -93,7 +91,11 @@ async function getThemeStyle(): Promise<string> {
   }`;
 }
 
-async function NavbarSlot({ management }: { management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>> }) {
+async function NavbarSlot({
+  management,
+}: {
+  management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>>;
+}) {
   return <Navbar management={management} />;
 }
 
@@ -137,10 +139,10 @@ export default async function NotFound() {
           </div>
 
           <div className={styles.actions}>
-            <Link href='/' className={styles.btn_home}>
-              <FontAwesomeIcon icon={faHouse} />
+            <a className={styles.btn_home} href='/'>
+              <FontAwesomeIcon icon={faHouse} aria-hidden='true' />
               Go to Home
-            </Link>
+            </a>
           </div>
         </div>
         <Footer management={management} schoolYear={schoolYear} />

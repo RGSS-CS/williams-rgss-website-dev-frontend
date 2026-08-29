@@ -1,0 +1,213 @@
+.sectionWrap {
+    padding: 3rem 4.5rem 0;
+}
+
+.sectionContent {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.sectionTitleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+    gap: 12px;
+}
+
+.sectionTitle {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.TitleAccent {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--school-tertiary);
+    border-radius: 50%;
+}
+
+.sectionLead {
+    max-width: 80ch;
+    margin: 0 0 2rem;
+    color: var(--black);
+    opacity: 0.8;
+    line-height: 1.8;
+}
+
+.creditsGrid {
+    display: grid;
+    gap: 1.2rem;
+}
+
+.creditCard {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 1.5rem;
+    box-shadow: 0 12px 30px rgba(11, 28, 58, 0.05);
+    display: grid;
+    gap: 0.8rem;
+}
+
+.projectManagerCard {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 1.5rem;
+    box-shadow: 0 12px 30px rgba(11, 28, 58, 0.05);
+    display: grid;
+    gap: 0.8rem;
+    text-align: center;
+}
+
+.projectManagerCard .roleRow {
+    justify-items: center;
+}
+
+.projectManagerName {
+    display: block;
+    color: var(--school-primary);
+    font-size: 1.2rem;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.cardTitle {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--school-primary);
+    text-decoration: underline solid;
+}
+
+.cardText {
+    margin: 0;
+    color: var(--school-primary);
+    opacity: 0.8;
+    line-height: 1.7;
+    font-weight: bold;
+}
+
+.contactLink {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--school-primary);
+    line-height: 1.7;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.contactLink:hover,
+.contactLink:focus {
+    text-decoration: underline;
+}
+
+.personLink {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+}
+
+.personLink:hover,
+.personLink:focus {
+    text-decoration: underline;
+}
+
+.creditRole {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    background: var(--school-primary);
+    color: var(--school-tertiary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.techBadges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+}
+
+.techLabel {
+    font-size: 0.78rem;
+    color: var(--school-primary);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.badgeRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.techBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 3px solid var(--school-tertiary);
+    font-size: 0.82rem;
+    color: var(--school-primary);
+    font-weight: 700;
+    margin: 3px;
+}
+
+.techBadge img {
+    margin-right: 0.5rem;
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 720px) {
+    .sectionWrap {
+        padding: 3rem 1.5rem 0;
+    }
+}
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+@media (max-width: 1200px) {
+    .teamGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .teamGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.roleList {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.roleRow {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.smallText {
+    margin: 0;
+    color: var(--school-primary);
+    line-height: 1.7;
+    font-size: 0.82rem;
+    opacity: 0.65;
+}
