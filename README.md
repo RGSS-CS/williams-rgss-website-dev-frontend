@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Dev Commands
+<code>$ENV:API_URL="http://localhost:8000"; $ENV:REVALIDATE_SECRET="dev-insecure-revalidate-secret";npm run dev</code>
+
 ## Getting Started
 
 First, run the development server:

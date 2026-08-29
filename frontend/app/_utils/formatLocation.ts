@@ -4,13 +4,16 @@ type LocaProps = {
     management: Management | null;
 }
 
-export default function SchoolLocation({ management }: LocaProps){   
-   
-   const address = management?.schoolLocation?.[0]?.location;
-    const mapsUrl = address
+export default function SchoolLocation({ management }: LocaProps) {
+
+    const address = management?.schoolLocation?.[0]?.location;
+    const mapsUrl = (
+        address
         ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-        : null;
-    const { displayAddress, regionLine } = address
+        : null
+    );
+    const { displayAddress, regionLine } = (
+        address
         ? (() => {
             const parts = address.split(",").map(s => s.trim());
             const [name, houseNumber, street, city, region, , province, , country] = parts;
@@ -20,7 +23,8 @@ export default function SchoolLocation({ management }: LocaProps){
             const regionLine = [city, region, province, country].filter(Boolean).join(", ");
             return { displayAddress, regionLine };
         })()
-        : { displayAddress: null, regionLine: null };
+        : { displayAddress: null, regionLine: null }
+    );
 
     return [mapsUrl, displayAddress, regionLine];
 }

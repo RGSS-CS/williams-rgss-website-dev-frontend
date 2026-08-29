@@ -7,7 +7,6 @@ export function getSchoolYear(): string {
  
     const startYear = month >= 8 ? year : year - 1;
     const endYear = startYear + 1;
- 
     return `${startYear}-${endYear}`;
 }
  
