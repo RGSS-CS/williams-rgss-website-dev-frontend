@@ -10,6 +10,7 @@ const initialState: SignupState = { error: null };
 type SignupFormClientProps = {
     showCaptcha: boolean;
     code: string;
+    captchaEndpoint?: string;
 };
 
 type FieldProps = {
@@ -55,7 +56,7 @@ function PasswordField({ id, label, value, onChange }: FieldProps & { id: string
     );
 }
 
-export default function SignupFormClient({ showCaptcha, code }: SignupFormClientProps) {
+export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }: SignupFormClientProps) {
     const [state, formAction, isPending] = useActionState(signup, initialState);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -80,7 +81,7 @@ export default function SignupFormClient({ showCaptcha, code }: SignupFormClient
                 <span className="warning"><h4><strong>DO NOT USE YOUR SCHOOL PASSWORD</strong></h4></span>
                 <PasswordField id="password" label="Password" value={password} onChange={setPassword} />
                 <PasswordField id="confirm_password" label="Confirm Password" value={confirmPassword} onChange={setConfirmPassword} />
-                {showCaptcha && <Captcha />}
+                {showCaptcha && <Captcha endpoint={captchaEndpoint} />}
 
                 <button className="authSubmitButton" type="submit" id="loginBtn" disabled={isPending}>
                     <FontAwesomeIcon icon={faArrowRightToBracket} className="authSubmitIcon" />

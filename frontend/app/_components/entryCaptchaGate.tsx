@@ -9,6 +9,7 @@ type EntryCaptchaGateProps = {
     enabled: boolean;
     initialComplete: boolean;
     schoolName?: string;
+    captchaEndpoint?: string;
     children: React.ReactNode;
 };
 
@@ -24,6 +25,7 @@ export default function EntryCaptchaGate({
     enabled,
     initialComplete,
     schoolName,
+    captchaEndpoint,
     children
 }: EntryCaptchaGateProps) {
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -50,6 +52,7 @@ export default function EntryCaptchaGate({
                         </div>
                     ) : (
                         <Captcha
+                            endpoint={captchaEndpoint}
                             className={styles.captcha}
                             errorClassName={styles.error}
                             loadingClassName={styles.captchaLoading}
@@ -62,7 +65,7 @@ export default function EntryCaptchaGate({
                     )}
                 </div>
                 <p className={styles.privacyNote}>
-                    This check helps keep the {schoolName || "website"} available for the school community.
+                    This check helps keep the website available for the school community.
                 </p>
             </section>
         </main>

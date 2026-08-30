@@ -14,7 +14,11 @@ export default async function SignupForm({ params }: SignupFormProps) {
         <main className='registrationPage'>
             <div className='registrationShell'>
                 <Suspense fallback={<div></div>}>
-                    <RegisterGate params={params} showCaptcha={isCaptchaEnabledFor(management, "REGISTER")} />
+                    <RegisterGate
+                        params={params}
+                        showCaptcha={isCaptchaEnabledFor(management, "REGISTER")}
+                        captchaEndpoint={process.env.CAPTCHA_URL}
+                    />
                 </Suspense>
             </div>
         </main>

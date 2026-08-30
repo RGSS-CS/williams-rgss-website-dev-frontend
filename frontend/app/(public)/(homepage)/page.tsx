@@ -36,7 +36,7 @@ async function HomeHero() {
                 {management?.croppedSiteImage && (
                     <img
                         src={management?.croppedSiteImage}
-                        alt='Wildcat Icon'
+                        alt='School Icon'
                         width={260}
                         height={230}
                         loading='eager'
