@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { toPublicMediaUrl } from "./media-url";
 
 export type Photo = {
     id: number;
@@ -134,6 +135,20 @@ function normalizeWhyJoin(whyJoin: WhyJoinReasonApiRecord[] | null | undefined):
         }));
 };
 
+function normalizeGallery(gallery: Gallery | null): Gallery | null {
+    if (!gallery) {
+        return null;
+    }
+
+    return {
+        ...gallery,
+        photos: gallery.photos.map((photo) => ({
+            ...photo,
+            image: toPublicMediaUrl(photo.image),
+        })),
+    };
+}
+
 function normalizeClub(record: ClubApiRecord): Club {
     return {
         id: record.id,
@@ -152,7 +167,7 @@ function normalizeClub(record: ClubApiRecord): Club {
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
         joinInstructions: record.join_instructions,
         whyJoin: normalizeWhyJoin(record.why_join),
-        gallery: record.gallery,
+        gallery: normalizeGallery(record.gallery),
     };
 };
 

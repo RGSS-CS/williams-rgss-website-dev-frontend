@@ -1,7 +1,16 @@
+# TODO: review this script, de-clankerfy code if needed, and inform user Windows and/or Docker Desktop 
+# are highly not recommend and should switch to Linux with Docker CE instead
+# TODO: remove this oudated script
+
 #Requires -Version 5.1
 
+#!!!!!!!!!!!!! DISCLAIMER !!!!!!!!!!!!!!!
+# This script is oudated, for up-to-date install script, please refer to the RGSS CS Docs
+# this is found at https://docs.rgsscs.org or https://github.com/RGSS-CS/documentation
+#!!!!!!!!!!!!! DISCLAIMER !!!!!!!!!!!!!!!
+
 # ==============================================================================
-#  RGSS Williams Portal -- Windows Installer (Native PowerShell)
+#  RGSS & Dr. GW Williams Stuco Website Installer
 #
 #  Installs Docker Desktop, Portainer, and sets up the backend + frontend.
 #  Automatically resumes after the reboot that WSL2 setup requires.

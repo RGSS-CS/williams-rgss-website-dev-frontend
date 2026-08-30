@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
@@ -109,13 +108,12 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
                             <Link href='/' className={styles.brandLink}>
                                 <div className={styles.logo}>
                                     {management?.croppedSiteImage && (
-                                        <Image
+                                        <img
                                             src={management.croppedSiteImage}
                                             alt='School Logo'
                                             width={80}
                                             height={80}
                                             loading='eager'
-                                            priority={true}
                                         />
                                     )}
                                 </div>

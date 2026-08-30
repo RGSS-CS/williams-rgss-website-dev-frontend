@@ -1,6 +1,7 @@
 "use server";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { toPublicMediaUrl } from "./media-url";
 
 export type SchoolLocationApiRecord = {
     location: string;
@@ -110,9 +111,9 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         schoolEmail: record.school_email,
         schoolPhone: formatPhoneNumber(record.school_phone),
         socialMedia: record.social_media,
-        croppedFavicon: record.cropped_favicon,
-        croppedSiteImage: record.cropped_site_image,
-        stucoImage: record.stuco_image,
+        croppedFavicon: toPublicMediaUrl(record.cropped_favicon),
+        croppedSiteImage: toPublicMediaUrl(record.cropped_site_image),
+        stucoImage: toPublicMediaUrl(record.stuco_image),
         aboutStuco: record.about_stuco,
         aboutSchool: record.about_school,
         schoolLocation: record.school_location.map(normalizeSchoolLocation),

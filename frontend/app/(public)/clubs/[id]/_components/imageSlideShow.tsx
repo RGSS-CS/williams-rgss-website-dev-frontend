@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import type { Gallery } from "@/app/_lib/club";
 import styles from "@/app/(public)/clubs/[id]/club-detail.module.css";
@@ -33,18 +32,16 @@ export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
     <div className={styles.IMG_Container}>
       <div className={styles.IMG_Container_Main}>
         {photos.map((p, index) => (
-          <Image
+          <img
             key={p.id}
             src={p.image}
             alt={p.caption || p.title}
-            fill
-            sizes='(max-width: 768px) 100vw, 800px'
             className={styles.IMG}
             style={{
               opacity: index === current ? 1 : 0,
               pointerEvents: index === current ? "auto" : "none",
             }}
-            priority
+            loading={index === 0 ? "eager" : "lazy"}
           />
         ))}
 
