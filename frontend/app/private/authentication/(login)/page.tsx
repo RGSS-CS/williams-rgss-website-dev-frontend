@@ -29,6 +29,7 @@ export default async function SigninPage({ searchParams }: SigninPageProps) {
         <LoginForm
             management={management}
             showCaptcha={isCaptchaEnabledFor(management, "LOGIN")}
+            captchaEndpoint={process.env.CAPTCHA_URL}
             initialError={error ? (ERROR_MESSAGES[error] ?? null) : null}
         />
     );

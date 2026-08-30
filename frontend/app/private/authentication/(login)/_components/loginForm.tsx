@@ -18,12 +18,14 @@ import type { Management } from "@/app/_lib/site-management";
 type LoginFormProps = {
   management: Management;
   showCaptcha: boolean;
+  captchaEndpoint?: string;
   initialError?: string | null;
 };
 
 export default function LoginForm({
   management,
   showCaptcha,
+  captchaEndpoint,
   initialError = null,
 }: LoginFormProps) {
   const router = useRouter();
@@ -100,7 +102,7 @@ export default function LoginForm({
             </div>
           </div>
 
-          {showCaptcha && <Captcha />}
+          {showCaptcha && <Captcha endpoint={captchaEndpoint} />}
           <button className='authSubmitButton' type='submit' id='loginBtn' disabled={isPending}>
             <FontAwesomeIcon icon={faArrowRightToBracket} className='authSubmitIcon' />
             {isPending ? "Signing in..." : "Continue"}

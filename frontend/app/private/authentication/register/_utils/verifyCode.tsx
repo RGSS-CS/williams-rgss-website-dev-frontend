@@ -6,6 +6,7 @@ import { Suspense } from "react";
 type RegisterGateProps = {
     params: Promise<{ api: string }>;
     showCaptcha: boolean;
+    captchaEndpoint?: string;
 };
 
 function getApiBaseUrl(): string {
@@ -33,7 +34,7 @@ export async function verifyCode(code: string): Promise<boolean> {
     }
 }
 
-export default async function RegisterGate({ params, showCaptcha }: RegisterGateProps) {
+export default async function RegisterGate({ params, showCaptcha, captchaEndpoint }: RegisterGateProps) {
     const { api } = await params;
     const code = decodeURIComponent(api);
 
@@ -42,6 +43,6 @@ export default async function RegisterGate({ params, showCaptcha }: RegisterGate
         redirect("/private/authentication?error=invalid_code");
     }
 
-    return (<Suspense><SignupFormClient showCaptcha={showCaptcha} code={code} /></Suspense>)
+    return (<Suspense><SignupFormClient showCaptcha={showCaptcha} code={code} captchaEndpoint={captchaEndpoint} /></Suspense>)
         ;
 }

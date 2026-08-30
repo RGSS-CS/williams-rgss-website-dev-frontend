@@ -115,6 +115,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     enabled={enteringCaptchaEnabled}
                     initialComplete={entryCaptchaComplete}
                     schoolName={management?.schoolName}
+                    captchaEndpoint={process.env.CAPTCHA_URL}
                 >
                     <div className='notOfficalContainer'>
                         <div className='notOffcial'>

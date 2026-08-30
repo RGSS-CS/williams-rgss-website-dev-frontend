@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { CapWidget } from "cap-widget";
-import { CAPTCHAURL } from "../_lib/captcha";
 
 type CaptchaProps = {
+    endpoint?: string;
     className?: string;
     errorClassName?: string;
     loadingClassName?: string;
@@ -12,6 +12,7 @@ type CaptchaProps = {
 };
 
 export default function Captcha({
+    endpoint,
     className = "authCaptcha",
     errorClassName = "authFormError",
     loadingClassName = "authCaptchaLoading",
@@ -20,7 +21,7 @@ export default function Captcha({
     const [isReady, setIsReady] = useState(false);
     const [hasLoadError, setHasLoadError] = useState(false);
     const widgetRef = useRef<CapWidget>(null);
-    const captchaEndpoint = CAPTCHAURL?.trim();
+    const captchaEndpoint = endpoint?.trim();
 
     useEffect(() => {
         let isMounted = true;
