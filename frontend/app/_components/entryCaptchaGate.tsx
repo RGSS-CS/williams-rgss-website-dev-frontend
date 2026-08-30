@@ -15,7 +15,7 @@ type EntryCaptchaGateProps = {
 
 function rememberCaptchaCompletion(): void {
     try {
-        document.cookie = `${ENTRY_CAPTCHA_COOKIE}=true; Max-Age=31536000; Path=/; SameSite=Lax`;
+        document.cookie = `${ENTRY_CAPTCHA_COOKIE}=true; Max-Age=86400; Path=/; SameSite=Lax`;
     } catch {
         // The gate still works for the current render when storage is unavailable.
     }
