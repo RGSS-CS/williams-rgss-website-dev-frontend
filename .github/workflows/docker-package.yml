@@ -1,171 +1,173 @@
 name: Publish Frontend Package
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "frontend/**"
-      - ".github/workflows/docker-package.yml"
-  workflow_dispatch:
+    push:
+        branches:
+            - main
+        paths:
+            - "frontend/**"
+            - ".github/workflows/docker-package.yml"
+    workflow_dispatch:
 
 jobs:
-  set-pending-status:
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write
+    set-pending-status:
+        runs-on: ubuntu-latest
+        permissions:
+            statuses: write
 
-    steps:
-      - name: Set status – pending
-        uses: actions/github-script@v8
-        with:
-          script: |
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'pending',
-              context: 'Docker / Frontend Publish',
-              description: 'Building and publishing frontend image to GHCR…',
-            });
+        steps:
+            - name: Set status - pending
+              uses: actions/github-script@v8
+              with:
+                  script: |
+                        await github.rest.repos.createCommitStatus({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            sha: context.sha,
+                            state: 'pending',
+                            context: 'Docker / Frontend Publish',
+                            description: 'Building and publishing frontend image to GHCR…'
+                        });
 
-  build-platform-image:
-    needs: set-pending-status
-    name: Build ${{ matrix.platform }} image
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: linux/amd64
-            architecture: amd64
-            runner: ubuntu-24.04
-          - platform: linux/arm64
-            architecture: arm64
-            runner: ubuntu-24.04-arm
-    permissions:
-      contents: read
-      packages: write
+    build-platform-image:
+        needs: set-pending-status
+        name: Build ${{ matrix.platform }} image
+        runs-on: ${{ matrix.runner }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - platform: linux/amd64
+                      architecture: amd64
+                      runner: ubuntu-24.04
+                    - platform: linux/arm64
+                      architecture: arm64
+                      runner: ubuntu-24.04-arm
+        permissions:
+            contents: read
+            packages: write
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
 
-      # The platform suffix keeps each native image addressable until the
-      # manifest job combines them into the public multi-platform tags.
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v6
-        with:
-          images: ghcr.io/${{ github.repository }}/frontend
-          tags: |
-            type=raw,value=latest,enable=true
-            type=sha,prefix=sha-,format=short
-          flavor: |
-            suffix=-${{ matrix.architecture }},onlatest=true
+            # The platform suffix keeps each native image addressable until the
+            # manifest job combines them into the public multi-platform tags.
+            - name: Extract Docker metadata
+              id: meta
+              uses: docker/metadata-action@v6
+              with:
+                  images: ghcr.io/${{ github.repository }}/frontend
+                  tags: |
+                        type=raw,value=latest,enable=true
+                        type=sha,prefix=sha-,format=short
+                  flavor: |
+                        suffix=-${{ matrix.architecture }},onlatest=true
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v4
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build on native hardware. Next.js can execute native code while
-      # generating pages, which is not reliable under QEMU emulation.
-      - name: Build and push platform image
-        uses: docker/build-push-action@v7
-        with:
-          context: ./frontend
-          platforms: ${{ matrix.platform }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=frontend-${{ matrix.architecture }}
-          cache-to: type=gha,mode=max,scope=frontend-${{ matrix.architecture }}
+            # Build on native hardware. Next.js can execute native code while
+            # generating pages, which is not reliable under QEMU emulation.
+            - name: Build and push platform image
+              uses: docker/build-push-action@v7
+              with:
+                  context: ./frontend
+                  platforms: ${{ matrix.platform }}
+                  push: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  cache-from: type=gha,scope=frontend-${{ matrix.architecture }}
+                  cache-to: type=gha,mode=max,scope=frontend-${{ matrix.architecture }}
 
-  publish-manifest:
-    needs: build-platform-image
-    runs-on: ubuntu-24.04
-    permissions:
-      packages: write
+    publish-manifest:
+        needs: build-platform-image
+        runs-on: ubuntu-24.04
+        permissions:
+            packages: write
 
-    steps:
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v6
-        with:
-          images: ghcr.io/${{ github.repository }}/frontend
-          tags: |
-            type=raw,value=latest,enable=true
-            type=sha,prefix=sha-,format=short
+        steps:
+            - name: Extract Docker metadata
+              id: meta
+              uses: docker/metadata-action@v6
+              with:
+                  images: ghcr.io/${{ github.repository }}/frontend
+                  tags: |
+                        type=raw,value=latest,enable=true
+                        type=sha,prefix=sha-,format=short
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v4
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create and publish multi-platform manifest
-        id: manifest
-        env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-        run: |
-          mapfile -t tags <<< "$TAGS"
-          image="${tags[0]%:latest}"
-          tag_args=()
-          for tag in "${tags[@]}"; do
-            tag_args+=(--tag "$tag")
-          done
-          docker buildx imagetools create "${tag_args[@]}" \
-            "$image:latest-amd64" \
-            "$image:latest-arm64"
-          echo "image=$image" >> "$GITHUB_OUTPUT"
-          echo "digest=$(docker buildx imagetools inspect "$image:sha-${GITHUB_SHA::7}" --format '{{.Digest}}')" >> "$GITHUB_OUTPUT"
+            - name: Create and publish multi-platform manifest
+              id: manifest
+              env:
+                  TAGS: ${{ steps.meta.outputs.tags }}
+              run: |
+                    mapfile -t tags <<< "$TAGS"
+                    image="${tags[0]%:latest}"
+                    tag_args=()
+                    for tag in "${tags[@]}"; do
+                        tag_args+=(--tag "$tag")
+                    done
+                    docker buildx imagetools create "${tag_args[@]}" \
+                        "$image:latest-amd64" \
+                        "$image:latest-arm64"
+                    echo "image=$image" >> "$GITHUB_OUTPUT"
+                    echo "digest=$(docker buildx imagetools inspect "$image:sha-${GITHUB_SHA::7}" --format '{{.Digest}}')" >> "$GITHUB_OUTPUT"
 
-      - name: Export image references
-        env:
-          IMAGE: ${{ steps.manifest.outputs.image }}
-        run: |
-          echo "### Frontend image published :package:" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Field  | Value |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| ------ | ----- |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Digest | \`${{ steps.manifest.outputs.digest }}\` |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| SHA tag | \`$IMAGE:sha-${GITHUB_SHA::7}\` |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Latest tag | \`$IMAGE:latest\` |" >> "$GITHUB_STEP_SUMMARY"
+            - name: Export image references
+              env:
+                  IMAGE: ${{ steps.manifest.outputs.image }}
+              run: |
+                    echo "### Frontend image published :package:" >> "$GITHUB_STEP_SUMMARY"
+                    echo "" >> "$GITHUB_STEP_SUMMARY"
+                    echo "| Field  | Value |" >> "$GITHUB_STEP_SUMMARY"
+                    echo "| ------ | ----- |" >> "$GITHUB_STEP_SUMMARY"
+                    echo "| Digest | \`${{ steps.manifest.outputs.digest }}\` |" >> "$GITHUB_STEP_SUMMARY"
+                    echo "| SHA tag | \`$IMAGE:sha-${GITHUB_SHA::7}\` |" >> "$GITHUB_STEP_SUMMARY"
+                    echo "| Latest tag | \`$IMAGE:latest\` |" >> "$GITHUB_STEP_SUMMARY"
 
-  report-status:
-    if: always()
-    needs: [build-platform-image, publish-manifest]
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write
+    report-status:
+        if: always()
+        needs: [build-platform-image, publish-manifest]
+        runs-on: ubuntu-latest
+        permissions:
+            statuses: write
 
-    steps:
-      - name: Set final status
-        uses: actions/github-script@v8
-        env:
-          BUILD_RESULT: ${{ needs.build-platform-image.result }}
-          MANIFEST_RESULT: ${{ needs.publish-manifest.result }}
-        with:
-          script: |
-            const succeeded = process.env.BUILD_RESULT === 'success' &&
-              process.env.MANIFEST_RESULT === 'success';
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: succeeded ? 'success' : 'failure',
-              context: 'Docker / Frontend Publish',
-              description: succeeded
-                ? 'Frontend image published to GHCR.'
-                : 'Frontend image build or push failed.',
-            });
+        steps:
+            - name: Set final status
+              uses: actions/github-script@v8
+              env:
+                  BUILD_RESULT: ${{ needs.build-platform-image.result }}
+                  MANIFEST_RESULT: ${{ needs.publish-manifest.result }}
+              with:
+                  script: |
+                        const succeeded = process.env.BUILD_RESULT === 'success' &&
+                            process.env.MANIFEST_RESULT === 'success';
+                        await github.rest.repos.createCommitStatus({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            sha: context.sha,
+                            state: succeeded ? 'success' : 'failure',
+                            context: 'Docker / Frontend Publish',
+                            description: (
+                                succeeded 
+                                ? 'Frontend image published to GHCR.' 
+                                : 'Frontend image build or push failed.'
+                            )
+                        });
