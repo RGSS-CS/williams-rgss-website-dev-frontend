@@ -31,8 +31,6 @@ export type ManagementApiRecord = {
     cropped_favicon: string;
     cropped_site_image: string;
     stuco_image: string;
-    about_stuco: string;
-    about_school: string;
     school_location: SchoolLocationApiRecord[];
     school_mascot: string;
     school_primary_color: string;
@@ -51,8 +49,6 @@ export type Management = {
     croppedFavicon: string;
     croppedSiteImage: string;
     stucoImage: string;
-    aboutStuco: string;
-    aboutSchool: string;
     schoolLocation: SchoolLocation[];
     schoolMascot: string;
     schoolPrimaryColor: string;
@@ -114,8 +110,6 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         croppedFavicon: toPublicMediaUrl(record.cropped_favicon),
         croppedSiteImage: toPublicMediaUrl(record.cropped_site_image),
         stucoImage: toPublicMediaUrl(record.stuco_image),
-        aboutStuco: record.about_stuco,
-        aboutSchool: record.about_school,
         schoolLocation: record.school_location.map(normalizeSchoolLocation),
         schoolMascot: record.school_mascot,
         schoolPrimaryColor: record.school_primary_color,
