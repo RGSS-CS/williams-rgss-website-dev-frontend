@@ -18,7 +18,7 @@
     pointer-events: none;
 }
 
-.hero_shape {
+.heroShape {
     position: absolute;
     top: 0;
     right: 0;
@@ -29,7 +29,7 @@
     pointer-events: none;
 }
 
-.hero_inner {
+.heroInner {
     max-width: 1500px;
     margin: 0 auto 20px;
     display: grid;
@@ -40,12 +40,13 @@
     z-index: 2;
 }
 
-.hero_left {
+.heroLeft {
     flex-direction: column;
+    z-index: 100;
 }
 
-.hero_title h1,
-.hero_title h2 {
+.heroTitle h1,
+.heroTitle h2 {
     font-size: clamp(2.6rem, 6vw, 4.6rem);
     font-weight: 900;
     letter-spacing: 0.03em;
@@ -55,17 +56,17 @@
     margin-top: 10px;
 }
 
-.hero_title h2 {
+.heroTitle h2 {
     color: var(--school-tertiary);
     margin-bottom: 1.5rem;
 }
 
-.hero_subtitle {
+.heroSubtitle {
     border-left: 5px solid var(--school-tertiary);
     margin-bottom: 2rem;
 }
 
-.hero_subtitle p {
+.heroSubtitle p {
     font-size: clamp(1rem, 2vw, 1.25rem);
     font-weight: 400;
     opacity: 0.85;

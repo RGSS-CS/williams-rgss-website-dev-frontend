@@ -5,9 +5,9 @@ export default async function Loading() {
     return (
         <main aria-busy="true" aria-label="Loading club details">
             <section className="hero">
-                <div className="hero_shape"></div>
+                <div className="heroShape"></div>
                 <div className="heroInner">
-                    <div className="hero_left">
+                    <div className="heroLeft">
                         <div className={loadingStyles.loadingBreadcrumbs}>
                             <span></span>
                             <span></span>

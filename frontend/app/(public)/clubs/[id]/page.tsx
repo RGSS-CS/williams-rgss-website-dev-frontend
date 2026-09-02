@@ -81,9 +81,9 @@ async function ClubHero({ clubId }: { clubId: number }) {
 
   return (
     <section className='hero'>
-      <div className='hero_shape'></div>
+      <div className='heroShape'></div>
       <div className='heroInner'>
-        <div className='hero_left'>
+        <div className='heroLeft'>
           <div className={styles_modules.breadcrumbs}>
             <Link href='/'>Home</Link>
             <span>/</span>
@@ -91,10 +91,10 @@ async function ClubHero({ clubId }: { clubId: number }) {
             <span>/</span>
             <span>{club.name}</span>
           </div>
-          <div className={`hero_title ${styles_modules.hero_title}`}>
+          <div className={`heroTitle ${styles_modules.heroTitle}`}>
             <h1>{club.name}</h1>
           </div>
-          <div className='hero_subtitle'>
+          <div className='heroSubtitle'>
             <p>{club.preview_description}</p>
           </div>
           <div className={styles_modules.heroActions}>
