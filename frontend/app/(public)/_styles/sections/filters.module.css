@@ -50,8 +50,9 @@
 }
 
 .filterChip:hover {
-    border-color: var(--school-tertiary);
+    border-color: var(--school-primary-dark);
     color: var(--school-primary-dark);
+    background: var(--school-tertiary);
 }
 
 .filterChip[data-active="true"] {
