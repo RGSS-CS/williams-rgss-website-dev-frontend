@@ -39,7 +39,7 @@ function normalizePageManagement(record: PageManagementApiRecord): PageManagemen
 };
 
 export async function getPageManagement(): Promise<PageManagement[]> {
-    'use cache: remote';
+    'use cache';
     cacheLife('hours');
     cacheTag('management');
     const url = getPageManagementApiUrl();
