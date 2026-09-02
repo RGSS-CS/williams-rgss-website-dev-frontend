@@ -1,5 +1,8 @@
 # Frontend
 API_URL=http://backend:8000
+# Public origin used for backend-hosted images (for example, https://example.com).
+# The original /media/... path, query string, and hash are retained.
+PUBLIC_MEDIA_BASE_URL=
 FRONTEND_REVALIDATE_URL=http://frontend:3000/api/revalidate
 REVALIDATE_SECRET=
 

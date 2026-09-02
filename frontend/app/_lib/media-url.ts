@@ -1,4 +1,4 @@
-const publicMediaBaseUrl = process.env.PROXIED_URL;
+const publicMediaBaseUrl = process.env.PUBLIC_MEDIA_BASE_URL;
 
 export function toPublicMediaUrl(mediaUrl: string): string {
     if (!publicMediaBaseUrl || !mediaUrl) {
@@ -6,8 +6,10 @@ export function toPublicMediaUrl(mediaUrl: string): string {
     }
 
     try {
-        const sourceUrl = new URL(mediaUrl);
         const publicBaseUrl = new URL(publicMediaBaseUrl);
+        // Media URLs returned by the API may be either absolute or relative.
+        // Use a placeholder origin so both forms can be parsed consistently.
+        const sourceUrl = new URL(mediaUrl, "http://media.local");
 
         if (!sourceUrl.pathname.startsWith("/media/")) {
             return mediaUrl;
