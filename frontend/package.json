@@ -15,21 +15,21 @@
         "@fortawesome/free-regular-svg-icons": "^7.3.1",
         "@fortawesome/free-solid-svg-icons": "^7.3.1",
         "@fortawesome/react-fontawesome": "^3.5.0",
-        "cap-widget": "^0.1.56",
+        "cap-widget": "^0.1.57",
         "crypto-js": "^4.2.0",
         "leaflet": "^1.9.4",
-        "next": "^16.3.3",
+        "next": "^16.3.4",
         "react": "^19.2.8",
         "react-dom": "^19.2.8",
-        "sharp": "^0.35.3"
+        "sharp": "^0.35.4"
     },
     "devDependencies": {
         "@types/leaflet": "^1.9.22",
         "@types/node": "^20.19.43",
         "@types/react": "^19.2.18",
-        "@types/react-dom": "^19.2.4",
+        "@types/react-dom": "^19.2.5",
         "eslint": "^9.39.5",
-        "eslint-config-next": "^16.3.3",
+        "eslint-config-next": "^16.3.4",
         "typescript": "^5.9.3"
     },
     "overrides": {
