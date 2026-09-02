@@ -216,11 +216,11 @@ export default function Credits() {
                 <p className={styles.cardText}>
                   <a
                     className={styles.personLink}
-                    href=''
+                    href='https://github.com/Haoiscool3'
                     target='_blank'
                     rel='noopener noreferrer'
                   >
-                    Name Here
+                    Haobin Chen Fang
                   </a>
                 </p>
               </div>
