@@ -16,6 +16,7 @@
         "@fortawesome/free-solid-svg-icons": "^7.3.1",
         "@fortawesome/react-fontawesome": "^3.5.0",
         "cap-widget": "^0.1.56",
+        "crypto-js": "^4.2.0",
         "leaflet": "^1.9.4",
         "next": "^16.3.3",
         "react": "^19.2.8",
