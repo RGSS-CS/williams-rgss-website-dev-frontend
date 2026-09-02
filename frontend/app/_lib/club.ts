@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { toPublicMediaUrl } from "./media-url";
+import { decodeVerifiedApplicationUrl } from "./application-url";
 
 export type Photo = {
     id: number;
@@ -64,7 +65,7 @@ export type Club = {
     roomNumber: string;
     classroomCode: string;
     teacherAdvisor: string;
-    applicationFormLink: string;
+    applicationFormLink: string | null;
     acceptingApplicants: string;
     joinInstructions: string;
     whyJoin: WhyJoinReason[];
@@ -163,7 +164,7 @@ function normalizeClub(record: ClubApiRecord): Club {
         roomNumber: String(record.room_number),
         classroomCode: record.classroom_code ?? '',
         teacherAdvisor: record.teacher_advisor,
-        applicationFormLink: record.application_form_link ?? '',
+        applicationFormLink: decodeVerifiedApplicationUrl(record.application_form_link),
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
         joinInstructions: record.join_instructions,
         whyJoin: normalizeWhyJoin(record.why_join),
