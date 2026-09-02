@@ -111,15 +111,13 @@
     width: 100%;
 }
 
-.btn_home {
+.btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     box-sizing: border-box;
     min-height: 39px;
     padding: 11px 22px;
-    background: var(--school-tertiary);
-    color: var(--school-primary);
     border: none;
     border-radius: 10px;
     font-weight: 800;
@@ -129,7 +127,17 @@
     text-decoration: none;
 }
 
-.btn_home svg {
+.btn_home {
+    background: var(--school-tertiary);
+    color: var(--school-primary);
+}
+
+.btn_back {
+    background: var(--grey);
+    color: var(--black);
+}
+
+.actions svg {
     display: block;
     width: 1em;
     height: 1em;
