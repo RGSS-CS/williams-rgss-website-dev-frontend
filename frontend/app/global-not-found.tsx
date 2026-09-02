@@ -18,7 +18,7 @@ import darkenHex from "@/app/_utils/colorLightenDarken";
 import "@/app/global.css";
 import { getSchoolYear } from "./_utils/schoolYear";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export const metadata: Metadata = {
     title: "Page Not Found",
@@ -91,12 +91,14 @@ async function getThemeStyle(): Promise<string> {
   }`;
 }
 
-async function NavbarSlot({
-    management,
-}: {
+async function NavbarSlot({management}: {
     management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>>;
 }) {
     return <Navbar management={management} />;
+}
+
+async function handleBack() {
+
 }
 
 export default async function NotFound() {
@@ -133,15 +135,18 @@ export default async function NotFound() {
                     <div className={styles.copy}>
                         <h1>Page not found</h1>
                         <p>
-                            The page you&apos;re looking for doesn&apos;t exist or may have been moved. Head back
-                            to safety.
+                            The page you're looking for doesn't exist or may have been moved.
                         </p>
                     </div>
 
                     <div className={styles.actions}>
-                        <a className={styles.btn_home} href='/'>
+                        <button className={`${styles.btn} ${styles.btn_back}`} onClick={() => window.history.back()}>
+                            <FontAwesomeIcon icon={faArrowLeft} aria-hidden='true' />
+                            Back
+                        </button>
+                        <a className={`${styles.btn} ${styles.btn_back}`} href='/'>
                             <FontAwesomeIcon icon={faHouse} aria-hidden='true' />
-                            Go to Home
+                            Home
                         </a>
                     </div>
                 </div>
