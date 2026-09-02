@@ -25,16 +25,16 @@ async function ClubsHero() {
 
   return (
     <div className='hero'>
-      <div className='hero_shape'></div>
+      <div className='heroShape'></div>
 
-      <div className='hero_inner'>
-        <div className='hero_left'>
-          <div className='hero_title'>
+      <div className='heroInner'>
+        <div className='heroLeft'>
+          <div className='heroTitle'>
             <h1>{pageManagement?.title}</h1>
             <h2>{pageManagement?.subtitle}</h2>
           </div>
 
-          <div className='hero_subtitle'>
+          <div className='heroSubtitle'>
             <p>{pageManagement?.tagline}</p>
           </div>
 
