@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation";
 import { cacheLife } from "next/cache";
+import { redirect } from "next/navigation";
 import SignupFormClient from "@/app/private/authentication/register/[api]/_components/signupForm";
 import { Suspense } from "react";
 
 type RegisterGateProps = {
-    params: Promise<{ api: string }>;
+    code: string;
     showCaptcha: boolean;
     captchaEndpoint?: string;
 };
@@ -34,15 +34,11 @@ export async function verifyCode(code: string): Promise<boolean> {
     }
 }
 
-export default async function RegisterGate({ params, showCaptcha, captchaEndpoint }: RegisterGateProps) {
-    const { api } = await params;
-    const code = decodeURIComponent(api);
-
+export default async function RegisterGate({ code, showCaptcha, captchaEndpoint }: RegisterGateProps) {
     const isValid = await verifyCode(code);
     if (!isValid) {
         redirect("/private/authentication?error=invalid_code");
     }
 
-    return (<Suspense><SignupFormClient showCaptcha={showCaptcha} code={code} captchaEndpoint={captchaEndpoint} /></Suspense>)
-        ;
+    return <Suspense><SignupFormClient showCaptcha={showCaptcha} code={code} captchaEndpoint={captchaEndpoint} /></Suspense>;
 }
