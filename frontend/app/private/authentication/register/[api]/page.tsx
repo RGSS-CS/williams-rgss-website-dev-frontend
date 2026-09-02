@@ -1,26 +1,5 @@
-import { getManagementSettings } from "@/app/_lib/site-management";
-import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
-import RegisterGate from "@/app/private/authentication/register/_utils/verifyCode";
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-type SignupFormProps = {
-    params: Promise<{ api: string }>;
-};
-
-export default async function SignupForm({ params }: SignupFormProps) {
-    const management = await getManagementSettings();
-
-    return (
-        <main className='registrationPage'>
-            <div className='registrationShell'>
-                <Suspense fallback={<div></div>}>
-                    <RegisterGate
-                        params={params}
-                        showCaptcha={isCaptchaEnabledFor(management, "REGISTER")}
-                        captchaEndpoint={process.env.CAPTCHA_URL}
-                    />
-                </Suspense>
-            </div>
-        </main>
-    );
+export default function LegacyRegistrationRoute() {
+    redirect("/private/authentication?error=invalid_code");
 }
