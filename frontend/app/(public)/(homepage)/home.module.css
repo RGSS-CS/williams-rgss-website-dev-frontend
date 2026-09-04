@@ -127,11 +127,6 @@
     padding: 3rem 4.5rem 0;
 }
 
-.sectionContent {
-    max-width: 1500px;
-    margin: 0 auto;
-}
-
 .sectionTitleRow {
     display: flex;
     align-items: baseline;
