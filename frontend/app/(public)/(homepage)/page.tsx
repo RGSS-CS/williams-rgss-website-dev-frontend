@@ -112,7 +112,7 @@ export default function Page() {
                 <HomeHero />
             </Suspense>
             <div className={styles.sectionWrap}>
-                <div className={styles.sectionContent}>
+                <div>
                     <div className={styles.sectionTitleRow}>
                         <h2 className={styles.sectionTitle}>
                             <span className={styles.sectionTitleAccent}></span>
