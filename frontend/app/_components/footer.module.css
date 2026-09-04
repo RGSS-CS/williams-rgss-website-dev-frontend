@@ -41,6 +41,12 @@
     color: var(--school-tertiary);
 }
 
+.socialFooterLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .footerCol p {
     font-size: 0.9rem;
     line-height: 1.8;

@@ -6,13 +6,21 @@ import type { Management } from "@/app/_lib/site-management";
 import styles from "./footer.module.css";
 import SchoolLocation from "@/app/_utils/formatLocation";
 //ICONS
-import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 type ManagementProps = {
     management: Management | null;
     schoolYear: string;
 };
+
+const socialMediaDetails = {
+    IG: { title: "Instagram", icon: faInstagram },
+    YT: { title: "YouTube", icon: faYoutube },
+    LI: { title: "LinkedIn", icon: faLinkedin },
+    OT: { title: "Other", icon: faGlobe },
+} as const;
 
 export default function Footer({ management, schoolYear }: ManagementProps) {
     const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
@@ -88,26 +96,25 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
 
                 <div className={styles.footerCol}>
                     <h4>Follow Us</h4>
-                    <Link
-                        href='https://www.instagram.com/drgwwilliams'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className={styles.footerLink}
-                        title='Instagram'
-                        aria-label='Instagram'
-                    >
-                        Instagram
-                    </Link>
-                    <Link
-                        href='https://drgwwilliams-ss.yrdsb.ca/'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className={styles.footerLink}
-                        title='School website'
-                        aria-label='School website'
-                    >
-                        YRDSB
-                    </Link>
+                    {management?.socialMedia.map((socialMedia) => {
+                        const details = socialMediaDetails[socialMedia.socialType];
+                        const title = socialMedia.title ?? details.title;
+
+                        return (
+                            <Link
+                                key={`${socialMedia.socialType}-${socialMedia.link}`}
+                                href={socialMedia.link}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className={`${styles.footerLink} ${styles.socialFooterLink}`}
+                                title={title}
+                                aria-label={title}
+                            >
+                                <FontAwesomeIcon icon={details.icon} aria-hidden />
+                                {title}
+                            </Link>
+                        );
+                    })}
                 </div>
                 <div className={styles.footerCol}>
                     <h4>More</h4>

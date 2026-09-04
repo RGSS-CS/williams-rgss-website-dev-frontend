@@ -21,22 +21,37 @@ export type SchoolLocation = {
 
 export type CaptchaSurface = "LOGIN" | "REGISTER" | "ENTERING";
 
+export type SocialMediaType = "IG" | "YT" | "LI" | "OT";
+
+export type SocialMediaApiRecord = {
+    social_type: SocialMediaType;
+    title?: string | null;
+    link: string;
+};
+
+export type SocialMedia = {
+    socialType: SocialMediaType;
+    title: string | null;
+    link: string;
+};
+
 export type ManagementApiRecord = {
     maintainance_mode: boolean;
     school_name: string;
     council_name: string;
     school_email: string;
     school_phone: string;
-    social_media: unknown[];
-    cropped_favicon: string;
-    cropped_site_image: string;
-    stuco_image: string;
+    social_media: SocialMediaApiRecord[];
+    cropped_favicon: string | null;
+    cropped_site_image: string | null;
+    stuco_image?: string | null;
     school_location: SchoolLocationApiRecord[];
     school_mascot: string;
     school_primary_color: string;
     school_secondary_color: string;
     school_tertiary_color: string;
     captcha: CaptchaSurface[];
+    school_domain?: string;
 };
 
 export type Management = {
@@ -45,16 +60,17 @@ export type Management = {
     councilName: string;
     schoolEmail: string;
     schoolPhone: string;
-    socialMedia: unknown[];
-    croppedFavicon: string;
-    croppedSiteImage: string;
-    stucoImage: string;
+    socialMedia: SocialMedia[];
+    croppedFavicon: string | null;
+    croppedSiteImage: string | null;
+    stucoImage: string | null;
     schoolLocation: SchoolLocation[];
     schoolMascot: string;
     schoolPrimaryColor: string;
     schoolSecondaryColor: string;
     schoolTertiaryColor: string;
     captcha: CaptchaSurface[];
+    schoolDomain: string | null;
 };
 
 function getSiteManagementApiUrl() {
@@ -76,6 +92,14 @@ function normalizeSchoolLocation(record: SchoolLocationApiRecord): SchoolLocatio
         locationLon: record.location_lon,
         contentType: record.content_type,
         objectId: record.object_id,
+    };
+};
+
+function normalizeSocialMedia(record: SocialMediaApiRecord): SocialMedia {
+    return {
+        socialType: record.social_type,
+        title: record.title?.trim() || null,
+        link: record.link,
     };
 };
 
@@ -106,16 +130,17 @@ function normalizeManagement(record: ManagementApiRecord): Management {
         councilName: record.council_name,
         schoolEmail: record.school_email,
         schoolPhone: formatPhoneNumber(record.school_phone),
-        socialMedia: record.social_media,
-        croppedFavicon: toPublicMediaUrl(record.cropped_favicon),
-        croppedSiteImage: toPublicMediaUrl(record.cropped_site_image),
-        stucoImage: toPublicMediaUrl(record.stuco_image),
+        socialMedia: record.social_media.map(normalizeSocialMedia),
+        croppedFavicon: record.cropped_favicon ? toPublicMediaUrl(record.cropped_favicon) : null,
+        croppedSiteImage: record.cropped_site_image ? toPublicMediaUrl(record.cropped_site_image) : null,
+        stucoImage: record.stuco_image ? toPublicMediaUrl(record.stuco_image) : null,
         schoolLocation: record.school_location.map(normalizeSchoolLocation),
         schoolMascot: record.school_mascot,
         schoolPrimaryColor: record.school_primary_color,
         schoolSecondaryColor: record.school_secondary_color,
         schoolTertiaryColor: record.school_tertiary_color,
-        captcha: record.captcha
+        captcha: record.captcha,
+        schoolDomain: record.school_domain ?? null,
     };
 };
 
