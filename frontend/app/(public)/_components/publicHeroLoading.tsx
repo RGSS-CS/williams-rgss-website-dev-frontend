@@ -33,9 +33,9 @@ export default function PublicHeroLoading({
                 </div>
             )}
 
-            <div className={badge ? styles.homeHeroShape : "hero_shape"}></div>
-            <div className='hero_inner'>
-                <div className='hero_left'>
+            <div className={badge ? styles.homeHeroShape : "heroShape"}></div>
+            <div className='heroInner'>
+                <div className='heroLeft'>
                     {tag && <span className={`${styles.skeletonBlock} ${styles.loadingHeroTag}`}></span>}
 
                     <div className={styles.loadingHeroTitle}>

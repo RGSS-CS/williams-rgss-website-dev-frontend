@@ -6,7 +6,6 @@
 .schoolMap {
     width: 100%;
     height: 360px;
-    border-radius: 12px;
     overflow: hidden;
     z-index: 0;
 }

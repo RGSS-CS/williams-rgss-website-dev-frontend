@@ -127,11 +127,6 @@
     padding: 3rem 4.5rem 0;
 }
 
-.sectionContent {
-    max-width: 1500px;
-    margin: 0 auto;
-}
-
 .sectionTitleRow {
     display: flex;
     align-items: baseline;
@@ -168,14 +163,13 @@
 
 .mapSection {
     position: relative;
-    border-radius: 12px;
     overflow: hidden;
     z-index: 0;
     margin-bottom: 1.8rem;
 }
 
 .sectionDivider {
-    height: 1px;
+    height: 3px;
     background: var(--line);
     margin-bottom: 1.6rem;
 }
@@ -185,7 +179,6 @@
     margin-top: 1rem;
     color: var(--school-primary);
     font-weight: 700;
-    text-decoration: none;
 }
 
 .mapLink:hover {

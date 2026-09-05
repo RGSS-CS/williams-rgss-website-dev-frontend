@@ -45,18 +45,18 @@ async function HomeHero() {
             </div>
 
             <div className={styles.heroShape}></div>
-            <div className='hero_inner'>
-                <div className='hero_left'>
+            <div className='heroInner'>
+                <div className='heroLeft'>
                     <div className={styles.heroTag}>
                         <p>
                             {management?.councilName} {schoolYear}
                         </p>
                     </div>
-                    <div className='hero_title'>
+                    <div className='heroTitle'>
                         <h1>{pageManagement?.title}</h1>
                         <h2>{pageManagement?.subtitle}</h2>
                     </div>
-                    <div className='hero_subtitle'>
+                    <div className='heroSubtitle'>
                         <p>{pageManagement?.tagline}</p>
                     </div>
 
@@ -112,7 +112,7 @@ export default function Page() {
                 <HomeHero />
             </Suspense>
             <div className={styles.sectionWrap}>
-                <div className={styles.sectionContent}>
+                <div>
                     <div className={styles.sectionTitleRow}>
                         <h2 className={styles.sectionTitle}>
                             <span className={styles.sectionTitleAccent}></span>

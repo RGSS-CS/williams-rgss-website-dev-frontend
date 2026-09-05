@@ -11,7 +11,7 @@ export default function Loading() {
 
             {Array.from({ length: SECTION_COUNT }).map((_, index) => (
                 <div className={styles.sectionWrap} key={index}>
-                    <div className={styles.sectionContent}>
+                    <div>
                         <div className={styles.sectionTitleRow}>
                             <span className={`${loadingStyles.skeletonBlock} ${styles.loadingSectionTitle}`}></span>
                         </div>

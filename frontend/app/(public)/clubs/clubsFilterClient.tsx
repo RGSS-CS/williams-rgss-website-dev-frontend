@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX, useDeferredValue, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import type { Club } from "@/app/_lib/club";
 
@@ -33,6 +33,12 @@ import {
 type ClubsFilterClientProps = {
   clubs: Club[];
   searchOnly?: boolean;
+};
+
+type ClubFilters = {
+  query: string;
+  activeCategory: string;
+  activeDay: string;
 };
 
 const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
@@ -83,6 +89,16 @@ function formatDayChip(day: string | null) {
   };
 
   return normalized ? (map[normalized] ?? "All Days") : "All Days";
+}
+
+function filtersFromSearchParams(searchParamString: string): ClubFilters {
+  const params = new URLSearchParams(searchParamString);
+
+  return {
+    query: params.get("q")?.trim() ?? "",
+    activeCategory: params.get("category") ?? "all",
+    activeDay: params.get("day") ?? "All Days",
+  };
 }
 
 function matchesQuery(club: Club, query: string) {
@@ -146,11 +162,19 @@ function ClubCard({ club }: { club: Club }) {
 }
 
 export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFilterClientProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const searchParamString = searchParams.toString();
 
-  const [query, setQuery] = useState(() => searchParams.get("q")?.trim() ?? "");
-  const [activeCategory, setActiveCategory] = useState(() => searchParams.get("category") ?? "all");
-  const [activeDay, setActiveDay] = useState(() => searchParams.get("day") ?? "All Days");
+  const [filters, setFilters] = useState(() => filtersFromSearchParams(searchParamString));
+  const [previousSearchParamString, setPreviousSearchParamString] = useState(searchParamString);
+
+  if (previousSearchParamString !== searchParamString) {
+    setPreviousSearchParamString(searchParamString);
+    setFilters(filtersFromSearchParams(searchParamString));
+  }
+
+  const { query, activeCategory, activeDay } = filters;
 
   const deferredQuery = useDeferredValue(query);
 
@@ -183,7 +207,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     category?: string | null;
     day?: string | null;
   }) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParamString);
 
     if (partial.q !== undefined) {
       if (partial.q) {
@@ -213,19 +237,14 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
 
     const url = queryString ? `/clubs?${queryString}` : "/clubs";
 
-    window.history.replaceState(null, "", url);
+    router.replace(url, { scroll: false });
 
-    if (partial.q !== undefined) {
-      setQuery(partial.q ?? "");
-    }
-
-    if (partial.category !== undefined) {
-      setActiveCategory(partial.category ?? "all");
-    }
-
-    if (partial.day !== undefined) {
-      setActiveDay(partial.day ?? "All Days");
-    }
+    setFilters((currentFilters) => ({
+      query: partial.q !== undefined ? partial.q ?? "" : currentFilters.query,
+      activeCategory:
+        partial.category !== undefined ? partial.category ?? "all" : currentFilters.activeCategory,
+      activeDay: partial.day !== undefined ? partial.day ?? "All Days" : currentFilters.activeDay,
+    }));
   };
 
   const filteredClubs = useMemo(
