@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import {
   Montserrat,
   Jost,
@@ -18,6 +20,9 @@ import darkenHex from "@/app/_utils/colorLightenDarken";
 import "@/app/global.css";
 import { getSchoolYear } from "./_utils/schoolYear";
 import NotFoundActions from "./_components/notFoundActions";
+
+// The standalone 404 page bypasses the root layout's icon setup.
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: "Page Not Found",
