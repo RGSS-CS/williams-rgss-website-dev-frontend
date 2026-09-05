@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowRightToBracket, faBars, faHome,
-    faImages, faInfoCircle, faRightFromBracket,
+    faRightFromBracket,
     faTimes, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import type { Management } from "@/app/_lib/site-management";
