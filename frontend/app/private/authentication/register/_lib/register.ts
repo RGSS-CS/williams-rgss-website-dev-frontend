@@ -122,7 +122,7 @@ export async function register(
             body: JSON.stringify(payload),
             signal: options?.signal,
         });
-    } catch (networkError) {
+    } catch {
         throw new RegisterError(0, {
             non_field_errors: [
                 "Unable to reach the server. Check your connection and try again.",
