@@ -25,7 +25,6 @@ type NavbarClientProps = {
 const links = [
     { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
     { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
-    { href: "/about", icon: <FontAwesomeIcon icon={faInfoCircle} />, label: "About" }
 ];
 
 function isActivePath(pathname: string, href: string) {
