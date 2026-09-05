@@ -21,7 +21,7 @@ export const useCopyToClipboard = (
                 await navigator.clipboard.writeText(text);
                 setStatus('success');
                 setCopiedText(text);
-            } catch (error) {
+            } catch {
                 setStatus('error');
                 setCopiedText(null);
             }
