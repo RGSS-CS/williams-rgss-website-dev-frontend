@@ -42,10 +42,10 @@ async function GalleryHero() {
                     <div className='heroSubtitle'>
                         <p>{pageManagement?.tagline}</p>
                     </div>
-                    <div className='search_container'>
-                        <FontAwesomeIcon icon={faSearch} className='search_container_icon' />
+                    <div className='searchContainer'>
+                        <FontAwesomeIcon icon={faSearch} className='searchContainerIcon' />
                         <input
-                            className='search_input'
+                            className='searchInput'
                             id='gallery_search'
                             type='text'
                             placeholder='Search by club name, event, people...'

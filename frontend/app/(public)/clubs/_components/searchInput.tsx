@@ -16,7 +16,7 @@ export default function ClubSearchInput(
 
     return (
         <input
-            className="search_input"
+            className="searchInput"
             id="club_search"
             type="text"
             value={value}

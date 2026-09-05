@@ -121,13 +121,13 @@ export default async function NotFound() {
                     <NavbarSlot management={management} />
                 </Suspense>
                 <div className={styles.content}>
-                    <div className={styles.gif_stage}>
-                        <div className={styles.overlay_404}>
-                            <div className={styles.num_404}>
+                    <div className={styles.gifStage}>
+                        <div className={styles.overlay404}>
+                            <div className={styles.num404}>
                                 4<span>0</span>4
                             </div>
                         </div>
-                        <div className={styles.gif_frame}>
+                        <div className={styles.gifFrame}>
                             <Image src='/images/gifs/meowl.gif' alt='meow' width={640} height={360} unoptimized />
                         </div>
                     </div>
@@ -140,11 +140,11 @@ export default async function NotFound() {
                     </div>
 
                     <div className={styles.actions}>
-                        <button className={`${styles.btn} ${styles.btn_back}`} onClick={() => window.history.back()}>
+                        <button className={`${styles.btn} ${styles.btnBack}`} onClick={() => window.history.back()}>
                             <FontAwesomeIcon icon={faArrowLeft} aria-hidden='true' />
                             Back
                         </button>
-                        <a className={`${styles.btn} ${styles.btn_back}`} href='/'>
+                        <a className={`${styles.btn} ${styles.btnBack}`} href='/'>
                             <FontAwesomeIcon icon={faHouse} aria-hidden='true' />
                             Home
                         </a>

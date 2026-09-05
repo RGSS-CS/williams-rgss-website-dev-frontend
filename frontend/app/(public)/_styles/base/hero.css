@@ -77,13 +77,13 @@
     white-space: pre-line;
 }
 
-.search_container {
+.searchContainer {
     max-width: 680px;
     width: 100%;
     position: relative;
 }
 
-.search_container_icon {
+.searchContainerIcon {
     position: absolute;
     left: 1.2rem;
     top: 50%;
@@ -93,7 +93,7 @@
     pointer-events: none;
 }
 
-.search_input {
+.searchInput {
     width: 100%;
     box-sizing: border-box;
     padding: 0.9rem 1.2rem 0.9rem 3rem;
@@ -106,21 +106,21 @@
     outline: none;
 }
 
-.search_input::placeholder {
+.searchInput::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 
-.search_input:focus {
+.searchInput:focus {
     border-color: var(--school-tertiary);
     background: rgba(255, 255, 255, 0.15);
 }
 
 @media (max-width: 768px) {
-    .search_container {
+    .searchContainer {
         max-width: 100%;
     }
 
-    .search_input {
+    .searchInput {
         font-size: 0.9rem;
         padding-inline: 1rem 1rem;
         padding-left: 2.8rem;

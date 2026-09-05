@@ -38,27 +38,27 @@ async function ClubsHero() {
             <p>{pageManagement?.tagline}</p>
           </div>
 
-          <div className='search_container'>
-            <FontAwesomeIcon icon={faSearch} className='search_container_icon' />
+          <div className='searchContainer'>
+            <FontAwesomeIcon icon={faSearch} className='searchContainerIcon' />
 
             <ClubsFilterClient clubs={clubs} searchOnly />
           </div>
 
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
-              <span className='stat-num'>{clubs.length}</span>
-              <span className='stat-label'>Total Clubs</span>
+              <span className='statNum'>{clubs.length}</span>
+              <span className='statLabel'>Total Clubs</span>
             </div>
 
             <div className={styles.heroStat}>
-              <span className='stat-num'>
+              <span className='statNum'>
                 {
                   Array.from(new Set(clubs.flatMap((club) => club.categories).filter(Boolean)))
                     .length
                 }
               </span>
 
-              <span className='stat-label'>Categories</span>
+              <span className='statLabel'>Categories</span>
             </div>
           </div>
         </div>
