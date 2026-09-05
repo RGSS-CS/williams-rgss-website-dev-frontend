@@ -110,20 +110,20 @@ async function ClubHero({ clubId }: { clubId: number }) {
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
-              <span className='stat-num'>{club.categories.length || 1}</span>
-              <span className='stat-label'>Categories</span>
+              <span className='statNum'>{club.categories.length || 1}</span>
+              <span className='statLabel'>Categories</span>
             </div>
             <div className={styles.heroStat}>
-              <span className='stat-num'>{meetingDay.split(" ")[0]}</span>
-              <span className='stat-label'>Meeting Day</span>
+              <span className='statNum'>{meetingDay.split(" ")[0]}</span>
+              <span className='statLabel'>Meeting Day</span>
             </div>
             <div className={styles.heroStat}>
-              <span className='stat-num'>{club.roomNumber ?? "TBA"}</span>
-              <span className='stat-label'>Room</span>
+              <span className='statNum'>{club.roomNumber ?? "TBA"}</span>
+              <span className='statLabel'>Room</span>
             </div>
             <div className={styles.heroStat}>
-              <span className='stat-num'>{cadence}</span>
-              <span className='stat-label'>Schedule</span>
+              <span className='statNum'>{cadence}</span>
+              <span className='statLabel'>Schedule</span>
             </div>
           </div>
         </div>

@@ -12,13 +12,13 @@
     border-bottom: var(--school-tertiary) solid 4px;
 }
 
-.gif_stage {
+.gifStage {
     position: relative;
     width: 380px;
     max-width: 100%;
 }
 
-.overlay_404 {
+.overlay404 {
     position: absolute;
     top: 50%;
     left: 0; right: 0;
@@ -30,7 +30,7 @@
     z-index: 2;
 }
 
-.num_404 {
+.num404 {
     font-size: 7rem;
     line-height: 1;
     letter-spacing: 0.04em;
@@ -41,9 +41,9 @@
     0 4px 24px rgba(0,0,0,0.7);
 }
 
-.num_404 span { color: var(--school-tertiary); }
+.num404 span { color: var(--school-tertiary); }
 
-.gif_frame {
+.gifFrame {
     width: 100%;
     border-radius: 20px;
     overflow: hidden;
@@ -56,7 +56,7 @@
     position: relative;
 }
 
-.gif_frame::after {
+.gifFrame::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -72,7 +72,7 @@
     z-index: 1;
 }
 
-.gif_frame img {
+.gifFrame img {
     width: 100%;
     height: 280px;
     object-fit: cover;
@@ -127,12 +127,12 @@
     text-decoration: none;
 }
 
-.btn_home {
+.btnHome {
     background: var(--school-tertiary);
     color: var(--school-primary);
 }
 
-.btn_back {
+.btnBack {
     background: var(--grey);
     color: var(--black);
 }
@@ -144,4 +144,4 @@
     flex: 0 0 1em;
 }
 
-.btn_home:hover { background: var(--school-tertiary-dark); }
+.btnHome:hover { background: var(--school-tertiary-dark); }

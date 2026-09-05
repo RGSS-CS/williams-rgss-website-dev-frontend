@@ -16,7 +16,7 @@
     flex: 0 0 auto;
 }
 
-.heroStat :global(.stat-num) {
+.heroStat :global(.statNum) {
     font-weight: 900;
     font-size: 2rem;
     color: var(--school-tertiary);
@@ -25,7 +25,7 @@
     display: flex;
 }
 
-.heroStat :global(.stat-label) {
+.heroStat :global(.statLabel) {
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;

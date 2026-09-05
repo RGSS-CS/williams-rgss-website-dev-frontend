@@ -29,14 +29,14 @@ export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
   };
 
   return (
-    <div className={styles.IMG_Container}>
-      <div className={styles.IMG_Container_Main}>
+    <div className={styles.imgContainer}>
+      <div className={styles.imgContainerMain}>
         {photos.map((p, index) => (
           <img
             key={p.id}
             src={p.image}
             alt={p.caption || p.title}
-            className={styles.IMG}
+            className={styles.img}
             style={{
               opacity: index === current ? 1 : 0,
               pointerEvents: index === current ? "auto" : "none",
