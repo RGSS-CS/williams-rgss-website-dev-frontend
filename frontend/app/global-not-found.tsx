@@ -103,10 +103,6 @@ async function NavbarSlot({
   return <Navbar management={management} />;
 }
 
-async function handleBack() {
-
-}
-
 export default async function NotFound() {
   const management = await getManagementSettings();
   if (!management) return null;
