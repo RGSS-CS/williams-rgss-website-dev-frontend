@@ -2,6 +2,10 @@
     margin-bottom: 2rem;
 }
 
+.heroDescription {
+    white-space: pre-line;
+}
+
 .heroActions {
     display: flex;
     flex-wrap: wrap;
