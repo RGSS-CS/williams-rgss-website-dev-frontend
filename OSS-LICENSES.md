@@ -1,13 +1,16 @@
 # Open Source Software Licenses
 
-This project, the Dr. GW Williams & RGSS Student Council website or simply "Stuco Website" for short, could not have been created without the various software libraries we used.
+This project, the Dr. GW Williams & RGSS Student Council website or simply "Stuco Website" for short, could not have been created without the various software libraries we used. 
+
+We, the members of RGSS CS Club and our collaborators from Dr. GW Williams SS, aknowledge and express our gratitude for the developers of the softwares listed below—not just for their contribution to our project but also to open-source community and tech world as a whole.
 
 ## Licenses for OSS used in Stuco Website produced below
+
 THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE CONTAINED IN PORTIONS OF STUCO WEBSITE.
 
 -----------
 
-This OSS-LICENSES file was generated with the generate-license-file npm package!
+This license file was generated with the generate-license-file npm package!
 https://www.npmjs.com/package/generate-license-file
 
 Said package contains the following license:
