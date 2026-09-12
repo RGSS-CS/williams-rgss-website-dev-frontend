@@ -126,18 +126,6 @@
     margin-top: 1.75rem;
 }
 
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.75rem 1.2rem;
-    border-radius: 999px;
-    border: 2px solid var(--grey);
-    background: var(--white);
-    color: var(--school-primary);
-    font-weight: 800;
-}
-
 .imgContainer {
     width: 100%;
     padding: 20px;
@@ -574,8 +562,7 @@
 @media (max-width: 1120px) {
 
     .aboutGrid,
-    .infoGrid,
-    .heroStats {
+    .infoGrid {
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -583,8 +570,7 @@
 @media (max-width: 800px) {
 
     .aboutGrid,
-    .infoGrid,
-    .heroStats {
+    .infoGrid {
         grid-template-columns: 1fr;
     }
 
@@ -639,10 +625,6 @@
         left: 10px;
     }
 
-    .arrowRuight {
-        right: 10px;
-    }
-
     .counter {
         right: 10px;
         bottom: 10px;
@@ -662,28 +644,6 @@
     .applicationsClosedCard {
         flex-direction: column;
     }
-}
-
-.whyJoinWrap {
-    background: var(--white);
-}
-
-.whyJoinWrap .section {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: clamp(3.5rem, 6vw, 5rem) clamp(1rem, 4vw, 4rem);
-}
-
-.whyJoinHeading {
-    margin-bottom: clamp(2.25rem, 5vw, 3.5rem);
-    text-align: center;
-}
-
-.whyJoinHeading h2 {
-    margin: 0;
-    color: var(--black);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 900;
 }
 
 .whyJoinList {
@@ -722,14 +682,6 @@
     min-width: 0;
 }
 
-.whyJoinIcon {
-    display: block;
-    min-height: 3rem;
-    margin-bottom: 1.15rem;
-    font-size: 2.75rem;
-    line-height: 1;
-}
-
 .whyJoinCopy h3 {
     margin: 0;
     color: var(--school-primary);
@@ -758,9 +710,6 @@
 }
 
 @media (max-width: 720px) {
-    .whyJoinWrap .section {
-        padding: 2.5rem 1rem;
-    }
 
     .whyJoinList {
         grid-template-columns: 1fr;

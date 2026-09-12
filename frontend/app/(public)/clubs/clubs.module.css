@@ -57,11 +57,6 @@
     text-align: center;
 }
 
-.emptyState .fas {
-    font-size: 3rem;
-    opacity: 0.3;
-}
-
 .emptyState h3 {
     font-size: 3rem;
     margin-bottom: 0.2rem;
@@ -71,10 +66,6 @@
 .emptyState p {
     font-size: 0.9rem;
     max-width: 320px;
-}
-
-.clubCardsGrid {
-    align-items: stretch;
 }
 
 .clubCardLink {
@@ -142,16 +133,6 @@
     align-items: center;
     gap: 7px;
     color: var(--school-primary-light);
-}
-
-.clubMetaRow .fas {
-    flex-shrink: 0;
-    font-size: 0.78rem;
-    color: var(--school-primary);
-    opacity: 0.5;
-    width: 14px;
-    text-align: center;
-    margin-right: 0;
 }
 
 .clubMetaRow h4 {
@@ -257,11 +238,6 @@
     text-decoration: none;
 }
 
-.ctaBtn .fas {
-    margin-left: 0.6rem;
-    font-size: 1.1rem;
-}
-
 .ctaBtn:hover {
     transform: translateY(-3px);
     box-shadow: 0 3px 0 var(--school-tertiary-dark), 0 2px 10px rgba(0, 0, 0, 0.15);
@@ -283,21 +259,8 @@
         background: var(--white);
     }
 
-    .resultsCountMobile {
-        margin-top: 0;
-    }
-
     .clubCard {
         border-radius: 24px;
-    }
-
-    .clubCardHero,
-    .clubCardBody {
-        padding: 1.2rem;
-    }
-
-    .clubMetaGrid {
-        grid-template-columns: 1fr;
     }
 
 }

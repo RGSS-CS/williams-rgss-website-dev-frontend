@@ -73,7 +73,3 @@
     background: var(--school-primary-light);
     margin: 0 4px;
 }
-
-.filterToggleBtn {
-    display: none;
-}
