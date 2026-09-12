@@ -148,23 +148,6 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
             <div className={styles_modules.sectionBody}>{club.description}</div>
-
-            <div className={styles_modules.badgeRow}>
-              <div className={styles_modules.badge}>
-                <FontAwesomeIcon icon={faCalendarCheck} />
-                {meetingDay} · {meetingTime}
-              </div>
-              <div className={styles_modules.badge}>
-                <FontAwesomeIcon icon={faDoorOpen} />
-                {roomLabel}
-              </div>
-              {hasCategories && (
-                <div className={styles_modules.badge}>
-                  <FontAwesomeIcon icon={faLayerGroup} />
-                  {categories.join(" · ")}
-                </div>
-              )}
-            </div>
           </div>
           {club.joinInstructions ? (
             <ClubSlideshow gallery={club.gallery ?? null} />
