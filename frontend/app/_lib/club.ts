@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { toPublicMediaUrl } from "./media-url";
+import { toPublicMediaUrl } from "../_utils/media-url";
 
 export type Photo = {
     id: number;

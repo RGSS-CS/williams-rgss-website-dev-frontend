@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
+import { getGalleryPhotos } from "@/app/_lib/gallery-photos";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
@@ -134,11 +135,10 @@ async function ClubHero({ clubId }: { clubId: number }) {
 
 async function ClubAbout({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
-  const categories = (club.categories ?? []).filter((category) => category?.trim());
-  const hasCategories = categories.length > 0;
-  const meetingDay = formatDay(club.dayOfMeeting);
-  const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const accessToken = (await cookies()).get("access_token")?.value;
+  const photos = accessToken
+    ? (await getGalleryPhotos()).filter((photo) => photo.club === clubId)
+    : [];
 
   return (
     <div className={styles_modules.aboutWrap}>
@@ -149,8 +149,8 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
             <div className={styles_modules.sectionBody}>{club.description}</div>
           </div>
-          {club.joinInstructions ? (
-            <ClubSlideshow gallery={club.gallery ?? null} />
+          {accessToken ? (
+            <ClubSlideshow key={clubId} photos={photos} />
           ) : (
             <span className={styles_modules.loginWarn}>
               <h3>You must be signed in to view this media</h3>
