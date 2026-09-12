@@ -142,7 +142,6 @@
     width: 100%;
     padding: 20px;
     background: var(--school-primary);
-    border-radius: 16px;
 }
 
 .imgContainerMain {
@@ -267,7 +266,7 @@
 
 .infoGrid {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1.5rem;
 }
 
@@ -400,7 +399,6 @@
     line-height: 1.5;
     color: var(--line);
     background: var(--school-primary);
-    border-radius: 14px;
     padding: 0.75rem;
 }
 
@@ -437,9 +435,8 @@
     gap: 0.85rem;
     min-width: 0;
     padding: 0.85rem;
-    border-radius: 16px;
     background: var(--school-primary);
-    border: 1px solid var(--school-tertiary);
+    border: 2px solid var(--school-tertiary);
     position: relative;
     z-index: 1;
 }
