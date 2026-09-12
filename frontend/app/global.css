@@ -33,7 +33,7 @@ main {
 }
 
 h1 {
-	font-family: "Montserrat", sans-serif;
+	font-family: var(--font-montserrat), sans-serif;
 }
 
 h2 {
@@ -50,7 +50,7 @@ h4 {
 
 h5 {
 	/* SPECIAL FONT */
-	font-family: "quicksand", sans-serif;
+	font-family: var(--font-quicksand), sans-serif;
 }
 
 p {
