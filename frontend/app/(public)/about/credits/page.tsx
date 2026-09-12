@@ -206,6 +206,19 @@ export default function Credits() {
                   </a>
                 </p>
               </div>
+              <div className={styles.roleRow}>
+                <span className={styles.creditRole}>Other Contributors</span>
+                <p className={styles.smallText}>
+                  <a
+                    className={styles.personLink}
+                    href='https://github.com/DanPlus6'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    David Fu
+                  </a>
+                </p>
+              </div>
             </div>
           </article>
           <article className={styles.creditCard}>
