@@ -36,12 +36,6 @@
   flex-shrink: 0;
 }
 
-.tickerLine {
-  width: min(70vw, 520px);
-  height: 0.85rem;
-  margin-left: 1rem;
-}
-
 .heroBadgeImage {
   background: var(--school-secondary);
   position: absolute;
