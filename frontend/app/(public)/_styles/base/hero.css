@@ -116,6 +116,25 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        padding-inline: 1.5rem;
+    }
+
+    .heroInner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    .heroLeft {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .heroTitle h1,
+    .heroTitle h2 {
+        font-size: clamp(2rem, 6vw, 2.875rem);
+    }
+
     .searchContainer {
         max-width: 100%;
     }

@@ -180,13 +180,6 @@ async function ClubInfo({ clubId }: { clubId: number }) {
         </div>
 
         <div className={styles_modules.infoGrid}>
-          {hasCategories && (
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
-              <h3>Category</h3>
-              <p>{categories.join(", ")}</p>
-            </article>
-          )}
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
             <h3>Meeting Day</h3>
