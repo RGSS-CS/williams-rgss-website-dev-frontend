@@ -164,6 +164,7 @@
 }
 
 .clubCardDescription {
+    white-space: pre-line;
     font-size: 0.84rem;
     color: var(--school-primary);
     border: solid 4px var(--school-tertiary);

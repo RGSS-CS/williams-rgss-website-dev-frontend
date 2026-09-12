@@ -95,7 +95,7 @@ async function ClubHero({ clubId }: { clubId: number }) {
             <h1>{club.name}</h1>
           </div>
           <div className='heroSubtitle'>
-            <p>{club.preview_description}</p>
+            <p className={styles_modules.heroDescription}>{club.preview_description}</p>
           </div>
           <div className={styles_modules.heroActions}>
             {showJoinSection && (
@@ -147,7 +147,7 @@ async function ClubAbout({ clubId }: { clubId: number }) {
           <div>
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
-            <div className={styles_modules.sectionBody}>{club.preview_description}</div>
+            <div className={styles_modules.sectionBody}>{club.description}</div>
 
             <div className={styles_modules.badgeRow}>
               <div className={styles_modules.badge}>
