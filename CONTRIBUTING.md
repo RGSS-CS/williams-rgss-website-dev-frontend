@@ -1,4 +1,4 @@
-> **Important Note**: This is the guide on contribution to the <u>frontend</u> codebase, for contribution towards site <u>backend</u>, please see Backend Contribution Guide
+> **Important Note**: This is the guide on contribution to the <u>frontend</u> codebase, for contribution towards site <u>backend</u>, please see [Backend Contribution Guide](https://github.com/RGSS-CS/williams-rgss-website-dev-frontend/blob/main/CONTRIBUTING.md)!
 
 # Contribution Guide
 

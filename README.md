@@ -12,7 +12,7 @@ This site (frontend and backend) was started by and currently maintained by Aide
     <img alt="Project github contributors, image made with contrib.rocks." src="https://contrib.rocks/image?repo=rgss-cs/williams-rgss-website-dev-frontend">
 </a>
 
-Want to contribute to this project? See our [frontend contribution guide](https://github.com/RGSS-CS/williams-rgss-website-dev-frontend/blob/release-mini/CONTRIBUTING.md) or !
+Want to contribute to this project? See our [frontend contribution guide](https://github.com/RGSS-CS/williams-rgss-website-dev-frontend/blob/release-mini/CONTRIBUTING.md) or [backend contribution guide](https://github.com/RGSS-CS/williams-rgss-website-dev-frontend/blob/main/CONTRIBUTING.md)!
 
 ## License and Attribution
 
