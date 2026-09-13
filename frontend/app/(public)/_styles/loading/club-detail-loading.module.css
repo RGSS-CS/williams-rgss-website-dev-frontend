@@ -10,7 +10,7 @@
   border: 0;
 }
 
-.loadingBreadcrumbs,
+.loadingSiteDirectories,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
 .loadingHeroHint,
@@ -37,7 +37,7 @@
   border-radius: 8px;
 }
 
-.loadingBreadcrumbs span,
+.loadingSiteDirectories span,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
 .loadingHeroHint,
@@ -55,7 +55,7 @@
   background: #e7edf4;
 }
 
-.loadingBreadcrumbs span,
+.loadingSiteDirectories span,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
 .loadingHeroButton,
@@ -70,7 +70,7 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-.loadingBreadcrumbs span::after,
+.loadingSiteDirectories span::after,
 .loadingHeroTitle span::after,
 .loadingHeroSubtitle span::after,
 .loadingHeroButton::after,
@@ -100,19 +100,19 @@
   animation: skeletonShimmer 1.35s ease-in-out infinite;
 }
 
-.loadingBreadcrumbs {
+.loadingSiteDirectories {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 1.2rem;
 }
 
-.loadingBreadcrumbs span {
+.loadingSiteDirectories span {
   width: 4.2rem;
   height: 0.9rem;
 }
 
-.loadingBreadcrumbs span:last-child {
+.loadingSiteDirectories span:last-child {
   width: min(34vw, 8rem);
 }
 
@@ -303,7 +303,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .loadingBreadcrumbs span::after,
+  .loadingSiteDirectories span::after,
   .loadingHeroTitle span::after,
   .loadingHeroSubtitle span::after,
   .loadingHeroButton::after,

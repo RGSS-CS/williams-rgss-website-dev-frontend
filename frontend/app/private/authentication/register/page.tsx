@@ -1,3 +1,4 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import { redirect } from 'next/navigation';
 import { getManagementSettings } from '@/app/_lib/site-management';
 import { isCaptchaEnabledFor } from '@/app/_utils/checkCaptchaEnabled';
@@ -22,6 +23,7 @@ export default async function RegisterRedirectClient({ searchParams }: RegisterE
     return (
         <main className='registrationPage'>
             <div className='registrationShell'>
+                <SiteDirectories items={[{ label: "Authentication", href: "/private/authentication" }, { label: "Register" }]} />
                 <RegisterGate
                     code={code}
                     showCaptcha={isCaptchaEnabledFor(management, 'REGISTER')}

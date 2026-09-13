@@ -8,7 +8,7 @@ export default async function Loading() {
                 <div className="heroShape"></div>
                 <div className="heroInner">
                     <div className="heroLeft">
-                        <div className={loadingStyles.loadingBreadcrumbs}>
+                        <div className={loadingStyles.loadingSiteDirectories}>
                             <span></span>
                             <span></span>
                             <span></span>
