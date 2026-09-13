@@ -109,8 +109,8 @@ async function ClubHero({ clubId }: { clubId: number }) {
               <span className='statLabel'>Meeting Day</span>
             </div>
             <div className={styles.heroStat}>
-              <span className='statNum'>{club.roomNumber ?? "TBA"}</span>
-              <span className='statLabel'>Room</span>
+              <span className='statNum'>{club.location || "TBA"}</span>
+              <span className='statLabel'>Location</span>
             </div>
             <div className={styles.heroStat}>
               <span className='statNum'>{cadence}</span>
@@ -158,7 +158,7 @@ async function ClubInfo({ clubId }: { clubId: number }) {
   const hasCategories = categories.length > 0;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const locationLabel = club.location || "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
 
   return (
@@ -187,8 +187,8 @@ async function ClubInfo({ clubId }: { clubId: number }) {
           </article>
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
-            <h3>Room</h3>
-            <p>{roomLabel}</p>
+            <h3>Location</h3>
+            <p>{locationLabel}</p>
           </article>
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas} />
@@ -235,7 +235,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
   const accessToken = (await cookies()).get("access_token")?.value;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const locationLabel = club.location || "Location TBA";
   const classcode = club.classroomCode?.trim() || null;
   const showClassroomCode = Boolean(classcode);
   const showJoinSection = club.acceptingApplicants !== "Applications closed";
@@ -281,7 +281,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
                 <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
                 <p>
                   <strong>Location</strong>
-                  {roomLabel}
+                  {locationLabel}
                 </p>
               </div>
             </div>

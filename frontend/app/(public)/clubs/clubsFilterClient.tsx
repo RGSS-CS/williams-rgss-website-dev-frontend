@@ -107,7 +107,7 @@ function matchesQuery(club: Club, query: string) {
     club.preview_description,
     club.description,
     club.teacherAdvisor ?? "",
-    club.roomNumber ?? "",
+    club.location ?? "",
     club.dayOfMeeting ?? "",
     club.time ?? "",
     club.repetition ?? "",
@@ -130,7 +130,7 @@ function ClubCard({ club }: { club: Club }) {
             <FontAwesomeIcon icon={faMapMarkerAlt} />
 
             <h4>
-              <b>Room:</b> {club.roomNumber}
+              <b>Location:</b> {club.location || "TBA"}
             </h4>
           </div>
 

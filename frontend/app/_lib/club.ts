@@ -1,23 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { toPublicMediaUrl } from "../_utils/media-url";
-
-export type Photo = {
-    id: number;
-    title: string;
-    image: string;
-    caption: string;
-    date_added: string;
-};
-
-export type Gallery = {
-    id: number;
-    title: string;
-    description: string;
-    date_added: string;
-    photos: Photo[];
-};
 
 export type WhyJoinReasonApiRecord = {
     title: string;
@@ -41,14 +24,13 @@ export type ClubApiRecord = {
     day_of_meeting: string;
     time: string;
     repetition: string;
-    room_number: number;
+    location: string;
     classroom_code: string | null;
     teacher_advisor: string;
     application_form_link: string | null;
     accepting_applicants: string;
     join_instructions: string;
     why_join: WhyJoinReasonApiRecord[] | null;
-    gallery: Gallery | null;
 };
 
 export type Club = {
@@ -61,14 +43,13 @@ export type Club = {
     dayOfMeeting: string;
     time: string;
     repetition: string;
-    roomNumber: string;
+    location: string;
     classroomCode: string;
     teacherAdvisor: string;
     applicationFormLink: string;
     acceptingApplicants: string;
     joinInstructions: string;
     whyJoin: WhyJoinReason[];
-    gallery: Gallery | null;
 };
 
 function getClubsApiUrl() {
@@ -135,20 +116,6 @@ function normalizeWhyJoin(whyJoin: WhyJoinReasonApiRecord[] | null | undefined):
         }));
 };
 
-function normalizeGallery(gallery: Gallery | null): Gallery | null {
-    if (!gallery) {
-        return null;
-    }
-
-    return {
-        ...gallery,
-        photos: gallery.photos.map((photo) => ({
-            ...photo,
-            image: toPublicMediaUrl(photo.image),
-        })),
-    };
-}
-
 function normalizeClub(record: ClubApiRecord): Club {
     return {
         id: record.id,
@@ -160,14 +127,13 @@ function normalizeClub(record: ClubApiRecord): Club {
         dayOfMeeting: record.day_of_meeting,
         time: formatTimeTo12Hour(record.time) ?? '',
         repetition: record.repetition,
-        roomNumber: String(record.room_number),
+        location: record.location,
         classroomCode: record.classroom_code ?? '',
         teacherAdvisor: record.teacher_advisor,
         applicationFormLink: record.application_form_link ?? '',
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
         joinInstructions: record.join_instructions,
         whyJoin: normalizeWhyJoin(record.why_join),
-        gallery: normalizeGallery(record.gallery),
     };
 };
 
