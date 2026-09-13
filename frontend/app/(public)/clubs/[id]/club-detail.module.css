@@ -48,26 +48,6 @@
   font-size: 0.9rem;
 }
 
-.breadcrumbs {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: var(--white);
-  font-size: 0.92rem;
-  border-bottom: var(--school-secondary) solid 1px;
-  margin-bottom: 1.2rem;
-}
-
-.breadcrumbs a {
-  color: var(--line);
-  text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-  color: var(--white);
-  transition: color 0.3s;
-}
-
 .aboutWrap {
   background: var(--white);
 }

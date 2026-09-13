@@ -1,3 +1,4 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import Image from "next/image";
 import ResponsiveFilterPanel from "@/app/(public)/_components/mobileFilterPanel";
 import styles from "./gallery.module.css";
@@ -35,6 +36,7 @@ async function GalleryHero() {
             <div className='heroShape'></div>
             <div className='heroInner'>
                 <div className='heroLeft'>
+                    <SiteDirectories items={[{ label: "Gallery" }]} />
                     <div className='heroTitle'>
                         <h1>{pageManagement?.title}</h1>
                         <h2>{pageManagement?.subtitle}</h2>
