@@ -104,10 +104,6 @@ async function ClubHero({ clubId }: { clubId: number }) {
                 Apply Now
               </AnchorLink>
             )}
-            <p>
-              <FontAwesomeIcon icon={faChevronDown} />
-              Scroll to explore
-            </p>
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
