@@ -282,14 +282,6 @@ export default function Credits() {
             >
               Django
             </a>
-            <a
-              className={styles.techBadge}
-              href='https://fonts.google.com/'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Google Fonts
-            </a>
           </div>
         </div>
       </div>
