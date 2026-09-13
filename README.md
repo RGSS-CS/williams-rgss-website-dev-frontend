@@ -2,11 +2,11 @@
 
 This repository holds the codebase for [RGSS](https://richmondgreen-ss.yrdsb.ca/) and [Dr. GW Williams SS](https://drgwwilliams-ss.yrdsb.ca/) Student Council's website.
 
-**DISCLAIMER**: Releases are currently rolling and oftenly bleed-edge due to low personnel as of 2026-09-12.
+**DISCLAIMER**: Releases are currently rolling and not fully tested due to low personnel and availability as of 2026-09-12.
 
 ## Credits
 
-This site (frontend and backend) was started by and currently maintained by Aiden So, Benjamin Zhu, and David Fu.
+This project (frontend and backend) was started by and currently maintained by Aiden So, Benjamin Zhu, and David Fu.
 
 <a href="https://github.com/RGSS-CS/williams-rgss-website-dev-frontend/graphs/contributors">
     <img alt="Project github contributors, image made with contrib.rocks." src="https://contrib.rocks/image?repo=rgss-cs/williams-rgss-website-dev-frontend">
