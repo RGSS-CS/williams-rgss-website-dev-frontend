@@ -1,8 +1,64 @@
-node_modules
-.next
-.git
+# deps
+node_modules/
+.pnp/
+.pnp.js
+.pnpm-store/
+.bun/
+
+# build out
+.next/
+out/
+dist/
+build/
+
+# envs
+.env.dev
+.env.prod
 .env*.local
+
+# logs
 *.log
-Dockerfile
+npm-debug.log*
+bun-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker files
+Dockerfile*
 .dockerignore
-README.md
+docker-compose*.yml
+compose*.yaml
+
+# typescript
+*.tsbuildinfo
+
+# Cache and tmp
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.turbo/
+.tmp/
+.temp/
+
+# OS-specific files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
