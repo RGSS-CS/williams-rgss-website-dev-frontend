@@ -24,7 +24,7 @@ const socialMediaDetails = {
 
 export default function Footer({ management, schoolYear }: ManagementProps) {
     const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-    const [mapsUrl, displayAddress, regionLine] = SchoolLocation({ management });
+    const [mapsUrl, displayAddress] = SchoolLocation({ management });
 
     const handleCopy = async (text: string) => {
         await copyToClipboard(text);
@@ -35,8 +35,6 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
             <div className={styles.footerInner}>
                 <div className={styles.footerCol}>
                     <h4>School Info</h4>
-                    <p>{regionLine}</p>
-
                     <div className={styles.link}>
                         <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
                         {mapsUrl ? (
