@@ -8,11 +8,15 @@
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) repeat(var(--footer-link-columns, 3), minmax(0, 1fr));
     gap: 1rem;
     border-bottom: 1px solid var(--line);
     padding-bottom: 2rem;
     margin-bottom: 1.5rem;
+}
+
+.withoutSocialMedia {
+    --footer-link-columns: 2;
 }
 
 .footerCol h4 {
