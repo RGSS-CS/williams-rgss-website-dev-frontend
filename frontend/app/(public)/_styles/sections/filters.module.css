@@ -1,5 +1,3 @@
-/* Shared filter bars */
-
 .filterBarContainer {
     background: var(--white);
     border-bottom: 5px solid var(--school-tertiary);
@@ -19,18 +17,86 @@
     flex-wrap: wrap;
 }
 
+.filterDropdown {
+    width: 100%;
+}
+
 .filterLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
     font-weight: 700;
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--school-primary);
-    margin-right: 4px;
     white-space: nowrap;
 }
 
-.filterLabel i {
-    margin-right: 4px;
+.filterLabel:focus-visible {
+    outline: 2px solid var(--school-primary);
+    outline-offset: 4px;
+}
+
+.filterChevron {
+    margin-left: auto;
+    transition: transform 250ms ease;
+}
+
+.filterResultsCount {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--school-primary-light);
+    letter-spacing: normal;
+    text-transform: none;
+    text-align: right;
+}
+
+.filterDropdown[data-open="true"] .filterChevron {
+    transform: rotate(180deg);
+}
+
+.filterPanel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows 250ms ease, opacity 250ms ease, visibility 250ms;
+}
+
+.filterDropdown[data-open="true"] .filterPanel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+}
+
+.filterPanelInner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .filterPanel,
+    .filterChevron {
+        transition: none;
+    }
+}
+
+.filterOptions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--school-primary-light);
 }
 
 .filterChip {
@@ -67,9 +133,12 @@
     color: var(--school-primary);
 }
 
-.filterDivider {
-    width: 1px;
-    height: 22px;
-    background: var(--school-primary-light);
-    margin: 0 4px;
+.dayFilterRow {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--school-primary-light);
 }

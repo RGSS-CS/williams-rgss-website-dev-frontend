@@ -45,24 +45,6 @@ async function ClubsHero() {
 
             <ClubsFilterClient clubs={clubs} searchOnly />
           </div>
-
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className='statNum'>{clubs.length}</span>
-              <span className='statLabel'>Total Clubs</span>
-            </div>
-
-            <div className={styles.heroStat}>
-              <span className='statNum'>
-                {
-                  Array.from(new Set(clubs.flatMap((club) => club.categories).filter(Boolean)))
-                    .length
-                }
-              </span>
-
-              <span className='statLabel'>Categories</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -95,7 +77,7 @@ async function ClubsCta() {
 export default function ClubsPage() {
   return (
     <main>
-      <Suspense fallback={<PublicHeroLoading search stats={2} />}>
+      <Suspense fallback={<PublicHeroLoading breadcrumbs search />}>
         <ClubsHero />
       </Suspense>
 

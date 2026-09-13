@@ -35,7 +35,7 @@
 .brandLink {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     min-width: 0;
 }
 
@@ -223,5 +223,13 @@
     .schoolSubtitleSkeleton {
         width: 85px;
         height: 0.75rem;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .logoSkeleton,
+    .schoolTitleSkeleton,
+    .schoolSubtitleSkeleton,
+    .navLinkSkeleton {
+        animation: none;
     }
 }

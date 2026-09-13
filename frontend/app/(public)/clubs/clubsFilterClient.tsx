@@ -302,6 +302,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     <div className='sticky-wrapper'>
       <MobileFilterPanel>
         <ClubsFilterControls
+          count={filteredClubs.length}
           categories={categoryFilters}
           activeCategory={activeCategory}
           activeDay={activeDay}
@@ -317,10 +318,6 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
           }
         />
 
-        <span className={styles.resultsCount}>
-          Showing {filteredClubs.length} club
-          {filteredClubs.length === 1 ? "" : "s"}
-        </span>
       </MobileFilterPanel>
 
       <div className={styles.mobileResultsBar}>

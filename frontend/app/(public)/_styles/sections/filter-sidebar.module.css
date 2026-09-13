@@ -67,11 +67,6 @@
     color: var(--white);
 }
 
-.filterSidebarTitle i {
-    margin-right: 8px;
-    color: var(--school-tertiary);
-}
-
 .filterSidebarClose {
     background: none;
     border: none;
