@@ -14,7 +14,7 @@ import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
 
 //ICONS
-import { faCalendarAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faPaperPlane, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export const instant = false;
 
@@ -66,9 +66,9 @@ async function HomeHero() {
                             <span>Our Clubs</span>
                         </Link>
 
-                        <AnchorLink href='#events' className={styles.heroBtnSecondary}>
-                            <FontAwesomeIcon icon={faCalendarAlt} />
-                            <span>Upcoming Events</span>
+                        <AnchorLink href='/private/authentication/' className={styles.heroBtnSecondary}>
+                            <FontAwesomeIcon icon={faRightFromBracket} />
+                            <span>Login</span>
                         </AnchorLink>
                     </div>
                 </div>

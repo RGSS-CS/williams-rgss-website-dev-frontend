@@ -25,6 +25,7 @@ const socialMediaDetails = {
 export default function Footer({ management, schoolYear }: ManagementProps) {
     const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
     const [mapsUrl, displayAddress] = SchoolLocation({ management });
+    const hasSocialMedia = (management?.socialMedia.length ?? 0) > 0;
 
     const handleCopy = async (text: string) => {
         await copyToClipboard(text);
@@ -32,7 +33,7 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
 
     return (
         <footer className={styles.siteFooter}>
-            <div className={styles.footerInner}>
+            <div className={`${styles.footerInner} ${hasSocialMedia ? "" : styles.withoutSocialMedia}`}>
                 <div className={styles.footerCol}>
                     <h4>School Info</h4>
                     <div className={styles.link}>
@@ -92,28 +93,30 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
                     </div>
                 </div>
 
-                <div className={styles.footerCol}>
-                    <h4>Follow Us</h4>
-                    {management?.socialMedia.map((socialMedia) => {
-                        const details = socialMediaDetails[socialMedia.socialType];
-                        const title = socialMedia.title ?? details.title;
+                {hasSocialMedia && (
+                    <div className={styles.footerCol}>
+                        <h4>Follow Us</h4>
+                        {management?.socialMedia.map((socialMedia) => {
+                            const details = socialMediaDetails[socialMedia.socialType];
+                            const title = socialMedia.title ?? details.title;
 
-                        return (
-                            <Link
-                                key={`${socialMedia.socialType}-${socialMedia.link}`}
-                                href={socialMedia.link}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className={`${styles.footerLink} ${styles.socialFooterLink}`}
-                                title={title}
-                                aria-label={title}
-                            >
-                                <FontAwesomeIcon icon={details.icon} aria-hidden />
-                                {title}
-                            </Link>
-                        );
-                    })}
-                </div>
+                            return (
+                                <Link
+                                    key={`${socialMedia.socialType}-${socialMedia.link}`}
+                                    href={socialMedia.link}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    className={`${styles.footerLink} ${styles.socialFooterLink}`}
+                                    title={title}
+                                    aria-label={title}
+                                >
+                                    <FontAwesomeIcon icon={details.icon} aria-hidden />
+                                    {title}
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
                 <div className={styles.footerCol}>
                     <h4>More</h4>
                     <Link href='/about/credits' className={styles.footerLink} prefetch={false}>
