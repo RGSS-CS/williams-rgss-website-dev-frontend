@@ -204,11 +204,7 @@ export default function Credits() {
                   >
                     Ryan Shi
                   </a>
-                </p>
-              </div>
-              <div className={styles.roleRow}>
-                <span className={styles.creditRole}>Other Contributors</span>
-                <p className={styles.smallText}>
+                  ,{" "}
                   <a
                     className={styles.personLink}
                     href='https://github.com/DanPlus6'
