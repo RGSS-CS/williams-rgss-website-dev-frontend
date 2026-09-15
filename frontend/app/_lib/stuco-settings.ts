@@ -6,11 +6,13 @@ import { toPublicMediaUrl } from "../_utils/media-url";
 export type StucoSettingsApiRecord = {
     council_name: string;
     group_photo: string | null;
+    photo_caption: string | null;
 };
 
 export type StucoSettings = {
     councilName: string;
     groupPhoto: string | null;
+    photoCaption: string | null;
 };
 
 export type StucoAnnouncementApiRecord = {
@@ -44,7 +46,8 @@ function getStucoAnnouncementsApiUrl() {
 function normalizeStucoSettings(record: StucoSettingsApiRecord): StucoSettings {
     return {
         councilName: record.council_name,
-        groupPhoto: record.group_photo,
+        groupPhoto: record.group_photo === null ? null : toPublicMediaUrl(record.group_photo),
+        photoCaption: record.group_photo,
     };
 };
 

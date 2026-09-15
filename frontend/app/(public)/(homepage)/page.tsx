@@ -115,6 +115,12 @@ async function STUCOImg() {
                 loading='lazy'
                 decoding='async'
             />
+
+            <div className={styles.descriptionContainer}>
+                <div className={styles.description}>
+                    <p>{stuco.}</p>
+                </div>
+                </div>
             <div className={styles.sectionDivider}></div>
         </div>
     );
