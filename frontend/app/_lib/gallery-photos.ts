@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cacheLife, cacheTag } from "next/cache";
 import { toPublicMediaUrl } from "../_utils/media-url";
 
 export type GalleryPhotoApiRecord = {
@@ -25,6 +25,18 @@ export type GalleryPhoto = {
     shownInMainPage: boolean;
 };
 
+function getGalleryPhotosApiUrl() {
+    const apiBaseUrl =
+        process.env.API_URL ||
+        "http://backend:8000";
+
+    try {
+        return new URL("/api/gallery/photos/?format=json", apiBaseUrl).toString();
+    } catch {
+        return null;
+    };
+};
+
 function normalizeGalleryPhoto(record: GalleryPhotoApiRecord): GalleryPhoto {
     return {
         name: record.name,
@@ -36,20 +48,24 @@ function normalizeGalleryPhoto(record: GalleryPhotoApiRecord): GalleryPhoto {
         shownInGallery: record.shown_in_gallery,
         shownInMainPage: record.shown_in_main_page,
     };
-}
+};
 
 export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
+    'use cache';
+    cacheLife('hours');
+    cacheTag('gallery-photos');
+    const url = getGalleryPhotosApiUrl();
+
+    if (!url) {
+        return [];
+    };
+
     try {
-        const apiBaseUrl = process.env.API_URL || "http://backend:8000";
-        const url = new URL("/api/gallery/photos/", apiBaseUrl);
-        const accessToken = (await cookies()).get("access_token")?.value;
         const res = await fetch(url, {
             method: "GET",
             headers: {
-                Accept: "application/json",
-                ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+                "Content-Type": "application/json",
             },
-            cache: "no-store",
         });
 
         if (!res.ok) {
@@ -60,5 +76,5 @@ export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
         return photos.map(normalizeGalleryPhoto);
     } catch {
         return [];
-    }
-}
+    };
+};

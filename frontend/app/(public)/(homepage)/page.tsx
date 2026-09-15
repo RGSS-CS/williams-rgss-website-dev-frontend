@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
+import { getStucoSettings } from "@/app/_lib/stuco-settings";
 // elements
 import Link from "next/link";
 import TickerBar from "./_components/tickerBar";
@@ -27,7 +28,7 @@ async function HomeHero() {
     const [management, pageManagement, schoolYear] = await Promise.all([
         getManagementSettings(),
         getPageManagementSettings("HM"),
-        getSchoolYear()
+        getSchoolYear(),
     ]);
 
     return (
@@ -85,7 +86,6 @@ async function FindUsSection() {
     return (
         <div className={styles.sectionWrap}>
             <div className={styles.mapSection}>
-                <div className={styles.sectionDivider}></div>
                 <SchoolMap locations={management?.schoolLocation ?? null} />
                 <a
                     href={mapsUrl ? mapsUrl : "#"}
@@ -101,9 +101,23 @@ async function FindUsSection() {
 }
 
 async function STUCOImg() {
-    <div className={styles.sectionWrap}>
-        
-    </div>
+    const stuco = await getStucoSettings();
+    if (!stuco?.groupPhoto) {
+        return null;
+    }
+
+    return (
+        <div className={styles.sectionWrap}>
+            <img
+                className={styles.stucoPhoto}
+                src={stuco.groupPhoto}
+                alt='Student council group photo'
+                loading='lazy'
+                decoding='async'
+            />
+            <div className={styles.sectionDivider}></div>
+        </div>
+    );
 }
 
 export default function Page() {
@@ -112,7 +126,9 @@ export default function Page() {
             <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
                 <HomeHero />
             </Suspense>
-
+            <Suspense fallback={null}>
+                <STUCOImg />
+            </Suspense>
             <Suspense fallback={null}>
                 <FindUsSection />
             </Suspense>
