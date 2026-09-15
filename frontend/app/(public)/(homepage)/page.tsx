@@ -32,7 +32,7 @@ async function HomeHero() {
     ]);
 
     return (
-        <div className='hero'>
+        <div className='hero homeHero'>
             <TickerBar />
             <div className={styles.heroBadgeImage}>
                 {management?.croppedSiteImage && (

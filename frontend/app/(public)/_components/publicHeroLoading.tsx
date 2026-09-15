@@ -22,7 +22,7 @@ export default function PublicHeroLoading({
     ticker = false
 }: PublicHeroLoadingProps) {
     return (
-        <div className='hero' aria-busy='true' aria-label='Loading hero'>
+        <div className={badge ? 'hero homeHero' : 'hero'} aria-busy='true' aria-label='Loading hero'>
             {ticker && (
                 <div className={styles.tickerBar}>
                     <span className={styles.tickerHeader}></span>
