@@ -17,13 +17,10 @@ import {
   faQuestion,
   faCalendarAlt,
   faDoorOpen,
-  faLayerGroup,
   faClock,
   faRepeat,
   faUserTie,
-  faChevronDown,
   faArrowUpRightFromSquare,
-  faCalendarCheck,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -100,10 +97,6 @@ async function ClubHero({ clubId }: { clubId: number }) {
             )}
           </div>
           <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className='statNum'>{club.categories.length || 1}</span>
-              <span className='statLabel'>Categories</span>
-            </div>
             <div className={styles.heroStat}>
               <span className='statNum'>{meetingDay.split(" ")[0]}</span>
               <span className='statLabel'>Meeting Day</span>
