@@ -1,10 +1,14 @@
 .hero {
     background: linear-gradient(150deg, var(--school-primary) 0%, var(--school-primary-light) 55%);
-    padding: 4.5rem 2.5rem 0;
+    padding: 2rem 2.5rem 0;
     color: var(--white);
     position: relative;
     overflow: hidden;
     padding-bottom: 30px;
+}
+
+.hero.homeHero {
+    padding-top: 4.5rem;
 }
 
 .hero:before {
@@ -116,6 +120,25 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        padding-inline: 1.5rem;
+    }
+
+    .heroInner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    .heroLeft {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .heroTitle h1,
+    .heroTitle h2 {
+        font-size: clamp(2rem, 6vw, 2.875rem);
+    }
+
     .searchContainer {
         max-width: 100%;
     }

@@ -1,6 +1,7 @@
-import Link from "next/link";
+import SiteDirectories from "@/app/_components/siteDirectories";
 import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
+import { getGalleryPhotos } from "@/app/_lib/gallery-photos";
 import styles_modules from "./club-detail.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
@@ -16,13 +17,10 @@ import {
   faQuestion,
   faCalendarAlt,
   faDoorOpen,
-  faLayerGroup,
   faClock,
   faRepeat,
   faUserTie,
-  faChevronDown,
   faArrowUpRightFromSquare,
-  faCalendarCheck,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -84,18 +82,12 @@ async function ClubHero({ clubId }: { clubId: number }) {
       <div className='heroShape'></div>
       <div className='heroInner'>
         <div className='heroLeft'>
-          <div className={styles_modules.breadcrumbs}>
-            <Link href='/'>Home</Link>
-            <span>/</span>
-            <Link href='/clubs'>Clubs</Link>
-            <span>/</span>
-            <span>{club.name}</span>
-          </div>
+          <SiteDirectories items={[{ label: "Clubs", href: "/clubs" }, { label: club.name }]} />
           <div className={`heroTitle ${styles_modules.heroTitle}`}>
             <h1>{club.name}</h1>
           </div>
           <div className='heroSubtitle'>
-            <p>{club.preview_description}</p>
+            <p className={styles_modules.heroDescription}>{club.preview_description}</p>
           </div>
           <div className={styles_modules.heroActions}>
             {showJoinSection && (
@@ -103,23 +95,15 @@ async function ClubHero({ clubId }: { clubId: number }) {
                 Apply Now
               </AnchorLink>
             )}
-            <p>
-              <FontAwesomeIcon icon={faChevronDown} />
-              Scroll to explore
-            </p>
           </div>
           <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className='statNum'>{club.categories.length || 1}</span>
-              <span className='statLabel'>Categories</span>
-            </div>
             <div className={styles.heroStat}>
               <span className='statNum'>{meetingDay.split(" ")[0]}</span>
               <span className='statLabel'>Meeting Day</span>
             </div>
             <div className={styles.heroStat}>
-              <span className='statNum'>{club.roomNumber ?? "TBA"}</span>
-              <span className='statLabel'>Room</span>
+              <span className='statNum'>{club.location || "TBA"}</span>
+              <span className='statLabel'>Location</span>
             </div>
             <div className={styles.heroStat}>
               <span className='statNum'>{cadence}</span>
@@ -134,11 +118,10 @@ async function ClubHero({ clubId }: { clubId: number }) {
 
 async function ClubAbout({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
-  const categories = (club.categories ?? []).filter((category) => category?.trim());
-  const hasCategories = categories.length > 0;
-  const meetingDay = formatDay(club.dayOfMeeting);
-  const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const accessToken = (await cookies()).get("access_token")?.value;
+  const photos = accessToken
+    ? (await getGalleryPhotos()).filter((photo) => photo.club === clubId)
+    : [];
 
   return (
     <div className={styles_modules.aboutWrap}>
@@ -147,27 +130,10 @@ async function ClubAbout({ clubId }: { clubId: number }) {
           <div>
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
-            <div className={styles_modules.sectionBody}>{club.preview_description}</div>
-
-            <div className={styles_modules.badgeRow}>
-              <div className={styles_modules.badge}>
-                <FontAwesomeIcon icon={faCalendarCheck} />
-                {meetingDay} · {meetingTime}
-              </div>
-              <div className={styles_modules.badge}>
-                <FontAwesomeIcon icon={faDoorOpen} />
-                {roomLabel}
-              </div>
-              {hasCategories && (
-                <div className={styles_modules.badge}>
-                  <FontAwesomeIcon icon={faLayerGroup} />
-                  {categories.join(" · ")}
-                </div>
-              )}
-            </div>
+            <div className={styles_modules.sectionBody}>{club.description}</div>
           </div>
-          {club.joinInstructions ? (
-            <ClubSlideshow gallery={club.gallery ?? null} />
+          {accessToken ? (
+            <ClubSlideshow key={clubId} photos={photos} />
           ) : (
             <span className={styles_modules.loginWarn}>
               <h3>You must be signed in to view this media</h3>
@@ -185,7 +151,7 @@ async function ClubInfo({ clubId }: { clubId: number }) {
   const hasCategories = categories.length > 0;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const locationLabel = club.location || "Location TBA";
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
 
   return (
@@ -197,13 +163,6 @@ async function ClubInfo({ clubId }: { clubId: number }) {
         </div>
 
         <div className={styles_modules.infoGrid}>
-          {hasCategories && (
-            <article className={styles_modules.infoTile}>
-              <FontAwesomeIcon icon={faLayerGroup} className={styles_modules.fas} />
-              <h3>Category</h3>
-              <p>{categories.join(", ")}</p>
-            </article>
-          )}
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
             <h3>Meeting Day</h3>
@@ -221,8 +180,8 @@ async function ClubInfo({ clubId }: { clubId: number }) {
           </article>
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
-            <h3>Room</h3>
-            <p>{roomLabel}</p>
+            <h3>Location</h3>
+            <p>{locationLabel}</p>
           </article>
           <article className={styles_modules.infoTile}>
             <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas} />
@@ -269,7 +228,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
   const accessToken = (await cookies()).get("access_token")?.value;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
-  const roomLabel = club.roomNumber ? `Room ${club.roomNumber}` : "Location TBA";
+  const locationLabel = club.location || "Location TBA";
   const classcode = club.classroomCode?.trim() || null;
   const showClassroomCode = Boolean(classcode);
   const showJoinSection = club.acceptingApplicants !== "Applications closed";
@@ -315,7 +274,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
                 <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
                 <p>
                   <strong>Location</strong>
-                  {roomLabel}
+                  {locationLabel}
                 </p>
               </div>
             </div>

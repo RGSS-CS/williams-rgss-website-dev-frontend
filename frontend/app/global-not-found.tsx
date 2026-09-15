@@ -1,12 +1,10 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import Image from "next/image";
 import { Suspense } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import {
   Montserrat,
-  Jost,
-  Space_Grotesk,
-  Figtree,
   IBM_Plex_Sans,
   Quicksand,
 } from "next/font/google";
@@ -32,25 +30,8 @@ export const metadata: Metadata = {
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
+  preload: false,
   weight: ["400", "600", "700", "800"],
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  variable: "--font-jost",
-  weight: ["400", "600", "700"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["400", "500", "600", "700"],
-});
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
-  weight: ["400", "500", "600", "700"],
 });
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -62,6 +43,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 const quicksand = Quicksand({
   subsets: ["latin"],
   variable: "--font-quicksand",
+  preload: false,
   weight: ["400", "500", "600", "700"],
 });
 
@@ -111,7 +93,7 @@ export default async function NotFound() {
   return (
     <html
       lang='en'
-      className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+      className={`${montserrat.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
     >
       <head>
         <meta charSet='UTF-8' />
@@ -123,6 +105,7 @@ export default async function NotFound() {
           <NavbarSlot management={management} />
         </Suspense>
         <div className={styles.content}>
+          <SiteDirectories items={[{ label: "Page not found" }]} />
           <div className={styles.gifStage}>
             <div className={styles.overlay404}>
               <div className={styles.num404}>

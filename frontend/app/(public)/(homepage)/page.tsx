@@ -1,156 +1,144 @@
-import Link from "next/link";
-import { getSchoolYear } from "@/app/_utils/schoolYear";
+// settings
 import styles from "./home.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getSchoolYear } from "@/app/_utils/schoolYear";
 import { Metadata } from "next";
-import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
+import { getManagementSettings } from "@/app/_lib/site-management";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
+import { getStucoSettings } from "@/app/_lib/stuco-settings";
+// elements
+import Link from "next/link";
 import TickerBar from "./_components/tickerBar";
 import SchoolMap from "@/app/(public)/_components/schoolMap";
 import SchoolLocation from "@/app/_utils/formatLocation";
 import { Suspense } from "react";
 import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
-
-//ICONS
-import { faCalendarAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export const instant = false;
 
 export async function generateMetadata(): Promise<Metadata> {
-    return getSiteMetadata();
+  return getSiteMetadata('Homepage');
 }
 
 async function HomeHero() {
-    const [management, pageManagement, schoolYear] = await Promise.all([
-        getManagementSettings(),
-        getPageManagementSettings("HM"),
-        getSchoolYear(),
-    ]);
+  const [management, pageManagement, schoolYear] = await Promise.all([
+    getManagementSettings(),
+    getPageManagementSettings("HM"),
+    getSchoolYear(),
+  ]);
 
-    return (
-        <div className='hero'>
-            <TickerBar />
-            <div className={styles.heroBadgeImage}>
-                {management?.croppedSiteImage && (
-                    <img
-                        src={management?.croppedSiteImage}
-                        alt='School Icon'
-                        width={260}
-                        height={230}
-                        loading='eager'
-                    />
-                )}
-            </div>
+  return (
+    <div className='hero homeHero'>
+      <TickerBar />
+      <div className={styles.heroBadgeImage}>
+        {management?.croppedSiteImage && (
+          <img
+            src={management?.croppedSiteImage}
+            alt='School Icon'
+            width={260}
+            height={230}
+            loading='eager'
+          />
+        )}
+      </div>
 
-            <div className={styles.heroShape}></div>
-            <div className='heroInner'>
-                <div className='heroLeft'>
-                    <div className={styles.heroTag}>
-                        <p>
-                            {management?.councilName} {schoolYear}
-                        </p>
-                    </div>
-                    <div className='heroTitle'>
-                        <h1>{pageManagement?.title}</h1>
-                        <h2>{pageManagement?.subtitle}</h2>
-                    </div>
-                    <div className='heroSubtitle'>
-                        <p>{pageManagement?.tagline}</p>
-                    </div>
+      <div className={styles.heroShape}></div>
+      <div className='heroInner'>
+        <div className='heroLeft'>
+          <div className={styles.heroTag}>
+            <p>
+              {management?.councilName} {schoolYear}
+            </p>
+          </div>
+          <div className='heroTitle'>
+            <h1>{pageManagement?.title}</h1>
+            <h2>{pageManagement?.subtitle}</h2>
+          </div>
+          <div className='heroSubtitle'>
+            <p>{pageManagement?.tagline}</p>
+          </div>
 
-                    <div className={styles.heroButtons}>
-                        <Link href='/clubs' className={styles.heroBtnPrimary}>
-                            <FontAwesomeIcon icon={faPaperPlane} />
-                            <span>Our Clubs</span>
-                        </Link>
+          <div className={styles.heroButtons}>
+            <Link href='/clubs' className={styles.heroBtnPrimary}>
+              <FontAwesomeIcon icon={faPaperPlane} />
+              <span>Our Clubs</span>
+            </Link>
 
-                        <AnchorLink href='#events' className={styles.heroBtnSecondary}>
-                            <FontAwesomeIcon icon={faCalendarAlt} />
-                            <span>Upcoming Events</span>
-                        </AnchorLink>
-                    </div>
-                </div>
-            </div>
+            <AnchorLink href='/private/authentication/' className={styles.heroBtnSecondary}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span>Login</span>
+            </AnchorLink>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 async function FindUsSection() {
-    const management = await getManagementSettings();
-    const [mapsUrl] = SchoolLocation({ management });
+  const management = await getManagementSettings();
+  const [mapsUrl] = SchoolLocation({ management });
 
-    return (
-        <div className={styles.sectionWrap}>
-            <div className={styles.mapSection}>
-                <div className={styles.sectionDivider}></div>
-                <div className={styles.sectionTitleRow}>
-                    <h2 className={styles.sectionTitle}>
-                        <span className={styles.sectionTitleAccent}></span>
-                        Find Us
-                    </h2>
-                </div>
-                <SchoolMap locations={management?.schoolLocation ?? null} />
-                <a
-                    href={mapsUrl ? mapsUrl : "#"}
-                    className={styles.mapLink}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    View on Google Maps
-                </a>
-            </div>
-        </div>
-    );
+  return (
+    <div className={styles.sectionWrap}>
+      <div className={styles.mapSection}>
+        <SchoolMap locations={management?.schoolLocation ?? null} />
+        <a
+          href={mapsUrl ? mapsUrl : "#"}
+          className={styles.mapLink}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          View on Google Maps
+        </a>
+      </div>
+    </div>
+  );
+}
+
+async function STUCOImg() {
+  const stuco = await getStucoSettings();
+  if (!stuco?.groupPhoto) {
+    return null;
+  }
+
+  return (
+    <div className={styles.sectionWrap}>
+            <figure className={styles.stucoFigure}>
+                <img
+                    className={styles.stucoPhoto}
+                    src={stuco.groupPhoto}
+                    alt='Student council group photo'
+                    loading='eager'
+                    decoding='async'
+                />
+                {stuco.photoCaption?.trim() && (
+                    <figcaption className={styles.photoCaption}>
+                        {stuco.photoCaption}
+                    </figcaption>
+                )}
+            </figure>
+            <div className={styles.sectionDivider}></div>
+    </div>
+  );
 }
 
 export default function Page() {
-    return (
-        <main>
-            <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
-                <HomeHero />
-            </Suspense>
-            <div className={styles.sectionWrap}>
-                <div>
-                    <div className={styles.sectionTitleRow}>
-                        <h2 className={styles.sectionTitle}>
-                            <span className={styles.sectionTitleAccent}></span>
-                            Announcements
-                        </h2>
-                    </div>
-                    <div className={styles.cardContainer}>
-                        <div className={styles.cardRow}>
-                            {/* Put Announcement cards here after database is set up */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className={styles.sectionWrap} id='events'>
-                <div className={styles.sectionTitleRow}>
-                    <h2 className={styles.sectionTitle}>
-                        <span className={styles.sectionTitleAccent}></span>
-                        Events
-                    </h2>
-                </div>
-                {/*Add calendar page*/}
-            </div>
-            <div className={styles.sectionWrap}>
-                <div className={styles.sectionContent}>
-                    <div className={styles.sectionTitleRow}>
-                        <h2 className={styles.sectionTitle}>
-                            <span className={styles.sectionTitleAccent}></span>
-                            Meet the Council
-                        </h2>
-                    </div>
-                    <div className={styles.cardContainer}>
-                        <div className={styles.cardRow}>{/*Add section for school council*/}</div>
-                    </div>
-                </div>
-            </div>
-            <Suspense fallback={null}>
-                <FindUsSection />
-            </Suspense>
-        </main>
-    );
+  return (
+    <main>
+      <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
+        <HomeHero />
+      </Suspense>
+      <Suspense fallback={null}>
+        <STUCOImg />
+      </Suspense>
+      <Suspense fallback={null}>
+        <FindUsSection />
+      </Suspense>
+    </main>
+  );
 }

@@ -1,3 +1,4 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import { getClubs } from "@/app/_lib/club";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
@@ -29,6 +30,7 @@ async function ClubsHero() {
 
       <div className='heroInner'>
         <div className='heroLeft'>
+          <SiteDirectories items={[{ label: "Clubs" }]} />
           <div className='heroTitle'>
             <h1>{pageManagement?.title}</h1>
             <h2>{pageManagement?.subtitle}</h2>
@@ -42,24 +44,6 @@ async function ClubsHero() {
             <FontAwesomeIcon icon={faSearch} className='searchContainerIcon' />
 
             <ClubsFilterClient clubs={clubs} searchOnly />
-          </div>
-
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className='statNum'>{clubs.length}</span>
-              <span className='statLabel'>Total Clubs</span>
-            </div>
-
-            <div className={styles.heroStat}>
-              <span className='statNum'>
-                {
-                  Array.from(new Set(clubs.flatMap((club) => club.categories).filter(Boolean)))
-                    .length
-                }
-              </span>
-
-              <span className='statLabel'>Categories</span>
-            </div>
           </div>
         </div>
       </div>
@@ -93,7 +77,7 @@ async function ClubsCta() {
 export default function ClubsPage() {
   return (
     <main>
-      <Suspense fallback={<PublicHeroLoading search stats={2} />}>
+      <Suspense fallback={<PublicHeroLoading breadcrumbs search />}>
         <ClubsHero />
       </Suspense>
 

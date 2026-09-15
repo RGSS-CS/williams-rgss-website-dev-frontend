@@ -1,10 +1,8 @@
 "use client";
 
 import { JSX } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FilterDropdown from "@/app/(public)/_components/filterDropdown";
 import styles from "@/app/(public)/_styles/sections/filters.module.css";
-//ICONS
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 export type CategoryFilter = {
     value: string;
@@ -16,6 +14,7 @@ export type CategoryFilter = {
 const dayFilters = ["All Days", "Mon", "Tue", "Wed", "Thu", "Fri"] as const;
 
 type ClubsFilterControlsProps = {
+    count: number;
     categories: CategoryFilter[];
     activeCategory: string;
     activeDay: string;
@@ -24,6 +23,7 @@ type ClubsFilterControlsProps = {
 };
 
 export default function ClubsFilterControls({
+    count,
     categories,
     activeCategory,
     activeDay,
@@ -32,11 +32,7 @@ export default function ClubsFilterControls({
 }: ClubsFilterControlsProps) {
 
     return (
-        <>
-            <span className={styles.filterLabel}>
-                <FontAwesomeIcon icon={faFilter} />
-                Filter
-            </span>
+        <FilterDropdown count={count}>
             {categories.map((filter) => (
                 <button
                     key={filter.value}
@@ -49,18 +45,19 @@ export default function ClubsFilterControls({
                     {filter.label}
                 </button>
             ))}
-            <div className={styles.filterDivider}></div>
-            {dayFilters.map((day) => (
-                <button
-                    key={day}
-                    className={styles.filterChip}
-                    data-active={activeDay === day}
-                    data-variant="primary"
-                    onClick={() => onDayChange(day)}
-                >
-                    {day}
-                </button>
-            ))}
-        </>
+            <div className={styles.dayFilterRow}>
+                {dayFilters.map((day) => (
+                    <button
+                        key={day}
+                        className={styles.filterChip}
+                        data-active={activeDay === day}
+                        data-variant="primary"
+                        onClick={() => onDayChange(day)}
+                    >
+                        {day}
+                    </button>
+                    ))}
+            </div>
+        </FilterDropdown>
     );
 }

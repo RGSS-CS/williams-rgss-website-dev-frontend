@@ -12,19 +12,18 @@ export default function SchoolLocation({ management }: LocaProps) {
         ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
         : null
     );
-    const { displayAddress, regionLine } = (
+    const displayAddress = (
         address
         ? (() => {
             const parts = address.split(",").map(s => s.trim());
-            const [name, houseNumber, street, city, region, , province, , country] = parts;
+            const [name, houseNumber, street] = parts;
             const displayAddress = [name, [houseNumber, street].filter(Boolean).join(" ")]
                 .filter(Boolean)
                 .join(", ");
-            const regionLine = [city, region, province, country].filter(Boolean).join(", ");
-            return { displayAddress, regionLine };
+            return displayAddress;
         })()
-        : { displayAddress: null, regionLine: null }
+        : null
     );
 
-    return [mapsUrl, displayAddress, regionLine];
+    return [mapsUrl, displayAddress];
 }
