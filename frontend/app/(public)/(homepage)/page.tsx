@@ -113,7 +113,7 @@ async function STUCOImg() {
                     className={styles.stucoPhoto}
                     src={stuco.groupPhoto}
                     alt='Student council group photo'
-                    loading='lazy'
+                    loading='eager'
                     decoding='async'
                 />
                 {stuco.photoCaption?.trim() && (
