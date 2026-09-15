@@ -45,7 +45,9 @@ async function getThemeVariables(): Promise<React.CSSProperties> {
 const montserrat = Montserrat({
     subsets: ["latin"],
     variable: "--font-montserrat",
-    preload: false,
+    // Load heading text early and avoid flashing a fallback font while it loads.
+    preload: true,
+    display: "block",
     weight: ["400", "600", "700", "800"],
 });
 
