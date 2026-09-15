@@ -21,123 +21,124 @@ import { faPaperPlane, faRightFromBracket } from "@fortawesome/free-solid-svg-ic
 export const instant = false;
 
 export async function generateMetadata(): Promise<Metadata> {
-    return getSiteMetadata();
+  return getSiteMetadata('Homepage');
 }
 
 async function HomeHero() {
-    const [management, pageManagement, schoolYear] = await Promise.all([
-        getManagementSettings(),
-        getPageManagementSettings("HM"),
-        getSchoolYear(),
-    ]);
+  const [management, pageManagement, schoolYear] = await Promise.all([
+    getManagementSettings(),
+    getPageManagementSettings("HM"),
+    getSchoolYear(),
+  ]);
 
-    return (
-        <div className='hero homeHero'>
-            <TickerBar />
-            <div className={styles.heroBadgeImage}>
-                {management?.croppedSiteImage && (
-                    <img
-                        src={management?.croppedSiteImage}
-                        alt='School Icon'
-                        width={260}
-                        height={230}
-                        loading='eager'
-                    />
-                )}
-            </div>
+  return (
+    <div className='hero homeHero'>
+      <TickerBar />
+      <div className={styles.heroBadgeImage}>
+        {management?.croppedSiteImage && (
+          <img
+            src={management?.croppedSiteImage}
+            alt='School Icon'
+            width={260}
+            height={230}
+            loading='eager'
+          />
+        )}
+      </div>
 
-            <div className={styles.heroShape}></div>
-            <div className='heroInner'>
-                <div className='heroLeft'>
-                    <div className={styles.heroTag}>
-                        <p>
-                            {management?.councilName} {schoolYear}
-                        </p>
-                    </div>
-                    <div className='heroTitle'>
-                        <h1>{pageManagement?.title}</h1>
-                        <h2>{pageManagement?.subtitle}</h2>
-                    </div>
-                    <div className='heroSubtitle'>
-                        <p>{pageManagement?.tagline}</p>
-                    </div>
+      <div className={styles.heroShape}></div>
+      <div className='heroInner'>
+        <div className='heroLeft'>
+          <div className={styles.heroTag}>
+            <p>
+              {management?.councilName} {schoolYear}
+            </p>
+          </div>
+          <div className='heroTitle'>
+            <h1>{pageManagement?.title}</h1>
+            <h2>{pageManagement?.subtitle}</h2>
+          </div>
+          <div className='heroSubtitle'>
+            <p>{pageManagement?.tagline}</p>
+          </div>
 
-                    <div className={styles.heroButtons}>
-                        <Link href='/clubs' className={styles.heroBtnPrimary}>
-                            <FontAwesomeIcon icon={faPaperPlane} />
-                            <span>Our Clubs</span>
-                        </Link>
+          <div className={styles.heroButtons}>
+            <Link href='/clubs' className={styles.heroBtnPrimary}>
+              <FontAwesomeIcon icon={faPaperPlane} />
+              <span>Our Clubs</span>
+            </Link>
 
-                        <AnchorLink href='/private/authentication/' className={styles.heroBtnSecondary}>
-                            <FontAwesomeIcon icon={faRightFromBracket} />
-                            <span>Login</span>
-                        </AnchorLink>
-                    </div>
-                </div>
-            </div>
+            <AnchorLink href='/private/authentication/' className={styles.heroBtnSecondary}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span>Login</span>
+            </AnchorLink>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 async function FindUsSection() {
-    const management = await getManagementSettings();
-    const [mapsUrl] = SchoolLocation({ management });
+  const management = await getManagementSettings();
+  const [mapsUrl] = SchoolLocation({ management });
 
-    return (
-        <div className={styles.sectionWrap}>
-            <div className={styles.mapSection}>
-                <SchoolMap locations={management?.schoolLocation ?? null} />
-                <a
-                    href={mapsUrl ? mapsUrl : "#"}
-                    className={styles.mapLink}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    View on Google Maps
-                </a>
-            </div>
-        </div>
-    );
+  return (
+    <div className={styles.sectionWrap}>
+      <div className={styles.mapSection}>
+        <SchoolMap locations={management?.schoolLocation ?? null} />
+        <a
+          href={mapsUrl ? mapsUrl : "#"}
+          className={styles.mapLink}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          View on Google Maps
+        </a>
+      </div>
+    </div>
+  );
 }
 
 async function STUCOImg() {
-    const stuco = await getStucoSettings();
-    if (!stuco?.groupPhoto) {
-        return null;
-    }
+  const stuco = await getStucoSettings();
+  if (!stuco?.groupPhoto) {
+    return null;
+  }
 
-    return (
-        <div className={styles.sectionWrap}>
-            <img
-                className={styles.stucoPhoto}
-                src={stuco.groupPhoto}
-                alt='Student council group photo'
-                loading='lazy'
-                decoding='async'
-            />
-
-            <div className={styles.descriptionContainer}>
-                <div className={styles.description}>
-                    <p>{stuco.}</p>
-                </div>
-                </div>
+  return (
+    <div className={styles.sectionWrap}>
+            <figure className={styles.stucoFigure}>
+                <img
+                    className={styles.stucoPhoto}
+                    src={stuco.groupPhoto}
+                    alt='Student council group photo'
+                    loading='lazy'
+                    decoding='async'
+                />
+                {stuco.photoCaption?.trim() && (
+                    <figcaption className={styles.photoCaption}>
+                        {stuco.photoCaption}
+                    </figcaption>
+                )}
+            </figure>
             <div className={styles.sectionDivider}></div>
-        </div>
-    );
+    </div>
+  );
 }
 
 export default function Page() {
-    return (
-        <main>
-            <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
-                <HomeHero />
-            </Suspense>
-            <Suspense fallback={null}>
-                <STUCOImg />
-            </Suspense>
-            <Suspense fallback={null}>
-                <FindUsSection />
-            </Suspense>
-        </main>
-    );
+  return (
+    <main>
+      <Suspense fallback={<PublicHeroLoading badge buttons tag ticker />}>
+        <HomeHero />
+      </Suspense>
+      <Suspense fallback={null}>
+        <STUCOImg />
+      </Suspense>
+      <Suspense fallback={null}>
+        <FindUsSection />
+      </Suspense>
+    </main>
+  );
 }

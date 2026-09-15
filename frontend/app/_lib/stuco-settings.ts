@@ -47,7 +47,7 @@ function normalizeStucoSettings(record: StucoSettingsApiRecord): StucoSettings {
     return {
         councilName: record.council_name,
         groupPhoto: record.group_photo === null ? null : toPublicMediaUrl(record.group_photo),
-        photoCaption: record.group_photo,
+        photoCaption: record.photo_caption,
     };
 };
 

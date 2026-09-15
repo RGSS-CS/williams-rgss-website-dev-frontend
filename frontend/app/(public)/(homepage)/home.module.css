@@ -178,13 +178,37 @@
     padding: 3rem 4.5rem 0;
 }
 
+.stucoFigure {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin: 0 0 2rem;
+}
+
+.stucoFigure:not(:has(.photoCaption)) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .stucoPhoto {
     display: block;
     box-sizing: border-box;
-    width: 70%;
+    width: 100%;
     max-width: 1100px;
     height: auto;
-    margin: 0 0 2rem;
+    margin: 0;
+}
+
+.photoCaption {
+    min-width: 0;
+    max-width: 38ch;
+    color: var(--black);
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.7;
+    text-align: left;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
 }
 
 .sectionTitleRow {
@@ -246,6 +270,15 @@
 }
 
 @media (max-width: 768px) {
+    .stucoFigure {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    .photoCaption {
+        max-width: none;
+    }
+
     .heroBadgeImage {
         display: none !important;
     }
