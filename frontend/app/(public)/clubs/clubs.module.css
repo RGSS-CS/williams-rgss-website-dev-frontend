@@ -4,6 +4,12 @@
     min-height: 100svh;
 }
 
+.page:not([hidden]):not([style*="display: none"]):not(:has([data-clubs-ready="true"])) ~ :global(footer) {
+    /* The shared footer can arrive before the clubs stream hydrates.
+       Ignore pages hidden by Next's Activity boundary after navigation. */
+    visibility: hidden;
+}
+
 .heroStats {
     display: flex;
     flex-direction: row;

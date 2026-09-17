@@ -5,59 +5,60 @@ import loadingStyles from "@/app/(public)/_styles/loading/club-detail-loading.mo
 
 export default function Loading() {
     return (
-        <main aria-busy="true" aria-label="Loading club details">
-            <section className="hero">
-                <div className="heroShape"></div>
-                <div className="heroInner">
-                    <div className="heroLeft">
-                        <div className={loadingStyles.loadingSiteDirectories}>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div className={loadingStyles.loadingHeroTitle}>
-                            <span></span>
-                        </div>
-
-                        <div className={loadingStyles.loadingHeroSubtitle}>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div className={styles.heroActions}>
-                            <span className={loadingStyles.loadingHeroButton} />
-                        </div>
-                        <div className={clubStyles.heroStats}>
-                            {Array.from({ length: 4 }).map((_, index) => (
-                                <div className={clubStyles.heroStat} key={index}>
-                                    <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatNumber}`} />
-                                    <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatLabel}`} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div className={styles.aboutWrap}>
-                <section className={styles.section}>
-                    <div className={styles.aboutGrid}>
-                        <div>
-                            <span className={loadingStyles.loadingEyebrow}></span>
-                            <div className={loadingStyles.loadingSectionTitle}></div>
-                            <div className={loadingStyles.loadingSectionBody}>
+        <main className={loadingStyles.loading} aria-busy="true" aria-label="Loading club details">
+            <div className={loadingStyles.skeleton} aria-hidden="true">
+                <section className="hero">
+                    <div className="heroShape"></div>
+                    <div className="heroInner">
+                        <div className="heroLeft">
+                            <div className={loadingStyles.loadingSiteDirectories}>
                                 <span></span>
                                 <span></span>
                                 <span></span>
                             </div>
-                        </div>
 
-                        <div className={`${styles.aboutVisual} ${loadingStyles.loadingAboutVisual}`}>
+                            <div className={loadingStyles.loadingHeroTitle}>
+                                <span></span>
+                            </div>
 
+                            <div className={loadingStyles.loadingHeroSubtitle}>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div className={styles.heroActions}>
+                                <span className={loadingStyles.loadingHeroButton} />
+                            </div>
+                            <div className={clubStyles.heroStats}>
+                                {Array.from({ length: 4 }).map((_, index) => (
+                                    <div className={clubStyles.heroStat} key={index}>
+                                        <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatNumber}`} />
+                                        <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatLabel}`} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </section>
+
+                <div className={styles.aboutWrap}>
+                    <section className={styles.section}>
+                        <div className={styles.aboutGrid}>
+                            <div>
+                                <span className={loadingStyles.loadingEyebrow}></span>
+                                <div className={loadingStyles.loadingSectionTitle}></div>
+                                <div className={loadingStyles.loadingSectionBody}>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+
+                            <div className={`${styles.aboutVisual} ${loadingStyles.loadingAboutVisual}`}>
+
+                            </div>
+                        </div>
+                    </section>
             </div>
 
             <div className={`${styles.divider} category_divider`}></div>
@@ -112,6 +113,13 @@ export default function Loading() {
                     </div>
                 </div>
             </section>
+            </div>
+            <div className={loadingStyles.overlay}>
+                <div className={loadingStyles.spinnerContainer} role="status">
+                    <span className={loadingStyles.spinner} aria-hidden="true" />
+                    <span className={loadingStyles.visuallyHidden}>Loading club details...</span>
+                </div>
+            </div>
         </main>
     );
 }

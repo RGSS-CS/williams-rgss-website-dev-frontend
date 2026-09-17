@@ -12,6 +12,7 @@ import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
 import NotAcceptingApplications from "./_components/notAcceptingApplications";
+import ClubDetailLoading from "./loading";
 //ICONS
 import {
   faQuestion,
@@ -147,8 +148,6 @@ async function ClubAbout({ clubId }: { clubId: number }) {
 
 async function ClubInfo({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
-  const categories = (club.categories ?? []).filter((category) => category?.trim());
-  const hasCategories = categories.length > 0;
   const meetingDay = formatDay(club.dayOfMeeting);
   const meetingTime = club.time ?? "Time TBA";
   const locationLabel = club.location || "Location TBA";
@@ -164,27 +163,22 @@ async function ClubInfo({ clubId }: { clubId: number }) {
 
         <div className={styles_modules.infoGrid}>
           <article className={styles_modules.infoTile}>
-            <FontAwesomeIcon icon={faCalendarAlt} className={styles_modules.fas} />
             <h3>Meeting Day</h3>
             <p>{meetingDay}</p>
           </article>
           <article className={styles_modules.infoTile}>
-            <FontAwesomeIcon icon={faClock} className={styles_modules.fas} />
             <h3>Meeting Time</h3>
             <p>{meetingTime}</p>
           </article>
           <article className={styles_modules.infoTile}>
-            <FontAwesomeIcon icon={faRepeat} className={styles_modules.fas} />
             <h3>Repetition</h3>
             <p>{cadence}</p>
           </article>
           <article className={styles_modules.infoTile}>
-            <FontAwesomeIcon icon={faDoorOpen} className={styles_modules.fas} />
             <h3>Location</h3>
             <p>{locationLabel}</p>
           </article>
           <article className={styles_modules.infoTile}>
-            <FontAwesomeIcon icon={faUserTie} className={styles_modules.fas} />
             <h3>Teacher Advisor</h3>
             <p>{club.teacherAdvisor ?? "Not provided"}</p>
           </article>
@@ -306,7 +300,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
   );
 }
 
-export default async function ClubDetailPage({ params }: ClubPageProps) {
+async function ClubDetailContent({ params }: ClubPageProps) {
   const { id } = await params;
   const clubId = Number(id);
 
@@ -316,26 +310,21 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
 
   return (
     <main>
-      <Suspense fallback={null}>
-        <ClubHero clubId={clubId} />
-      </Suspense>
-
-      <Suspense fallback={null}>
-        <ClubAbout clubId={clubId} />
-      </Suspense>
+      <ClubHero clubId={clubId} />
+      <ClubAbout clubId={clubId} />
 
       <div className={`${styles_modules.divider} category_divider`}></div>
-      <Suspense fallback={null}>
-        <ClubWhyJoin clubId={clubId} />
-      </Suspense>
-
-      <Suspense fallback={null}>
-        <ClubInfo clubId={clubId} />
-      </Suspense>
-
-      <Suspense fallback={null}>
-        <ClubApply clubId={clubId} />
-      </Suspense>
+      <ClubWhyJoin clubId={clubId} />
+      <ClubInfo clubId={clubId} />
+      <ClubApply clubId={clubId} />
     </main>
+  );
+}
+
+export default function ClubDetailPage({ params }: ClubPageProps) {
+  return (
+    <Suspense fallback={<ClubDetailLoading />}>
+      <ClubDetailContent params={params} />
+    </Suspense>
   );
 }

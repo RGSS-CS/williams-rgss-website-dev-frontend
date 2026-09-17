@@ -239,10 +239,9 @@
 }
 
 .infoTile {
-  border-radius: 24px;
   border: 3px solid var(--line);
   background: var(--white);
-  padding: 1.6rem 1.4rem;
+  padding: 1rem 1.4rem;
 }
 
 .infoTile .fas {
@@ -251,14 +250,14 @@
 }
 
 .infoTile h3 {
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   color: var(--school-primary);
   font-size: 1.25rem;
   font-weight: 800;
 }
 
 .infoTile p {
-  margin-top: 0.65rem;
+  margin-top: 0.6rem;
   color: var(--school-primary);
   line-height: 1.7;
 }
