@@ -80,8 +80,6 @@ export default function ClubsPage() {
       <Suspense fallback={null}>
         <ClubsHero />
       </Suspense>
-
-      {/* Reserve the club list's space in the cached shell while it resumes. */}
       <Suspense fallback={<ClubsContentLoading />}>
         <ClubsExplorer />
         <ClubsCta />
