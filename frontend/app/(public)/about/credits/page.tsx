@@ -1,9 +1,11 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import styles from "./credits.module.css";
 
 export default function Credits() {
   return (
     <section className={styles.sectionWrap}>
       <div className={styles.sectionContent}>
+        <SiteDirectories tone="dark" items={[{ label: "About", href: "/about" }, { label: "Site Credits" }]} />
         <div className={styles.sectionTitleRow}>
           <h2 className={styles.sectionTitle}>Site Credits</h2>
         </div>
@@ -204,6 +206,15 @@ export default function Credits() {
                   >
                     Ryan Shi
                   </a>
+                  ,{" "}
+                  <a
+                    className={styles.personLink}
+                    href='https://github.com/DanPlus6'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    David Fu
+                  </a>
                 </p>
               </div>
             </div>
@@ -272,14 +283,6 @@ export default function Credits() {
               rel='noopener noreferrer'
             >
               Django
-            </a>
-            <a
-              className={styles.techBadge}
-              href='https://fonts.google.com/'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Google Fonts
             </a>
           </div>
         </div>

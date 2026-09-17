@@ -107,7 +107,7 @@ function matchesQuery(club: Club, query: string) {
     club.preview_description,
     club.description,
     club.teacherAdvisor ?? "",
-    club.roomNumber ?? "",
+    club.location ?? "",
     club.dayOfMeeting ?? "",
     club.time ?? "",
     club.repetition ?? "",
@@ -130,7 +130,7 @@ function ClubCard({ club }: { club: Club }) {
             <FontAwesomeIcon icon={faMapMarkerAlt} />
 
             <h4>
-              <b>Room:</b> {club.roomNumber}
+              <b>Location:</b> {club.location || "TBA"}
             </h4>
           </div>
 
@@ -302,6 +302,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     <div className='sticky-wrapper'>
       <MobileFilterPanel>
         <ClubsFilterControls
+          count={filteredClubs.length}
           categories={categoryFilters}
           activeCategory={activeCategory}
           activeDay={activeDay}
@@ -317,10 +318,6 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
           }
         />
 
-        <span className={styles.resultsCount}>
-          Showing {filteredClubs.length} club
-          {filteredClubs.length === 1 ? "" : "s"}
-        </span>
       </MobileFilterPanel>
 
       <div className={styles.mobileResultsBar}>

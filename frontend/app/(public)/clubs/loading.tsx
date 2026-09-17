@@ -10,11 +10,14 @@ const CLUB_CARD_COUNT = 6;
 export default function Loading() {
     return (
         <main aria-busy="true" aria-label="Loading clubs">
-            <PublicHeroLoading search stats={2} />
+            <PublicHeroLoading breadcrumbs search />
 
             <div className="sticky-wrapper">
                 <div className={filterStyles.filterBarContainer}>
-                    <div className={filterStyles.filterBar}>
+                    <div className={loadingStyles.loadingMobileFilter} aria-hidden="true">
+                        <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingFilterLabel}`} />
+                    </div>
+                    <div className={`${filterStyles.filterBar} ${loadingStyles.loadingDesktopFilters}`}>
                         <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingFilterLabel}`}></span>
                         {Array.from({ length: FILTER_CHIP_COUNT }).map((_, index) => (
                             <span
@@ -22,10 +25,18 @@ export default function Loading() {
                                 key={index}
                             ></span>
                         ))}
+                        <div className={filterStyles.dayFilterRow}>
+                            {Array.from({ length: 6 }).map((_, index) => (
+                                <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingDayChip}`} key={`day-${index}`} />
+                            ))}
+                        </div>
                         <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingResultsCount}`}></span>
                     </div>
                 </div>
 
+                <div className={styles.mobileResultsBar}>
+                    <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingResultsCount}`} />
+                </div>
                 <div className={catStyles.categoryContainer}>
                     <div className={catStyles.categorySection}>
                         <div className={catStyles.categoryHeader}>

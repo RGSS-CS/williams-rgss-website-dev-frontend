@@ -10,16 +10,12 @@
   border: 0;
 }
 
-.loadingBreadcrumbs,
+.loadingSiteDirectories span,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
-.loadingHeroHint,
-.loadingHeroStat,
 .loadingEyebrow,
 .loadingSectionTitle,
 .loadingSectionBody span,
-.loadingBadge,
-.loadingVisualCaption,
 .loadingHeadlineIcon,
 .loadingHeadlineText,
 .loadingTileIcon,
@@ -37,16 +33,12 @@
   border-radius: 8px;
 }
 
-.loadingBreadcrumbs span,
+.loadingSiteDirectories span,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
-.loadingHeroHint,
-.loadingHeroStat,
 .loadingEyebrow,
 .loadingSectionTitle,
 .loadingSectionBody span,
-.loadingBadge,
-.loadingVisualCaption,
 .loadingHeadlineIcon,
 .loadingHeadlineText,
 .loadingTileIcon,
@@ -55,12 +47,10 @@
   background: #e7edf4;
 }
 
-.loadingBreadcrumbs span,
+.loadingSiteDirectories span,
 .loadingHeroTitle span,
 .loadingHeroSubtitle span,
 .loadingHeroButton,
-.loadingHeroHint,
-.loadingHeroStat,
 .loadingApplyEyebrow,
 .loadingApplyTitle,
 .loadingApplyText,
@@ -70,17 +60,13 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-.loadingBreadcrumbs span::after,
+.loadingSiteDirectories span::after,
 .loadingHeroTitle span::after,
 .loadingHeroSubtitle span::after,
 .loadingHeroButton::after,
-.loadingHeroHint::after,
-.loadingHeroStat::after,
 .loadingEyebrow::after,
 .loadingSectionTitle::after,
 .loadingSectionBody span::after,
-.loadingBadge::after,
-.loadingVisualCaption::after,
 .loadingHeadlineIcon::after,
 .loadingHeadlineText::after,
 .loadingTileIcon::after,
@@ -100,19 +86,19 @@
   animation: skeletonShimmer 1.35s ease-in-out infinite;
 }
 
-.loadingBreadcrumbs {
+.loadingSiteDirectories {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 1.2rem;
 }
 
-.loadingBreadcrumbs span {
+.loadingSiteDirectories span {
   width: 4.2rem;
   height: 0.9rem;
 }
 
-.loadingBreadcrumbs span:last-child {
+.loadingSiteDirectories span:last-child {
   width: min(34vw, 8rem);
 }
 
@@ -147,14 +133,6 @@
   width: min(72%, 420px);
 }
 
-.loadingHeroActions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
 .loadingHeroButton {
   display: block;
   position: relative;
@@ -163,23 +141,6 @@
   height: 2.9rem;
   border-radius: 999px;
   background: rgba(219, 152, 32, 0.65);
-}
-
-.loadingHeroHint {
-  width: 9.5rem;
-  height: 0.95rem;
-}
-
-.loadingHeroStats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  width: 100%;
-}
-
-.loadingHeroStat {
-  width: 7rem;
-  height: 1.9rem;
 }
 
 .loadingEyebrow {
@@ -216,21 +177,9 @@
   width: 68%;
 }
 
-.loadingBadge {
-  width: 10rem;
-  height: 2.8rem;
-  border-radius: 999px;
-}
-
 .loadingAboutVisual {
   background: #d9e4ef;
   position: relative;
-}
-
-.loadingVisualCaption {
-  width: 70%;
-  height: 3.3rem;
-  margin: auto 1.5rem 1.3rem;
 }
 
 .loadingHeadlineIcon {
@@ -303,17 +252,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .loadingBreadcrumbs span::after,
+  .loadingSiteDirectories span::after,
   .loadingHeroTitle span::after,
   .loadingHeroSubtitle span::after,
   .loadingHeroButton::after,
-  .loadingHeroHint::after,
-  .loadingHeroStat::after,
   .loadingEyebrow::after,
   .loadingSectionTitle::after,
   .loadingSectionBody span::after,
-  .loadingBadge::after,
-  .loadingVisualCaption::after,
   .loadingHeadlineIcon::after,
   .loadingHeadlineText::after,
   .loadingTileIcon::after,

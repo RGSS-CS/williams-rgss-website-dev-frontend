@@ -27,19 +27,70 @@
     flex-shrink: 0;
 }
 
+.tickerTrack {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--school-primary);
+}
+
+.tickerInner {
+    display: flex;
+    width: max-content;
+    min-width: 200%;
+    animation: tickerScroll 30s linear infinite;
+}
+
+.tickerItems {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--school-tertiary);
+}
+
+.tickerItem {
+    flex-shrink: 0;
+    padding: 0 24px;
+    white-space: nowrap;
+    font-size: 1.1rem;
+}
+
+.tickerBar:hover .tickerInner,
+.tickerBar:focus-within .tickerInner {
+    animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+    to { transform: translateX(-55%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tickerTrack {
+        overflow-x: auto;
+    }
+
+    .tickerInner {
+        animation: none;
+        min-width: 100%;
+    }
+
+    .tickerItems[aria-hidden="true"] {
+        display: none;
+    }
+}
+
 .heroTag {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(219, 152, 32, 0.1);
-    border: 1px solid rgba(219, 152, 32, 0.3);
     color: var(--school-tertiary);
     font-weight: 600;
     font-size: 0.72rem;
     letter-spacing: 0.14em;
-    padding: 5px 16px;
-    border-radius: 40px;
-    margin-bottom: 1.2rem;
     text-transform: uppercase;
 }
 
@@ -127,6 +178,45 @@
     padding: 3rem 4.5rem 0;
 }
 
+.stucoFigure {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    max-width: 1280px;
+    margin: 0 auto 2rem;
+}
+
+.stucoFigure:not(:has(.photoCaption)) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 800px;
+}
+
+.stucoPhoto {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    max-height: 600px;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    object-position: right center;
+    margin: 0;
+}
+
+.photoCaption {
+    min-width: 0;
+    max-width: none;
+    color: var(--black);
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    font-weight: 500;
+    line-height: 1.7;
+    text-align: left;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
 .sectionTitleRow {
     display: flex;
     align-items: baseline;
@@ -185,20 +275,20 @@
     text-decoration: underline;
 }
 
-.loadingSectionTitle {
-    width: min(280px, 70vw);
-    height: 2rem;
-    background: color-mix(in srgb, var(--school-primary) 16%, transparent);
-}
-
-.loadingSectionBlock {
-    width: 100%;
-    height: 120px;
-    background: color-mix(in srgb, var(--school-primary) 10%, transparent);
-}
-
-
 @media (max-width: 768px) {
+    .stucoFigure {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    .stucoPhoto {
+        object-position: center;
+    }
+
+    .photoCaption {
+        max-width: none;
+    }
+
     .heroBadgeImage {
         display: none !important;
     }

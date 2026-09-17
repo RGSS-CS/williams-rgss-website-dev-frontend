@@ -36,12 +36,6 @@
   flex-shrink: 0;
 }
 
-.tickerLine {
-  width: min(70vw, 520px);
-  height: 0.85rem;
-  margin-left: 1rem;
-}
-
 .heroBadgeImage {
   background: var(--school-secondary);
   position: absolute;
@@ -95,7 +89,7 @@
 
 .loadingHeroTitle .skeletonBlock {
   width: min(68vw, 450px);
-  height: clamp(2.8rem, 6vw, 5rem);
+  height: clamp(2.6rem, 6vw, 4.6rem);
 }
 
 .loadingHeroTitle .skeletonBlock:last-child {
@@ -153,8 +147,25 @@
 }
 
 .loadingHeroButtons {
-  width: min(100%, 320px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.loadingHeroButtons .skeletonBlock {
+  width: 160px;
   height: 44px;
+}
+
+.loadingHeroButtons .skeletonBlock:last-child {
+  width: 130px;
+}
+
+.loadingBreadcrumbs {
+  width: 110px;
+  height: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .heroStats {
@@ -208,9 +219,11 @@
   .loadingHeroTitle .skeletonBlock,
   .loadingHeroTitle .skeletonBlock:last-child {
     width: 100%;
+    height: clamp(2rem, 6vw, 2.875rem);
   }
 
   .heroStats {
+    flex-wrap: wrap;
     gap: 1.5rem;
   }
 }

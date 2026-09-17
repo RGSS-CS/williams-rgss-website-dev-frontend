@@ -1,14 +1,16 @@
+import clubStyles from "../clubs.module.css";
+import heroLoadingStyles from "@/app/(public)/_styles/loading/public-hero-loading.module.css";
 import styles from "./club-detail.module.css";
 import loadingStyles from "@/app/(public)/_styles/loading/club-detail-loading.module.css";
 
-export default async function Loading() {
+export default function Loading() {
     return (
         <main aria-busy="true" aria-label="Loading club details">
             <section className="hero">
                 <div className="heroShape"></div>
                 <div className="heroInner">
                     <div className="heroLeft">
-                        <div className={loadingStyles.loadingBreadcrumbs}>
+                        <div className={loadingStyles.loadingSiteDirectories}>
                             <span></span>
                             <span></span>
                             <span></span>
@@ -23,15 +25,16 @@ export default async function Loading() {
                             <span></span>
                         </div>
 
-                        <div className={loadingStyles.loadingHeroActions}>
-                            <span className={loadingStyles.loadingHeroButton}></span>
-                            <span className={loadingStyles.loadingHeroHint}></span>
-                            <div className={loadingStyles.loadingHeroStats}>
-                                <span className={loadingStyles.loadingHeroStat}></span>
-                                <span className={loadingStyles.loadingHeroStat}></span>
-                                <span className={loadingStyles.loadingHeroStat}></span>
-                                <span className={loadingStyles.loadingHeroStat}></span>
-                            </div>
+                        <div className={styles.heroActions}>
+                            <span className={loadingStyles.loadingHeroButton} />
+                        </div>
+                        <div className={clubStyles.heroStats}>
+                            {Array.from({ length: 4 }).map((_, index) => (
+                                <div className={clubStyles.heroStat} key={index}>
+                                    <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatNumber}`} />
+                                    <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatLabel}`} />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -48,21 +51,16 @@ export default async function Loading() {
                                 <span></span>
                                 <span></span>
                             </div>
-                            <div className={styles.badgeRow}>
-                                <span className={loadingStyles.loadingBadge}></span>
-                                <span className={loadingStyles.loadingBadge}></span>
-                                <span className={loadingStyles.loadingBadge}></span>
-                            </div>
                         </div>
 
                         <div className={`${styles.aboutVisual} ${loadingStyles.loadingAboutVisual}`}>
-                            <div className={loadingStyles.loadingVisualCaption}></div>
+
                         </div>
                     </div>
                 </section>
             </div>
 
-            <div className={styles.divider}></div>
+            <div className={`${styles.divider} category_divider`}></div>
 
             <div className={styles.infoWrap}>
                 <section className={styles.section}>
@@ -72,7 +70,7 @@ export default async function Loading() {
                     </div>
 
                     <div className={styles.infoGrid}>
-                        {Array.from({ length: 6 }).map((_, index) => (
+                        {Array.from({ length: 5 }).map((_, index) => (
                             <article className={styles.infoTile} key={index}>
                                 <span className={loadingStyles.loadingTileIcon}></span>
                                 <div className={loadingStyles.loadingTileTitle}></div>

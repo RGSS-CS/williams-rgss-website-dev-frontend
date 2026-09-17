@@ -1,6 +1,7 @@
 import styles from "@/app/(public)/_styles/loading/public-hero-loading.module.css";
 
 type PublicHeroLoadingProps = {
+    breadcrumbs?: boolean;
     badge?: boolean;
     buttons?: boolean;
     search?: boolean;
@@ -11,6 +12,7 @@ type PublicHeroLoadingProps = {
 };
 
 export default function PublicHeroLoading({
+    breadcrumbs = false,
     badge = false,
     buttons = false,
     search = false,
@@ -20,7 +22,7 @@ export default function PublicHeroLoading({
     ticker = false
 }: PublicHeroLoadingProps) {
     return (
-        <div className='hero' aria-busy='true' aria-label='Loading hero'>
+        <div className={badge ? 'hero homeHero' : 'hero'} aria-busy='true' aria-label='Loading hero'>
             {ticker && (
                 <div className={styles.tickerBar}>
                     <span className={styles.tickerHeader}></span>
@@ -36,6 +38,7 @@ export default function PublicHeroLoading({
             <div className={badge ? styles.homeHeroShape : "heroShape"}></div>
             <div className='heroInner'>
                 <div className='heroLeft'>
+                    {breadcrumbs && <span className={`${styles.skeletonBlock} ${styles.loadingBreadcrumbs}`} />}
                     {tag && <span className={`${styles.skeletonBlock} ${styles.loadingHeroTag}`}></span>}
 
                     <div className={styles.loadingHeroTitle}>
@@ -56,7 +59,12 @@ export default function PublicHeroLoading({
                         </div>
                     )}
 
-                    {buttons && <span className={`${styles.skeletonBlock} ${styles.loadingHeroButtons}`}></span>}
+                    {buttons && (
+                        <div className={styles.loadingHeroButtons}>
+                            <span className={styles.skeletonBlock} />
+                            <span className={styles.skeletonBlock} />
+                        </div>
+                    )}
 
                     {stats > 0 && (
                         <div className={styles.heroStats}>

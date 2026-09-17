@@ -24,25 +24,12 @@
     gap: 12px;
 }
 
-.titleAccent {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--school-tertiary);
-    border-radius: 50%;
-}
-
 .sectionLead {
     max-width: 80ch;
     margin: 0 0 2rem;
     color: var(--black);
     opacity: 0.8;
     line-height: 1.8;
-}
-
-.creditsGrid {
-    display: grid;
-    gap: 1.2rem;
 }
 
 .creditCard {

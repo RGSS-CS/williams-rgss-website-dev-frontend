@@ -17,6 +17,7 @@
 
 .loadingFilterLabel,
 .loadingFilterChip,
+.loadingDayChip,
 .loadingResultsCount,
 .loadingCategoryTitle,
 .loadingCategoryCount,
@@ -128,13 +129,29 @@
   }
 }
 
+.loadingDayChip {
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: 40px;
+}
+
+.loadingMobileFilter {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .loadingResultsCount {
-    flex-basis: 100%;
-    margin-left: 0;
+  .loadingDesktopFilters {
+    display: none;
   }
 
-  .loadingFilterChip:nth-of-type(n + 6) {
-    display: none;
+  .loadingMobileFilter {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.2rem;
+    min-height: 1rem;
+  }
+
+  .loadingResultsCount {
+    margin-left: 0;
   }
 }
