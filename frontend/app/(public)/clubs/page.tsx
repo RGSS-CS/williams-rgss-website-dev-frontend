@@ -6,8 +6,8 @@ import { Metadata } from "next";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import ClubsFilterClient from "./clubsFilterClient";
+import ClubsContentLoading from "./_components/clubsContentLoading";
 import { Suspense } from "react";
-import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -76,16 +76,14 @@ async function ClubsCta() {
 
 export default function ClubsPage() {
   return (
-    <main>
-      <Suspense fallback={<PublicHeroLoading breadcrumbs search />}>
+    <main className={styles.page}>
+      <Suspense fallback={null}>
         <ClubsHero />
       </Suspense>
 
-      <Suspense fallback={null}>
+      {/* Reserve the club list's space in the cached shell while it resumes. */}
+      <Suspense fallback={<ClubsContentLoading />}>
         <ClubsExplorer />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <ClubsCta />
       </Suspense>
     </main>
