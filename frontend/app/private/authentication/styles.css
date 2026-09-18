@@ -31,7 +31,6 @@
   position: relative;
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 1.125rem;
   box-shadow: 0 4px 32px rgb(0 0 0 / 7%);
 }
 

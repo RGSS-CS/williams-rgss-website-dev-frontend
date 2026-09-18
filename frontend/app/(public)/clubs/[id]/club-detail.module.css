@@ -234,9 +234,8 @@
 
 .infoSection {
   box-sizing: border-box;
-  max-width: 1400px;
   margin-inline: auto;
-  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
+  padding: 4.4rem 4.4rem;
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
   gap: clamp(2rem, 5vw, 5rem);
@@ -244,22 +243,6 @@
   color: var(--school-primary);
 }
 
-.infoEyebrow {
-  display: block;
-  margin-bottom: 0.85rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.infoHeader h2 {
-  margin: 0;
-  font-size: clamp(1.75rem, 3vw, 3rem);
-  font-weight: 900;
-  line-height: 1.2;
-  letter-spacing: -0.035em;
-}
 
 .infoHeader p {
   max-width: 32ch;

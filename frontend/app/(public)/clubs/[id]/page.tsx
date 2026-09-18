@@ -154,8 +154,8 @@ async function ClubInfo({ clubId }: { clubId: number }) {
     <div className={styles_modules.infoWrap}>
       <section className={styles_modules.infoSection} aria-labelledby="club-information-heading">
         <header className={styles_modules.infoHeader}>
-          <span className={styles_modules.infoEyebrow}>At a glance</span>
-          <h2 id="club-information-heading">Club information</h2>
+          <span className={styles_modules.sectionEyebrow}>At a glance</span>
+          <h2 id="club-information-heading" className={styles_modules.sectionTitle}>Club information</h2>
         </header>
 
         <dl className={styles_modules.infoGrid}>
