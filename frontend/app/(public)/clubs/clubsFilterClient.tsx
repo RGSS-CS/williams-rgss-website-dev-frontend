@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useDeferredValue, useMemo, useState } from "react";
+import { JSX, useDeferredValue, useMemo, useState, useSyncExternalStore } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import type { Club } from "@/app/_lib/club";
@@ -42,6 +42,10 @@ type ClubFilters = {
 };
 
 const DEFAULT_CATEGORY_ICON = <FontAwesomeIcon icon={faLayerGroup} />;
+
+const subscribeToHydration = () => () => {};
+const getHydratedSnapshot = () => true;
+const getServerHydratedSnapshot = () => false;
 
 const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
   academic: <FontAwesomeIcon icon={faBook} />,
@@ -162,6 +166,11 @@ function ClubCard({ club }: { club: Club }) {
 }
 
 export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFilterClientProps) {
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot
+  );
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamString = searchParams.toString();
@@ -299,7 +308,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
   }
 
   return (
-    <div className='sticky-wrapper'>
+    <div className='sticky-wrapper' data-clubs-ready={hydrated}>
       <MobileFilterPanel>
         <ClubsFilterControls
           count={filteredClubs.length}

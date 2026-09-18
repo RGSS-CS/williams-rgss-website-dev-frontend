@@ -1,6 +1,6 @@
 import SiteDirectories from "@/app/_components/siteDirectories";
 import Image from "next/image";
-import { Suspense } from "react";
+import { Suspense, type CSSProperties } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import {
@@ -59,22 +59,22 @@ function safeHex(value: string | null | undefined, fallback: string): string {
   return value && HEX_PATTERN.test(value) ? value : fallback;
 }
 
-async function getThemeStyle(): Promise<string> {
-  const management = await getManagementSettings();
-
+function getThemeStyle(
+  management: Awaited<ReturnType<typeof getManagementSettings>>
+): CSSProperties & Record<`--${string}`, string> {
   const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
   const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
   const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
   const primaryLight = darkenHex(primary, -20);
   const tertiaryDark = darkenHex(tertiary, 20);
 
-  return `:root {
-    --school-primary: ${primary};
-    --school-primary-light: ${primaryLight};
-    --school-secondary: ${secondary};
-    --school-tertiary: ${tertiary};
-    --school-tertiary-dark: ${tertiaryDark};
-  }`;
+  return {
+    "--school-primary": primary,
+    "--school-primary-light": primaryLight,
+    "--school-secondary": secondary,
+    "--school-tertiary": tertiary,
+    "--school-tertiary-dark": tertiaryDark,
+  };
 }
 
 async function NavbarSlot({
@@ -89,16 +89,16 @@ export default async function NotFound() {
   const management = await getManagementSettings();
   if (!management) return null;
   const schoolYear = await getSchoolYear();
-  const themeStyle = await getThemeStyle();
+  const themeStyle = getThemeStyle(management);
   return (
     <html
       lang='en'
       className={`${montserrat.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+      style={themeStyle}
     >
       <head>
         <meta charSet='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
-        <style id='school-theme' dangerouslySetInnerHTML={{ __html: themeStyle }} />
       </head>
       <body>
         <Suspense fallback={<NavbarSkeleton />}>

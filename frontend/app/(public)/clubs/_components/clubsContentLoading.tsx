@@ -1,42 +1,13 @@
-import styles from "./clubs.module.css";
+import styles from "../clubs.module.css";
 import loadingStyles from "@/app/(public)/_styles/loading/clubs-loading.module.css";
-import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
 import catStyles from "@/app/(public)/_styles/sections/categories.module.css";
-import filterStyles from "@/app/(public)/_styles/sections/filters.module.css";
 
-const FILTER_CHIP_COUNT = 8;
 const CLUB_CARD_COUNT = 6;
 
-export default function Loading() {
+export default function ClubsContentLoading() {
     return (
-        <main aria-busy="true" aria-label="Loading clubs">
-            <PublicHeroLoading breadcrumbs search />
-
+        <div aria-busy="true" aria-label="Loading clubs">
             <div className="sticky-wrapper">
-                <div className={filterStyles.filterBarContainer}>
-                    <div className={loadingStyles.loadingMobileFilter} aria-hidden="true">
-                        <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingFilterLabel}`} />
-                    </div>
-                    <div className={`${filterStyles.filterBar} ${loadingStyles.loadingDesktopFilters}`}>
-                        <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingFilterLabel}`}></span>
-                        {Array.from({ length: FILTER_CHIP_COUNT }).map((_, index) => (
-                            <span
-                                className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingFilterChip}`}
-                                key={index}
-                            ></span>
-                        ))}
-                        <div className={filterStyles.dayFilterRow}>
-                            {Array.from({ length: 6 }).map((_, index) => (
-                                <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingDayChip}`} key={`day-${index}`} />
-                            ))}
-                        </div>
-                        <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingResultsCount}`}></span>
-                    </div>
-                </div>
-
-                <div className={styles.mobileResultsBar}>
-                    <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingResultsCount}`} />
-                </div>
                 <div className={catStyles.categoryContainer}>
                     <div className={catStyles.categorySection}>
                         <div className={catStyles.categoryHeader}>
@@ -67,6 +38,7 @@ export default function Loading() {
                 <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingCtaTitle}`}></span>
                 <span className={`${loadingStyles.skeletonBlock} ${loadingStyles.loadingCtaText}`}></span>
             </div>
-        </main>
+        </div>
     );
 }
+

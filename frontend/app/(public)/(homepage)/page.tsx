@@ -1,5 +1,6 @@
 // settings
 import styles from "./home.module.css";
+import dividerStyles from "@/app/(public)/_styles/utilities/section-divider.module.css";
 import { getSchoolYear } from "@/app/_utils/schoolYear";
 import { Metadata } from "next";
 import { getSiteMetadata } from "@/app/_utils/metadata";
@@ -122,7 +123,7 @@ async function STUCOImg() {
                     </figcaption>
                 )}
             </figure>
-            <div className={styles.sectionDivider}></div>
+            <div className={dividerStyles.sectionDivider} aria-hidden="true"></div>
     </div>
   );
 }

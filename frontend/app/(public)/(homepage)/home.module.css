@@ -258,11 +258,6 @@
     margin-bottom: 1.8rem;
 }
 
-.sectionDivider {
-    height: 3px;
-    background: var(--line);
-    margin-bottom: 1.6rem;
-}
 
 .mapLink {
     display: inline-flex;
