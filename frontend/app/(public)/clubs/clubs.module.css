@@ -1,6 +1,4 @@
 .page {
-    /* Keep the footer below the viewport while cached content resumes. */
-    min-height: 100vh;
     min-height: 100svh;
 }
 
