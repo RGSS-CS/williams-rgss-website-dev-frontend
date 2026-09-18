@@ -100,14 +100,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     schoolName={management?.schoolName}
                     captchaEndpoint={process.env.CAPTCHA_URL}
                 >
-                    {/* <div className='notOfficalContainer'>
-                        <div className='notOffcial'>
-                            <h1>
-                                This website is currently not officially associated with Dr. GW Williams S.S or
-                                Richmond Green S.S
-                            </h1>
-                        </div>
-                    </div> */}
                     {children}
                 </EntryCaptchaGate>
             </body>
