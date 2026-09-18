@@ -1,0 +1,5 @@
+.sectionDivider {
+    height: 3px;
+    background: var(--line);
+    margin-bottom: 1.6rem;
+}

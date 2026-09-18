@@ -232,34 +232,92 @@
   color: var(--school-tertiary);
 }
 
-.infoGrid {
+.infoSection {
+  box-sizing: border-box;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 4rem);
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  color: var(--school-primary);
+}
+
+.infoEyebrow {
+  display: block;
+  margin-bottom: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.infoHeader h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.infoHeader p {
+  max-width: 32ch;
+  margin: 1rem 0 0;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--school-primary-light);
+}
+
+.infoGrid {
+  min-width: 0;
+  margin: 0;
+  padding: 0 clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(15, 33, 60, 0.035);
 }
 
 .infoTile {
-  border: 3px solid var(--line);
-  background: var(--white);
-  padding: 1rem 1.4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 1rem;
+  padding-block: 1.25rem;
+  align-items: baseline;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
-.infoTile .fas {
-  color: var(--school-tertiary);
-  font-size: 1.9rem;
+.infoTile + .infoTile {
+  border-top: 1px solid var(--line);
 }
 
-.infoTile h3 {
-  margin-top: 0.3rem;
+.infoTile dt {
+  color: var(--school-primary-light);
+  font-size: 0.9rem;
+}
+
+.infoTile dd {
+  margin: 0;
   color: var(--school-primary);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-line;
 }
 
-.infoTile p {
-  margin-top: 0.6rem;
-  color: var(--school-primary);
-  line-height: 1.7;
+@media (max-width: 800px) {
+  .infoSection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .infoTile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
 }
 
 .applySection {
@@ -539,15 +597,13 @@
 }
 
 @media (max-width: 1120px) {
-  .aboutGrid,
-  .infoGrid {
+  .aboutGrid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 800px) {
-  .aboutGrid,
-  .infoGrid {
+  .aboutGrid {
     grid-template-columns: 1fr;
   }
 

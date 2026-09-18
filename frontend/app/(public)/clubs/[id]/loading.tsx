@@ -1,6 +1,7 @@
 import clubStyles from "../clubs.module.css";
 import heroLoadingStyles from "@/app/(public)/_styles/loading/public-hero-loading.module.css";
 import styles from "./club-detail.module.css";
+import dividerStyles from "@/app/(public)/_styles/utilities/section-divider.module.css";
 import loadingStyles from "@/app/(public)/_styles/loading/club-detail-loading.module.css";
 
 export default function Loading() {
@@ -25,12 +26,8 @@ export default function Loading() {
                                 <span></span>
                                 <span></span>
                             </div>
-
-                            <div className={styles.heroActions}>
-                                <span className={loadingStyles.loadingHeroButton} />
-                            </div>
                             <div className={clubStyles.heroStats}>
-                                {Array.from({ length: 4 }).map((_, index) => (
+                                {Array.from({ length: 3 }).map((_, index) => (
                                     <div className={clubStyles.heroStat} key={index}>
                                         <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatNumber}`} />
                                         <span className={`${heroLoadingStyles.skeletonBlock} ${heroLoadingStyles.loadingStatLabel}`} />
@@ -53,73 +50,36 @@ export default function Loading() {
                                     <span></span>
                                 </div>
                             </div>
-
-                            <div className={`${styles.aboutVisual} ${loadingStyles.loadingAboutVisual}`}>
-
-                            </div>
                         </div>
                     </section>
-            </div>
-
-            <div className={`${styles.divider} category_divider`}></div>
-
-            <div className={styles.infoWrap}>
-                <section className={styles.section}>
-                    <div className={styles.headlineRow}>
-                        <span className={loadingStyles.loadingHeadlineIcon}></span>
-                        <span className={loadingStyles.loadingHeadlineText}></span>
-                    </div>
-
-                    <div className={styles.infoGrid}>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            <article className={styles.infoTile} key={index}>
-                                <span className={loadingStyles.loadingTileIcon}></span>
-                                <div className={loadingStyles.loadingTileTitle}></div>
-                                <div className={loadingStyles.loadingTileText}></div>
-                            </article>
-                        ))}
-                    </div>
-                </section>
-            </div>
-
-            <section className={styles.applySection} aria-labelledby="loading-join-club-heading">
-                <div className={styles.applySectionShell}>
-                    <div className={styles.applySectionCopy}>
-                        <h2 id="loading-join-club-heading" className={loadingStyles.visuallyHidden}>
-                            Loading join club details
-                        </h2>
-                        <span className={loadingStyles.loadingApplyEyebrow}></span>
-                        <div className={loadingStyles.loadingApplyTitle}></div>
-                        <div className={loadingStyles.loadingApplyText}></div>
-                    </div>
-
-                    <div className={styles.applyPanel}>
-                        <div className={styles.applyPanelInner}>
-                            <div className={styles.applyInfoCard}>
-                                <div className={styles.applyInfoRow}>
-                                    <span className={loadingStyles.loadingApplyRow}></span>
-                                </div>
-                                <div className={styles.applyInfoRow}>
-                                    <span className={loadingStyles.loadingApplyRow}></span>
-                                </div>
-                            </div>
-
-                            <div className={styles.applyCodeCard}>
-                                <span className={loadingStyles.loadingApplyCode}></span>
-                            </div>
-
-                            <span className={loadingStyles.loadingApplyButton}></span>
-                        </div>
-                    </div>
                 </div>
-            </section>
+
+                <div className={`${styles.divider} ${dividerStyles.sectionDivider}`} aria-hidden="true"></div>
+
+                <div className={styles.infoWrap}>
+                    <section className={styles.infoSection}>
+                        <div className={styles.infoHeader}>
+                            <span className={loadingStyles.loadingEyebrow}></span>
+                            <div className={loadingStyles.loadingSectionTitle}></div>
+                        </div>
+
+                        <div className={styles.infoGrid}>
+                            {Array.from({ length: 5 }).map((_, index) => (
+                                <article className={styles.infoTile} key={index}>
+                                    <div className={loadingStyles.loadingTileTitle}></div>
+                                    <div className={loadingStyles.loadingTileText}></div>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+                </div>
             </div>
             <div className={loadingStyles.overlay}>
                 <div className={loadingStyles.spinnerContainer} role="status">
                     <span className={loadingStyles.spinner} aria-hidden="true" />
                     <span className={loadingStyles.visuallyHidden}>Loading club details...</span>
                 </div>
-            </div>
-        </main>
-    );
-}
+                </div>
+            </main>
+        );
+    }

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import { getGalleryPhotos } from "@/app/_lib/gallery-photos";
 import styles_modules from "./club-detail.module.css";
+import dividerStyles from "@/app/(public)/_styles/utilities/section-divider.module.css";
 import styles from "@/app/(public)/clubs/clubs.module.css";
 import AnchorLink from "@/app/(public)/_components/anchorLink";
 import { Metadata } from "next";
@@ -18,11 +19,7 @@ import {
   faQuestion,
   faCalendarAlt,
   faDoorOpen,
-  faClock,
-  faRepeat,
-  faUserTie,
   faArrowUpRightFromSquare,
-  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 type ClubPageProps = {
@@ -155,34 +152,34 @@ async function ClubInfo({ clubId }: { clubId: number }) {
 
   return (
     <div className={styles_modules.infoWrap}>
-      <section className={styles_modules.section}>
-        <div className={styles_modules.headlineRow}>
-          <FontAwesomeIcon icon={faInfoCircle} className={styles_modules.fas} />
-          <span>Club Information</span>
-        </div>
+      <section className={styles_modules.infoSection} aria-labelledby="club-information-heading">
+        <header className={styles_modules.infoHeader}>
+          <span className={styles_modules.infoEyebrow}>At a glance</span>
+          <h2 id="club-information-heading">Club information</h2>
+        </header>
 
-        <div className={styles_modules.infoGrid}>
-          <article className={styles_modules.infoTile}>
-            <h3>Meeting Day</h3>
-            <p>{meetingDay}</p>
-          </article>
-          <article className={styles_modules.infoTile}>
-            <h3>Meeting Time</h3>
-            <p>{meetingTime}</p>
-          </article>
-          <article className={styles_modules.infoTile}>
-            <h3>Repetition</h3>
-            <p>{cadence}</p>
-          </article>
-          <article className={styles_modules.infoTile}>
-            <h3>Location</h3>
-            <p>{locationLabel}</p>
-          </article>
-          <article className={styles_modules.infoTile}>
-            <h3>Teacher Advisor</h3>
-            <p>{club.teacherAdvisor ?? "Not provided"}</p>
-          </article>
-        </div>
+        <dl className={styles_modules.infoGrid}>
+          <div className={styles_modules.infoTile}>
+            <dt>Meeting day</dt>
+            <dd>{meetingDay}</dd>
+          </div>
+          <div className={styles_modules.infoTile}>
+            <dt>Meeting time</dt>
+            <dd>{meetingTime}</dd>
+          </div>
+          <div className={styles_modules.infoTile}>
+            <dt>Frequency</dt>
+            <dd>{cadence}</dd>
+          </div>
+          <div className={styles_modules.infoTile}>
+            <dt>Location</dt>
+            <dd>{locationLabel}</dd>
+          </div>
+          <div className={styles_modules.infoTile}>
+            <dt>Teacher advisor</dt>
+            <dd>{club.teacherAdvisor || "Not provided"}</dd>
+          </div>
+        </dl>
       </section>
     </div>
   );
@@ -313,7 +310,7 @@ async function ClubDetailContent({ params }: ClubPageProps) {
       <ClubHero clubId={clubId} />
       <ClubAbout clubId={clubId} />
 
-      <div className={`${styles_modules.divider} category_divider`}></div>
+      <div className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`} aria-hidden="true"></div>
       <ClubWhyJoin clubId={clubId} />
       <ClubInfo clubId={clubId} />
       <ClubApply clubId={clubId} />
