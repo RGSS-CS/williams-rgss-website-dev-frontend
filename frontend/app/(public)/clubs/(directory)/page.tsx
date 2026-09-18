@@ -1,12 +1,14 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import { getClubs } from "@/app/_lib/club";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import { getPageManagementSettings } from "@/app/_lib/page-management";
 import styles from "@/app/(public)/clubs/clubs.module.css";
-import ClubsFilterClient from "./clubsFilterClient";
-import { Suspense } from "react";
+import ClubsFilterClient from "../clubsFilterClient";
+import ClubsContentLoading from "../_components/clubsContentLoading";
 import PublicHeroLoading from "@/app/(public)/_components/publicHeroLoading";
+import { Suspense } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +31,7 @@ async function ClubsHero() {
 
       <div className='heroInner'>
         <div className='heroLeft'>
+          <SiteDirectories items={[{ label: "Clubs" }]} />
           <div className='heroTitle'>
             <h1>{pageManagement?.title}</h1>
             <h2>{pageManagement?.subtitle}</h2>
@@ -42,24 +45,6 @@ async function ClubsHero() {
             <FontAwesomeIcon icon={faSearch} className='searchContainerIcon' />
 
             <ClubsFilterClient clubs={clubs} searchOnly />
-          </div>
-
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className='statNum'>{clubs.length}</span>
-              <span className='statLabel'>Total Clubs</span>
-            </div>
-
-            <div className={styles.heroStat}>
-              <span className='statNum'>
-                {
-                  Array.from(new Set(clubs.flatMap((club) => club.categories).filter(Boolean)))
-                    .length
-                }
-              </span>
-
-              <span className='statLabel'>Categories</span>
-            </div>
           </div>
         </div>
       </div>
@@ -92,16 +77,12 @@ async function ClubsCta() {
 
 export default function ClubsPage() {
   return (
-    <main>
-      <Suspense fallback={<PublicHeroLoading search stats={2} />}>
+    <main className={styles.page}>
+      <Suspense fallback={<PublicHeroLoading breadcrumbs search />}>
         <ClubsHero />
       </Suspense>
-
-      <Suspense fallback={null}>
+      <Suspense fallback={<ClubsContentLoading />}>
         <ClubsExplorer />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <ClubsCta />
       </Suspense>
     </main>

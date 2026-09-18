@@ -8,11 +8,15 @@
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) repeat(var(--footer-link-columns, 3), minmax(0, 1fr));
     gap: 1rem;
     border-bottom: 1px solid var(--line);
     padding-bottom: 2rem;
     margin-bottom: 1.5rem;
+}
+
+.withoutSocialMedia {
+    --footer-link-columns: 2;
 }
 
 .footerCol h4 {
@@ -70,31 +74,6 @@
 .link:hover .footerLink,
 .link:hover button {
     color: var(--school-tertiary) !important;
-}
-
-.socialRow {
-    display: flex;
-    gap: 14px;
-    margin-top: 0.75rem;
-}
-
-.socialLink {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.65);
-    text-decoration: none;
-    transition: all 0.15s;
-    font-size: 0.9rem;
-}
-
-.socialLink:hover {
-    border-color: var(--school-tertiary);
-    color: var(--school-primary);
 }
 
 .footerBottom {

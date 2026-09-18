@@ -2,7 +2,7 @@ import styles from "./navbarSkeleton.module.css";
 
 export default function NavbarSkeleton() {
     return (
-        <div className={styles.navbarContainer}>
+        <div className={styles.navbarContainer} aria-busy="true" aria-label="Loading navigation">
             <nav className={styles.navbar}>
                 <div className={styles.headerContainer}>
                     <div className={styles.titleContainer}>

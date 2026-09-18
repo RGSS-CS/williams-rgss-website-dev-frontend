@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FilterDropdown from "@/app/(public)/_components/filterDropdown";
 import styles from "@/app/(public)/_styles/sections/filters.module.css";
 //ICONS
-import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faPalette, faHandsHelping, faRunning, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 
 const categorySections = [
     { key: "academic", icon: <FontAwesomeIcon icon={faBook} />, label: "Academic" },
@@ -13,17 +14,13 @@ const categorySections = [
 
 export default function GalleryFilterContent() {
     return (
-        <>
-            <span className={styles.filterLabel}>
-                <FontAwesomeIcon icon={faFilter} />
-                Filter
-            </span>
+        <FilterDropdown>
             {categorySections.map((section) => (
                 <button key={section.key} className={styles.filterChip} type="button">
                     {section.icon}
                     {section.label}
                 </button>
             ))}
-        </>
+        </FilterDropdown>
     );
 }

@@ -12,11 +12,6 @@
     padding: 1.5rem;
 }
 
-.lightboxOverlay:global(.open) {
-    opacity: 1;
-    pointer-events: all;
-}
-
 .lightboxInner {
     position: relative;
     max-width: 900px;
@@ -26,10 +21,6 @@
     gap: 1rem;
     transform: scale(0.94);
     transition: transform 0.25s;
-}
-
-.lightboxOverlay:global(.open) .lightboxInner {
-    transform: scale(1);
 }
 
 .lightboxImgContainer {

@@ -1,8 +1,5 @@
 import {
     Montserrat,
-    Jost,
-    Space_Grotesk,
-    Figtree,
     IBM_Plex_Sans,
     Quicksand
 } from "next/font/google";
@@ -48,25 +45,10 @@ async function getThemeVariables(): Promise<React.CSSProperties> {
 const montserrat = Montserrat({
     subsets: ["latin"],
     variable: "--font-montserrat",
+    // Load heading text early and avoid flashing a fallback font while it loads.
+    preload: true,
+    display: "block",
     weight: ["400", "600", "700", "800"],
-});
-
-const jost = Jost({
-    subsets: ["latin"],
-    variable: "--font-jost",
-    weight: ["400", "600", "700"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-    subsets: ["latin"],
-    variable: "--font-space-grotesk",
-    weight: ["400", "500", "600", "700"],
-});
-
-const figtree = Figtree({
-    subsets: ["latin"],
-    variable: "--font-figtree",
-    weight: ["400", "500", "600", "700"],
 });
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -78,6 +60,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 const quicksand = Quicksand({
     subsets: ["latin"],
     variable: "--font-quicksand",
+    preload: false,
     weight: ["400", "500", "600", "700"],
 });
 
@@ -105,7 +88,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <html
             lang='en'
-            className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+            className={`${montserrat.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
             style={themeStyle}
         >
             <head></head>
@@ -117,14 +100,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     schoolName={management?.schoolName}
                     captchaEndpoint={process.env.CAPTCHA_URL}
                 >
-                    <div className='notOfficalContainer'>
-                        <div className='notOffcial'>
-                            <h1>
-                                This website is currently not officially associated with Dr. GW Williams S.S or
-                                Richmond Green S.S
-                            </h1>
-                        </div>
-                    </div>
                     {children}
                 </EntryCaptchaGate>
             </body>

@@ -69,9 +69,7 @@
     margin-bottom: 0.85rem;
 }
 
-.cardIcon,
-.infoIcon,
-.contactIcon {
+.cardIcon {
     width: 44px;
     height: 44px;
     border-radius: 14px;

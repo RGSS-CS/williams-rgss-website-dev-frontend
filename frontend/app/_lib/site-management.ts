@@ -1,7 +1,7 @@
 "use server";
 
 import { cacheLife, cacheTag } from "next/cache";
-import { toPublicMediaUrl } from "./media-url";
+import { toPublicMediaUrl } from "../_utils/media-url";
 
 export type SchoolLocationApiRecord = {
     location: string;

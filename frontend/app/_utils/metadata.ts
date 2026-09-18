@@ -1,5 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { getManagementSettings } from "../_lib/site-management";
+import { getStucoSettings } from "../_lib/stuco-settings";
 
 export async function getSiteMetadata(pageTitle?: string) {
     "use cache";
@@ -7,8 +8,10 @@ export async function getSiteMetadata(pageTitle?: string) {
     cacheTag('management');
 
     const management = await getManagementSettings();
+    const stuco = await getStucoSettings();
+    
     const schoolName = management?.schoolName;
-    const councilName = management?.councilName;
+    const councilName = stuco?.councilName;
 
     const siteTitle = `${schoolName} ${councilName}`.trim();
 

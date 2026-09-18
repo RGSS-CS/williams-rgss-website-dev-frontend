@@ -1,12 +1,10 @@
+import SiteDirectories from "@/app/_components/siteDirectories";
 import Image from "next/image";
-import { Suspense } from "react";
+import { Suspense, type CSSProperties } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import {
   Montserrat,
-  Jost,
-  Space_Grotesk,
-  Figtree,
   IBM_Plex_Sans,
   Quicksand,
 } from "next/font/google";
@@ -32,25 +30,8 @@ export const metadata: Metadata = {
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
+  preload: false,
   weight: ["400", "600", "700", "800"],
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  variable: "--font-jost",
-  weight: ["400", "600", "700"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["400", "500", "600", "700"],
-});
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
-  weight: ["400", "500", "600", "700"],
 });
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -62,6 +43,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 const quicksand = Quicksand({
   subsets: ["latin"],
   variable: "--font-quicksand",
+  preload: false,
   weight: ["400", "500", "600", "700"],
 });
 
@@ -77,22 +59,22 @@ function safeHex(value: string | null | undefined, fallback: string): string {
   return value && HEX_PATTERN.test(value) ? value : fallback;
 }
 
-async function getThemeStyle(): Promise<string> {
-  const management = await getManagementSettings();
-
+function getThemeStyle(
+  management: Awaited<ReturnType<typeof getManagementSettings>>
+): CSSProperties & Record<`--${string}`, string> {
   const primary = safeHex(management?.schoolPrimaryColor, FALLBACK_COLORS.primary);
   const secondary = safeHex(management?.schoolSecondaryColor, FALLBACK_COLORS.secondary);
   const tertiary = safeHex(management?.schoolTertiaryColor, FALLBACK_COLORS.tertiary);
   const primaryLight = darkenHex(primary, -20);
   const tertiaryDark = darkenHex(tertiary, 20);
 
-  return `:root {
-    --school-primary: ${primary};
-    --school-primary-light: ${primaryLight};
-    --school-secondary: ${secondary};
-    --school-tertiary: ${tertiary};
-    --school-tertiary-dark: ${tertiaryDark};
-  }`;
+  return {
+    "--school-primary": primary,
+    "--school-primary-light": primaryLight,
+    "--school-secondary": secondary,
+    "--school-tertiary": tertiary,
+    "--school-tertiary-dark": tertiaryDark,
+  };
 }
 
 async function NavbarSlot({
@@ -107,22 +89,23 @@ export default async function NotFound() {
   const management = await getManagementSettings();
   if (!management) return null;
   const schoolYear = await getSchoolYear();
-  const themeStyle = await getThemeStyle();
+  const themeStyle = getThemeStyle(management);
   return (
     <html
       lang='en'
-      className={`${montserrat.variable} ${jost.variable} ${spaceGrotesk.variable} ${figtree.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+      className={`${montserrat.variable} ${ibmPlexSans.variable} ${quicksand.variable}`}
+      style={themeStyle}
     >
       <head>
         <meta charSet='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
-        <style id='school-theme' dangerouslySetInnerHTML={{ __html: themeStyle }} />
       </head>
       <body>
         <Suspense fallback={<NavbarSkeleton />}>
           <NavbarSlot management={management} />
         </Suspense>
         <div className={styles.content}>
+          <SiteDirectories items={[{ label: "Page not found" }]} />
           <div className={styles.gifStage}>
             <div className={styles.overlay404}>
               <div className={styles.num404}>

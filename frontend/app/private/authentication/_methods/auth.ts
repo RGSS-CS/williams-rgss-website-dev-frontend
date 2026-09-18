@@ -202,7 +202,7 @@ export async function signin(_prevState: SigninState, formData: FormData): Promi
 
     if (!response.ok || !body.access || !body.refresh) {
         return {
-            error: body.detail ?? `Sign in failed (status ${response.status}). Please try again.`,
+            error: body.detail ?? `Account Not Found. Please try again.`,
         };
     }
 

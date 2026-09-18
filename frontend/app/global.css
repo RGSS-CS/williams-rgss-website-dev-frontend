@@ -33,7 +33,7 @@ main {
 }
 
 h1 {
-	font-family: "Montserrat", sans-serif;
+	font-family: var(--font-montserrat), sans-serif;
 }
 
 h2 {
@@ -50,25 +50,9 @@ h4 {
 
 h5 {
 	/* SPECIAL FONT */
-	font-family: "quicksand", sans-serif;
+	font-family: var(--font-quicksand), sans-serif;
 }
 
 p {
 	font-family: "Acumin variable", sans-serif;
-}
-
-.notOffcial {
-	color: red;
-	width:70%;
-	text-align: center;
-	margin: 0 auto;
-	background: black;
-	font-size: 14px;
-}
-
-.notOfficalContainer {
-	position: fixed;
-	bottom:0;
-	width: 100%;
-	z-index: 10000;
 }

@@ -127,11 +127,6 @@
     text-decoration: none;
 }
 
-.btnHome {
-    background: var(--school-tertiary);
-    color: var(--school-primary);
-}
-
 .btnBack {
     background: var(--grey);
     color: var(--black);
@@ -143,5 +138,3 @@
     height: 1em;
     flex: 0 0 1em;
 }
-
-.btnHome:hover { background: var(--school-tertiary-dark); }

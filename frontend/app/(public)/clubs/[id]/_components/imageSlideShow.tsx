@@ -1,31 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import type { Gallery } from "@/app/_lib/club";
+import type { GalleryPhoto } from "@/app/_lib/gallery-photos";
 import styles from "@/app/(public)/clubs/[id]/club-detail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 type ClubSlideShowProps = {
-  gallery?: Gallery | null;
+  photos: GalleryPhoto[];
 };
 
-export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
-  const photos = gallery?.photos ?? [];
+export default function ClubSlideshow({ photos }: ClubSlideShowProps) {
   const [current, setCurrent] = useState(0);
 
   if (photos.length === 0) {
     return null;
   }
 
-  const photo = photos[current];
+  const activeIndex = current % photos.length;
+  const photo = photos[activeIndex];
 
   const previous = () => {
-    setCurrent((current) => (current === 0 ? photos.length - 1 : current - 1));
+    setCurrent((current) => (current % photos.length + photos.length - 1) % photos.length);
   };
 
   const next = () => {
-    setCurrent((current) => (current === photos.length - 1 ? 0 : current + 1));
+    setCurrent((current) => (current + 1) % photos.length);
   };
 
   return (
@@ -33,13 +33,13 @@ export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
       <div className={styles.imgContainerMain}>
         {photos.map((p, index) => (
           <img
-            key={p.id}
+            key={`${p.club}-${p.image}-${p.createdDate}`}
             src={p.image}
-            alt={p.caption || p.title}
+            alt={p.description || p.name}
             className={styles.img}
             style={{
-              opacity: index === current ? 1 : 0,
-              pointerEvents: index === current ? "auto" : "none",
+              opacity: index === activeIndex ? 1 : 0,
+              pointerEvents: index === activeIndex ? "auto" : "none",
             }}
             loading={index === 0 ? "eager" : "lazy"}
           />
@@ -66,7 +66,7 @@ export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
         )}
 
         <div className={styles.counter}>
-          {current + 1} / {photos.length}
+          {activeIndex + 1} / {photos.length}
         </div>
       </div>
 
@@ -74,18 +74,18 @@ export default function ClubSlideshow({ gallery }: ClubSlideShowProps) {
         <div className={styles.dots}>
           {photos.map((photo, index) => (
             <button
-              key={photo.id}
+              key={`${photo.club}-${photo.image}-${photo.createdDate}`}
               type='button'
-              className={`${styles.dot}${index === current ? styles.dots_active : ""}`}
+              className={`${styles.dot} ${index === activeIndex ? styles.dots_active : ""}`}
               onClick={() => setCurrent(index)}
               aria-label={`Show image ${index + 1}`}
-              aria-current={index === current}
+              aria-current={index === activeIndex}
             />
           ))}
         </div>
       )}
 
-      {photo.caption && <p className={styles.caption}>{photo.caption}</p>}
+      {photo.description && <p className={styles.caption}>{photo.description}</p>}
     </div>
   );
 }

@@ -1,9 +1,3 @@
-.authPage {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .authContent {
   flex: 1;
   display: flex;
@@ -37,7 +31,6 @@
   position: relative;
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 1.125rem;
   box-shadow: 0 4px 32px rgb(0 0 0 / 7%);
 }
 
@@ -180,6 +173,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   width: auto;
+  border-left: #b91c1c solid 4px;
 }
 
 .authCaptcha {
