@@ -17,7 +17,6 @@ export type PageManagement = {
 };
 
 export type SitesApiResponse = PageManagementApiRecord[];
-export type SitesResponse = PageManagement[];
 
 function getPageManagementApiUrl() {
     const apiBaseUrl = process.env.API_URL || "http://backend:8000";
