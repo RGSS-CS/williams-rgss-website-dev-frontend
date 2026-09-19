@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX, useDeferredValue, useMemo, useState, useSyncExternalStore } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import type { Club } from "@/app/_lib/club";
 
@@ -171,7 +171,6 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     getHydratedSnapshot,
     getServerHydratedSnapshot
   );
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamString = searchParams.toString();
 
@@ -216,7 +215,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     category?: string | null;
     day?: string | null;
   }) => {
-    const params = new URLSearchParams(searchParamString);
+    const params = new URLSearchParams(window.location.search);
 
     if (partial.q !== undefined) {
       if (partial.q) {
@@ -246,7 +245,9 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
 
     const url = queryString ? `/clubs?${queryString}` : "/clubs";
 
-    router.replace(url, { scroll: false });
+    // Keep filtering the loaded clubs without a server navigation and refetch.
+    // Next.js syncs history updates with useSearchParams in both filter instances.
+    window.history.replaceState(null, "", `${url}${window.location.hash}`);
 
     setFilters((currentFilters) => ({
       query: partial.q !== undefined ? partial.q ?? "" : currentFilters.query,
