@@ -1,7 +1,9 @@
 "use client";
 import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey, faUser } from "@fortawesome/free-solid-svg-icons";
 import { signup, SignupState } from "@/app/private/authentication/_methods/auth";
 import Captcha from "@/app/_components/captcha";
 
@@ -57,6 +59,7 @@ function PasswordField({ id, label, value, onChange }: FieldProps & { id: string
 }
 
 export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }: SignupFormClientProps) {
+    const router = useRouter();
     const [state, formAction, isPending] = useActionState(signup, initialState);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -64,9 +67,22 @@ export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }:
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const handleBack = () => {
+        if (window.history.length > 1) {
+            router.back();
+            return;
+        }
+        router.push("/");
+    };
+
     return (
         <form action={formAction}>
             <div className="authCard">
+                <Breadcrumbs tone="dark" items={[{ label: "Authentication", href: "/private/authentication" }, { label: "Register" }]} />
+                <button type="button" className="authBackButton" onClick={handleBack} aria-label="Go back">
+                    <FontAwesomeIcon icon={faArrowLeft} className="authIcon" />
+                    Go Back
+                </button>
                 <div className="authCardHeader">
                     <h1>Register Now</h1>
                     <p>Sign up for easy access to all features</p>

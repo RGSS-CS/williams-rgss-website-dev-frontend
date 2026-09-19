@@ -1,8 +1,8 @@
-import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { redirect } from 'next/navigation';
 import { getManagementSettings } from '@/app/_lib/site-management';
 import { isCaptchaEnabledFor } from '@/app/_utils/checkCaptchaEnabled';
-import RegisterGate from '@/app/private/authentication/register/_utils/verifyCode';
+import { verifyCode } from '@/app/private/authentication/register/_utils/verifyCode';
+import SignupFormClient from './[api]/_components/signupForm';
 import { decodeVerifiedRegistrationCode } from '@/app/_lib/registration-code';
 export const instant = false;
 
@@ -18,18 +18,22 @@ export default async function RegisterRedirectClient({ searchParams }: RegisterE
         redirect('/private/authentication?error=missing_code');
     }
 
-    const management = await getManagementSettings();
+    const [management, isValid] = await Promise.all([
+        getManagementSettings(),
+        verifyCode(code),
+    ]);
+
+    if (!isValid) {
+        redirect('/private/authentication?error=invalid_code');
+    }
 
     return (
-        <main className='registrationPage'>
-            <div className='registrationShell'>
-                <Breadcrumbs items={[{ label: "Authentication", href: "/private/authentication" }, { label: "Register" }]} />
-                <RegisterGate
-                    code={code}
-                    showCaptcha={isCaptchaEnabledFor(management, 'REGISTER')}
-                    captchaEndpoint={process.env.CAPTCHA_URL}
-                />
-            </div>
+        <main className='authBody'>
+            <SignupFormClient
+                code={code}
+                showCaptcha={isCaptchaEnabledFor(management, 'REGISTER')}
+                captchaEndpoint={process.env.CAPTCHA_URL}
+            />
         </main>
     );
 }
