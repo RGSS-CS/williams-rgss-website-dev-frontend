@@ -94,6 +94,44 @@ function clearAuthCookies(requestHeaders: Headers): NextResponse {
 }
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
+    const pathname = request.nextUrl.pathname;
+    // Keep the offline page, service worker, assets, and backend cache hook reachable.
+    const bypassMaintenance = pathname === "/offline.html"
+        || pathname === "/sw.js"
+        || pathname === "/console/revalidate"
+        || pathname.startsWith("/images/");
+
+    if (!bypassMaintenance) {
+        try {
+            const settingsResponse = await fetch(
+                new URL("/api/management/site-settings/?format=json", getApiBaseUrl()),
+                {
+                    headers: { Accept: "application/json" },
+                    cache: "no-store",
+                    signal: AbortSignal.timeout(5_000),
+                },
+            );
+
+            if (settingsResponse.ok) {
+                const settings: unknown = await settingsResponse.json();
+                if (Array.isArray(settings) && settings[0]?.maintainance_mode === true) {
+                    const offlineUrl = request.nextUrl.clone();
+                    offlineUrl.pathname = "/offline.html";
+                    offlineUrl.search = "";
+                    return NextResponse.rewrite(offlineUrl, {
+                        status: 503,
+                        headers: {
+                            "Cache-Control": "no-store",
+                            "Retry-After": "60",
+                        },
+                    });
+                }
+            }
+        } catch {
+            // Only an explicit true enables maintenance; transient API failures do not.
+        }
+    }
+
     const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
     const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
 
