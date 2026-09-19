@@ -1,11 +1,11 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import styles from "./credits.module.css";
 
 export default function Credits() {
   return (
     <section className={styles.sectionWrap}>
       <div className={styles.sectionContent}>
-        <SiteDirectories tone="dark" items={[{ label: "About", href: "/about" }, { label: "Site Credits" }]} />
+        <Breadcrumbs tone="dark" items={[{ label: "About", href: "/about" }, { label: "Site Credits" }]} />
         <div className={styles.sectionTitleRow}>
           <h2 className={styles.sectionTitle}>Site Credits</h2>
         </div>

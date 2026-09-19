@@ -1,6 +1,6 @@
 "use client";
 
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 
 import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
@@ -46,7 +46,7 @@ export default function LoginForm({
     <div className='authBody'>
       <form action={formAction}>
         <div className='authCard'>
-          <SiteDirectories tone="dark" items={[{ label: "Authentication" }]} />
+          <Breadcrumbs tone="dark" items={[{ label: "Authentication" }]} />
           <button
             type='button'
             className='authBackButton'

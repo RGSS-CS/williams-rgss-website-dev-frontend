@@ -1,4 +1,4 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import styles from './about.module.css';
 import { Metadata } from 'next';
 import { getSiteMetadata } from '@/app/_utils/metadata';
@@ -18,7 +18,7 @@ async function AboutHero() {
             <div className="heroShape"></div>
             <div className="heroInner">
                 <div className="heroLeft">
-                    <SiteDirectories items={[{ label: "About" }]} />
+                    <Breadcrumbs items={[{ label: "About" }]} />
                     <div className="heroTitle">
                         <h1>{pageManagement?.title}</h1>
                         <h2>{pageManagement?.subtitle}</h2>

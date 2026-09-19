@@ -1,4 +1,4 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
 import styles from "./dashboard.module.css";
@@ -29,7 +29,7 @@ export default async function ExecDashboard() {
                     </div>
                 </header>
                 <div className={styles.content}>
-                    <SiteDirectories tone="dark" items={[{ label: "Dashboard" }]} />
+                    <Breadcrumbs tone="dark" items={[{ label: "Dashboard" }]} />
                     <div className={styles.headerContent}>
                         <h2>Overview</h2>
                     </div>
