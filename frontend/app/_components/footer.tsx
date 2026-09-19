@@ -11,161 +11,170 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 type ManagementProps = {
-    management: Management | null;
-    schoolYear: string;
+  management: Management | null;
+  schoolYear: string;
 };
 
 const socialMediaDetails = {
-    IG: { title: "Instagram", icon: faInstagram },
-    YT: { title: "YouTube", icon: faYoutube },
-    LI: { title: "LinkedIn", icon: faLinkedin },
-    OT: { title: "Other", icon: faGlobe },
+  IG: { title: "Instagram", icon: faInstagram },
+  YT: { title: "YouTube", icon: faYoutube },
+  LI: { title: "LinkedIn", icon: faLinkedin },
+  OT: { title: "Other", icon: faGlobe },
 } as const;
 
 export default function Footer({ management, schoolYear }: ManagementProps) {
-    const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
-    const [mapsUrl, displayAddress] = SchoolLocation({ management });
-    const hasSocialMedia = (management?.socialMedia.length ?? 0) > 0;
+  const [copyStatus, copiedText, copyToClipboard] = useCopyToClipboard();
+  const [mapsUrl, displayAddress] = SchoolLocation({ management });
+  const hasSocialMedia = (management?.socialMedia.length ?? 0) > 0;
 
-    const handleCopy = async (text: string) => {
-        await copyToClipboard(text);
-    };
+  const handleCopy = async (text: string) => {
+    await copyToClipboard(text);
+  };
 
-    return (
-        <footer className={styles.siteFooter}>
-            <div className={`${styles.footerInner} ${hasSocialMedia ? "" : styles.withoutSocialMedia}`}>
-                <div className={styles.footerCol}>
-                    <h4>School Info</h4>
-                    <div className={styles.link}>
-                        <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
-                        {mapsUrl ? (
-                            <>
-                                <Link
-                                    href={mapsUrl}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={`${styles.footerLink} ${styles.desktopOnly}`}
-                                >
-                                    {displayAddress}
-                                </Link>
-                                <Link
-                                    href={mapsUrl}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={`${styles.footerLink} ${styles.mobileOnly}`}
-                                >
-                                    Open In Google Maps
-                                </Link>
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                    </div>
+  return (
+    <footer className={styles.siteFooter}>
+      <div className={`${styles.footerInner} ${hasSocialMedia ? "" : styles.withoutSocialMedia}`}>
+        <div className={styles.footerCol}>
+          <h4>School Info</h4>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faLocationDot} className={styles.fas} />
+            {mapsUrl ? (
+              <>
+                <Link
+                  href={mapsUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={`${styles.footerLink} ${styles.desktopOnly}`}
+                >
+                  {displayAddress}
+                </Link>
+                <Link
+                  href={mapsUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={`${styles.footerLink} ${styles.mobileOnly}`}
+                >
+                  Open In Google Maps
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
 
-                    <div className={styles.link}>
-                        <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
-                        <Link
-                            href={`mailto:${management?.schoolEmail}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className={styles.footerLink}
-                        >
-                            {management?.schoolEmail}
-                        </Link>
-                    </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faEnvelope} className={styles.fas} />
+            <Link
+              href={`mailto:${management?.schoolEmail}`}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.footerLink}
+            >
+              {management?.schoolEmail}
+            </Link>
+          </div>
 
-                    <div className={styles.link}>
-                        <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-                        <button
-                            type='button'
-                            className={styles.desktopOnly}
-                            onClick={() => handleCopy(management?.schoolPhone || "")}
-                        >
-                            {copyStatus === "success" ? `Copied: ${copiedText}` : management?.schoolPhone}
-                            {copyStatus === "error" && <p>Failed to copy.</p>}
-                        </button>
-                        <Link
-                            className={`${styles.footerLink} ${styles.mobileOnly}`}
-                            href={`tel:${management?.schoolPhone?.replace(/\D/g, "")}`}
-                        >
-                            {management?.schoolPhone}
-                        </Link>
-                    </div>
-                </div>
+          <div className={styles.link}>
+            <FontAwesomeIcon icon={faPhone} className={styles.fas} />
+            <button
+              type='button'
+              className={styles.desktopOnly}
+              onClick={() => handleCopy(management?.schoolPhone || "")}
+            >
+              {copyStatus === "success" ? `Copied: ${copiedText}` : management?.schoolPhone}
+              {copyStatus === "error" && <p>Failed to copy.</p>}
+            </button>
+            <Link
+              className={`${styles.footerLink} ${styles.mobileOnly}`}
+              href={`tel:${management?.schoolPhone?.replace(/\D/g, "")}`}
+            >
+              {management?.schoolPhone}
+            </Link>
+          </div>
+        </div>
 
-                {hasSocialMedia && (
-                    <div className={styles.footerCol}>
-                        <h4>Follow Us</h4>
-                        {management?.socialMedia.map((socialMedia) => {
-                            const details = socialMediaDetails[socialMedia.socialType];
-                            const title = socialMedia.title ?? details.title;
+        {hasSocialMedia && (
+          <div className={styles.footerCol}>
+            <h4>Follow Us</h4>
+            {management?.socialMedia.map((socialMedia) => {
+              const details = socialMediaDetails[socialMedia.socialType];
+              const title = socialMedia.title ?? details.title;
 
-                            return (
-                                <Link
-                                    key={`${socialMedia.socialType}-${socialMedia.link}`}
-                                    href={socialMedia.link}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={`${styles.footerLink} ${styles.socialFooterLink}`}
-                                    title={title}
-                                    aria-label={title}
-                                >
-                                    <FontAwesomeIcon icon={details.icon} aria-hidden />
-                                    {title}
-                                </Link>
-                            );
-                        })}
-                    </div>
-                )}
-                <div className={styles.footerCol}>
-                    <h4>More</h4>
-                    <Link href='/about/credits' className={styles.footerLink} prefetch={false}>
-                        Site Credits
-                    </Link>
-                    <Link
-                        href='https://github.com/RGSS-CS/williams-rgss-website-dev-frontend'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className={styles.footerLink}
-                    >
-                        Github
-                    </Link>
-                </div>
-                <div className={styles.footerCol}>
-                    <h4>Legal</h4>
-                    <Link href='' target='_blank' rel='noopener nofeferrer' className={styles.footerLink}>
-                        Privacy Policy
-                    </Link>
-                    <Link href='' target='_blank' rel='noopener nofeferrer' className={styles.footerLink}>
-                        Terms of Service
-                    </Link>
-                    <Link
-                        href='https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/LICENSE'
-                        target='_blank'
-                        rel='noopener nofeferrer'
-                        className={styles.footerLink}
-                    >
-                        License
-                    </Link>
-                    <Link
-                        href='https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/OSS-LICENSES.md'
-                        target='_blank'
-                        rel='noopener nofeferrer'
-                        className={styles.footerLink}
-                    >
-                        OSS-License
-                    </Link>
-                </div>
-            </div>
-            <div className={styles.footerBottom}>
-                <span>
-                    {management?.schoolName} {management?.councilName} {schoolYear ?? ""}
-                </span>
-                <span>
-                    &copy; {schoolYear ?? ""} {management?.schoolName} {management?.councilName}. All rights
-                    reserved.
-                </span>
-            </div>
-        </footer>
-    );
+              return (
+                <Link
+                  key={`${socialMedia.socialType}-${socialMedia.link}`}
+                  href={socialMedia.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={`${styles.footerLink} ${styles.socialFooterLink}`}
+                  title={title}
+                  aria-label={title}
+                >
+                  <FontAwesomeIcon icon={details.icon} aria-hidden />
+                  {title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        <div className={styles.footerCol}>
+          <h4>More</h4>
+          <Link href='/about/credits' className={styles.footerLink} prefetch={false}>
+            Site Credits
+          </Link>
+          <Link
+            href='https://github.com/RGSS-CS/williams-rgss-website-dev-frontend'
+            target='_blank'
+            rel='noopener noreferrer'
+            className={styles.footerLink}
+          >
+            Github
+          </Link>
+          <Link
+            href='https://github.com/GWW-RGSS/issues/issues/new/choose'
+            target='_blank'
+            rel='noopener noreferrer'
+            className={styles.footerLink}
+          >
+            Report an Issue
+          </Link>
+        </div>
+
+        <div className={styles.footerCol}>
+          <h4>Legal</h4>
+          <Link href='' target='_blank' rel='noopener nofeferrer' className={styles.footerLink}>
+            Privacy Policy
+          </Link>
+          <Link href='' target='_blank' rel='noopener nofeferrer' className={styles.footerLink}>
+            Terms of Service
+          </Link>
+          <Link
+            href='https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/LICENSE'
+            target='_blank'
+            rel='noopener nofeferrer'
+            className={styles.footerLink}
+          >
+            License
+          </Link>
+          <Link
+            href='https://raw.githubusercontent.com/RGSS-CS/williams-rgss-website-dev-frontend/refs/heads/main/OSS-LICENSES.md'
+            target='_blank'
+            rel='noopener nofeferrer'
+            className={styles.footerLink}
+          >
+            OSS-License
+          </Link>
+        </div>
+      </div>
+      <div className={styles.footerBottom}>
+        <span>
+          {management?.schoolName} {management?.councilName} {schoolYear ?? ""}
+        </span>
+        <span>
+          &copy; {schoolYear ?? ""} {management?.schoolName} {management?.councilName}. All rights
+          reserved.
+        </span>
+      </div>
+    </footer>
+  );
 }
