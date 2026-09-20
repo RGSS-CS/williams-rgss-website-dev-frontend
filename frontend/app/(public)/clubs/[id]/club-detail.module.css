@@ -99,13 +99,6 @@
   white-space: pre-line;
 }
 
-.badgeRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.9rem;
-  margin-top: 1.75rem;
-}
-
 .imgContainer {
   width: 100%;
   padding: 20px;
