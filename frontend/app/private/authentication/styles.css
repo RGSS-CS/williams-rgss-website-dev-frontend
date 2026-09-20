@@ -81,11 +81,6 @@
   pointer-events: none;
 }
 
-.warning {
-  color: red;
-  font-size: 12px;
-}
-
 .authInputWrap input {
   width: 100%;
   box-sizing: border-box;
