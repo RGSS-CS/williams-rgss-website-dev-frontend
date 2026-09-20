@@ -1,7 +1,9 @@
 "use client";
 import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRightToBracket, faEnvelope, faEye, faEyeSlash, faKey, faUser } from "@fortawesome/free-solid-svg-icons";
 import { signup, SignupState } from "@/app/private/authentication/_methods/auth";
 import Captcha from "@/app/_components/captcha";
 
@@ -57,6 +59,7 @@ function PasswordField({ id, label, value, onChange }: FieldProps & { id: string
 }
 
 export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }: SignupFormClientProps) {
+    const router = useRouter();
     const [state, formAction, isPending] = useActionState(signup, initialState);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -64,9 +67,22 @@ export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }:
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const handleBack = () => {
+        if (window.history.length > 1) {
+            router.back();
+            return;
+        }
+        router.push("/");
+    };
+
     return (
         <form action={formAction}>
             <div className="authCard">
+                <Breadcrumbs tone="dark" items={[{ label: "Authentication", href: "/private/authentication" }, { label: "Register" }]} />
+                <button type="button" className="authBackButton" onClick={handleBack} aria-label="Go back">
+                    <FontAwesomeIcon icon={faArrowLeft} className="authIcon" />
+                    Go Back
+                </button>
                 <div className="authCardHeader">
                     <h1>Register Now</h1>
                     <p>Sign up for easy access to all features</p>
@@ -78,7 +94,6 @@ export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }:
                 <TextField id="first_name" label="Name" placeholder="First Name" autoComplete="given-name" value={firstName} onChange={setFirstName} icon={faUser} />
                 <TextField id="last_name" label="" placeholder="Last Name" autoComplete="family-name" value={lastName} onChange={setLastName} icon={faUser} />
                 <TextField id="email" label="Email (Student)" type="email" placeholder="Email" autoComplete="email" value={email} onChange={setEmail} icon={faEnvelope} />
-                <span className="warning"><h4><strong>DO NOT USE YOUR SCHOOL PASSWORD</strong></h4></span>
                 <PasswordField id="password" label="Password" value={password} onChange={setPassword} />
                 <PasswordField id="confirm_password" label="Confirm Password" value={confirmPassword} onChange={setConfirmPassword} />
                 {showCaptcha && <Captcha endpoint={captchaEndpoint} />}

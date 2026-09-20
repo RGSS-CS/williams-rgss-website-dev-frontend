@@ -1,4 +1,4 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { redirect } from "next/navigation";
 import { getClubById } from "@/app/_lib/club";
 import { getGalleryPhotos } from "@/app/_lib/gallery-photos";
@@ -80,7 +80,7 @@ async function ClubHero({ clubId }: { clubId: number }) {
       <div className='heroShape'></div>
       <div className='heroInner'>
         <div className='heroLeft'>
-          <SiteDirectories items={[{ label: "Clubs", href: "/clubs" }, { label: club.name }]} />
+          <Breadcrumbs items={[{ label: "Clubs", href: "/clubs" }, { label: club.name }]} />
           <div className={`heroTitle ${styles_modules.heroTitle}`}>
             <h1>{club.name}</h1>
           </div>
