@@ -133,7 +133,7 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <ClubSlideshow key={clubId} photos={photos} />
           ) : (
             <span className={styles_modules.loginWarn}>
-              <h3>You must be signed in to view this media</h3>
+              <h3>You must be signed in to view this item</h3>
             </span>
           )}
         </div>
@@ -199,7 +199,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
   if (!accessToken) {
     return (
       <div id='join-club' className={styles_modules.loginWarn}>
-        <h3>You must be signed in to view this media</h3>
+        <h3>You must be signed in to view this item</h3>
       </div>
     );
   }
