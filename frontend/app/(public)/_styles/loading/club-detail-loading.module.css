@@ -73,17 +73,8 @@
 .loadingEyebrow,
 .loadingSectionTitle,
 .loadingSectionBody span,
-.loadingHeadlineIcon,
-.loadingHeadlineText,
-.loadingTileIcon,
 .loadingTileTitle,
-.loadingTileText,
-.loadingApplyEyebrow,
-.loadingApplyTitle,
-.loadingApplyText,
-.loadingApplyRow,
-.loadingApplyCode,
-.loadingApplyButton {
+.loadingTileText {
   overflow: hidden;
   position: relative;
   display: block;
@@ -96,9 +87,6 @@
 .loadingEyebrow,
 .loadingSectionTitle,
 .loadingSectionBody span,
-.loadingHeadlineIcon,
-.loadingHeadlineText,
-.loadingTileIcon,
 .loadingTileTitle,
 .loadingTileText {
   background: #e7edf4;
@@ -106,35 +94,18 @@
 
 .loadingBreadcrumbs span,
 .loadingHeroTitle span,
-.loadingHeroSubtitle span,
-.loadingHeroButton,
-.loadingApplyEyebrow,
-.loadingApplyTitle,
-.loadingApplyText,
-.loadingApplyRow,
-.loadingApplyCode,
-.loadingApplyButton {
+.loadingHeroSubtitle span {
   background: rgba(255, 255, 255, 0.18);
 }
 
 .loadingBreadcrumbs span::after,
 .loadingHeroTitle span::after,
 .loadingHeroSubtitle span::after,
-.loadingHeroButton::after,
 .loadingEyebrow::after,
 .loadingSectionTitle::after,
 .loadingSectionBody span::after,
-.loadingHeadlineIcon::after,
-.loadingHeadlineText::after,
-.loadingTileIcon::after,
 .loadingTileTitle::after,
-.loadingTileText::after,
-.loadingApplyEyebrow::after,
-.loadingApplyTitle::after,
-.loadingApplyText::after,
-.loadingApplyRow::after,
-.loadingApplyCode::after,
-.loadingApplyButton::after {
+.loadingTileText::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -190,16 +161,6 @@
   width: min(72%, 420px);
 }
 
-.loadingHeroButton {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  width: 9rem;
-  height: 2.9rem;
-  border-radius: 999px;
-  background: rgba(219, 152, 32, 0.65);
-}
-
 .loadingEyebrow {
   width: 6.5rem;
   height: 1.55rem;
@@ -234,29 +195,6 @@
   width: 68%;
 }
 
-.loadingAboutVisual {
-  background: #d9e4ef;
-  position: relative;
-}
-
-.loadingHeadlineIcon {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  flex-shrink: 0;
-}
-
-.loadingHeadlineText {
-  width: min(66vw, 360px);
-  height: clamp(2rem, 4vw, 2.5rem);
-}
-
-.loadingTileIcon {
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 12px;
-}
-
 .loadingTileTitle {
   width: 65%;
   height: 1.25rem;
@@ -269,39 +207,6 @@
   margin-top: 0.75rem;
 }
 
-.loadingApplyEyebrow {
-  width: 7rem;
-  height: 0.75rem;
-  margin-bottom: 0.55rem;
-}
-
-.loadingApplyTitle {
-  width: min(80%, 290px);
-  height: clamp(2rem, 4vw, 3rem);
-}
-
-.loadingApplyText {
-  width: min(100%, 430px);
-  height: 1rem;
-  margin-top: 1rem;
-}
-
-.loadingApplyRow {
-  height: 4.2rem;
-  border-radius: 14px;
-}
-
-.loadingApplyCode {
-  height: 3.6rem;
-  border-radius: 16px;
-}
-
-.loadingApplyButton {
-  height: 3.1rem;
-  border-radius: 14px;
-  background: rgba(219, 152, 32, 0.72);
-}
-
 @keyframes skeletonShimmer {
   100% {
     transform: translateX(100%);
@@ -312,21 +217,11 @@
   .loadingBreadcrumbs span::after,
   .loadingHeroTitle span::after,
   .loadingHeroSubtitle span::after,
-  .loadingHeroButton::after,
   .loadingEyebrow::after,
   .loadingSectionTitle::after,
   .loadingSectionBody span::after,
-  .loadingHeadlineIcon::after,
-  .loadingHeadlineText::after,
-  .loadingTileIcon::after,
   .loadingTileTitle::after,
-  .loadingTileText::after,
-  .loadingApplyEyebrow::after,
-  .loadingApplyTitle::after,
-  .loadingApplyText::after,
-  .loadingApplyRow::after,
-  .loadingApplyCode::after,
-  .loadingApplyButton::after {
+  .loadingTileText::after {
     animation: none;
   }
 }
