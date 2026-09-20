@@ -16,7 +16,6 @@ import NotAcceptingApplications from "./_components/notAcceptingApplications";
 import ClubDetailLoading from "./loading";
 //ICONS
 import {
-  faQuestion,
   faCalendarAlt,
   faDoorOpen,
   faArrowUpRightFromSquare,
@@ -185,35 +184,6 @@ async function ClubInfo({ clubId }: { clubId: number }) {
   );
 }
 
-async function ClubWhyJoin({ clubId }: { clubId: number }) {
-  const club = await getClubForPage(clubId);
-  const reasons = club.whyJoin ?? [];
-
-  if (reasons.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className={styles_modules.section}>
-      <div className={styles_modules.headlineRow}>
-        <FontAwesomeIcon icon={faQuestion} className={styles_modules.fas} />
-        <span>Why Join?</span>
-      </div>
-
-      <div className={styles_modules.whyJoinList} data-count={reasons.length}>
-        {reasons.map((reason) => (
-          <article className={styles_modules.whyJoinItem} key={`${reason.index}-${reason.title}`}>
-            <div className={styles_modules.whyJoinCopy}>
-              <h3>{reason.title}</h3>
-              <p>{reason.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 async function ClubApply({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
   const accessToken = (await cookies()).get("access_token")?.value;
@@ -311,7 +281,6 @@ async function ClubDetailContent({ params }: ClubPageProps) {
       <ClubAbout clubId={clubId} />
 
       <div className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`} aria-hidden="true"></div>
-      <ClubWhyJoin clubId={clubId} />
       <ClubInfo clubId={clubId} />
       <ClubApply clubId={clubId} />
     </main>
