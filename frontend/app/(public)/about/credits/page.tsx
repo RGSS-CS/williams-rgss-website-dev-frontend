@@ -235,32 +235,6 @@ export default function Credits() {
                   </a>
                 </p>
               </div>
-              <div className={styles.roleRow}>
-                <span className={styles.creditRole}>Quality Assurance</span>
-                <p className={styles.cardText}>
-                  <a
-                    className={styles.personLink}
-                    href=''
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    Name Here
-                  </a>
-                </p>
-              </div>
-              <div className={styles.roleRow}>
-                <span className={styles.creditRole}>Quality Assurance</span>
-                <p className={styles.cardText}>
-                  <a
-                    className={styles.personLink}
-                    href=''
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    Name Here
-                  </a>
-                </p>
-              </div>
             </div>
           </article>
         </div>
