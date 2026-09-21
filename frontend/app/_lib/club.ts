@@ -31,7 +31,7 @@ export type Club = {
     time: string;
     repetition: string;
     location: string;
-    classroomCode: string;
+    classroomCode: string | null;
     teacherAdvisor: string;
     applicationFormLink: string;
     acceptingApplicants: string;
@@ -99,7 +99,7 @@ function normalizeClub(record: ClubApiRecord): Club {
         time: formatTimeTo12Hour(record.time) ?? '',
         repetition: record.repetition,
         location: record.location,
-        classroomCode: record.classroom_code ?? '',
+        classroomCode: record.classroom_code ?? null,
         teacherAdvisor: record.teacher_advisor,
         applicationFormLink: record.application_form_link ?? '',
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
