@@ -117,7 +117,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
   const accessToken = (await cookies()).get("access_token")?.value;
   const photos = accessToken
-    ? (await getGalleryPhotos()).filter((photo) => photo.club === clubId)
+    ? (await getGalleryPhotos()).filter(
+        (photo) => photo.club === clubId && photo.shownInMainPage === true
+      )
     : [];
 
   return (
@@ -151,10 +153,12 @@ async function ClubInfo({ clubId }: { clubId: number }) {
 
   return (
     <div className={styles_modules.infoWrap}>
-      <section className={styles_modules.infoSection} aria-labelledby="club-information-heading">
+      <section className={styles_modules.infoSection} aria-labelledby='club-information-heading'>
         <header className={styles_modules.infoHeader}>
           <span className={styles_modules.sectionEyebrow}>At a glance</span>
-          <h2 id="club-information-heading" className={styles_modules.sectionTitle}>Club information</h2>
+          <h2 id='club-information-heading' className={styles_modules.sectionTitle}>
+            Club information
+          </h2>
         </header>
 
         <dl className={styles_modules.infoGrid}>
@@ -280,7 +284,10 @@ async function ClubDetailContent({ params }: ClubPageProps) {
       <ClubHero clubId={clubId} />
       <ClubAbout clubId={clubId} />
 
-      <div className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`} aria-hidden="true"></div>
+      <div
+        className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`}
+        aria-hidden='true'
+      ></div>
       <ClubInfo clubId={clubId} />
       <ClubApply clubId={clubId} />
     </main>
