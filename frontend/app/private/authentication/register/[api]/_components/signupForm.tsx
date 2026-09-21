@@ -85,7 +85,6 @@ export default function SignupFormClient({ showCaptcha, code, captchaEndpoint }:
                 </button>
                 <div className="authCardHeader">
                     <h1>Register Now</h1>
-                    <p>Sign up for easy access to all features</p>
                 </div>
 
                 {state.error && <div className="authFormError" role="alert">{state.error}</div>}
