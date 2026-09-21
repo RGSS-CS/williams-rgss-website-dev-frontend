@@ -250,10 +250,12 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
     window.history.replaceState(null, "", `${url}${window.location.hash}`);
 
     setFilters((currentFilters) => ({
-      query: partial.q !== undefined ? partial.q ?? "" : currentFilters.query,
+      query: partial.q !== undefined ? (partial.q ?? "") : currentFilters.query,
       activeCategory:
-        partial.category !== undefined ? partial.category ?? "all" : currentFilters.activeCategory,
-      activeDay: partial.day !== undefined ? partial.day ?? "All Days" : currentFilters.activeDay,
+        partial.category !== undefined
+          ? (partial.category ?? "all")
+          : currentFilters.activeCategory,
+      activeDay: partial.day !== undefined ? (partial.day ?? "All Days") : currentFilters.activeDay,
     }));
   };
 
@@ -327,7 +329,6 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
             })
           }
         />
-
       </MobileFilterPanel>
 
       <div className={styles.mobileResultsBar}>
