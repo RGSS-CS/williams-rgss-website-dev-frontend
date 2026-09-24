@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
 import NotAcceptingApplications from "./_components/notAcceptingApplications";
 import ClubDetailLoading from "./loading";
+import ClubAnnouncements from "./_components/clubAnnouncements";
 //ICONS
 import {
   faCalendarAlt,
@@ -68,8 +69,12 @@ const getClubForPage = cache(async (clubId: number) => {
   return club;
 });
 
+// Capture one timestamp per request so popup eligibility is stable during hydration.
+const getPageTime = cache(async () => Date.now());
+
 async function ClubHero({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
+  const currentTime = await getPageTime();
   const meetingDay = formatDay(club.dayOfMeeting);
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
   const showJoinSection = club.acceptingApplicants !== "Applications closed";
@@ -92,6 +97,7 @@ async function ClubHero({ clubId }: { clubId: number }) {
                 Apply Now
               </AnchorLink>
             )}
+            <ClubAnnouncements key={club.id} announcements={club.announcements} currentTime={currentTime} />
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>

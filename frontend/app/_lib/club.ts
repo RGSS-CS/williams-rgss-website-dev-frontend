@@ -2,6 +2,22 @@
 
 import { cookies } from "next/headers";
 
+export type ClubAnnouncementApiRecord = {
+    title: string;
+    description: string;
+    date_posted: string;
+    popup: boolean;
+    expiry: string;
+};
+
+export type ClubAnnouncement = {
+    title: string;
+    description: string;
+    datePosted: string;
+    popup: boolean;
+    expiry: string;
+};
+
 export type ClubApiRecord = {
     id: number;
     name: string;
@@ -18,6 +34,7 @@ export type ClubApiRecord = {
     application_form_link: string | null;
     accepting_applicants: string;
     join_instructions: string;
+    announcement?: ClubAnnouncementApiRecord[] | null;
 };
 
 export type Club = {
@@ -36,6 +53,7 @@ export type Club = {
     applicationFormLink: string;
     acceptingApplicants: string;
     joinInstructions: string;
+    announcements: ClubAnnouncement[];
 };
 
 function getClubsApiUrl() {
@@ -104,6 +122,13 @@ function normalizeClub(record: ClubApiRecord): Club {
         applicationFormLink: record.application_form_link ?? '',
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
         joinInstructions: record.join_instructions,
+        announcements: (record.announcement ?? []).map((announcement) => ({
+            title: announcement.title,
+            description: announcement.description,
+            datePosted: announcement.date_posted,
+            popup: announcement.popup,
+            expiry: announcement.expiry,
+        })),
     };
 };
 
