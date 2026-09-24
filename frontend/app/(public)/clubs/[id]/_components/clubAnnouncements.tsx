@@ -40,6 +40,7 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
 
   if (announcements.length === 0) return null;
   const visible = view === "pinned" ? pinned : sorted;
+  const headingText = view === "pinned" ? "Club notice" : "Announcements";
 
   return (
     <>
@@ -67,27 +68,27 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
         }}
       >
         <header className={styles.header}>
-          <div>
-            <h2 id={headingId}>{view === "pinned" ? "Pinned announcements" : "Announcements"}</h2>
-            <p>{view === "pinned" ? "The latest notices from this club." : "Club updates, including past announcements."}</p>
-          </div>
+          <h2 id={headingId}>{headingText}</h2>
           <button type="button" className={styles.close} onClick={() => dialog.current?.close()} aria-label="Close announcements" autoFocus>
-            &times;
+            Close
           </button>
         </header>
         <div className={styles.list}>
           {visible.map((item, index) => {
             const posted = timestamp(item.datePosted);
             const expired = timestamp(item.expiry) <= currentTime;
+            const announcementClassName = expired
+              ? `${styles.item} ${styles.expired}`
+              : styles.item;
             return (
-              <article className={styles.item} key={`${item.datePosted}-${index}`}>
+              <article className={announcementClassName} key={`${item.datePosted}-${index}`}>
+                <h3>{item.title}</h3>
                 <div className={styles.meta}>
                   {Number.isFinite(posted) && (
                     <time dateTime={new Date(posted).toISOString()}>{dateFormatter.format(posted)}</time>
                   )}
                   {expired ? <span>Expired</span> : item.popup && timestamp(item.expiry) > currentTime ? <span>Pinned</span> : null}
                 </div>
-                <h3>{item.title}</h3>
                 <p>{item.description}</p>
               </article>
             );

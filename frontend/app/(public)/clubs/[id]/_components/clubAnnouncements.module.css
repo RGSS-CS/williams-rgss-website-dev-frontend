@@ -1,63 +1,133 @@
-.trigger {
+﻿.trigger {
   align-self: center;
+  min-height: 44px;
   padding: 0.5rem 0;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: #fff;
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 1rem;
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;
 }
 
 .trigger:hover { text-decoration-thickness: 2px; }
+
 .trigger:focus-visible,
-.dialog button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.dialog button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
 
 .dialog {
   box-sizing: border-box;
-  width: min(580px, calc(100vw - 2rem));
-  max-height: 80dvh;
+  width: min(640px, calc(100vw - 2rem));
+  max-height: 85dvh;
   margin: auto;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--white);
-  color: var(--school-primary);
-  box-shadow: 0 20px 70px rgb(0 0 0 / 20%);
+  border: 1px solid #cbd0d6;
+  border-radius: 4px;
+  background: #fff;
+  color: #20252b;
+  font-family: var(--font-ibm-plex-sans), Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
-.dialog::backdrop { background: rgb(0 0 0 / 40%); }
+.dialog::backdrop { background: rgb(0 0 0 / 45%); }
+
 .header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--line);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #dce0e4;
 }
-.header h2 { margin: 0; font-size: 1.25rem; }
-.header p { margin: 0.5rem 0 0; font-size: 0.875rem; line-height: 1.5; }
+
+.dialog .header h2 {
+  margin: 0;
+  color: #20252b;
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .close {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  min-height: 44px;
+  padding: 0.5rem 0;
   border: 0;
-  border-radius: 50%;
-  background: var(--school-dull-tone);
-  color: inherit;
-  font-size: 1.5rem;
+  background: transparent;
+  color: #343c45;
+  font: inherit;
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
 }
-.list { padding: 0 1.5rem; }
-.item { padding: 1.25rem 0; overflow-wrap: anywhere; }
-.item + .item { border-top: 1px solid var(--line); }
-.meta { display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.75rem; color: var(--school-primary-light); }
-.meta span { font-weight: 700; }
-.item h3 { margin: 0.5rem 0 0; font-size: 1.05rem; }
-.item p { margin: 0.5rem 0 0; line-height: 1.7; white-space: pre-line; }
-.footer { padding: 1rem 1.5rem; border-top: 1px solid var(--line); }
-.footer button { padding: 0.5rem 0; border: 0; background: transparent; color: inherit; font: inherit; font-size: 0.875rem; text-decoration: underline; cursor: pointer; }
+
+.list { padding: 0 2rem; }
+.item { padding: 1.75rem 0; overflow-wrap: anywhere; }
+.item + .item { border-top: 1px solid #dce0e4; }
+
+.dialog .item h3 {
+  margin: 0;
+  color: #20252b;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.375rem;
+  color: #535d68;
+  font-size: 0.875rem;
+}
+
+.meta span::before { content: '\00b7'; margin-right: 0.75rem; }
+
+.dialog .item p {
+  margin: 1rem 0 0;
+  color: #20252b;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.dialog .expired h3,
+.dialog .expired p,
+.dialog .expired .meta {
+  color: #707070;
+}
+
+.footer { padding: 0.75rem 2rem; border-top: 1px solid #dce0e4; }
+
+.footer button {
+  min-height: 44px;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  color: #20252b;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .header { padding: 0.75rem 1.25rem; }
+  .list { padding-inline: 1.25rem; }
+  .footer { padding-inline: 1.25rem; }
+}
