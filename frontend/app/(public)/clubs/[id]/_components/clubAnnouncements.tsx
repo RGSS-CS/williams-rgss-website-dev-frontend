@@ -21,13 +21,18 @@ function timestamp(value: string) {
   return Date.parse(`${date}Z`) - (sign === "+" ? offset : -offset);
 }
 
-export default function ClubAnnouncements({ announcements, currentTime }: {
+export default function ClubAnnouncements({
+  announcements,
+  currentTime,
+}: {
   announcements: ClubAnnouncement[];
   currentTime: number;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const headingId = useId();
+  const expiredPanelId = useId();
+  const [expiredOpen, setExpiredOpen] = useState(false);
   // Format only after hydration, using the visitor's locale and timezone.
   const isClient = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
   const [view, setView] = useState<"pinned" | "all">("pinned");
@@ -44,19 +49,52 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
   }, [hasPinned]);
 
   if (announcements.length === 0) return null;
-  const visible = view === "pinned" ? pinned : sorted;
+  const expiredAnnouncements = sorted
+    .filter((item) => timestamp(item.expiry) <= currentTime)
+    .slice(0, 3);
+  const activeAnnouncements = sorted.filter((item) => !(timestamp(item.expiry) <= currentTime));
+  const visible = view === "pinned" ? pinned : activeAnnouncements;
   const headingText = view === "pinned" ? "Club notice" : "Announcements";
+
+  const renderAnnouncement = (item: ClubAnnouncement, index: number) => {
+    const posted = timestamp(item.datePosted);
+    const expired = timestamp(item.expiry) <= currentTime;
+    const announcementClassName = expired
+      ? `${styles.item} ${styles.expired}`
+      : styles.item;
+    return (
+      <article className={announcementClassName} key={`${item.datePosted}-${index}`}>
+        <h3>{item.title}</h3>
+        <div className={styles.meta}>
+          {Number.isFinite(posted) && (
+            <time dateTime={new Date(posted).toISOString()}>
+              {isClient ? dateFormatter.format(posted) : null}
+            </time>
+          )}
+          {expired ? (
+            <span>Expired</span>
+          ) : item.popup && timestamp(item.expiry) > currentTime ? (
+            <span>Pinned</span>
+          ) : null}
+        </div>
+        <p>{item.description}</p>
+      </article>
+    );
+  };
 
   return (
     <>
       <button
         ref={trigger}
-        type="button"
+        type='button'
         className={styles.trigger}
-        aria-haspopup="dialog"
-        onClick={() => { setView("all"); dialog.current?.showModal(); }}
+        aria-haspopup='dialog'
+        onClick={() => {
+          setView("all");
+          dialog.current?.showModal();
+        }}
       >
-        Announcements <span aria-hidden="true">({announcements.length})</span>
+        Announcements
       </button>
       <dialog
         ref={dialog}
@@ -66,42 +104,61 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
         onClick={(event) => {
           if (event.target !== event.currentTarget) return;
           const bounds = event.currentTarget.getBoundingClientRect();
-          if (event.clientX < bounds.left || event.clientX > bounds.right ||
-              event.clientY < bounds.top || event.clientY > bounds.bottom) {
+          if (
+            event.clientX < bounds.left ||
+            event.clientX > bounds.right ||
+            event.clientY < bounds.top ||
+            event.clientY > bounds.bottom
+          ) {
             event.currentTarget.close();
           }
         }}
       >
         <header className={styles.header}>
           <h2 id={headingId}>{headingText}</h2>
-          <button type="button" className={styles.close} onClick={() => dialog.current?.close()} aria-label="Close announcements" autoFocus>
+          <button
+            type='button'
+            className={styles.close}
+            onClick={() => dialog.current?.close()}
+            aria-label='Close announcements'
+            autoFocus
+          >
             Close
           </button>
         </header>
         <div className={styles.list}>
-          {visible.map((item, index) => {
-            const posted = timestamp(item.datePosted);
-            const expired = timestamp(item.expiry) <= currentTime;
-            const announcementClassName = expired
-              ? `${styles.item} ${styles.expired}`
-              : styles.item;
-            return (
-              <article className={announcementClassName} key={`${item.datePosted}-${index}`}>
-                <h3>{item.title}</h3>
-                <div className={styles.meta}>
-                  {Number.isFinite(posted) && (
-                    <time dateTime={new Date(posted).toISOString()}>{isClient ? dateFormatter.format(posted) : null}</time>
-                  )}
-                  {expired ? <span>Expired</span> : item.popup && timestamp(item.expiry) > currentTime ? <span>Pinned</span> : null}
+          {visible.map(renderAnnouncement)}
+          {view === "all" && expiredAnnouncements.length > 0 && (
+            <div className={styles.expiredDropdown}>
+              <button
+                type='button'
+                className={styles.expiredToggle}
+                aria-expanded={expiredOpen}
+                aria-controls={expiredPanelId}
+                onClick={() => setExpiredOpen((open) => !open)}
+              >
+                <span className={styles.expiredChevron} aria-hidden='true'>›</span>
+                Expired announcements ({expiredAnnouncements.length})
+              </button>
+              <div
+                id={expiredPanelId}
+                className={styles.expiredPanel}
+                data-open={expiredOpen}
+                inert={!expiredOpen}
+                aria-hidden={!expiredOpen}
+              >
+                <div className={styles.expiredPanelInner}>
+                  {expiredAnnouncements.map(renderAnnouncement)}
                 </div>
-                <p>{item.description}</p>
-              </article>
-            );
-          })}
+              </div>
+            </div>
+          )}
         </div>
         {view === "pinned" && (
           <footer className={styles.footer}>
-            <button type="button" onClick={() => setView("all")}>View all announcements</button>
+            <button type='button' onClick={() => setView("all")}>
+              View all announcements
+            </button>
           </footer>
         )}
       </dialog>
