@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import type { ClubAnnouncement } from "@/app/_lib/club";
 import styles from "./clubAnnouncements.module.css";
 
-const dateFormatter = new Intl.DateTimeFormat("en-CA", {
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "long",
-  timeZone: "America/Toronto",
 });
+
+const subscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 // Some API timestamps include seconds in their historical UTC offset.
 function timestamp(value: string) {
@@ -25,6 +28,8 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const headingId = useId();
+  // Format only after hydration, using the visitor's locale and timezone.
+  const isClient = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
   const [view, setView] = useState<"pinned" | "all">("pinned");
   const sorted = [...announcements].sort(
     (a, b) => (timestamp(b.datePosted) || 0) - (timestamp(a.datePosted) || 0)
@@ -85,7 +90,7 @@ export default function ClubAnnouncements({ announcements, currentTime }: {
                 <h3>{item.title}</h3>
                 <div className={styles.meta}>
                   {Number.isFinite(posted) && (
-                    <time dateTime={new Date(posted).toISOString()}>{dateFormatter.format(posted)}</time>
+                    <time dateTime={new Date(posted).toISOString()}>{isClient ? dateFormatter.format(posted) : null}</time>
                   )}
                   {expired ? <span>Expired</span> : item.popup && timestamp(item.expiry) > currentTime ? <span>Pinned</span> : null}
                 </div>
