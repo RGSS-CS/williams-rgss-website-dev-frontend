@@ -1,5 +1,11 @@
 import Breadcrumbs from "@/app/_components/breadcrumbs";
 import styles from "./credits.module.css";
+import { getSiteMetadata } from "@/app/_utils/metadata";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata('Site Credits');
+}
 
 export default function Credits() {
   return (
