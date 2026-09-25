@@ -55,7 +55,7 @@ function AuthNavItem({
         const className = variant === "sidebar" ? styles.sidebarLink : styles.navLink;
 
         return (
-            <a
+            <Link
                 href='/private/authentication'
                 className={className}
                 data-active={isActivePath(currentPath, "/private/authentication")}
@@ -63,7 +63,7 @@ function AuthNavItem({
             >
                 <FontAwesomeIcon icon={faArrowRightToBracket} />
                 Login/Register
-            </a>
+            </Link>
         );
     }
     return (
@@ -103,7 +103,7 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
                             >
                                 <FontAwesomeIcon icon={faBars} />
                             </button>
-                            <Link href='/' className={styles.brandLink}>
+                            <Link href='/' className={styles.brandLink} scroll={false}>
                                 <div className={styles.logo}>
                                     {management?.croppedSiteImage && (
                                         <img
@@ -124,7 +124,7 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
 
                         <div className={styles.navLinks}>
                             {links.map((link) => (
-                                <a
+                                <Link
                                     key={link.href}
                                     href={link.href}
                                     className={styles.navLink}
@@ -133,7 +133,7 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
                                 >
                                     {link.icon}
                                     {link.label}
-                                </a>
+                                </Link>
                             ))}
                             <AuthNavItem
                                 authUser={authUser}
@@ -157,7 +157,7 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
                 </button>
                 <div className={styles.sidebarLinks}>
                     {links.map((link) => (
-                        <a
+                        <Link
                             key={link.href}
                             href={link.href}
                             className={styles.sidebarLink}
@@ -166,7 +166,7 @@ export default function NavbarClient({ management, authUser }: NavbarClientProps
                         >
                             {link.icon}
                             {link.label}
-                        </a>
+                        </Link>
                     ))}
                     <AuthNavItem
                         authUser={authUser}

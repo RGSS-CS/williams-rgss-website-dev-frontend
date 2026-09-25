@@ -14,9 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
 import NotAcceptingApplications from "./_components/notAcceptingApplications";
 import ClubDetailLoading from "./loading";
+import ClubAnnouncements from "./_components/clubAnnouncements";
 //ICONS
 import {
-  faQuestion,
   faCalendarAlt,
   faDoorOpen,
   faArrowUpRightFromSquare,
@@ -69,8 +69,12 @@ const getClubForPage = cache(async (clubId: number) => {
   return club;
 });
 
+// Capture one timestamp per request so popup eligibility is stable during hydration.
+const getPageTime = cache(async () => Date.now());
+
 async function ClubHero({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
+  const currentTime = await getPageTime();
   const meetingDay = formatDay(club.dayOfMeeting);
   const cadence = sentenceCase(club.repetition, "Schedule to be announced");
   const showJoinSection = club.acceptingApplicants !== "Applications closed";
@@ -93,6 +97,7 @@ async function ClubHero({ clubId }: { clubId: number }) {
                 Apply Now
               </AnchorLink>
             )}
+            <ClubAnnouncements key={club.id} announcements={club.announcements} currentTime={currentTime} />
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
@@ -118,7 +123,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
   const accessToken = (await cookies()).get("access_token")?.value;
   const photos = accessToken
-    ? (await getGalleryPhotos()).filter((photo) => photo.club === clubId)
+    ? (await getGalleryPhotos()).filter(
+        (photo) => photo.club === clubId && photo.shownInMainPage === true
+      )
     : [];
 
   return (
@@ -134,7 +141,7 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <ClubSlideshow key={clubId} photos={photos} />
           ) : (
             <span className={styles_modules.loginWarn}>
-              <h3>You must be signed in to view this media</h3>
+              <h3>You must be signed in to view this item</h3>
             </span>
           )}
         </div>
@@ -152,10 +159,12 @@ async function ClubInfo({ clubId }: { clubId: number }) {
 
   return (
     <div className={styles_modules.infoWrap}>
-      <section className={styles_modules.infoSection} aria-labelledby="club-information-heading">
+      <section className={styles_modules.infoSection} aria-labelledby='club-information-heading'>
         <header className={styles_modules.infoHeader}>
           <span className={styles_modules.sectionEyebrow}>At a glance</span>
-          <h2 id="club-information-heading" className={styles_modules.sectionTitle}>Club information</h2>
+          <h2 id='club-information-heading' className={styles_modules.sectionTitle}>
+            Club information
+          </h2>
         </header>
 
         <dl className={styles_modules.infoGrid}>
@@ -185,35 +194,6 @@ async function ClubInfo({ clubId }: { clubId: number }) {
   );
 }
 
-async function ClubWhyJoin({ clubId }: { clubId: number }) {
-  const club = await getClubForPage(clubId);
-  const reasons = club.whyJoin ?? [];
-
-  if (reasons.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className={styles_modules.section}>
-      <div className={styles_modules.headlineRow}>
-        <FontAwesomeIcon icon={faQuestion} className={styles_modules.fas} />
-        <span>Why Join?</span>
-      </div>
-
-      <div className={styles_modules.whyJoinList} data-count={reasons.length}>
-        {reasons.map((reason) => (
-          <article className={styles_modules.whyJoinItem} key={`${reason.index}-${reason.title}`}>
-            <div className={styles_modules.whyJoinCopy}>
-              <h3>{reason.title}</h3>
-              <p>{reason.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 async function ClubApply({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
   const accessToken = (await cookies()).get("access_token")?.value;
@@ -229,7 +209,7 @@ async function ClubApply({ clubId }: { clubId: number }) {
   if (!accessToken) {
     return (
       <div id='join-club' className={styles_modules.loginWarn}>
-        <h3>You must be signed in to view this media</h3>
+        <h3>You must be signed in to view this item</h3>
       </div>
     );
   }
@@ -310,8 +290,10 @@ async function ClubDetailContent({ params }: ClubPageProps) {
       <ClubHero clubId={clubId} />
       <ClubAbout clubId={clubId} />
 
-      <div className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`} aria-hidden="true"></div>
-      <ClubWhyJoin clubId={clubId} />
+      <div
+        className={`${styles_modules.divider} ${dividerStyles.sectionDivider}`}
+        aria-hidden='true'
+      ></div>
       <ClubInfo clubId={clubId} />
       <ClubApply clubId={clubId} />
     </main>

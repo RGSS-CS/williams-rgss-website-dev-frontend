@@ -2,16 +2,20 @@
 
 import { cookies } from "next/headers";
 
-export type WhyJoinReasonApiRecord = {
+export type ClubAnnouncementApiRecord = {
     title: string;
     description: string;
-    index: number;
+    date_posted: string;
+    popup: boolean;
+    expiry: string;
 };
 
-export type WhyJoinReason = {
+export type ClubAnnouncement = {
     title: string;
     description: string;
-    index: number;
+    datePosted: string;
+    popup: boolean;
+    expiry: string;
 };
 
 export type ClubApiRecord = {
@@ -30,7 +34,7 @@ export type ClubApiRecord = {
     application_form_link: string | null;
     accepting_applicants: string;
     join_instructions: string;
-    why_join: WhyJoinReasonApiRecord[] | null;
+    announcement?: ClubAnnouncementApiRecord[] | null;
 };
 
 export type Club = {
@@ -44,12 +48,12 @@ export type Club = {
     time: string;
     repetition: string;
     location: string;
-    classroomCode: string;
+    classroomCode: string | null;
     teacherAdvisor: string;
     applicationFormLink: string;
     acceptingApplicants: string;
     joinInstructions: string;
-    whyJoin: WhyJoinReason[];
+    announcements: ClubAnnouncement[];
 };
 
 function getClubsApiUrl() {
@@ -101,21 +105,6 @@ function formatAcceptingApplicants(acceptingApplicants: string): string {
     return "Open to all";
 };
 
-function normalizeWhyJoin(whyJoin: WhyJoinReasonApiRecord[] | null | undefined): WhyJoinReason[] {
-    if (!whyJoin) {
-        return [];
-    };
-
-    return [...whyJoin]
-        .filter((reason) => reason?.title?.trim())
-        .sort((a, b) => a.index - b.index)
-        .map((reason) => ({
-            title: reason.title,
-            description: reason.description,
-            index: reason.index,
-        }));
-};
-
 function normalizeClub(record: ClubApiRecord): Club {
     return {
         id: record.id,
@@ -128,12 +117,18 @@ function normalizeClub(record: ClubApiRecord): Club {
         time: formatTimeTo12Hour(record.time) ?? '',
         repetition: record.repetition,
         location: record.location,
-        classroomCode: record.classroom_code ?? '',
+        classroomCode: record.classroom_code ?? null,
         teacherAdvisor: record.teacher_advisor,
         applicationFormLink: record.application_form_link ?? '',
         acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
         joinInstructions: record.join_instructions,
-        whyJoin: normalizeWhyJoin(record.why_join),
+        announcements: (record.announcement ?? []).map((announcement) => ({
+            title: announcement.title,
+            description: announcement.description,
+            datePosted: announcement.date_posted,
+            popup: announcement.popup,
+            expiry: announcement.expiry,
+        })),
     };
 };
 
