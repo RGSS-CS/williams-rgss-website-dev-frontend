@@ -46,6 +46,7 @@ export async function getLegalDocuments(): Promise<LegalDocuments | null> {
             headers: {
                 "Content-Type": "application/json",
             },
+            signal: AbortSignal.timeout(5000),
         });
 
         if (!res.ok) return null;
