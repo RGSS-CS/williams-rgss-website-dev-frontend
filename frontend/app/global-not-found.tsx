@@ -1,4 +1,4 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import Image from "next/image";
 import { Suspense, type CSSProperties } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -105,7 +105,7 @@ export default async function NotFound() {
           <NavbarSlot management={management} />
         </Suspense>
         <div className={styles.content}>
-          <SiteDirectories items={[{ label: "Page not found" }]} />
+          <Breadcrumbs items={[{ label: "Page not found" }]} />
           <div className={styles.gifStage}>
             <div className={styles.overlay404}>
               <div className={styles.num404}>

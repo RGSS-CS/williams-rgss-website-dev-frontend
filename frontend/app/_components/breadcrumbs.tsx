@@ -1,21 +1,21 @@
 import Link from "next/link";
-import styles from "./siteDirectories.module.css";
+import styles from "./breadcrumbs.module.css";
 
-type SiteDirectory = {
+type BreadcrumbItem = {
   label: string;
   href?: string;
 };
 
-type SiteDirectoriesProps = {
-  items?: SiteDirectory[];
+type BreadcrumbsProps = {
+  items?: BreadcrumbItem[];
   tone?: "light" | "dark";
 };
 
-export default function SiteDirectories({ items = [], tone = "light" }: SiteDirectoriesProps) {
-  const directories: SiteDirectory[] = [{ label: "Home", href: "/" }, ...items];
+export default function Breadcrumbs({ items = [], tone = "light" }: BreadcrumbsProps) {
+  const directories: BreadcrumbItem[] = [{ label: "Home", href: "/" }, ...items];
 
   return (
-    <nav aria-label="Site directories" className={`${styles.siteDirectories} ${styles[tone]}`}>
+    <nav aria-label="Breadcrumbs" className={`${styles.breadcrumbs} ${styles[tone]}`}>
       <ol>
         {directories.map((directory, index) => {
           const isCurrent = index === directories.length - 1;

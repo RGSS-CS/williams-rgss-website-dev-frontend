@@ -15,40 +15,12 @@
   animation: skeletonShimmer 1.35s ease-in-out infinite;
 }
 
-.loadingFilterLabel,
-.loadingFilterChip,
-.loadingDayChip,
-.loadingResultsCount,
 .loadingCategoryTitle,
 .loadingCategoryCount,
 .loadingClubCard .skeletonBlock,
 .loadingCtaTitle,
 .loadingCtaText {
   background: #e7edf4;
-}
-
-.loadingFilterLabel {
-  width: 5.8rem;
-  height: 0.9rem;
-  border-radius: 4px;
-  margin-right: 4px;
-}
-
-.loadingFilterChip {
-  width: 5.6rem;
-  height: 2rem;
-  border-radius: 40px;
-}
-
-.loadingFilterChip:nth-of-type(3n) {
-  width: 7rem;
-}
-
-.loadingResultsCount {
-  width: 7.5rem;
-  height: 0.9rem;
-  margin-left: auto;
-  border-radius: 4px;
 }
 
 .loadingCategoryTitle {
@@ -126,32 +98,5 @@
 @media (prefers-reduced-motion: reduce) {
   .skeletonBlock::after {
     animation: none;
-  }
-}
-
-.loadingDayChip {
-  width: 3.5rem;
-  height: 2rem;
-  border-radius: 40px;
-}
-
-.loadingMobileFilter {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .loadingDesktopFilters {
-    display: none;
-  }
-
-  .loadingMobileFilter {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.2rem;
-    min-height: 1rem;
-  }
-
-  .loadingResultsCount {
-    margin-left: 0;
   }
 }

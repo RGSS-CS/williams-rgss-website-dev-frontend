@@ -1,11 +1,17 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import styles from "./credits.module.css";
+import { getSiteMetadata } from "@/app/_utils/metadata";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSiteMetadata('Site Credits');
+}
 
 export default function Credits() {
   return (
     <section className={styles.sectionWrap}>
       <div className={styles.sectionContent}>
-        <SiteDirectories tone="dark" items={[{ label: "About", href: "/about" }, { label: "Site Credits" }]} />
+        <Breadcrumbs tone="dark" items={[{ label: "About", href: "/about" }, { label: "Site Credits" }]} />
         <div className={styles.sectionTitleRow}>
           <h2 className={styles.sectionTitle}>Site Credits</h2>
         </div>
@@ -232,32 +238,6 @@ export default function Credits() {
                     rel='noopener noreferrer'
                   >
                     Haobin Chen Fang
-                  </a>
-                </p>
-              </div>
-              <div className={styles.roleRow}>
-                <span className={styles.creditRole}>Quality Assurance</span>
-                <p className={styles.cardText}>
-                  <a
-                    className={styles.personLink}
-                    href=''
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    Name Here
-                  </a>
-                </p>
-              </div>
-              <div className={styles.roleRow}>
-                <span className={styles.creditRole}>Quality Assurance</span>
-                <p className={styles.cardText}>
-                  <a
-                    className={styles.personLink}
-                    href=''
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    Name Here
                   </a>
                 </p>
               </div>

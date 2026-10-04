@@ -12,7 +12,7 @@ export default function Loading() {
                     <div className="heroShape"></div>
                     <div className="heroInner">
                         <div className="heroLeft">
-                            <div className={loadingStyles.loadingSiteDirectories}>
+                            <div className={loadingStyles.loadingBreadcrumbs}>
                                 <span></span>
                                 <span></span>
                                 <span></span>

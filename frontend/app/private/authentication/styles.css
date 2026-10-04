@@ -4,8 +4,7 @@
   flex-direction: column;
 }
 
-.authBody,
-.registrationPage {
+.authBody {
   flex: 1;
   padding: 4rem 1.5rem;
   display: flex;
@@ -17,11 +16,6 @@
 
 .authBody form {
   width: min(100%, 30rem);
-}
-
-.registrationShell {
-  width: min(100%, 30rem);
-  margin: auto;
 }
 
 .authCard {
@@ -85,11 +79,6 @@
   transform: translateY(-50%);
   font-size: 0.82rem;
   pointer-events: none;
-}
-
-.warning {
-  color: red;
-  font-size: 12px;
 }
 
 .authInputWrap input {
@@ -201,8 +190,7 @@
 }
 
 @media (max-width: 600px) {
-  .authBody,
-  .registrationPage {
+  .authBody {
     padding: 2rem 1rem;
   }
 

@@ -7,12 +7,14 @@ export type StucoSettingsApiRecord = {
     council_name: string;
     group_photo: string | null;
     photo_caption: string | null;
+    stuco_logo: string | null;
 };
 
 export type StucoSettings = {
     councilName: string;
     groupPhoto: string | null;
     photoCaption: string | null;
+    stucoLogo: string | null;
 };
 
 export type StucoAnnouncementApiRecord = {
@@ -48,6 +50,7 @@ function normalizeStucoSettings(record: StucoSettingsApiRecord): StucoSettings {
         councilName: record.council_name,
         groupPhoto: record.group_photo === null ? null : toPublicMediaUrl(record.group_photo),
         photoCaption: record.photo_caption,
+        stucoLogo: record.stuco_logo === null ? null : toPublicMediaUrl(record.stuco_logo),
     };
 };
 

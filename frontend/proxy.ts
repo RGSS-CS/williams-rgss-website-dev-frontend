@@ -5,6 +5,51 @@ const REFRESH_TOKEN_COOKIE = "refresh_token";
 const USER_GROUPS_COOKIE = "user_groups";
 const ACCOUNT_USERNAME_COOKIE = "account_username";
 const REFRESH_BEFORE_EXPIRY_MS = 60_000;
+const MAINTENANCE_CACHE_MS = 30_000;
+const MAINTENANCE_RETRY_MS = 5_000;
+
+// Shared by requests in this server instance; no user-specific data is cached.
+let maintenanceCache: { enabled: boolean; expiresAt: number } | undefined;
+let maintenanceRequest: Promise<boolean> | undefined;
+
+async function isMaintenanceEnabled(): Promise<boolean> {
+    if (maintenanceCache && maintenanceCache.expiresAt > Date.now()) {
+        return maintenanceCache.enabled;
+    }
+    if (maintenanceRequest) return maintenanceRequest;
+
+    maintenanceRequest = (async () => {
+        let enabled = false;
+        let ttl = MAINTENANCE_RETRY_MS;
+        try {
+            const response = await fetch(
+                new URL("/api/management/site-settings/?format=json", getApiBaseUrl()),
+                {
+                    headers: { Accept: "application/json" },
+                    cache: "no-store",
+                    signal: AbortSignal.timeout(5_000),
+                },
+            );
+            if (response.ok) {
+                const settings: unknown = await response.json();
+                if (Array.isArray(settings)) {
+                    enabled = settings[0]?.maintainance_mode === true;
+                    ttl = MAINTENANCE_CACHE_MS;
+                }
+            }
+        } catch {
+            // Preserve fail-open behavior and retry soon after transient failures.
+        }
+        maintenanceCache = { enabled, expiresAt: Date.now() + ttl };
+        return enabled;
+    })();
+
+    try {
+        return await maintenanceRequest;
+    } finally {
+        maintenanceRequest = undefined;
+    }
+}
 
 type RefreshResponse = {
     access?: string;
@@ -94,6 +139,26 @@ function clearAuthCookies(requestHeaders: Headers): NextResponse {
 }
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
+    const pathname = request.nextUrl.pathname;
+    // Keep the offline page, service worker, assets, and backend cache hook reachable.
+    const bypassMaintenance = pathname === "/offline.html"
+        || pathname === "/sw.js"
+        || pathname === "/console/revalidate"
+        || pathname.startsWith("/images/");
+
+    if (!bypassMaintenance && await isMaintenanceEnabled()) {
+        const offlineUrl = request.nextUrl.clone();
+        offlineUrl.pathname = "/offline.html";
+        offlineUrl.search = "";
+        return NextResponse.rewrite(offlineUrl, {
+            status: 503,
+            headers: {
+                "Cache-Control": "no-store",
+                "Retry-After": "60",
+            },
+        });
+    }
+
     const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
     const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
 

@@ -1,4 +1,4 @@
-import SiteDirectories from "@/app/_components/siteDirectories";
+import Breadcrumbs from "@/app/_components/breadcrumbs";
 import { getClubs } from "@/app/_lib/club";
 import { getManagementSettings } from "@/app/_lib/site-management";
 import { getSiteMetadata } from "@/app/_utils/metadata";
@@ -31,7 +31,7 @@ async function ClubsHero() {
 
       <div className='heroInner'>
         <div className='heroLeft'>
-          <SiteDirectories items={[{ label: "Clubs" }]} />
+          <Breadcrumbs items={[{ label: "Clubs" }]} />
           <div className='heroTitle'>
             <h1>{pageManagement?.title}</h1>
             <h2>{pageManagement?.subtitle}</h2>

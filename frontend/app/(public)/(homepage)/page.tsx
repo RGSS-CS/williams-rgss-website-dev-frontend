@@ -26,20 +26,21 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 async function HomeHero() {
-  const [management, pageManagement, schoolYear] = await Promise.all([
+  const [management, pageManagement, schoolYear, stuco] = await Promise.all([
     getManagementSettings(),
     getPageManagementSettings("HM"),
     getSchoolYear(),
+    getStucoSettings(),
   ]);
 
   return (
     <div className='hero homeHero'>
       <TickerBar />
       <div className={styles.heroBadgeImage}>
-        {management?.croppedSiteImage && (
+        {stuco?.stucoLogo && (
           <img
-            src={management?.croppedSiteImage}
-            alt='School Icon'
+            src={stuco.stucoLogo}
+            alt='Student Council Logo'
             width={260}
             height={230}
             loading='eager'
