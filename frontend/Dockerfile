@@ -1,49 +1,35 @@
-# ============================================
-# Stage 1: Dependencies Installation Stage
-# ============================================
+# syntax=docker/dockerfile:1
 
-FROM oven/bun:1 AS base
+FROM node:20-alpine AS base
+RUN npm install -g npm@11.13.0
 
 FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+RUN \
+    if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+    elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install --frozen-lockfile; \
+    else npm ci; \
+    fi
 
-# ============================================
-# Stage 2: Build Next.js application in standalone mode
-# ============================================
-
-FROM base AS build
+FROM base AS builder
 WORKDIR /app
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
 
-RUN bun --bun next build
-
-# ============================================
-# Stage 3: Run Next.js application
-# ============================================
-
-FROM base AS run
-
+FROM base AS runner
 WORKDIR /app
-
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-
-COPY --from=build --chown=bun:bun /app/public ./public
-
-RUN mkdir .next && chown bun:bun .next
-
-COPY --from=build --chown=bun:bun /app/.next/standalone ./
-COPY --from=build --chown=bun:bun /app/.next/static ./.next/static
-
-USER bun
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser  --system --uid 1001 nextjs
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
 EXPOSE 3000
-CMD ["bun", "server.js"]
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]
