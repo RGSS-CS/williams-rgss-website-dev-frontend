@@ -100,7 +100,7 @@ export async function getStucoSettings(): Promise<StucoSettings | null> {
 export async function getStucoAnnouncements(): Promise<StucoAnnouncement[]> {
     'use cache';
     cacheLife('hours');
-    cacheTag('stuco-announcements');
+    cacheTag('stuco-settings');
     const url = getStucoAnnouncementsApiUrl();
 
     if (!url) {
