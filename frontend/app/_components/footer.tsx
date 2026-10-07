@@ -123,10 +123,10 @@ export default function Footer({ management, schoolYear }: ManagementProps) {
                 )}
                 <div className={styles.footerCol}>
                     <h4>Legal</h4>
-                    <Link href='/legal/privacy-policy' className={styles.footerLink}>
+                    <Link href='/legal/privacy' className={styles.footerLink}>
                         Privacy Policy
                     </Link>
-                    <Link href='/legal/terms-conditions' className={styles.footerLink}>
+                    <Link href='/legal/tos' className={styles.footerLink}>
                         Terms of Service
                     </Link>
                     <Link
