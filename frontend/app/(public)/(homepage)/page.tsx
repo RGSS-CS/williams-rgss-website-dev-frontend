@@ -26,8 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 async function HomeHero() {
-  const [management, pageManagement, schoolYear, stuco] = await Promise.all([
-    getManagementSettings(),
+  const [pageManagement, schoolYear, stuco] = await Promise.all([
     getPageManagementSettings("HM"),
     getSchoolYear(),
     getStucoSettings(),
@@ -53,7 +52,7 @@ async function HomeHero() {
         <div className='heroLeft'>
           <div className={styles.heroTag}>
             <p>
-              {management?.councilName} {schoolYear}
+              {stuco?.councilName} {schoolYear}
             </p>
           </div>
           <div className='heroTitle'>

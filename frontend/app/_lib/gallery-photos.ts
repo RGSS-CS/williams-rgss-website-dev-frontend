@@ -1,6 +1,6 @@
 "use server";
 
-import { cacheLife, cacheTag } from "next/cache";
+import { cookies } from "next/headers";
 import { toPublicMediaUrl } from "../_utils/media-url";
 
 export type GalleryPhotoApiRecord = {
@@ -51,9 +51,6 @@ function normalizeGalleryPhoto(record: GalleryPhotoApiRecord): GalleryPhoto {
 };
 
 export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
-    'use cache';
-    cacheLife('hours');
-    cacheTag('gallery-photos');
     const url = getGalleryPhotosApiUrl();
 
     if (!url) {
@@ -61,11 +58,14 @@ export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
     };
 
     try {
+        const accessToken = (await cookies()).get("access_token")?.value;
         const res = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
             },
+            cache: "no-store",
         });
 
         if (!res.ok) {

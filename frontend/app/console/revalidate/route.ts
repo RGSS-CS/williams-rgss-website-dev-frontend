@@ -8,7 +8,6 @@ const VALID_TAGS = new Set([
     "clubs",
     "gallery-photos",
     "stuco-settings",
-    "stuco-announcements",
 ]);
 
 export async function POST(request: NextRequest) {
