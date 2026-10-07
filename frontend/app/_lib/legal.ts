@@ -28,7 +28,7 @@ function normalizeLegal(record: LegalApiRecord): LegalDocuments {
     return {
         termsService: record.terms_service,
         privacyPolicy: record.privacy_policy,
-        lastUpdated: record.last_updated,
+        lastUpdated: record.last_updated
     };
 }
 
@@ -44,9 +44,9 @@ export async function getLegalDocuments(): Promise<LegalDocuments | null> {
         const res = await fetch(url, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            signal: AbortSignal.timeout(5000),
+            signal: AbortSignal.timeout(5000)
         });
 
         if (!res.ok) return null;
