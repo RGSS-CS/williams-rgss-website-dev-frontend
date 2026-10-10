@@ -5,22 +5,26 @@ const REFRESH_TOKEN_COOKIE = "refresh_token";
 const USER_GROUPS_COOKIE = "user_groups";
 const ACCOUNT_USERNAME_COOKIE = "account_username";
 const REFRESH_BEFORE_EXPIRY_MS = 60_000;
-const MAINTENANCE_CACHE_MS = 30_000;
-const MAINTENANCE_RETRY_MS = 5_000;
-
-// Shared by requests in this server instance; no user-specific data is cached.
-let maintenanceCache: { enabled: boolean; expiresAt: number } | undefined;
+// Keep only concurrent requests in flight together. Maintenance mode must be
+// checked on each navigation so enabling it takes effect on the first request.
+let lastKnownMaintenanceState = false;
 let maintenanceRequest: Promise<boolean> | undefined;
 
+function readMaintenanceFlag(settings: unknown): boolean | undefined {
+    if (!Array.isArray(settings) || settings.length === 0) return undefined;
+
+    const record = settings[0];
+    if (!record || typeof record !== "object") return undefined;
+
+    const value = (record as { maintainance_mode?: unknown }).maintainance_mode;
+    return typeof value === "boolean" ? value : undefined;
+}
+
 async function isMaintenanceEnabled(): Promise<boolean> {
-    if (maintenanceCache && maintenanceCache.expiresAt > Date.now()) {
-        return maintenanceCache.enabled;
-    }
     if (maintenanceRequest) return maintenanceRequest;
 
     maintenanceRequest = (async () => {
-        let enabled = false;
-        let ttl = MAINTENANCE_RETRY_MS;
+        let enabled = lastKnownMaintenanceState;
         try {
             const response = await fetch(
                 new URL("/api/management/site-settings/?format=json", getApiBaseUrl()),
@@ -32,15 +36,15 @@ async function isMaintenanceEnabled(): Promise<boolean> {
             );
             if (response.ok) {
                 const settings: unknown = await response.json();
-                if (Array.isArray(settings)) {
-                    enabled = settings[0]?.maintainance_mode === true;
-                    ttl = MAINTENANCE_CACHE_MS;
+                const flag = readMaintenanceFlag(settings);
+                if (flag !== undefined) {
+                    enabled = flag;
+                    lastKnownMaintenanceState = flag;
                 }
             }
         } catch {
-            // Preserve fail-open behavior and retry soon after transient failures.
+            // Keep the last known state and retry soon after transient failures.
         }
-        maintenanceCache = { enabled, expiresAt: Date.now() + ttl };
         return enabled;
     })();
 
