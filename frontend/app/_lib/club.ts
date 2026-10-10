@@ -99,7 +99,7 @@ function formatTimeTo12Hour(time: string | null | undefined): string | null {
 function formatAcceptingApplicants(acceptingApplicants: string): string {
     if (acceptingApplicants === "AC") {
         return "Apply Now";
-    } else if (acceptingApplicants === "WA") {
+    } else if (acceptingApplicants === "NA") {
         return "Applications closed";
     }
     return "Open to all";
