@@ -24,6 +24,9 @@ import {
   faMicrochip,
   faMusic,
   faBriefcase,
+  faLeaf,
+  faLandmark,
+  faFutbol,
   faSearch,
   faArrowRight,
   faCalendarAlt,
@@ -59,6 +62,11 @@ const CATEGORY_ICON_MAP: Record<string, JSX.Element> = {
   technology: <FontAwesomeIcon icon={faMicrochip} />,
   music: <FontAwesomeIcon icon={faMusic} />,
   business: <FontAwesomeIcon icon={faBriefcase} />,
+  culture: <FontAwesomeIcon icon={faPalette} />,
+  environment: <FontAwesomeIcon icon={faLeaf} />,
+  athletics: <FontAwesomeIcon icon={faFutbol} />,
+  literature: <FontAwesomeIcon icon={faBook} />,
+  history: <FontAwesomeIcon icon={faLandmark} />,
 };
 
 function slugifyCategory(category: string) {
