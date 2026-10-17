@@ -3,164 +3,162 @@
 import { cookies } from "next/headers";
 
 export type ClubAnnouncementApiRecord = {
-    title: string;
-    description: string;
-    date_posted: string;
-    popup: boolean;
-    expiry: string;
+  title: string;
+  description: string;
+  date_posted: string;
+  popup: boolean;
+  expiry: string;
 };
 
 export type ClubAnnouncement = {
-    title: string;
-    description: string;
-    datePosted: string;
-    popup: boolean;
-    expiry: string;
+  title: string;
+  description: string;
+  datePosted: string;
+  popup: boolean;
+  expiry: string;
 };
 
 export type ClubApiRecord = {
-    id: number;
-    name: string;
-    preview_description: string;
-    description: string;
-    tagline: string | null;
-    category: string[];
-    day_of_meeting: string;
-    time: string;
-    repetition: string;
-    location: string;
-    classroom_code: string | null;
-    teacher_advisor: string;
-    application_form_link: string | null;
-    accepting_applicants: string;
-    join_instructions: string;
-    announcement?: ClubAnnouncementApiRecord[] | null;
+  id: number;
+  name: string;
+  preview_description: string;
+  description: string;
+  tagline: string | null;
+  category: string[];
+  day_of_meeting: string[] | null;
+  time: string;
+  repetition: string;
+  location: string;
+  classroom_code: string | null;
+  teacher_advisor: string;
+  application_form_link: string | null;
+  accepting_applicants: string;
+  join_instructions: string;
+  announcement?: ClubAnnouncementApiRecord[] | null;
 };
 
 export type Club = {
-    id: number;
-    name: string;
-    preview_description: string;
-    description: string;
-    tagline: string;
-    categories: string[];
-    dayOfMeeting: string;
-    time: string;
-    repetition: string;
-    location: string;
-    classroomCode: string | null;
-    teacherAdvisor: string;
-    applicationFormLink: string;
-    acceptingApplicants: string;
-    joinInstructions: string;
-    announcements: ClubAnnouncement[];
+  id: number;
+  name: string;
+  preview_description: string;
+  description: string;
+  tagline: string;
+  categories: string[];
+  dayOfMeeting: string[];
+  time: string;
+  repetition: string;
+  location: string;
+  classroomCode: string | null;
+  teacherAdvisor: string;
+  applicationFormLink: string;
+  acceptingApplicants: string;
+  joinInstructions: string;
+  announcements: ClubAnnouncement[];
 };
 
 function getClubsApiUrl() {
-    const apiBaseUrl =
-        process.env.API_URL ||
-        "http://backend:8000";
+  const apiBaseUrl = process.env.API_URL || "http://backend:8000";
 
-    try {
-        return new URL("/api/club/?format=json", apiBaseUrl).toString();
-    } catch {
-        return null;
-    };
-};
+  try {
+    return new URL("/api/club/?format=json", apiBaseUrl).toString();
+  } catch {
+    return null;
+  }
+}
 
 function formatTimeTo12Hour(time: string | null | undefined): string | null {
-    if (!time) {
-        return null;
-    };
+  if (!time) {
+    return null;
+  }
 
-    const trimmedTime = time.trim();
-    if (!trimmedTime) {
-        return null;
-    };
+  const trimmedTime = time.trim();
+  if (!trimmedTime) {
+    return null;
+  }
 
-    if (/am|pm/i.test(trimmedTime)) {
-        return trimmedTime;
-    };
+  if (/am|pm/i.test(trimmedTime)) {
+    return trimmedTime;
+  }
 
-    const match = trimmedTime.match(/^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?$/);
-    if (!match) {
-        return trimmedTime;
-    };
+  const match = trimmedTime.match(/^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?$/);
+  if (!match) {
+    return trimmedTime;
+  }
 
-    const hours = Number(match[1]);
-    const minutes = match[2] ? Number(match[2]) : 0;
-    const suffix = hours >= 12 ? "PM" : "AM";
-    const normalizedHours = hours % 12 === 0 ? 12 : hours % 12;
-    const minuteString = minutes.toString().padStart(2, "0");
+  const hours = Number(match[1]);
+  const minutes = match[2] ? Number(match[2]) : 0;
+  const suffix = hours >= 12 ? "PM" : "AM";
+  const normalizedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const minuteString = minutes.toString().padStart(2, "0");
 
-    return `${normalizedHours}:${minuteString} ${suffix}`;
-};
+  return `${normalizedHours}:${minuteString} ${suffix}`;
+}
 
 function formatAcceptingApplicants(acceptingApplicants: string): string {
-    if (acceptingApplicants === "AC") {
-        return "Apply Now";
-    } else if (acceptingApplicants === "NA") {
-        return "Applications closed";
-    }
-    return "Open to all";
-};
+  if (acceptingApplicants === "AC") {
+    return "Apply Now";
+  } else if (acceptingApplicants === "NA") {
+    return "Applications closed";
+  }
+  return "Open to all";
+}
 
 function normalizeClub(record: ClubApiRecord): Club {
-    return {
-        id: record.id,
-        name: record.name,
-        preview_description: record.preview_description,
-        description: record.description,
-        tagline: record.tagline ?? '',
-        categories: record.category ?? [],
-        dayOfMeeting: record.day_of_meeting,
-        time: formatTimeTo12Hour(record.time) ?? '',
-        repetition: record.repetition,
-        location: record.location,
-        classroomCode: record.classroom_code ?? null,
-        teacherAdvisor: record.teacher_advisor,
-        applicationFormLink: record.application_form_link ?? '',
-        acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
-        joinInstructions: record.join_instructions,
-        announcements: (record.announcement ?? []).map((announcement) => ({
-            title: announcement.title,
-            description: announcement.description,
-            datePosted: announcement.date_posted,
-            popup: announcement.popup,
-            expiry: announcement.expiry,
-        })),
-    };
-};
+  return {
+    id: record.id,
+    name: record.name,
+    preview_description: record.preview_description,
+    description: record.description,
+    tagline: record.tagline ?? "",
+    categories: record.category ?? [],
+    dayOfMeeting: record.day_of_meeting ?? [],
+    time: formatTimeTo12Hour(record.time) ?? "",
+    repetition: record.repetition,
+    location: record.location,
+    classroomCode: record.classroom_code ?? null,
+    teacherAdvisor: record.teacher_advisor,
+    applicationFormLink: record.application_form_link ?? "",
+    acceptingApplicants: formatAcceptingApplicants(record.accepting_applicants),
+    joinInstructions: record.join_instructions,
+    announcements: (record.announcement ?? []).map((announcement) => ({
+      title: announcement.title,
+      description: announcement.description,
+      datePosted: announcement.date_posted,
+      popup: announcement.popup,
+      expiry: announcement.expiry,
+    })),
+  };
+}
 
 export async function getClubs(): Promise<Club[]> {
-    const url = getClubsApiUrl();
-    if (!url) {
-        return [];
-    };
+  const url = getClubsApiUrl();
+  if (!url) {
+    return [];
+  }
 
-    try {
-        const accessToken = (await cookies()).get("access_token")?.value;
-        const res = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-            },
-            cache: "no-store",
-        });
+  try {
+    const accessToken = (await cookies()).get("access_token")?.value;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
+      cache: "no-store",
+    });
 
-        if (!res.ok) {
-            return [];
-        };
+    if (!res.ok) {
+      return [];
+    }
 
-        const clubs = (await res.json()) as ClubApiRecord[];
-        return clubs.map(normalizeClub);
-    } catch {
-        return [];
-    };
-};
+    const clubs = (await res.json()) as ClubApiRecord[];
+    return clubs.map(normalizeClub);
+  } catch {
+    return [];
+  }
+}
 
 export async function getClubById(id: number): Promise<Club | null> {
-    const clubs = await getClubs();
-    return clubs.find((club) => club.id === id) ?? null;
-};
+  const clubs = await getClubs();
+  return clubs.find((club) => club.id === id) ?? null;
+}

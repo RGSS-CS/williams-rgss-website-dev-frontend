@@ -27,6 +27,7 @@ import {
   faSearch,
   faArrowRight,
   faCalendarAlt,
+  faClock,
   faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -81,18 +82,9 @@ function getCategoryIcon(category: string) {
   return DEFAULT_CATEGORY_ICON;
 }
 
-function formatDayChip(day: string | null) {
-  const normalized = day?.slice(0, 3).toLowerCase();
-
-  const map: Record<string, string> = {
-    mon: "Mon",
-    tue: "Tue",
-    wed: "Wed",
-    thu: "Thu",
-    fri: "Fri",
-  };
-
-  return normalized ? (map[normalized] ?? "All Days") : "All Days";
+function hasMeetingDay(days: string[] | null, selectedDay: string) {
+  const selectedPrefix = selectedDay.slice(0, 3).toLowerCase();
+  return (days ?? []).some((day) => day.slice(0, 3).toLowerCase() === selectedPrefix);
 }
 
 function filtersFromSearchParams(searchParamString: string): ClubFilters {
@@ -112,7 +104,7 @@ function matchesQuery(club: Club, query: string) {
     club.description,
     club.teacherAdvisor ?? "",
     club.location ?? "",
-    club.dayOfMeeting ?? "",
+    club.dayOfMeeting.join(" "),
     club.time ?? "",
     club.repetition ?? "",
     club.categories.join(" "),
@@ -124,6 +116,11 @@ function matchesQuery(club: Club, query: string) {
 }
 
 function ClubCard({ club }: { club: Club }) {
+  const meetingDaysLabel = club.dayOfMeeting
+    .map((day) => day.slice(0, 3).toLowerCase())
+    .map((day) => day.charAt(0).toUpperCase() + day.slice(1))
+    .join(" · ");
+
   return (
     <a href={`/clubs/${club.id}`} className={styles.clubCardLink}>
       <article className={styles.clubCard}>
@@ -138,11 +135,24 @@ function ClubCard({ club }: { club: Club }) {
             </h4>
           </div>
 
-          <div className={styles.clubMetaRow}>
+          <div className={`${styles.clubMetaRow} ${styles.clubScheduleRow}`}>
             <FontAwesomeIcon icon={faCalendarAlt} />
 
             <h4>
-              <b>{club.repetition}:</b> {club.dayOfMeeting} @ {club.time}
+              <span className={styles.clubScheduleDays}>
+                <b>{club.repetition}:</b>{" "}
+                <span title={club.dayOfMeeting.join(", ") || "Meeting day to be announced"}>
+                  {meetingDaysLabel || "TBA"}
+                </span>
+              </span>
+            </h4>
+          </div>
+
+          <div className={styles.clubMetaRow}>
+            <FontAwesomeIcon icon={faClock} />
+
+            <h4>
+              <b>Time:</b> {club.time || "TBA"}
             </h4>
           </div>
         </div>
@@ -268,7 +278,7 @@ export default function ClubsFilterClient({ clubs, searchOnly = false }: ClubsFi
           activeCategory === "all" || clubCategorySlugs.includes(activeCategory);
 
         const matchesDayFilter =
-          activeDay === "All Days" || formatDayChip(club.dayOfMeeting) === activeDay;
+          activeDay === "All Days" || hasMeetingDay(club.dayOfMeeting, activeDay);
 
         return matchesCategory && matchesDayFilter && matchesQuery(club, deferredQuery.trim());
       }),
