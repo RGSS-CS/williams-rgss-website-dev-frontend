@@ -113,7 +113,7 @@
   transition: transform 250ms ease;
 }
 
-.expiredToggle[aria-expanded='true'] .expiredChevron {
+.expiredToggle[aria-expanded="true"] .expiredChevron {
   transform: rotate(90deg);
 }
 
@@ -122,10 +122,13 @@
   grid-template-rows: 0fr;
   opacity: 0;
   visibility: hidden;
-  transition: grid-template-rows 250ms ease, opacity 250ms ease, visibility 0s linear 250ms;
+  transition:
+    grid-template-rows 250ms ease,
+    opacity 250ms ease,
+    visibility 0s linear 250ms;
 }
 
-.expiredPanel[data-open='true'] {
+.expiredPanel[data-open="true"] {
   grid-template-rows: 1fr;
   opacity: 1;
   visibility: visible;
@@ -167,18 +170,79 @@
   margin-right: 0.75rem;
 }
 
-.dialog .item p {
+.dialog .description {
   margin: 1rem 0 0;
   color: var(--white);
   font-family: inherit;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.75;
-  white-space: pre-line;
+}
+
+.description > :first-child {
+  margin-top: 0;
+}
+
+.description > :last-child {
+  margin-bottom: 0;
+}
+
+.description p,
+.description ul,
+.description ol,
+.description blockquote,
+.description pre,
+.description table {
+  margin: 0 0 1rem;
+}
+
+.description ul,
+.description ol {
+  padding-left: 1.5rem;
+}
+
+.description a {
+  color: var(--school-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.description blockquote {
+  padding-left: 1rem;
+  border-left: 3px solid var(--school-tertiary);
+}
+
+.description pre {
+  overflow-x: auto;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+}
+
+.description :not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+  font-size: 0.9em;
+}
+
+.description table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.description th,
+.description td {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--school-primary-light);
+  text-align: left;
 }
 
 .dialog .expired h3,
-.dialog .expired p,
+.dialog .expired .description,
+.dialog .expired .description a,
 .dialog .expired .meta {
   color: var(--grey);
 }
