@@ -35,7 +35,13 @@ export default function ClubSlideshow({ photos }: ClubSlideShowProps) {
   }, [activeIndex]);
 
   if (photos.length === 0) {
-    return null;
+    return (
+      <div className={styles.imgContainer}>
+        <div className={`${styles.imgContainerMain} ${styles.imgPlaceholder}`}>
+          No media provided
+        </div>
+      </div>
+    );
   }
 
   const photo = photos[activeIndex];

@@ -193,6 +193,20 @@
   overflow: hidden;
 }
 
+.imgPlaceholder {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 1px dashed var(--school-tertiary);
+  background: var(--school-dull-tone);
+  color: var(--school-tertiary);
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .img {
   position: absolute;
   inset: 0;
