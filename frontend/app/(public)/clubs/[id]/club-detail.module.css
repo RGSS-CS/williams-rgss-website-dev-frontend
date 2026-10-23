@@ -67,9 +67,13 @@
 
 .aboutGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 40vw);
   gap: 2.5rem;
   align-items: center;
+}
+
+.aboutGrid > * {
+  min-width: 0;
 }
 
 .sectionEyebrow {
@@ -96,10 +100,87 @@
   color: var(--school-primary);
   font-size: 1.08rem;
   line-height: 1.85;
-  white-space: pre-line;
+}
+
+.sectionBody > :first-child {
+  margin-top: 0;
+}
+
+.sectionBody > :last-child {
+  margin-bottom: 0;
+}
+
+.sectionBody h1,
+.sectionBody h2,
+.sectionBody h3,
+.sectionBody h4,
+.sectionBody h5,
+.sectionBody h6 {
+  margin: 1.5rem 0 0.65rem;
+  color: var(--school-primary);
+  line-height: 1.25;
+}
+
+.sectionBody p,
+.sectionBody ul,
+.sectionBody ol,
+.sectionBody blockquote,
+.sectionBody pre,
+.sectionBody table {
+  margin: 0 0 1rem;
+}
+
+.sectionBody ul,
+.sectionBody ol {
+  padding-left: 1.5rem;
+}
+
+.sectionBody li + li {
+  margin-top: 0.35rem;
+}
+
+.sectionBody a {
+  color: var(--school-primary-light);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.sectionBody blockquote {
+  padding-left: 1rem;
+  border-left: 3px solid var(--school-tertiary);
+}
+
+.sectionBody pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: var(--school-dull-tone);
+  font-size: 0.9em;
+}
+
+.sectionBody :not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  background: var(--school-dull-tone);
+  font-size: 0.9em;
+}
+
+.sectionBody table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.sectionBody th,
+.sectionBody td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  text-align: left;
 }
 
 .imgContainer {
+  box-sizing: border-box;
   width: 100%;
   padding: 20px;
   background: var(--school-primary);
@@ -110,6 +191,20 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+}
+
+.imgPlaceholder {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 1px dashed var(--school-tertiary);
+  background: var(--school-dull-tone);
+  color: var(--school-tertiary);
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .img {
@@ -180,13 +275,21 @@
 
 .dots {
   display: flex;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
   gap: 7px;
   margin-top: 14px;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-color: var(--school-tertiary-dark) transparent;
+  scrollbar-width: thin;
 }
 
 .dot {
+  flex: 0 0 8px;
   width: 8px;
   height: 8px;
   padding: 0;
@@ -194,13 +297,20 @@
   border-radius: 50%;
   background: var(--school-tertiary);
   cursor: pointer;
+  scroll-snap-align: center;
   transition:
-    width 0.2s ease,
+    flex-basis 0.2s ease,
     background 0.2s ease;
 }
 
 .dot:hover {
   background: var(--school-tertiary-dark);
+}
+
+.dots_active {
+  flex-basis: 20px;
+  border-radius: 999px;
+  background: var(--school-secondary);
 }
 
 .caption {
@@ -221,7 +331,6 @@
   align-items: start;
   color: var(--school-primary);
 }
-
 
 .infoHeader p {
   max-width: 32ch;
@@ -560,13 +669,17 @@
 
 @media (max-width: 1120px) {
   .aboutGrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
 @media (max-width: 800px) {
+  .section {
+    padding: 2.5rem 1rem;
+  }
+
   .aboutGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .applySection {

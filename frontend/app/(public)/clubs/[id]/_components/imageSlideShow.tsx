@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { GalleryPhoto } from "@/app/_lib/gallery-photos";
 import styles from "@/app/(public)/clubs/[id]/club-detail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,16 +12,42 @@ type ClubSlideShowProps = {
 
 export default function ClubSlideshow({ photos }: ClubSlideShowProps) {
   const [current, setCurrent] = useState(0);
+  const dotsRef = useRef<HTMLDivElement>(null);
+  const activeIndex = photos.length === 0 ? 0 : current % photos.length;
+
+  useEffect(() => {
+    const dots = dotsRef.current;
+    const activeDot = dots?.children.item(activeIndex) as HTMLElement | null;
+
+    if (!dots || !activeDot) {
+      return;
+    }
+
+    const dotsBounds = dots.getBoundingClientRect();
+    const activeDotBounds = activeDot.getBoundingClientRect();
+    const activeDotCenter = activeDotBounds.left + activeDotBounds.width / 2;
+    const dotsCenter = dotsBounds.left + dots.clientWidth / 2;
+
+    dots.scrollTo({
+      left: dots.scrollLeft + activeDotCenter - dotsCenter,
+      behavior: "smooth",
+    });
+  }, [activeIndex]);
 
   if (photos.length === 0) {
-    return null;
+    return (
+      <div className={styles.imgContainer}>
+        <div className={`${styles.imgContainerMain} ${styles.imgPlaceholder}`}>
+          No media provided
+        </div>
+      </div>
+    );
   }
 
-  const activeIndex = current % photos.length;
   const photo = photos[activeIndex];
 
   const previous = () => {
-    setCurrent((current) => (current % photos.length + photos.length - 1) % photos.length);
+    setCurrent((current) => ((current % photos.length) + photos.length - 1) % photos.length);
   };
 
   const next = () => {
@@ -71,7 +97,7 @@ export default function ClubSlideshow({ photos }: ClubSlideShowProps) {
       </div>
 
       {photos.length > 1 && (
-        <div className={styles.dots}>
+        <div className={styles.dots} ref={dotsRef}>
           {photos.map((photo, index) => (
             <button
               key={`${photo.club}-${photo.image}-${photo.createdDate}`}

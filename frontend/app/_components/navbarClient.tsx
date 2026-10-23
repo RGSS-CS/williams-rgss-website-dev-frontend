@@ -26,6 +26,7 @@ type AuthUser = {
 type NavbarClientProps = {
   management: Management | null;
   pageSettings: PageManagement[];
+  councilName: string;
   authUser: AuthUser | null;
 };
 
@@ -35,16 +36,19 @@ const links = [
     href: "/about",
     internalSiteName: "AB",
     icon: <FontAwesomeIcon icon={faCircleInfo} />,
+    label: "About",
   },
   {
     href: "/clubs",
     internalSiteName: "CL",
     icon: <FontAwesomeIcon icon={faUsers} />,
+    label: "Clubs",
   },
   {
     href: "/gallery",
     internalSiteName: "GL",
     icon: <FontAwesomeIcon icon={faImages} />,
+    label: "Gallery",
   },
 ];
 
@@ -106,7 +110,12 @@ function AuthNavItem({
   );
 }
 
-export default function NavbarClient({ management, pageSettings, authUser }: NavbarClientProps) {
+export default function NavbarClient({
+  management,
+  pageSettings,
+  councilName,
+  authUser,
+}: NavbarClientProps) {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -138,7 +147,7 @@ export default function NavbarClient({ management, pageSettings, authUser }: Nav
                 </div>
                 <div className={styles.brandCopy}>
                   <span className={styles.schoolTitle}>{management?.schoolName}</span>
-                  <span className={styles.schoolSubtitle}>Student Council</span>
+                  <span className={styles.schoolSubtitle}>{councilName}</span>
                 </div>
               </Link>
             </div>
@@ -147,7 +156,7 @@ export default function NavbarClient({ management, pageSettings, authUser }: Nav
               {links.map((link) => {
                 const label =
                   pageSettings.find((page) => page.internalSiteName === link.internalSiteName)
-                    ?.verboseTab;
+                    ?.verboseTab || link.label;
 
                 return (
                   <Link
@@ -186,7 +195,7 @@ export default function NavbarClient({ management, pageSettings, authUser }: Nav
           {links.map((link) => {
             const label =
               pageSettings.find((page) => page.internalSiteName === link.internalSiteName)
-                ?.verboseTab;
+                ?.verboseTab || link.label;
 
             return (
               <Link

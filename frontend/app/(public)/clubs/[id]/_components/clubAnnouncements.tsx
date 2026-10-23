@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import type { ClubAnnouncement } from "@/app/_lib/club";
 import styles from "./clubAnnouncements.module.css";
 
@@ -59,9 +61,7 @@ export default function ClubAnnouncements({
   const renderAnnouncement = (item: ClubAnnouncement, index: number) => {
     const posted = timestamp(item.datePosted);
     const expired = timestamp(item.expiry) <= currentTime;
-    const announcementClassName = expired
-      ? `${styles.item} ${styles.expired}`
-      : styles.item;
+    const announcementClassName = expired ? `${styles.item} ${styles.expired}` : styles.item;
     return (
       <article className={announcementClassName} key={`${item.datePosted}-${index}`}>
         <h3>{item.title}</h3>
@@ -77,7 +77,9 @@ export default function ClubAnnouncements({
             <span>Pinned</span>
           ) : null}
         </div>
-        <p>{item.description}</p>
+        <div className={styles.description}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.description}</ReactMarkdown>
+        </div>
       </article>
     );
   };
@@ -137,7 +139,9 @@ export default function ClubAnnouncements({
                 aria-controls={expiredPanelId}
                 onClick={() => setExpiredOpen((open) => !open)}
               >
-                <span className={styles.expiredChevron} aria-hidden='true'>›</span>
+                <span className={styles.expiredChevron} aria-hidden='true'>
+                  ›
+                </span>
                 Expired announcements ({expiredAnnouncements.length})
               </button>
               <div

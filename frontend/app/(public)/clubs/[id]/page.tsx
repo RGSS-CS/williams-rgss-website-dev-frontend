@@ -15,6 +15,8 @@ import ClubSlideshow from "./_components/imageSlideShow";
 import NotAcceptingApplications from "./_components/notAcceptingApplications";
 import ClubDetailLoading from "./loading";
 import ClubAnnouncements from "./_components/clubAnnouncements";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 //ICONS
 import {
   faCalendarAlt,
@@ -37,13 +39,17 @@ export async function generateMetadata({ params }: ClubPageProps): Promise<Metad
   return getSiteMetadata(club?.name);
 }
 
-function formatDay(day: string | null) {
-  if (!day) {
+function formatDay(days: string[] | null) {
+  if (!days?.length) {
     return "Meeting day TBA";
   }
 
-  const normalized = day.toLowerCase();
-  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  return days
+    .map((day) => {
+      const normalized = day.toLowerCase();
+      return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    })
+    .join(", ");
 }
 
 function sentenceCase(value: string | null, fallback: string) {
@@ -97,11 +103,15 @@ async function ClubHero({ clubId }: { clubId: number }) {
                 Apply Now
               </AnchorLink>
             )}
-            <ClubAnnouncements key={club.id} announcements={club.announcements} currentTime={currentTime} />
+            <ClubAnnouncements
+              key={club.id}
+              announcements={club.announcements}
+              currentTime={currentTime}
+            />
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
-              <span className='statNum'>{meetingDay.split(" ")[0]}</span>
+              <span className='statNum'>{meetingDay.split(",")[0]}</span>
               <span className='statLabel'>Meeting Day</span>
             </div>
             <div className={styles.heroStat}>
@@ -135,7 +145,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
           <div>
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
-            <div className={styles_modules.sectionBody}>{club.description}</div>
+            <div className={styles_modules.sectionBody}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{club.description}</ReactMarkdown>
+            </div>
           </div>
           {accessToken ? (
             <ClubSlideshow key={clubId} photos={photos} />
