@@ -32,24 +32,24 @@ type NavbarClientProps = {
 
 const links = [
   { href: "/", internalSiteName: "HM", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
-  {
-    href: "/about",
-    internalSiteName: "AB",
-    icon: <FontAwesomeIcon icon={faCircleInfo} />,
-    label: "About",
-  },
+  // {
+  //   href: "/about",
+  //   internalSiteName: "AB",
+  //   icon: <FontAwesomeIcon icon={faCircleInfo} />,
+  //   label: "About",
+  // },
   {
     href: "/clubs",
     internalSiteName: "CL",
     icon: <FontAwesomeIcon icon={faUsers} />,
     label: "Clubs",
   },
-  {
-    href: "/gallery",
-    internalSiteName: "GL",
-    icon: <FontAwesomeIcon icon={faImages} />,
-    label: "Gallery",
-  },
+  // {
+  //   href: "/gallery",
+  //   internalSiteName: "GL",
+  //   icon: <FontAwesomeIcon icon={faImages} />,
+  //   label: "Gallery",
+  // },
 ];
 
 function isActivePath(pathname: string, href: string) {
