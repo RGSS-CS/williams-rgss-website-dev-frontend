@@ -17,6 +17,7 @@ import ClubDetailLoading from "./loading";
 import ClubAnnouncements from "./_components/clubAnnouncements";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import markdownComponents from "@/app/_components/markdownComponents";
 //ICONS
 import {
   faCalendarAlt,
@@ -146,7 +147,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
             <div className={styles_modules.sectionBody}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{club.description}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {club.description}
+              </ReactMarkdown>
             </div>
           </div>
           {accessToken ? (

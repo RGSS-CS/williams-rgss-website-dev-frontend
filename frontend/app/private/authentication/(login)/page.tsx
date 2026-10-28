@@ -2,6 +2,8 @@ import { getManagementSettings } from "@/app/_lib/site-management";
 import { isCaptchaEnabledFor } from "@/app/_utils/checkCaptchaEnabled";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import LoginForm from "./_components/loginForm";
 
 export const instant = false;
@@ -20,6 +22,11 @@ const ERROR_MESSAGES: Record<string, string> = {
 };
 
 export default async function SigninPage({ searchParams }: SigninPageProps) {
+    const cookieStore = await cookies();
+    if (cookieStore.has("access_token")) {
+        redirect("/");
+    }
+
     const management = await getManagementSettings();
     if (!management) return null;
 
