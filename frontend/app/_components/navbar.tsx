@@ -6,9 +6,10 @@ import NavbarClient from "@/app/_components/navbarClient";
 
 type NavbarProps = {
   management: Management | null;
+  useNativeNavigation?: boolean;
 };
 
-export default async function Navbar({ management }: NavbarProps) {
+export default async function Navbar({ management, useNativeNavigation = false }: NavbarProps) {
   const [cookieStore, pageSettings, stucoSettings] = await Promise.all([
     cookies(),
     getPageManagement(),
@@ -24,6 +25,7 @@ export default async function Navbar({ management }: NavbarProps) {
       pageSettings={pageSettings}
       councilName={stucoSettings?.councilName ?? ""}
       authUser={authUser}
+      useNativeNavigation={useNativeNavigation}
     />
   );
 }

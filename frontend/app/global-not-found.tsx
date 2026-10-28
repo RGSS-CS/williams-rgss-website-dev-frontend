@@ -82,7 +82,7 @@ async function NavbarSlot({
 }: {
   management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>>;
 }) {
-  return <Navbar management={management} />;
+  return <Navbar management={management} useNativeNavigation />;
 }
 
 export default async function NotFound() {

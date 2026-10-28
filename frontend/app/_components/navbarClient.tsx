@@ -28,6 +28,7 @@ type NavbarClientProps = {
   pageSettings: PageManagement[];
   councilName: string;
   authUser: AuthUser | null;
+  useNativeNavigation: boolean;
 };
 
 const links = [
@@ -69,18 +70,21 @@ function AuthNavItem({
   authUser,
   currentPath,
   onNavigate,
+  useNativeNavigation,
   variant = "desktop",
 }: {
   authUser: AuthUser | null;
   currentPath: string;
   onNavigate: () => void;
+  useNativeNavigation: boolean;
   variant?: "desktop" | "sidebar";
 }) {
   if (!authUser) {
     const className = variant === "sidebar" ? styles.sidebarLink : styles.navLink;
+    const NavigationLink = useNativeNavigation ? "a" : Link;
 
     return (
-      <Link
+      <NavigationLink
         href='/private/authentication'
         className={className}
         data-active={isActivePath(currentPath, "/private/authentication")}
@@ -88,7 +92,7 @@ function AuthNavItem({
       >
         <FontAwesomeIcon icon={faArrowRightToBracket} />
         Login/Register
-      </Link>
+      </NavigationLink>
     );
   }
   return (
@@ -115,10 +119,12 @@ export default function NavbarClient({
   pageSettings,
   councilName,
   authUser,
+  useNativeNavigation,
 }: NavbarClientProps) {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const NavigationLink = useNativeNavigation ? "a" : Link;
 
   return (
     <>
@@ -133,7 +139,7 @@ export default function NavbarClient({
               >
                 <FontAwesomeIcon icon={faBars} />
               </button>
-              <Link href='/' className={styles.brandLink} scroll={false}>
+              <NavigationLink href='/' className={styles.brandLink}>
                 <div className={styles.logo}>
                   {management?.croppedSiteImage && (
                     <img
@@ -149,7 +155,7 @@ export default function NavbarClient({
                   <span className={styles.schoolTitle}>{management?.schoolName}</span>
                   <span className={styles.schoolSubtitle}>{councilName}</span>
                 </div>
-              </Link>
+              </NavigationLink>
             </div>
 
             <div className={styles.navLinks}>
@@ -159,7 +165,7 @@ export default function NavbarClient({
                     ?.verboseTab || link.label;
 
                 return (
-                  <Link
+                  <NavigationLink
                     key={link.href}
                     href={link.href}
                     className={styles.navLink}
@@ -168,13 +174,14 @@ export default function NavbarClient({
                   >
                     {link.icon}
                     {label}
-                  </Link>
+                  </NavigationLink>
                 );
               })}
               <AuthNavItem
                 authUser={authUser}
                 currentPath={pathname}
                 onNavigate={() => setSidebarOpen(false)}
+                useNativeNavigation={useNativeNavigation}
               />
             </div>
           </div>
@@ -198,7 +205,7 @@ export default function NavbarClient({
                 ?.verboseTab || link.label;
 
             return (
-              <Link
+              <NavigationLink
                 key={link.href}
                 href={link.href}
                 className={styles.sidebarLink}
@@ -207,13 +214,14 @@ export default function NavbarClient({
               >
                 {link.icon}
                 {label}
-              </Link>
+              </NavigationLink>
             );
           })}
           <AuthNavItem
             authUser={authUser}
             currentPath={pathname}
             onNavigate={() => setSidebarOpen(false)}
+            useNativeNavigation={useNativeNavigation}
             variant='sidebar'
           />
         </div>
