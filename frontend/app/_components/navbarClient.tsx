@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
   faBars,
-  faCircleInfo,
+  // faCircleInfo,
   faHome,
-  faImages,
+  // faImages,
   faRightFromBracket,
   faTimes,
   faUsers,

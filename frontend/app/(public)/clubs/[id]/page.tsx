@@ -9,6 +9,7 @@ import AnchorLink from "@/app/(public)/_components/anchorLink";
 import { Metadata } from "next";
 import { cache, Suspense } from "react";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
@@ -77,7 +78,10 @@ const getClubForPage = cache(async (clubId: number) => {
 });
 
 // Capture one timestamp per request so popup eligibility is stable during hydration.
-const getPageTime = cache(async () => Date.now());
+const getPageTime = cache(async () => {
+  await connection();
+  return Date.now();
+});
 
 async function ClubHero({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
