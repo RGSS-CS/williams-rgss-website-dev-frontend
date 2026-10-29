@@ -7,12 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
   faBars,
+  // faCircleInfo,
   faHome,
+  // faImages,
   faRightFromBracket,
   faTimes,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import type { Management } from "@/app/_lib/site-management";
+import type { PageManagement } from "@/app/_lib/page-management";
 import { signout } from "@/app/private/authentication/_methods/auth";
 import styles from "./navbar.module.css";
 
@@ -22,13 +25,32 @@ type AuthUser = {
 
 type NavbarClientProps = {
   management: Management | null;
+  pageSettings: PageManagement[];
   councilName: string;
   authUser: AuthUser | null;
+  useNativeNavigation: boolean;
 };
 
 const links = [
-  { href: "/", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
-  { href: "/clubs", icon: <FontAwesomeIcon icon={faUsers} />, label: "Clubs" },
+  { href: "/", internalSiteName: "HM", icon: <FontAwesomeIcon icon={faHome} />, label: "Home" },
+  // {
+  //   href: "/about",
+  //   internalSiteName: "AB",
+  //   icon: <FontAwesomeIcon icon={faCircleInfo} />,
+  //   label: "About",
+  // },
+  {
+    href: "/clubs",
+    internalSiteName: "CL",
+    icon: <FontAwesomeIcon icon={faUsers} />,
+    label: "Clubs",
+  },
+  // {
+  //   href: "/gallery",
+  //   internalSiteName: "GL",
+  //   icon: <FontAwesomeIcon icon={faImages} />,
+  //   label: "Gallery",
+  // },
 ];
 
 function isActivePath(pathname: string, href: string) {
@@ -48,18 +70,21 @@ function AuthNavItem({
   authUser,
   currentPath,
   onNavigate,
+  useNativeNavigation,
   variant = "desktop",
 }: {
   authUser: AuthUser | null;
   currentPath: string;
   onNavigate: () => void;
+  useNativeNavigation: boolean;
   variant?: "desktop" | "sidebar";
 }) {
   if (!authUser) {
     const className = variant === "sidebar" ? styles.sidebarLink : styles.navLink;
+    const NavigationLink = useNativeNavigation ? "a" : Link;
 
     return (
-      <Link
+      <NavigationLink
         href='/private/authentication'
         className={className}
         data-active={isActivePath(currentPath, "/private/authentication")}
@@ -67,7 +92,7 @@ function AuthNavItem({
       >
         <FontAwesomeIcon icon={faArrowRightToBracket} />
         Login/Register
-      </Link>
+      </NavigationLink>
     );
   }
   return (
@@ -89,10 +114,17 @@ function AuthNavItem({
   );
 }
 
-export default function NavbarClient({ management, councilName, authUser }: NavbarClientProps) {
+export default function NavbarClient({
+  management,
+  pageSettings,
+  councilName,
+  authUser,
+  useNativeNavigation,
+}: NavbarClientProps) {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const NavigationLink = useNativeNavigation ? "a" : Link;
 
   return (
     <>
@@ -107,7 +139,7 @@ export default function NavbarClient({ management, councilName, authUser }: Navb
               >
                 <FontAwesomeIcon icon={faBars} />
               </button>
-              <Link href='/' className={styles.brandLink} scroll={false}>
+              <NavigationLink href='/' className={styles.brandLink}>
                 <div className={styles.logo}>
                   {management?.croppedSiteImage && (
                     <img
@@ -123,26 +155,33 @@ export default function NavbarClient({ management, councilName, authUser }: Navb
                   <span className={styles.schoolTitle}>{management?.schoolName}</span>
                   <span className={styles.schoolSubtitle}>{councilName}</span>
                 </div>
-              </Link>
+              </NavigationLink>
             </div>
 
             <div className={styles.navLinks}>
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={styles.navLink}
-                  data-active={isActivePath(pathname, link.href)}
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  {link.icon}
-                  {link.label}
-                </Link>
-              ))}
+              {links.map((link) => {
+                const label =
+                  pageSettings.find((page) => page.internalSiteName === link.internalSiteName)
+                    ?.verboseTab || link.label;
+
+                return (
+                  <NavigationLink
+                    key={link.href}
+                    href={link.href}
+                    className={styles.navLink}
+                    data-active={isActivePath(pathname, link.href)}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    {link.icon}
+                    {label}
+                  </NavigationLink>
+                );
+              })}
               <AuthNavItem
                 authUser={authUser}
                 currentPath={pathname}
                 onNavigate={() => setSidebarOpen(false)}
+                useNativeNavigation={useNativeNavigation}
               />
             </div>
           </div>
@@ -160,22 +199,29 @@ export default function NavbarClient({ management, councilName, authUser }: Navb
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className={styles.sidebarLinks}>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={styles.sidebarLink}
-              data-active={isActivePath(pathname, link.href)}
-              onClick={() => setSidebarOpen(false)}
-            >
-              {link.icon}
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const label =
+              pageSettings.find((page) => page.internalSiteName === link.internalSiteName)
+                ?.verboseTab || link.label;
+
+            return (
+              <NavigationLink
+                key={link.href}
+                href={link.href}
+                className={styles.sidebarLink}
+                data-active={isActivePath(pathname, link.href)}
+                onClick={() => setSidebarOpen(false)}
+              >
+                {link.icon}
+                {label}
+              </NavigationLink>
+            );
+          })}
           <AuthNavItem
             authUser={authUser}
             currentPath={pathname}
             onNavigate={() => setSidebarOpen(false)}
+            useNativeNavigation={useNativeNavigation}
             variant='sidebar'
           />
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import markdownComponents from "@/app/_components/markdownComponents";
 import type { ClubAnnouncement } from "@/app/_lib/club";
 import styles from "./clubAnnouncements.module.css";
 
@@ -78,7 +79,9 @@ export default function ClubAnnouncements({
           ) : null}
         </div>
         <div className={styles.description}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.description}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+            {item.description}
+          </ReactMarkdown>
         </div>
       </article>
     );

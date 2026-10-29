@@ -9,6 +9,7 @@ import AnchorLink from "@/app/(public)/_components/anchorLink";
 import { Metadata } from "next";
 import { cache, Suspense } from "react";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import { getSiteMetadata } from "@/app/_utils/metadata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ClubSlideshow from "./_components/imageSlideShow";
@@ -17,6 +18,7 @@ import ClubDetailLoading from "./loading";
 import ClubAnnouncements from "./_components/clubAnnouncements";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import markdownComponents from "@/app/_components/markdownComponents";
 //ICONS
 import {
   faCalendarAlt,
@@ -76,7 +78,10 @@ const getClubForPage = cache(async (clubId: number) => {
 });
 
 // Capture one timestamp per request so popup eligibility is stable during hydration.
-const getPageTime = cache(async () => Date.now());
+const getPageTime = cache(async () => {
+  await connection();
+  return Date.now();
+});
 
 async function ClubHero({ clubId }: { clubId: number }) {
   const club = await getClubForPage(clubId);
@@ -146,7 +151,9 @@ async function ClubAbout({ clubId }: { clubId: number }) {
             <span className={styles_modules.sectionEyebrow}>About Us</span>
             <h2 className={styles_modules.sectionTitle}>{club.tagline}</h2>
             <div className={styles_modules.sectionBody}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{club.description}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {club.description}
+              </ReactMarkdown>
             </div>
           </div>
           {accessToken ? (

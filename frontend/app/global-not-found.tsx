@@ -3,11 +3,7 @@ import Image from "next/image";
 import { Suspense, type CSSProperties } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import {
-  Montserrat,
-  IBM_Plex_Sans,
-  Quicksand,
-} from "next/font/google";
+import { Montserrat, IBM_Plex_Sans, Quicksand } from "next/font/google";
 import type { Metadata } from "next";
 import styles from "@/app/not-found.module.css";
 import Navbar from "./_components/navbar";
@@ -82,7 +78,7 @@ async function NavbarSlot({
 }: {
   management: NonNullable<Awaited<ReturnType<typeof getManagementSettings>>>;
 }) {
-  return <Navbar management={management} />;
+  return <Navbar management={management} useNativeNavigation />;
 }
 
 export default async function NotFound() {
@@ -124,7 +120,7 @@ export default async function NotFound() {
 
           <NotFoundActions />
         </div>
-          <Footer management={management} schoolYear={schoolYear} />
+        <Footer management={management} schoolYear={schoolYear} />
       </body>
     </html>
   );

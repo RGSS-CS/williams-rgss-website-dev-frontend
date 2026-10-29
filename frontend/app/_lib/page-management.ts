@@ -4,6 +4,7 @@ import { cacheLife, cacheTag } from "next/cache";
 
 export type PageManagementApiRecord = {
     internal_site_name: string;
+    verbose_tab_name: string;
     title: string;
     subtitle: string;
     tagline: string;
@@ -11,6 +12,7 @@ export type PageManagementApiRecord = {
 
 export type PageManagement = {
     internalSiteName: string;
+    verboseTab: string;
     title: string;
     subtitle: string;
     tagline: string;
@@ -31,6 +33,7 @@ function getPageManagementApiUrl() {
 function normalizePageManagement(record: PageManagementApiRecord): PageManagement {
     return {
         internalSiteName: record.internal_site_name,
+        verboseTab: record.verbose_tab_name,
         title: record.title,
         subtitle: record.subtitle,
         tagline: record.tagline

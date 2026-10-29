@@ -114,6 +114,8 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    height: fit-content;
+    width: 90%;
 }
 
 .techBadges {
@@ -184,11 +186,6 @@
 .roleList {
     display: grid;
     gap: 0.9rem;
-}
-
-.roleRow {
-    display: grid;
-    gap: 0.25rem;
 }
 
 .smallText {
