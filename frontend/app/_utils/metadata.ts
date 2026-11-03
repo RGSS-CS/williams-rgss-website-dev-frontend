@@ -17,6 +17,6 @@ export async function getSiteMetadata(pageTitle?: string) {
 
     return {
         title: pageTitle ? `${pageTitle} - ${siteTitle}` : siteTitle,
-        description: `This is the School Council Website of ${schoolName}`
+        description: `This is a website hosted by ${schoolName}`
     };
 }
